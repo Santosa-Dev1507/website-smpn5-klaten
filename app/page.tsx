@@ -246,18 +246,18 @@ export default function Home() {
         <div className={styles.testimonialsGrid}>
           {testimonials.map((t, i) => (
             <div key={i} className={styles.testimonialCard}>
-              <div className={styles.quoteIcon}>&ldquo;</div>
-              <p className={styles.testimonialText}>{t.text}</p>
-              <div className={styles.testimonialAuthor}>
+              <div className={styles.testimonialPhotoWrap}>
                 {t.photo ? (
                   <img src={t.photo} alt={t.name} className={styles.avatarPhoto} />
                 ) : (
                   <div className={styles.avatar}>{t.avatar}</div>
                 )}
-                <div>
-                  <strong>{t.name}</strong>
-                  <span>{t.role}</span>
-                </div>
+              </div>
+              <div className={styles.quoteIcon}>&ldquo;</div>
+              <p className={styles.testimonialText}>{t.text}</p>
+              <div className={styles.testimonialAuthor}>
+                <strong>{t.name}</strong>
+                <span>{t.role}</span>
               </div>
             </div>
           ))}
