@@ -106,7 +106,7 @@ export default function Home() {
           </h1>
           <p className={styles.heroDescription}>
             Di SMPN 5 Klaten, kami percaya juara bukan hanya soal nilai tertinggi. Di sini, siswa tumbuh
-            dengan karakter, keterampilan, dan kepercayaan diri untuk menghadapi masa depan.
+            dengan karakter, keterampilan, kepercayaan diri dan mencintai lingkungan untuk menghadapi masa depan.
           </p>
           <div className={styles.heroActions}>
             <a href="#spmb" className={styles.btnPrimary}>Mulai Perjalananmu →</a>
@@ -317,7 +317,7 @@ export default function Home() {
       <section className={styles.news}>
         <div className={styles.sectionHeader}>
           <div className={styles.sectionBadge}>Berita & Pengumuman</div>
-          <h2>Selalu <span className={styles.highlightRed}>Terkini</span></h2>
+          <h2>Kabar Para <span className={styles.highlightRed}>Juara</span></h2>
           <p>Ikuti perkembangan terbaru dari SMPN 5 Klaten.</p>
         </div>
         <div className={styles.newsGrid}>
