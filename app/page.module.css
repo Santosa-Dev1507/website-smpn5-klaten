@@ -205,6 +205,35 @@
 .testimonialAuthor strong { display: block; font-weight: 700; color: var(--dark); font-size: 1rem; }
 .testimonialAuthor span { display: block; font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem; }
 
+/* ===== INSTAGRAM CTA ===== */
+.instagramSection { padding: 4rem 5%; background: #fdf8f2; }
+.instagramCta {
+  max-width: 900px; margin: 0 auto;
+  display: flex; align-items: center; gap: 2.5rem;
+  background: var(--light); border-radius: 24px;
+  padding: 3rem; border: 1px solid var(--border-color);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+.instagramCtaIcon {
+  flex-shrink: 0; width: 90px; height: 90px; border-radius: 20px;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.instagramCtaText { flex: 1; }
+.instagramCtaText h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
+.instagramCtaText p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+.instagramCtaText .sectionBadge { margin-bottom: 0.75rem; }
+.instagramCtaBtn {
+  flex-shrink: 0; display: inline-block;
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: #fff; font-weight: 700; font-size: 1rem;
+  padding: 0.9rem 1.8rem; border-radius: 50px;
+  text-decoration: none; white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(220,39,67,0.3);
+}
+.instagramCtaBtn:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(220,39,67,0.4); }
+
 /* ===== PPDB CTA ===== */
 .ppdb { background: var(--primary); padding: 5rem 5%; overflow: hidden; }
 .ppdbInner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; align-items: center; }
@@ -335,6 +364,7 @@
   .footerTop { grid-template-columns: 1fr; gap: 2rem; }
   .heroTitle { font-size: 2.6rem; }
   .sectionHeader h2 { font-size: 2rem; }
+  .instagramCta { flex-direction: column; text-align: center; }
 }
 @media (max-width: 640px) {
   .nav { display: none; }
@@ -345,4 +375,6 @@
   .ppdbInfo { flex-direction: column; gap: 1rem; }
   .ppdbInfoDivider { width: 60px; height: 1px; }
   .footerBottom { flex-direction: column; text-align: center; }
+  .instagramCta { padding: 2rem 1.5rem; }
+  .instagramCtaText h2 { font-size: 1.5rem; }
 }

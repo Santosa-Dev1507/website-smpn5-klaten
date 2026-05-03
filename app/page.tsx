@@ -337,23 +337,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== INSTAGRAM SECTION ===== */}
+      {/* ===== INSTAGRAM CTA ===== */}
       <section className={styles.instagramSection}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.sectionBadge}>Media Sosial</div>
-          <h2>Ikuti Kami di <span className={styles.highlightRed}>Instagram</span></h2>
-          <p>Dapatkan update terbaru kegiatan sekolah melalui media sosial kami.</p>
-        </div>
-
-        <div className={styles.instagramWidgetContainer}>
-          <iframe 
-            src="//lightwidget.com/widgets/163fdfe5f99b5f84aeb0d50a88e3bfcf.html" 
-            scrolling="no" 
-            allowTransparency={true}
-            className="lightwidget-widget" 
-            style={{ width: "100%", border: 0, overflow: "hidden", minHeight: "200px" }}
-          ></iframe>
-          <Script src="https://cdn.lightwidget.com/widgets/lightwidget.js" strategy="lazyOnload" />
+        <div className={styles.instagramCta}>
+          <div className={styles.instagramCtaIcon}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </div>
+          <div className={styles.instagramCtaText}>
+            <div className={styles.sectionBadge}>Media Sosial</div>
+            <h2>Ikuti Kami di <span className={styles.highlightRed}>Instagram</span></h2>
+            <p>Dapatkan update terbaru kegiatan, prestasi, dan momen berkesan SMPN 5 Klaten melalui Instagram kami.</p>
+          </div>
+          <a
+            href="https://www.instagram.com/espema_klaten"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.instagramCtaBtn}
+          >
+            @espema_klaten
+          </a>
         </div>
       </section>
 
