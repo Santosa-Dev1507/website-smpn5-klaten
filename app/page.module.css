@@ -25,7 +25,7 @@
 /* ===== HERO ===== */
 .hero {
   display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-  padding: 5rem 5% 6rem; align-items: center; min-height: 88vh;
+  padding: 5rem 5% 6rem; align-items: center;
   background: linear-gradient(135deg, #fdf8f2 0%, #fff 60%);
 }
 .heroContent { display: flex; flex-direction: column; align-items: flex-start; }
