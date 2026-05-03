@@ -1,0 +1,98 @@
+/* HEADER */
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 5%; background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 200;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+.logoContainer { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+.schoolName { display: block; font-weight: 800; font-size: 1.05rem; color: #944535; }
+.schoolTagline { display: block; font-size: 0.68rem; color: #555; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+/* DESKTOP NAV */
+.nav { display: flex; gap: 2rem; align-items: center; font-weight: 600; font-size: 0.95rem; }
+.nav a { color: #0D0C13; text-decoration: none; transition: color 0.3s; }
+.nav a:hover { color: #944535; }
+.navActive { color: #944535 !important; border-bottom: 2px solid #944535; padding-bottom: 2px; }
+.navCta {
+  background: #944535; color: #fff !important; padding: 0.6rem 1.4rem;
+  border-radius: 50px; transition: all 0.3s ease !important; text-decoration: none !important;
+}
+.navCta:hover { background: #7a382a !important; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(148,69,53,0.3); }
+.navCtaActive { background: #7a382a !important; }
+
+/* HAMBURGER */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer;
+  background: none; border: none; padding: 6px; z-index: 210;
+}
+.hamburger span {
+  display: block; width: 26px; height: 2.5px; background: #0D0C13;
+  border-radius: 4px; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+/* Animasi X */
+.hamburgerOpen span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburgerOpen span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+/* OVERLAY */
+.overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(2px); z-index: 190;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* MOBILE DRAWER */
+.mobileMenu {
+  position: fixed; top: 0; right: 0; width: min(340px, 85vw); height: 100dvh;
+  background: #fff; z-index: 200; padding: 0;
+  transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex; flex-direction: column; box-shadow: -8px 0 40px rgba(0,0,0,0.12);
+  overflow-y: auto;
+}
+.mobileMenuOpen { transform: translateX(0); }
+
+.mobileMenuHeader {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 1.5rem; border-bottom: 1px solid #eaeaea; flex-shrink: 0;
+}
+.mobileLogoArea { display: flex; align-items: center; gap: 0.75rem; }
+.closeBtn {
+  background: #f5f5f5; border: none; width: 36px; height: 36px;
+  border-radius: 50%; font-size: 1rem; cursor: pointer; color: #555;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.closeBtn:hover { background: #944535; color: #fff; }
+
+.mobileLinks { display: flex; flex-direction: column; padding: 1rem 0; flex: 1; }
+.mobileLink {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.5rem; font-size: 1.05rem; font-weight: 600; color: #0D0C13;
+  text-decoration: none; border-bottom: 1px solid #f5f5f5;
+  transition: all 0.2s ease;
+}
+.mobileLink:hover { background: #fdf8f2; color: #944535; padding-left: 2rem; }
+.mobileLinkActive { color: #944535 !important; background: rgba(148,69,53,0.05); }
+.mobileLinkArrow { font-size: 0.9rem; color: #bbb; transition: transform 0.2s; }
+.mobileLink:hover .mobileLinkArrow { transform: translateX(4px); color: #944535; }
+
+.mobileCta {
+  margin: 1.5rem 1.5rem 0; padding: 1rem; background: #944535; color: #fff !important;
+  border-radius: 12px; font-weight: 800; text-align: center; font-size: 1rem;
+  text-decoration: none; display: block; transition: all 0.3s ease;
+}
+.mobileCta:hover { background: #7a382a; transform: translateY(-2px); }
+
+.mobileFooter {
+  padding: 1.5rem; border-top: 1px solid #eaeaea; flex-shrink: 0;
+}
+.mobileFooter p { font-size: 0.85rem; color: #888; margin-bottom: 0.4rem; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav { display: none; }
+  .hamburger { display: flex; }
+}

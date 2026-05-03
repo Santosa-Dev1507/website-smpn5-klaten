@@ -1,0 +1,158 @@
+.main { width: 100%; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* HEADER */
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 5%; background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+}
+.logoContainer { display: flex; align-items: center; gap: 0.75rem; }
+.schoolName { display: block; font-weight: 800; font-size: 1.05rem; color: #944535; }
+.schoolTagline { display: block; font-size: 0.68rem; color: #555; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+.nav { display: flex; gap: 2rem; align-items: center; font-weight: 600; font-size: 0.95rem; }
+.nav a { color: #0D0C13; transition: color 0.3s; }
+.nav a:hover { color: #944535; }
+.navActive { color: #944535 !important; border-bottom: 2px solid #944535; padding-bottom: 2px; }
+
+/* PAGE HERO */
+.pageHero {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem;
+  padding: 5rem 5% 5rem; background: linear-gradient(135deg, #fdf8f2 0%, #fff 70%);
+  align-items: center; min-height: 55vh; position: relative; overflow: hidden;
+}
+.pageHeroInner { display: flex; flex-direction: column; align-items: flex-start; }
+.heroBreadcrumb { font-size: 0.82rem; color: #888; margin-bottom: 1.25rem; font-weight: 500; }
+.heroBreadcrumb a { color: #944535; }
+.pageHero h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.25rem; color: #0D0C13; }
+.highlight { color: #944535; }
+.pageHero p { font-size: 1.1rem; color: #555; line-height: 1.7; margin-bottom: 2rem; max-width: 90%; }
+.btnDaftar {
+  background: #944535; color: #fff; padding: 0.9rem 2.2rem; border-radius: 50px;
+  font-weight: 700; font-size: 1rem; display: inline-block; transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(148,69,53,0.25);
+}
+.btnDaftar:hover { background: #7a382a; transform: translateY(-3px); box-shadow: 0 14px 28px rgba(148,69,53,0.3); }
+.pageHeroDecor { position: relative; display: flex; align-items: center; justify-content: center; }
+.decCircle1 {
+  position: absolute; width: 320px; height: 320px; border-radius: 50%;
+  border: 2px solid rgba(148,69,53,0.1); top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+.decCircle2 {
+  position: absolute; width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(250,214,166,0.15); top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+.heroStats {
+  display: flex; align-items: center; gap: 2rem; background: #fff;
+  border: 1px solid #eaeaea; border-radius: 20px; padding: 2rem 2.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.07); z-index: 2; position: relative;
+}
+.heroStat { text-align: center; }
+.heroStat strong { display: block; font-size: 2rem; font-weight: 900; color: #944535; }
+.heroStat span { display: block; font-size: 0.8rem; color: #555; font-weight: 500; }
+.heroStatDivider { width: 1px; height: 44px; background: #eaeaea; }
+
+/* SECTIONS */
+.section { padding: 6rem 5%; background: #fff; }
+.sectionAlt { padding: 6rem 5%; background: #fdf8f2; }
+.sectionHeader { text-align: center; margin-bottom: 3.5rem; }
+.sectionHeader h2 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem; color: #0D0C13; }
+.sectionHeader p { font-size: 1.05rem; color: #555; max-width: 540px; margin: 0 auto; }
+.badge {
+  display: inline-block; background: rgba(148,69,53,0.1); color: #944535;
+  font-weight: 700; font-size: 0.78rem; padding: 0.35rem 1rem;
+  border-radius: 50px; margin-bottom: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* JALUR GRID */
+.jalurGrid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.jalurCard {
+  background: #fff; padding: 2.5rem; border-radius: 20px;
+  border: 1px solid #eaeaea; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  transition: all 0.4s ease;
+}
+.jalurCard:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(148,69,53,0.1); border-color: #FAD6A6; }
+.jalurIcon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+.jalurCard h3 { font-size: 1.25rem; font-weight: 800; color: #944535; margin-bottom: 0.75rem; }
+.jalurCard p { font-size: 0.95rem; color: #555; line-height: 1.65; margin-bottom: 1.25rem; }
+.jalurDetails { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.jalurDetails li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: #333; font-weight: 500; }
+.checkmark { color: #944535; font-weight: 800; flex-shrink: 0; }
+
+/* TWO COL */
+.twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1100px; margin: 0 auto; align-items: flex-start; }
+.colTitle { font-size: 2rem; font-weight: 800; margin-bottom: 1.75rem; margin-top: 0.5rem; color: #0D0C13; }
+
+/* TABLE */
+.tableWrapper { overflow: hidden; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 1rem; }
+.table { width: 100%; border-collapse: collapse; }
+.table thead tr { background: #944535; }
+.table th { padding: 1rem 1.25rem; text-align: left; font-size: 0.85rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+.table tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.2s; }
+.table tbody tr:last-child { border-bottom: none; }
+.table tbody tr:hover { background: #fdf8f2; }
+.table td { padding: 1rem 1.25rem; font-size: 0.92rem; color: #333; }
+.dateBadge {
+  background: rgba(148,69,53,0.08); color: #944535;
+  padding: 0.25rem 0.75rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+}
+.tableNote { font-size: 0.82rem; color: #888; line-height: 1.5; background: #fff8e1; padding: 0.75rem 1rem; border-radius: 10px; border-left: 3px solid #f59e0b; }
+
+/* SYARAT */
+.syaratList { display: flex; flex-direction: column; gap: 1rem; }
+.syaratItem { display: flex; gap: 1rem; align-items: flex-start; padding: 1.25rem; background: #fff; border-radius: 14px; border: 1px solid #eaeaea; transition: all 0.3s ease; }
+.syaratItem:hover { border-color: #FAD6A6; box-shadow: 0 6px 16px rgba(148,69,53,0.07); }
+.syaratNumber {
+  width: 36px; height: 36px; background: #944535; color: #fff;
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
+}
+.syaratItem p { font-size: 0.92rem; color: #333; line-height: 1.6; margin: 0; padding-top: 0.3rem; }
+
+/* CTA SECTION */
+.ctaSection { background: #944535; padding: 5rem 5%; }
+.ctaInner { max-width: 720px; margin: 0 auto; text-align: center; }
+.ctaInner h2 { font-size: 2.4rem; font-weight: 800; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
+.highlightPeach { color: #FAD6A6; }
+.ctaInner p { font-size: 1.05rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 2rem; }
+.ctaActions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btnCtaPrimary {
+  background: #FAD6A6; color: #944535; padding: 0.9rem 2.2rem;
+  border-radius: 50px; font-weight: 800; font-size: 1rem; display: inline-block;
+  transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+.btnCtaPrimary:hover { background: #e8c08c; transform: translateY(-3px); }
+.btnCtaSecondary {
+  background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4);
+  padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 700; font-size: 1rem;
+  display: inline-block; transition: all 0.3s ease;
+}
+.btnCtaSecondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+/* FOOTER MINI */
+.footerMini { background: #0D0C13; padding: 1.5rem 5%; }
+.footerMiniInner {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 0.5rem;
+  font-size: 0.82rem; color: rgba(255,255,255,0.4);
+}
+.footerMiniInner a { color: #FAD6A6; font-weight: 600; transition: opacity 0.2s; }
+.footerMiniInner a:hover { opacity: 0.7; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .pageHero { grid-template-columns: 1fr; }
+  .pageHeroDecor { display: none; }
+  .jalurGrid { grid-template-columns: 1fr; }
+  .twoCol { grid-template-columns: 1fr; gap: 3rem; }
+  .pageHero h1 { font-size: 2rem; }
+}
+@media (max-width: 640px) {
+  .nav { display: none; }
+  .heroStats { flex-direction: column; gap: 1rem; }
+  .heroStatDivider { width: 60px; height: 1px; }
+  .ctaInner h2 { font-size: 1.8rem; }
+}

@@ -1,0 +1,164 @@
+.main { width: 100%; min-height: 100vh; display: flex; flex-direction: column; }
+.highlight { color: #944535; }
+.highlightPeach { color: #FAD6A6; }
+
+/* HERO */
+.hero {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem;
+  padding: 5rem 5%; background: linear-gradient(135deg, #fdf8f2 0%, #fff 70%);
+  align-items: center; min-height: 55vh;
+}
+.heroContent { display: flex; flex-direction: column; }
+.heroBadge {
+  display: inline-block; background: rgba(148,69,53,0.1); color: #944535;
+  font-weight: 700; font-size: 0.82rem; padding: 0.4rem 1.1rem;
+  border-radius: 50px; margin-bottom: 1.5rem; width: fit-content;
+}
+.heroContent h1 { font-size: 2.8rem; font-weight: 900; line-height: 1.2; color: #0D0C13; margin-bottom: 1.25rem; }
+.heroContent p { font-size: 1.05rem; color: #555; line-height: 1.75; margin-bottom: 2rem; max-width: 90%; }
+.heroActions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btnPrimary {
+  background: #944535; color: #fff; padding: 0.9rem 2rem; border-radius: 50px;
+  font-weight: 700; font-size: 0.95rem; display: inline-block; transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(148,69,53,0.25); text-decoration: none;
+}
+.btnPrimary:hover { background: #7a382a; transform: translateY(-3px); box-shadow: 0 14px 28px rgba(148,69,53,0.3); }
+.btnSecondary {
+  background: transparent; color: #944535; border: 2px solid #944535;
+  padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+  display: inline-block; transition: all 0.3s ease; text-decoration: none;
+}
+.btnSecondary:hover { background: #944535; color: #fff; }
+
+/* HERO DECOR */
+.heroDecor { display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
+.heroCard, .heroCardAlt {
+  background: #fff; border: 1px solid #eaeaea; border-radius: 20px;
+  padding: 2rem 2.5rem; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  width: 100%; max-width: 260px; transition: all 0.3s ease;
+}
+.heroCard:hover, .heroCardAlt:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(148,69,53,0.1); }
+.heroCardAlt { background: #944535; border-color: #944535; }
+.heroCardAlt strong, .heroCardAlt span { color: #fff !important; }
+.heroCardAlt .heroCardIcon { filter: brightness(10); }
+.heroCardIcon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+.heroCard strong, .heroCardAlt strong { display: block; font-size: 1.2rem; font-weight: 800; color: #0D0C13; }
+.heroCard span, .heroCardAlt span { display: block; font-size: 0.82rem; color: #888; margin-top: 0.2rem; }
+
+/* MILESTONE */
+.milestoneSection { background: #944535; padding: 3rem 5%; }
+.milestoneInner {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.milestoneItem { text-align: center; color: #fff; }
+.milestoneIcon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+.milestoneItem strong { display: block; font-size: 1.5rem; font-weight: 900; margin-bottom: 0.25rem; }
+.milestoneItem span { font-size: 0.85rem; color: rgba(255,255,255,0.75); }
+
+/* SECTIONS */
+.section { padding: 6rem 5%; background: #fff; }
+.sectionAlt { padding: 6rem 5%; background: #fdf8f2; }
+.sectionHeader { text-align: center; margin-bottom: 3.5rem; }
+.sectionHeader h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.75rem; color: #0D0C13; }
+.sectionHeader p { font-size: 1rem; color: #555; max-width: 540px; margin: 0 auto; }
+.badge {
+  display: inline-block; background: rgba(148,69,53,0.1); color: #944535;
+  font-weight: 700; font-size: 0.78rem; padding: 0.35rem 1rem;
+  border-radius: 50px; margin-bottom: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* MANFAAT */
+.manfaatGrid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.manfaatCard {
+  background: #fdf8f2; border-radius: 20px; padding: 2rem 1.5rem;
+  text-align: center; border: 1px solid #eaeaea; transition: all 0.3s ease;
+}
+.manfaatCard:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(148,69,53,0.1); border-color: #FAD6A6; }
+.manfaatIcon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+.manfaatCard h3 { font-size: 1.05rem; font-weight: 800; color: #944535; margin-bottom: 0.6rem; }
+.manfaatCard p { font-size: 0.88rem; color: #555; line-height: 1.65; }
+
+/* CERITA ALUMNI */
+.storyGrid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem;
+  max-width: 1100px; margin: 0 auto 2rem;
+}
+.storyCard {
+  background: #fff; border-radius: 20px; overflow: hidden;
+  border: 1px solid #eaeaea; transition: all 0.3s ease;
+}
+.storyCard:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(148,69,53,0.1); }
+.storyPhoto img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+.storyContent { padding: 1.5rem; }
+.storyAngkatan {
+  display: inline-block; background: rgba(148,69,53,0.1); color: #944535;
+  font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.75rem;
+  border-radius: 50px; margin-bottom: 0.75rem;
+}
+.storyContent h4 { font-size: 1.1rem; font-weight: 800; color: #0D0C13; margin-bottom: 0.35rem; }
+.storyJob { font-size: 0.85rem; color: #555; margin-bottom: 0.75rem; }
+.storyQuote { font-size: 0.88rem; color: #777; line-height: 1.65; font-style: italic; }
+.storyNote {
+  text-align: center; font-size: 0.9rem; color: #555; max-width: 600px; margin: 0 auto;
+  background: #fff; padding: 1.25rem 2rem; border-radius: 14px; border: 1px dashed #FAD6A6;
+}
+.storyNote a { color: #944535; font-weight: 600; }
+
+/* DIREKTORI */
+.direktoriPlaceholder {
+  max-width: 480px; margin: 0 auto; text-align: center;
+  background: #fdf8f2; border: 2px dashed #FAD6A6; border-radius: 24px; padding: 3rem 2rem;
+}
+.direktoriIcon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+.direktoriPlaceholder h3 { font-size: 1.3rem; font-weight: 800; color: #0D0C13; margin-bottom: 0.75rem; }
+.direktoriPlaceholder p { font-size: 0.95rem; color: #555; line-height: 1.7; margin-bottom: 1.5rem; }
+
+/* CTA */
+.ctaSection { background: #944535; padding: 5rem 5%; }
+.ctaInner { max-width: 680px; margin: 0 auto; text-align: center; }
+.ctaInner h2 { font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
+.ctaInner p { font-size: 1rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 2rem; }
+.ctaActions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btnCtaPrimary {
+  background: #FAD6A6; color: #944535; padding: 0.9rem 2rem; border-radius: 50px;
+  font-weight: 800; font-size: 0.95rem; display: inline-block; transition: all 0.3s ease;
+  text-decoration: none;
+}
+.btnCtaPrimary:hover { background: #e8c08c; transform: translateY(-3px); }
+.btnCtaSecondary {
+  background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4);
+  padding: 0.9rem 2rem; border-radius: 50px; font-weight: 700; font-size: 0.95rem;
+  display: inline-block; transition: all 0.3s ease; text-decoration: none;
+}
+.btnCtaSecondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+/* FOOTER MINI */
+.footerMini { background: #0D0C13; padding: 1.5rem 5%; margin-top: auto; }
+.footerMiniInner {
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 0.5rem;
+  font-size: 0.82rem; color: rgba(255,255,255,0.4);
+}
+.footerMiniInner a { color: #FAD6A6; font-weight: 600; transition: opacity 0.2s; text-decoration: none; }
+.footerMiniInner a:hover { opacity: 0.7; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .manfaatGrid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .heroDecor { display: none; }
+  .milestoneInner { grid-template-columns: repeat(2,1fr); }
+  .storyGrid { grid-template-columns: 1fr; max-width: 420px; }
+}
+@media (max-width: 640px) {
+  .heroContent h1 { font-size: 2rem; }
+  .manfaatGrid { grid-template-columns: 1fr; }
+  .milestoneInner { grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+  .ctaInner h2 { font-size: 1.75rem; }
+}

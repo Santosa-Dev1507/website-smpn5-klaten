@@ -1,0 +1,112 @@
+.main { width: 100%; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* HEADER */
+.header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+.logoContainer { display: flex; align-items: center; gap: 0.75rem; }
+.schoolName { display: block; font-weight: 800; font-size: 1.05rem; color: #944535; }
+.schoolTagline { display: block; font-size: 0.68rem; color: #555; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+.nav { display: flex; gap: 2rem; align-items: center; font-weight: 600; font-size: 0.95rem; }
+.nav a { color: #0D0C13; transition: color 0.3s; }
+.nav a:hover { color: #944535; }
+.navActive { color: #944535 !important; border-bottom: 2px solid #944535; padding-bottom: 2px; }
+.navCta { background: #944535; color: #fff !important; padding: 0.6rem 1.4rem; border-radius: 50px; transition: all 0.3s ease !important; }
+.navCta:hover { background: #7a382a; transform: translateY(-2px); }
+
+/* PAGE HERO */
+.pageHero { padding: 4rem 5% 3rem; background: linear-gradient(135deg, #fdf8f2 0%, #fff 70%); }
+.heroBreadcrumb { font-size: 0.82rem; color: #888; margin-bottom: 1rem; }
+.heroBreadcrumb a { color: #944535; font-weight: 600; }
+.pageHero h1 { font-size: 2.8rem; font-weight: 800; color: #0D0C13; margin-bottom: 0.75rem; }
+.highlight { color: #944535; }
+.pageHero p { font-size: 1.05rem; color: #555; max-width: 640px; line-height: 1.7; }
+
+/* TABS */
+.tabWrapper { flex: 1; padding: 0 5% 5rem; max-width: 1200px; margin: 0 auto; width: 100%; }
+.tabNav { display: flex; gap: 0; border-bottom: 2px solid #eaeaea; margin-bottom: 3rem; overflow-x: auto; }
+.tabBtn { padding: 1rem 2rem; font-size: 0.95rem; font-weight: 700; color: #888; background: transparent; border: none; border-bottom: 3px solid transparent; margin-bottom: -2px; cursor: pointer; white-space: nowrap; transition: all 0.3s ease; font-family: inherit; }
+.tabBtn:hover { color: #944535; }
+.tabActive { color: #944535 !important; border-bottom-color: #944535 !important; }
+.tabContent { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* VISI MISI */
+.visiCard { background: #944535; padding: 3rem; border-radius: 24px; margin-bottom: 3rem; position: relative; overflow: hidden; }
+.visiCard::before { content: '"'; position: absolute; top: -20px; right: 30px; font-size: 16rem; color: rgba(255,255,255,0.05); font-family: Georgia, serif; line-height: 1; }
+.visiLabel { display: inline-block; background: rgba(255,255,255,0.2); color: #FAD6A6; font-weight: 800; font-size: 0.8rem; padding: 0.3rem 1rem; border-radius: 50px; margin-bottom: 1.25rem; letter-spacing: 1px; }
+.visiText { font-size: 1.2rem; color: #fff; line-height: 1.8; font-style: italic; font-weight: 500; position: relative; z-index: 1; }
+.twoColSection { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.sectionTitle { font-size: 1.2rem; font-weight: 800; color: #944535; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; padding-bottom: 0.75rem; border-bottom: 2px solid #FAD6A6; }
+.misiList { display: flex; flex-direction: column; gap: 0.85rem; }
+.misiItem { display: flex; gap: 1rem; align-items: flex-start; }
+.misiNumber { width: 32px; height: 32px; min-width: 32px; background: #944535; color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; }
+.misiItem p { font-size: 0.95rem; color: #333; line-height: 1.6; margin: 0; padding-top: 0.3rem; }
+.tujuanList { display: flex; flex-direction: column; gap: 0.85rem; }
+.tujuanItem { display: flex; gap: 0.75rem; align-items: flex-start; padding: 1rem; background: #fdf8f2; border-radius: 12px; border-left: 3px solid #FAD6A6; }
+.tujuanCheck { color: #944535; font-weight: 900; font-size: 1rem; flex-shrink: 0; margin-top: 0.2rem; }
+.tujuanItem p { font-size: 0.9rem; color: #333; line-height: 1.6; margin: 0; }
+
+/* SAMBUTAN */
+.sambutanLayout { display: grid; grid-template-columns: 320px 1fr; gap: 4rem; align-items: flex-start; }
+.sambutanPhoto { position: sticky; top: 100px; }
+.kepsekPhoto { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
+.kepsekInfo { background: #944535; color: #fff; padding: 1.25rem 1.5rem; border-radius: 0 0 16px 16px; margin-top: -8px; }
+.kepsekInfo strong { display: block; font-size: 1rem; font-weight: 800; }
+.kepsekInfo span { display: block; font-size: 0.8rem; color: #FAD6A6; margin-top: 0.25rem; }
+.sambutanQuote { font-size: 6rem; color: #FAD6A6; font-family: Georgia, serif; line-height: 0.8; margin-bottom: 0.5rem; }
+.sambutanText h2 { font-size: 2rem; font-weight: 800; color: #0D0C13; margin-bottom: 2rem; }
+.sambutanContent { display: flex; flex-direction: column; gap: 1.1rem; }
+.sambutanContent p { font-size: 1rem; color: #444; line-height: 1.85; }
+.sambutanSign { margin-top: 2.5rem; }
+.signLine { width: 80px; height: 3px; background: #944535; margin-bottom: 0.75rem; border-radius: 2px; }
+.sambutanSign strong { display: block; font-size: 1rem; font-weight: 800; color: #0D0C13; }
+
+/* SEJARAH */
+.sejarahIntro { background: linear-gradient(135deg, #fdf8f2, #fff); padding: 2.5rem 3rem; border-radius: 20px; border-left: 5px solid #944535; margin-bottom: 3rem; }
+.sejarahIntro h2 { font-size: 2rem; font-weight: 800; color: #0D0C13; margin-bottom: 0.75rem; }
+.sejarahIntro p { font-size: 1.05rem; color: #555; line-height: 1.75; }
+.sejarahBlock { margin-bottom: 3rem; }
+.sejarahBlockHeader { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem; }
+.sejarahEra { background: #944535; color: #FAD6A6; font-size: 0.8rem; font-weight: 700; padding: 0.35rem 1rem; border-radius: 50px; white-space: nowrap; }
+.sejarahBlockHeader h3 { font-size: 1.5rem; font-weight: 800; color: #0D0C13; }
+.timeline { display: flex; flex-direction: column; gap: 1.5rem; padding-left: 1rem; border-left: 2px solid #FAD6A6; margin-bottom: 2rem; }
+.timelineItem { display: flex; gap: 1.25rem; align-items: flex-start; position: relative; }
+.timelineDot { width: 14px; height: 14px; min-width: 14px; background: #944535; border-radius: 50%; margin-top: 4px; margin-left: -22px; border: 3px solid #fff; box-shadow: 0 0 0 2px #944535; }
+.timelineItem strong { display: block; font-size: 1rem; font-weight: 700; color: #0D0C13; margin-bottom: 0.35rem; }
+.timelineItem p { font-size: 0.92rem; color: #555; line-height: 1.65; margin: 0; }
+.perintisBox { background: #fdf8f2; border: 1px solid #FAD6A6; border-radius: 16px; padding: 1.75rem 2rem; }
+.perintisBox h4 { font-size: 1rem; font-weight: 800; color: #944535; margin-bottom: 1.25rem; }
+.perintisGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.perintisGrid strong { display: block; font-size: 0.85rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+.perintisGrid ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+.perintisGrid li { font-size: 0.95rem; color: #333; font-weight: 500; }
+.perintisGrid li::before { content: "• "; color: #944535; font-weight: 900; }
+.kepalaGrid { display: flex; flex-direction: column; gap: 1rem; }
+.kepalaCard { display: flex; gap: 1.25rem; padding: 1.5rem; background: #fff; border: 1px solid #eaeaea; border-radius: 16px; transition: all 0.3s ease; }
+.kepalaCard:hover { border-color: #FAD6A6; box-shadow: 0 8px 24px rgba(148,69,53,0.08); transform: translateX(4px); }
+.kepalaNumber { width: 40px; height: 40px; min-width: 40px; background: #944535; color: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1rem; }
+.kepalaInfo strong { display: block; font-size: 1rem; font-weight: 800; color: #0D0C13; margin-bottom: 0.25rem; }
+.kepalaPeriode { font-size: 0.82rem; color: #944535; font-weight: 700; background: rgba(148,69,53,0.08); padding: 0.2rem 0.6rem; border-radius: 6px; display: inline-block; margin-bottom: 0.5rem; }
+.kepalaInfo p { font-size: 0.88rem; color: #555; line-height: 1.6; margin: 0; }
+
+/* FOOTER MINI */
+.footerMini { background: #0D0C13; padding: 1.5rem 5%; margin-top: auto; }
+.footerMiniInner { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 0.5rem; font-size: 0.82rem; color: rgba(255,255,255,0.4); }
+.footerMiniInner a { color: #FAD6A6; font-weight: 600; transition: opacity 0.2s; }
+.footerMiniInner a:hover { opacity: 0.7; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .twoColSection { grid-template-columns: 1fr; gap: 2.5rem; }
+  .sambutanLayout { grid-template-columns: 260px 1fr; gap: 2.5rem; }
+}
+@media (max-width: 768px) {
+  .nav { display: none; }
+  .pageHero h1 { font-size: 2rem; }
+  .tabBtn { padding: 0.75rem 1.25rem; font-size: 0.85rem; }
+  .sambutanLayout { grid-template-columns: 1fr; }
+  .sambutanPhoto { position: static; max-width: 280px; margin: 0 auto; }
+  .visiCard { padding: 2rem; }
+  .visiText { font-size: 1.05rem; }
+  .perintisGrid { grid-template-columns: 1fr; gap: 1rem; }
+  .kepalaCard { flex-direction: column; }
+}
