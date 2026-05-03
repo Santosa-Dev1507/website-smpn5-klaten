@@ -175,7 +175,7 @@ export default function Home() {
         <div className={styles.sectionHeader}>
           <div className={styles.sectionBadge}>Kurikulum</div>
           <h2>Kurikulum <span className={styles.highlightRed}>Pembelajaran</span></h2>
-          <p>Menerapkan Kurikulum Merdeka dengan pendekatan pembelajaran yang inovatif dan berpusat pada siswa.</p>
+          <p>Dirancang untuk mencetak generasi JUARA — unggul dalam ilmu, kuat dalam karakter, dan cinta lingkungan.</p>
         </div>
         <div className={styles.kurikulumGrid}>
           {[
