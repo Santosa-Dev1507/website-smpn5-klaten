@@ -325,7 +325,7 @@ export default function Home() {
           <iframe 
             src="//lightwidget.com/widgets/163fdfe5f99b5f84aeb0d50a88e3bfcf.html" 
             scrolling="no" 
-            allowtransparency="true"
+            allowTransparency={true}
             className="lightwidget-widget" 
             style={{ width: "100%", border: 0, overflow: "hidden", minHeight: "200px" }}
           ></iframe>
