@@ -40,25 +40,25 @@ const achievements = [
 
 const testimonials = [
   {
-    name: "[Nama Siswa 1]",
-    role: "Alumni — Diterima di SMAN 1 Klaten (2025)",
-    avatar: "AL",
-    photo: "",
-    text: "Berkat bimbingan guru-guru SMPN 5 Klaten yang sabar dan metode belajar yang menyenangkan, saya berhasil diterima di sekolah impian saya. Bangga jadi bagian dari keluarga ESPEMA!",
+    name: "Resty Nur Safni",
+    role: "Alumni — SMKN 3 Klaten, Jurusan Tata Busana",
+    avatar: "RN",
+    photo: "/alumni-resty.jpg",
+    text: "Banyak hal baru yang saya temukan di sini. Kebersamaan dengan teman-teman menjadi kenangan paling berkesan yang akan selalu saya ingat.",
   },
   {
-    name: "[Nama Siswa 2]",
-    role: "Alumni — Diterima di SMAN 2 Klaten (2025)",
-    avatar: "AL",
-    photo: "",
-    text: "Di SMPN 5 Klaten saya belajar bukan hanya dari buku, tapi juga dari pengalaman nyata. Nilai JUARA benar-benar membentuk karakter saya hingga hari ini.",
+    name: "Madana Naura Althafuabiya",
+    role: "Alumni — SMAN 1 Klaten",
+    avatar: "MN",
+    photo: "/alumni-madana.jpg",
+    text: "Di SMPN 5 Klaten, saya belajar bukan hanya ilmu, tapi juga arti persahabatan dan tanggung jawab. Guru-guru yang sabar benar-benar membantu saya berkembang. Bangga menjadi bagian dari keluarga ESPEMA!",
   },
   {
-    name: "[Nama Siswa 3]",
-    role: "Siswa Kelas 9 — Tahun Ajaran 2025/2026",
-    avatar: "SW",
-    photo: "",
-    text: "Guru-guru di sini tidak hanya mengajar, tapi benar-benar membimbing. Saya merasa didukung untuk berkembang sesuai bakat saya sendiri.",
+    name: "Rafka Aniszava Pratama",
+    role: "Alumni — SMKN 1 Klaten",
+    avatar: "RA",
+    photo: "/alumni-rafka.jpg",
+    text: "Awalnya saya belum mengenal diri sendiri. Berkat bimbingan guru-guru SMPN 5 Klaten, saya akhirnya menemukan potensi dan arah tujuan saya.",
   },
 ];
 
@@ -236,9 +236,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== TESTIMONIAL - Dinonaktifkan sementara, aktifkan saat data asli tersedia ===== */}
-
-
+      {/* ===== TESTIMONIAL ===== */}
+      <section className={styles.testimonials}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.sectionBadge}>Kata Mereka</div>
+          <h2>Suara <span className={styles.highlightRed}>Alumni ESPEMA</span></h2>
+          <p>Pengalaman nyata dari generasi JUARA yang telah merasakan langsung belajar di SMPN 5 Klaten.</p>
+        </div>
+        <div className={styles.testimonialsGrid}>
+          {testimonials.map((t, i) => (
+            <div key={i} className={styles.testimonialCard}>
+              <div className={styles.quoteIcon}>&ldquo;</div>
+              <p className={styles.testimonialText}>{t.text}</p>
+              <div className={styles.testimonialAuthor}>
+                {t.photo ? (
+                  <img src={t.photo} alt={t.name} className={styles.avatarPhoto} />
+                ) : (
+                  <div className={styles.avatar}>{t.avatar}</div>
+                )}
+                <div>
+                  <strong>{t.name}</strong>
+                  <span>{t.role}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
       {/* ===== SPMB CTA ===== */}
       <section className={styles.ppdb} id="spmb">
         <div className={styles.ppdbInner}>
