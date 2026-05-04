@@ -26,7 +26,7 @@ const manajemen = [
   { icon: "📊", name: "DAPODIK", desc: "Aplikasi Data Pokok Pendidikan Kemdikbud.", href: "https://dapo.kemdikbud.go.id", color: "#F59E0B" },
   { icon: "📋", name: "E-Rapor", desc: "Sistem Rapor Elektronik untuk penilaian siswa.", href: "#", color: "#EF4444" },
   { icon: "📅", name: "SPMB ESPEMA", desc: "Sistem Penerimaan Murid Baru SMP Negeri 5 Klaten.", href: "/spmb", color: "#944535" },
-  { icon: "💰", name: "SIP Penggajian", desc: "Sistem Informasi Penggajian & Potongan Guru.", href: "#", color: "#1A56A0" },
+  { icon: "💰", name: "SIP Penggajian", desc: "Sistem Informasi Penggajian & Potongan Guru.", href: "https://sistem-potongan-gaji.vercel.app/", color: "#1A56A0" },
   { icon: "📖", name: "Jurnal Mengajar", desc: "Pencatatan jurnal kegiatan belajar mengajar harian.", href: "#", color: "#2D7D46" },
   { icon: "🏛️", name: "Perpustakaan Digital", desc: "Katalog dan koleksi buku perpustakaan sekolah.", href: "#", color: "#8854D0" },
   { icon: "✅", name: "Absensi Digital", desc: "Sistem informasi kehadiran siswa dan guru.", href: "#", color: "#14BF96" },
