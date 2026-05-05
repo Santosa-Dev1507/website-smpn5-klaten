@@ -125,7 +125,7 @@ export default function SpmbPage() {
           <h2>4 Hal Baru dalam <span className={styles.highlight}>SPMB 2025/2026</span></h2>
           <p>Perubahan penting dalam sistem penerimaan murid baru tahun ini yang perlu Anda ketahui.</p>
         </div>
-        <div style={{ maxWidth: "1000px", margin: "0 auto" }} className={styles.tableWrapper}>
+        <div style={{ width: "100%", maxWidth: "1000px", margin: "0 auto" }} className={styles.tableWrapper}>
           <table className={styles.table}>
             <thead>
               <tr>

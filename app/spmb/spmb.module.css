@@ -84,10 +84,11 @@
 
 /* TWO COL */
 .twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1100px; margin: 0 auto; align-items: flex-start; }
+.twoCol > div { min-width: 0; width: 100%; }
 .colTitle { font-size: 2rem; font-weight: 800; margin-bottom: 1.75rem; margin-top: 0.5rem; color: #0D0C13; }
 
 /* TABLE */
-.tableWrapper { overflow-x: auto; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 1rem; background: #fff; }
+.tableWrapper { width: 100%; max-width: 100%; overflow-x: auto; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 1rem; background: #fff; }
 .table { width: 100%; border-collapse: collapse; min-width: 600px; }
 .table thead tr { background: #944535; }
 .table th { padding: 1rem 1.25rem; text-align: left; font-size: 0.85rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -179,4 +180,7 @@
   .heroStats { flex-direction: column; gap: 1rem; }
   .heroStatDivider { width: 60px; height: 1px; }
   .ctaInner h2 { font-size: 1.8rem; }
+  .table { min-width: 100%; }
+  .table th, .table td { padding: 0.85rem 0.75rem; font-size: 0.8rem; }
+  .syaratItem p { word-break: break-word; }
 }
