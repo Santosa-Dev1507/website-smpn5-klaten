@@ -391,6 +391,7 @@
 }
 @media (max-width: 640px) {
   .nav { display: none; }
+  .announcementAlert { flex-direction: column; text-align: center; gap: 0.85rem; padding: 1.25rem; }
   .statsInner { grid-template-columns: 1fr 1fr; }
   .valuesGrid { grid-template-columns: 1fr; }
   .kurikulumGrid { grid-template-columns: 1fr; }
