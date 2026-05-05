@@ -1,6 +1,7 @@
 import styles from "./page.module.css";
 import Image from "next/image";
 import Header from "./components/Header";
+import StatsCounter from "./components/StatsCounter";
 import Script from "next/script";
 
 // ===== KONFIGURASI SPMB =====
@@ -8,12 +9,6 @@ import Script from "next/script";
 const isSpmbOpen = true;
 
 // --- DATA PLACEHOLDER (Ganti dengan data asli nanti) ---
-const stats = [
-  { number: "42+", label: "Tahun Berdiri", sub: "Berdiri sejak 1984" },
-  { number: "768", label: "Siswa Aktif", sub: "Tahun ajaran 2025/2026" },
-  { number: "40", label: "Tenaga Pengajar", sub: "Guru profesional & berdedikasi" },
-  { number: "2025", label: "Adiwiyata Nasional", sub: "Penghargaan lingkungan hidup" },
-];
 
 const ekskulList = [
   { icon: "👥", name: "OSIS", desc: "Wadah pengembangan kepemimpinan dan manajerial organisasi siswa" },
@@ -108,6 +103,15 @@ export default function Home() {
             Di SMPN 5 Klaten, kami percaya juara bukan hanya soal nilai tertinggi. Di sini, siswa tumbuh
             dengan karakter, keterampilan, kepercayaan diri dan mencintai lingkungan untuk menghadapi masa depan.
           </p>
+
+          <div className={styles.announcementAlert}>
+            <div className={styles.announcementIcon}>🎓</div>
+            <div className={styles.announcementText}>
+              <strong>Pengumuman Kelulusan TA 2025/2026</strong>
+            </div>
+            <a href="/pengumuman" className={styles.btnAnnouncement}>Cek Kelulusan</a>
+          </div>
+
           <div className={styles.heroActions}>
             <a href="#spmb" className={styles.btnPrimary}>Mulai Perjalananmu →</a>
             <a href="#prestasi" className={styles.btnSecondary}>Lihat Prestasi Siswa</a>
@@ -134,17 +138,7 @@ export default function Home() {
       </section>
 
       {/* ===== STATS / SCHOOL BY NUMBERS ===== */}
-      <section className={styles.stats}>
-        <div className={styles.statsInner}>
-          {stats.map((s, i) => (
-            <div key={i} className={styles.statItem}>
-              <strong>{s.number}</strong>
-              <span>{s.label}</span>
-              <small>{s.sub}</small>
-            </div>
-          ))}
-        </div>
-      </section>
+      <StatsCounter />
 
       {/* ===== NILAI JUARA ===== */}
       <section className={styles.values} id="profil">
@@ -300,8 +294,9 @@ export default function Home() {
 
           </div>
           <div className={styles.ppdbDecor}>
-            <div className={styles.ppdbCircle1}></div>
-            <div className={styles.ppdbCircle2}></div>
+            <div className={styles.ppdbImageWrapper}>
+              <img src="/foto-spmb.webp" alt="Siswa Berprestasi" className={styles.ppdbImage} />
+            </div>
             <div className={styles.ppdbInfo}>
               <div className={styles.ppdbInfoItem}><strong>Juni</strong><span>Buka Pendaftaran</span></div>
               <div className={styles.ppdbInfoDivider}></div>

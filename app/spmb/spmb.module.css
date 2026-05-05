@@ -57,7 +57,7 @@
 .sectionAlt { padding: 6rem 5%; background: #fdf8f2; }
 .sectionHeader { text-align: center; margin-bottom: 3.5rem; }
 .sectionHeader h2 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem; color: #0D0C13; }
-.sectionHeader p { font-size: 1.05rem; color: #555; max-width: 540px; margin: 0 auto; }
+.sectionHeader p { font-size: 1.05rem; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.6; }
 .badge {
   display: inline-block; background: rgba(148,69,53,0.1); color: #944535;
   font-weight: 700; font-size: 0.78rem; padding: 0.35rem 1rem;
@@ -79,7 +79,7 @@
 .jalurCard h3 { font-size: 1.25rem; font-weight: 800; color: #944535; margin-bottom: 0.75rem; }
 .jalurCard p { font-size: 0.95rem; color: #555; line-height: 1.65; margin-bottom: 1.25rem; }
 .jalurDetails { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-.jalurDetails li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: #333; font-weight: 500; }
+.jalurDetails li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; color: #333; font-weight: 500; line-height: 1.5; }
 .checkmark { color: #944535; font-weight: 800; flex-shrink: 0; }
 
 /* TWO COL */
@@ -87,19 +87,19 @@
 .colTitle { font-size: 2rem; font-weight: 800; margin-bottom: 1.75rem; margin-top: 0.5rem; color: #0D0C13; }
 
 /* TABLE */
-.tableWrapper { overflow: hidden; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 1rem; }
+.tableWrapper { overflow: hidden; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 1rem; background: #fff; }
 .table { width: 100%; border-collapse: collapse; }
 .table thead tr { background: #944535; }
 .table th { padding: 1rem 1.25rem; text-align: left; font-size: 0.85rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
 .table tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.2s; }
 .table tbody tr:last-child { border-bottom: none; }
 .table tbody tr:hover { background: #fdf8f2; }
-.table td { padding: 1rem 1.25rem; font-size: 0.92rem; color: #333; }
+.table td { padding: 1rem 1.25rem; font-size: 0.92rem; color: #333; line-height: 1.5; }
 .dateBadge {
   background: rgba(148,69,53,0.08); color: #944535;
-  padding: 0.25rem 0.75rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem;
+  padding: 0.35rem 0.85rem; border-radius: 50px; font-weight: 600; font-size: 0.85rem; display: inline-block;
 }
-.tableNote { font-size: 0.82rem; color: #888; line-height: 1.5; background: #fff8e1; padding: 0.75rem 1rem; border-radius: 10px; border-left: 3px solid #f59e0b; }
+.tableNote { font-size: 0.85rem; color: #888; line-height: 1.6; background: #fff8e1; padding: 1rem 1.25rem; border-radius: 10px; border-left: 4px solid #f59e0b; margin-top: 1.5rem; }
 
 /* SYARAT */
 .syaratList { display: flex; flex-direction: column; gap: 1rem; }
@@ -111,6 +111,29 @@
   font-weight: 800; font-size: 0.9rem; flex-shrink: 0;
 }
 .syaratItem p { font-size: 0.92rem; color: #333; line-height: 1.6; margin: 0; padding-top: 0.3rem; }
+
+/* ACCORDION (REGULASI LENGKAP) */
+.regulasiContainer { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+.accordion {
+  background: #fff; border: 1px solid #eaeaea; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+.accordion summary {
+  padding: 1.25rem 1.5rem; font-weight: 700; font-size: 1.1rem; color: #0D0C13;
+  cursor: pointer; background: #fdf8f2; list-style: none; display: flex; justify-content: space-between; align-items: center;
+}
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion summary::after { content: '+'; font-size: 1.5rem; color: #944535; transition: transform 0.3s; }
+.accordion[open] summary::after { transform: rotate(45deg); }
+.accordionContent {
+  padding: 1.5rem; font-size: 0.95rem; color: #444; line-height: 1.7;
+  border-top: 1px solid #eaeaea;
+}
+.accordionContent h4 { font-size: 1.05rem; color: #944535; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.accordionContent h4:first-child { margin-top: 0; }
+.accordionContent ul, .accordionContent ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.accordionContent li { margin-bottom: 0.5rem; }
+.accordionContent p { margin-bottom: 1rem; }
 
 /* CTA SECTION */
 .ctaSection { background: #944535; padding: 5rem 5%; }
