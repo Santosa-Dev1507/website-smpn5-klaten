@@ -15,7 +15,7 @@ const ekskulList = [
   { icon: "🏥", name: "PMR", desc: "Melatih keterampilan pertolongan pertama dan kepedulian sosial (Palang Merah Remaja)" },
   { icon: "📖", name: "Tuntas Baca Al-Qur'an", desc: "Membangun kemampuan membaca Al-Qur'an dengan tartil dan benar" },
   { icon: "⛺", name: "Pramuka", desc: "Membentuk karakter mandiri, tangguh, dan berjiwa kepemimpinan" },
-  { icon: "🥋", name: "Tae Kwon Do", desc: "Olahraga bela diri yang melatih disiplin, ketangkasan, dan mental" },
+  { icon: "🥋", name: "Jiu Jitsu", desc: "Olahraga bela diri yang melatih disiplin, ketangkasan, dan mental" },
   { icon: "💃", name: "Seni Tari", desc: "Mengembangkan bakat seni dan kecintaan terhadap budaya Indonesia" },
   { icon: "🪖", name: "PBB (Baris Berbaris)", desc: "Melatih kedisiplinan, ketertiban, dan jiwa korsa siswa" },
 ];

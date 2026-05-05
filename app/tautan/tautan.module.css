@@ -70,7 +70,7 @@
 }
 @media (max-width: 560px) {
   .headerTitle { font-size: 1.75rem; }
-  .appGrid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+  .appGrid { grid-template-columns: 1fr; gap: 1rem; }
   .appCard { padding: 1.25rem 1rem; }
   .content { padding: 2rem 4%; }
 }
