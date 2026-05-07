@@ -11,13 +11,13 @@ const isSpmbOpen = true;
 // --- DATA PLACEHOLDER (Ganti dengan data asli nanti) ---
 
 const ekskulList = [
-  { icon: "👥", name: "OSIS", desc: "Wadah pengembangan kepemimpinan dan manajerial organisasi siswa" },
-  { icon: "🏥", name: "PMR", desc: "Melatih keterampilan pertolongan pertama dan kepedulian sosial (Palang Merah Remaja)" },
-  { icon: "📖", name: "Tuntas Baca Al-Qur'an", desc: "Membangun kemampuan membaca Al-Qur'an dengan tartil dan benar" },
-  { icon: "⛺", name: "Pramuka", desc: "Membentuk karakter mandiri, tangguh, dan berjiwa kepemimpinan" },
-  { icon: "🥋", name: "Jiu Jitsu", desc: "Olahraga bela diri yang melatih disiplin, ketangkasan, dan mental" },
-  { icon: "💃", name: "Seni Tari", desc: "Mengembangkan bakat seni dan kecintaan terhadap budaya Indonesia" },
-  { icon: "🪖", name: "PBB (Baris Berbaris)", desc: "Melatih kedisiplinan, ketertiban, dan jiwa korsa siswa" },
+  { image: "/OSIS.jpg", name: "OSIS", desc: "Wadah pengembangan kepemimpinan dan manajerial organisasi siswa" },
+  { image: "/PMR.png", name: "PMR", desc: "Melatih keterampilan pertolongan pertama dan kepedulian sosial (Palang Merah Remaja)" },
+  { image: "/TBQ.png", name: "Tuntas Baca Al-Qur'an", desc: "Membangun kemampuan membaca Al-Qur'an dengan tartil dan benar" },
+  { image: "/Pramuka.png", name: "Pramuka", desc: "Membentuk karakter mandiri, tangguh, dan berjiwa kepemimpinan" },
+  { image: "/Jiujitsu.png", name: "Jiu Jitsu", desc: "Olahraga bela diri yang melatih disiplin, ketangkasan, dan mental" },
+  { image: "/senitari.png", name: "Seni Tari", desc: "Mengembangkan bakat seni dan kecintaan terhadap budaya Indonesia" },
+  { image: "/PBB.jpg", name: "PBB (Baris Berbaris)", desc: "Melatih kedisiplinan, ketertiban, dan jiwa korsa siswa" },
 ];
 
 const achievements = [
@@ -196,10 +196,11 @@ export default function Home() {
         </div>
         <div className={styles.ekskulGrid}>
           {ekskulList.map((e, i) => (
-            <div key={i} className={styles.ekskulCard}>
-              <div className={styles.ekskulIcon}>{e.icon}</div>
-              <h4>{e.name}</h4>
-              <p>{e.desc}</p>
+            <div key={i} className={styles.ekskulCardOverlay} style={{ backgroundImage: `url(${e.image})` }}>
+              <div className={styles.ekskulOverlay}>
+                <h4>{e.name}</h4>
+                <p>{e.desc}</p>
+              </div>
             </div>
           ))}
         </div>
