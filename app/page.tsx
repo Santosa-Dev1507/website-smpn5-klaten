@@ -169,7 +169,7 @@ export default function Home() {
       {/* ===== KURIKULUM ===== */}
       <section className={styles.kurikulum}>
         <div className={styles.sectionHeader}>
-          <div className={styles.sectionBadge}>Cara Kami Mengajar</div>
+          <div className={styles.sectionBadge}>Kurikulum</div>
           <h2>Belajar yang <span className={styles.highlightRed}>menyiapkan, bukan sekadar mengajar</span></h2>
           <p>Kurikulum kami dirancang agar siswa tidak hanya tahu jawabannya — tapi tahu cara berpikir, bekerja sama, dan berkembang.</p>
         </div>
