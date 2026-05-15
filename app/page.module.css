@@ -324,6 +324,40 @@
 }
 
 /* ===== PPDB CTA ===== */
+/* ===== SPMB GRATIS QUOTE CARD ===== */
+.spmbGratisCard {
+  display: flex; align-items: center; gap: 1.25rem;
+  background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 16px; padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem; max-width: 480px;
+}
+.spmbGratisAvatar {
+  width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #FAD6A6, #e8c08c);
+  border: 3px solid rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; font-weight: 900; color: #944535;
+  overflow: hidden;
+}
+.spmbGratisAvatar img {
+  width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+}
+.spmbGratisBody {}
+.spmbGratisBadge {
+  display: inline-block; background: #FAD6A6; color: #944535;
+  font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.7rem;
+  border-radius: 50px; margin-bottom: 0.4rem; letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.spmbGratisBody p {
+  font-size: 0.88rem; color: rgba(255,255,255,0.95);
+  line-height: 1.5; margin: 0 0 0.35rem; font-style: italic;
+}
+.spmbGratisBody span {
+  font-size: 0.78rem; color: rgba(255,255,255,0.65); font-weight: 600;
+}
+
 .ppdb { background: var(--primary); padding: 5rem 5%; overflow: hidden; }
 .ppdbInner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 0 auto; align-items: center; }
 .ppdbBadge {

@@ -288,6 +288,15 @@ export default function Home() {
                   Pendaftaran SPMB SMPN 5 Klaten tahun ajaran 2026/2027 akan segera dibuka.<br />
                   Pantau terus halaman ini atau hubungi kami untuk informasi terbaru.
                 </p>
+                {/* ── GRATIS CARD ── */}
+                <div className={styles.spmbGratisCard}>
+                  <div className={styles.spmbGratisAvatar}>KS</div>
+                  <div className={styles.spmbGratisBody}>
+                    <div className={styles.spmbGratisBadge}>✅ Resmi &amp; Gratis</div>
+                    <p>&ldquo;SPMB SMPN 5 Klaten sepenuhnya <strong>GRATIS</strong>, tanpa pungutan dalam bentuk apapun.&rdquo;</p>
+                    <span>— Kepala SMPN 5 Klaten</span>
+                  </div>
+                </div>
                 <div className={styles.ppdbActions}>
                   <a href="https://chat.whatsapp.com/CQbZAGUZmb22MOKr4LnWmz?mlu=2&s=em&p=a" target="_blank" rel="noopener noreferrer" className={styles.btnPpdbPrimary}>💬 Gabung Grup WhatsApp</a>
                   <a href="/spmb" className={styles.btnPpdbSecondary}>Lihat Informasi SPMB</a>
