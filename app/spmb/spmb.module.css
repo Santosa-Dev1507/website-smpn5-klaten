@@ -116,11 +116,11 @@
 }
 @media (max-width: 850px) {
   .gratisBannerInner { display: flex; flex-direction: column; text-align: center; gap: 0; }
-  .gratisContent { padding: 3rem 1.5rem 1.5rem 1.5rem; order: 1; }
-  .gratisAvatarWrap { padding: 0; order: 2; width: 100%; margin-top: 1rem; }
-  .gratisAvatarImg { max-height: none; width: 100%; margin: 0 auto; }
+  .gratisContent { padding: 3rem 1.5rem 0 1.5rem; order: 1; position: relative; z-index: 2; }
+  .gratisAvatarWrap { padding: 0; order: 2; width: 100%; margin-top: -25%; position: relative; z-index: 1; }
+  .gratisAvatarImg { max-height: none; width: 120%; margin: 0 -10%; object-position: bottom center; }
   .gratisContent h3 { font-size: 1.5rem; }
-  .gratisContent p { font-size: 0.95rem; margin-left: auto; margin-right: auto; margin-bottom: 0; }
+  .gratisContent p { font-size: 0.95rem; margin-left: auto; margin-right: auto; margin-bottom: 1rem; }
   .gratisMeta { justify-content: center; }
 }
 .sectionHeader { text-align: center; margin-bottom: 3.5rem; }
