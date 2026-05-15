@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import Header from "./components/Header";
 import StatsCounter from "./components/StatsCounter";
+import ScrollReveal from "./components/ScrollReveal";
 import Script from "next/script";
 
 // ===== KONFIGURASI SPMB =====
@@ -89,6 +90,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
 
+      <ScrollReveal />
       <Header activePage="Beranda" />
 
       {/* ===== HERO SECTION ===== */}
@@ -126,7 +128,7 @@ export default function Home() {
               className={styles.schoolPhoto}
             />
             <div className={styles.decorativeShape}></div>
-            <div className={styles.floatingCard}>
+            <div className={styles.floatingCard} data-loop>
               <span className={styles.floatingIcon}>🌿</span>
               <div>
                 <strong>Adiwiyata Nasional</strong>
@@ -155,7 +157,7 @@ export default function Home() {
             { letter: "R", title: "Religius", desc: "Karakter kuat berawal dari nilai spiritual. Membentuk pribadi yang berakhlak mulia.", color: "#C0622F" },
             { letter: "A", title: "Berdaya", desc: "Berdaya dalam ilmu, kreativitas, dan karya nyata. Siswa yang mampu memberi manfaat bagi diri dan lingkungannya.", color: "#944535" },
           ].map((v, i) => (
-            <div key={i} className={styles.valueCard}>
+            <div key={i} className={`${styles.valueCard} reveal`}>
               <div className={styles.valueLetter} style={{ backgroundColor: v.color }}>{v.letter}</div>
               <h3>{v.title}</h3>
               <p>{v.desc}</p>
@@ -178,7 +180,7 @@ export default function Home() {
             { icon: "👥", title: "Pembelajaran Kolaboratif", desc: "Mendorong kerja sama tim dan komunikasi efektif antar siswa dalam proses belajar." },
             { icon: "✅", title: "Asesmen Komprehensif", desc: "Penilaian holistik yang mencakup aspek kognitif, afektif, dan psikomotorik." },
           ].map((k, i) => (
-            <div key={i} className={styles.kurikulumCard}>
+            <div key={i} className={`${styles.kurikulumCard} reveal`}>
               <div className={styles.kurikulumIcon}>{k.icon}</div>
               <h3>{k.title}</h3>
               <p>{k.desc}</p>
@@ -196,7 +198,7 @@ export default function Home() {
         </div>
         <div className={styles.ekskulGrid}>
           {ekskulList.map((e, i) => (
-            <div key={i} className={styles.ekskulCardOverlay} style={{ backgroundImage: `url(${e.image})` }}>
+            <div key={i} className={`${styles.ekskulCardOverlay} reveal`} style={{ backgroundImage: `url(${e.image})` }}>
               <div className={styles.ekskulOverlay}>
                 <h4>{e.name}</h4>
                 <p>{e.desc}</p>
@@ -219,7 +221,7 @@ export default function Home() {
           </div>
           <div className={styles.achievementsRight}>
             {achievements.map((a, i) => (
-              <div key={i} className={styles.achievementItem}>
+              <div key={i} className={`${styles.achievementItem} reveal`}>
                 <div className={styles.achievementYear}>{a.year}</div>
                 <div className={styles.achievementInfo}>
                   <strong>{a.title}</strong>
@@ -240,7 +242,7 @@ export default function Home() {
         </div>
         <div className={styles.testimonialsGrid}>
           {testimonials.map((t, i) => (
-            <div key={i} className={styles.testimonialCard}>
+            <div key={i} className={`${styles.testimonialCard} reveal`}>
               <div className={styles.testimonialPhotoWrap}>
                 {t.photo ? (
                   <img src={t.photo} alt={t.name} className={styles.avatarPhoto} />
@@ -318,7 +320,7 @@ export default function Home() {
         </div>
         <div className={styles.newsGrid}>
           {news.map((n, i) => (
-            <article key={i} className={styles.newsCard}>
+            <article key={i} className={`${styles.newsCard} reveal`}>
               <div className={styles.newsCategory} style={{ color: n.color, borderColor: n.color }}>
                 {n.category}
               </div>

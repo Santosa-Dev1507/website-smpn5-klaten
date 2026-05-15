@@ -10,6 +10,14 @@
   --text-main: #0D0C13;
   --text-muted: #555555;
   --border-color: #eaeaea;
+
+  /* ── Animation tokens (ui-animation skill) ── */
+  --ease-enter:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-move:   cubic-bezier(0.25, 1, 0.5,  1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-fast:    160ms;
+  --dur-base:    260ms;
+  --dur-slow:    420ms;
 }
 
 * {
@@ -25,6 +33,68 @@ body {
   color: var(--text-main);
   background-color: var(--background);
   scroll-behavior: smooth;
+}
+
+/* ── Scroll-reveal utility (IntersectionObserver controlled) ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity  var(--dur-slow) var(--ease-enter),
+    transform var(--dur-slow) var(--ease-enter);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger siblings: each .reveal child offset by 60 ms */
+.reveal:nth-child(2) { transition-delay: 60ms; }
+.reveal:nth-child(3) { transition-delay: 120ms; }
+.reveal:nth-child(4) { transition-delay: 180ms; }
+.reveal:nth-child(5) { transition-delay: 240ms; }
+.reveal:nth-child(6) { transition-delay: 300ms; }
+.reveal:nth-child(7) { transition-delay: 360ms; }
+
+/* ── Global keyframes (css-animations skill) ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes floatY {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes pulseRing {
+  from { opacity: 0; transform: scale(0.88); }
+  40%  { opacity: 1; }
+  to   { opacity: 0; transform: scale(1.14); }
+}
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+@keyframes badgePop {
+  0%   { transform: scale(0.85); opacity: 0; }
+  60%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* ── prefers-reduced-motion guard (ui-animation skill) ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration:      0.01ms !important;
+    animation-duration:       0.01ms !important;
+    animation-iteration-count: 1    !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 a {
