@@ -98,8 +98,13 @@ export default function Home() {
         <div className={styles.heroContent}>
           <div className={styles.heroBadge}>Sekolah Adiwiyata Tingkat Nasional</div>
           <h1 className={styles.heroTitle}>
-            Setiap Anak Punya <span className={styles.underlineHighlight}>Cara Sendiri</span> untuk Jadi{" "}
-            <span className={styles.highlightRed}>JUARA.</span>
+            <span className="staggerWord">Setiap&nbsp;</span>
+            <span className="staggerWord">Anak&nbsp;</span>
+            <span className="staggerWord">Punya&nbsp;</span>
+            <span className={`staggerWord ${styles.underlineHighlight}`}>Cara Sendiri</span>
+            <span className="staggerWord">&nbsp;untuk&nbsp;</span>
+            <span className="staggerWord">Jadi&nbsp;</span>
+            <span className={`staggerWord ${styles.highlightRed}`}>JUARA.</span>
           </h1>
           <p className={styles.heroDescription}>
             Bukan sekolah biasa — tempat anak Anda dikenal namanya, ditemukan bakatnya,

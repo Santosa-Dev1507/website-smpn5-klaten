@@ -41,7 +41,6 @@
 }
 .heroTitle {
   font-size: 3.6rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; color: var(--dark);
-  animation: fadeUp 600ms var(--ease-enter) 80ms both;
 }
 .underlineHighlight { position: relative; display: inline-block; }
 .underlineHighlight::after {
