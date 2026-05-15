@@ -304,7 +304,6 @@ export default function Home() {
               <span className={styles.gratisStampMain}>TIDAK</span>
               <span className={styles.gratisStampMain}>DIPUNGUT</span>
               <span>Biaya</span>
-              <div className={styles.gratisStampIcon}>✔</div>
             </div>
             <div className={styles.ppdbImageWrapper}>
               <img src="/foto-spmb.webp" alt="Siswa Berprestasi" className={styles.ppdbImage} />
