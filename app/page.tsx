@@ -289,7 +289,7 @@ export default function Home() {
                   Pantau terus halaman ini atau hubungi kami untuk informasi terbaru.
                 </p>
                 <div className={styles.ppdbActions}>
-                  <a href="https://wa.me/6289537781555?text=Halo,%20saya%20ingin%20tanya%20info%20SPMB%20SMPN%205%20Klaten" target="_blank" rel="noopener noreferrer" className={styles.btnPpdbPrimary}>💬 Tanya via WhatsApp</a>
+                  <a href="https://chat.whatsapp.com/CQbZAGUZmb22MOKr4LnWmz?mlu=2&s=em&p=a" target="_blank" rel="noopener noreferrer" className={styles.btnPpdbPrimary}>💬 Gabung Grup WhatsApp</a>
                   <a href="/spmb" className={styles.btnPpdbSecondary}>Lihat Informasi SPMB</a>
                 </div>
               </>
