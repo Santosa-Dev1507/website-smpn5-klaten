@@ -527,4 +527,9 @@
   .footerBottom { flex-direction: column; text-align: center; }
   .instagramCta { padding: 2rem 1.5rem; }
   .instagramCtaText h2 { font-size: 1.5rem; }
+  
+  /* Shrink stamp on mobile to prevent overlapping faces */
+  .gratisStamp { width: 130px; height: 130px; padding: 0.8rem; top: -5px; right: -5px; }
+  .gratisStamp span { font-size: 0.65rem; }
+  .gratisStampMain { font-size: 1rem !important; letter-spacing: 1px !important; }
 }
