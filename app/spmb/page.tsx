@@ -104,14 +104,9 @@ export default function SpmbPage() {
       <section className={styles.gratisBanner}>
         <div className={styles.gratisBannerInner}>
           <div className={styles.gratisAvatarWrap}>
-            {/* Foto panitia SPMB */}
-            <div className={styles.gratisAvatar}>
-              <img src="/panitia-spmb.png" alt="Panitia SPMB SMPN 5 Klaten" />
-            </div>
-            <div className={styles.gratisAvatarLabel}>Kepala<br />SMPN 5 Klaten</div>
+            <img src="/panitia-spmb.png" alt="Panitia SPMB SMPN 5 Klaten" className={styles.gratisAvatarImg} />
           </div>
-          <div className={styles.gratisContent}>
-            <div className={styles.gratisBadge}>✅ Pernyataan Resmi Sekolah</div>
+            <div className={styles.gratisContent}>
             <h3>SPMB SMPN 5 Klaten <span>GRATIS</span>,<br />tanpa pungutan apapun.</h3>
             <p>
               Seluruh proses Seleksi Penerimaan Murid Baru (SPMB) di SMPN 5 Klaten tidak dipungut biaya
@@ -119,8 +114,6 @@ export default function SpmbPage() {
               harap segera laporkan kepada panitia.
             </p>
             <div className={styles.gratisMeta}>
-              <span className={styles.gratisMetaLine}>— Kepala SMPN 5 Klaten</span>
-              <div className={styles.gratisDivider}></div>
               <span className={styles.gratisStamp}>📞 Hubungi: 0895-3778-15555</span>
             </div>
           </div>
