@@ -102,8 +102,8 @@ export default function Home() {
             <span className={styles.highlightRed}>JUARA.</span>
           </h1>
           <p className={styles.heroDescription}>
-            Di SMPN 5 Klaten, kami percaya juara bukan hanya soal nilai tertinggi. Di sini, siswa tumbuh
-            dengan karakter, keterampilan, kepercayaan diri dan mencintai lingkungan untuk menghadapi masa depan.
+            Bukan sekolah biasa — tempat anak Anda dikenal namanya, ditemukan bakatnya,
+            dan disiapkan untuk masa depan yang lebih dari sekadar nilai.
           </p>
 
           <div className={styles.announcementAlert}>
@@ -115,7 +115,7 @@ export default function Home() {
           </div>
 
           <div className={styles.heroActions}>
-            <a href="#spmb" className={styles.btnPrimary}>Mulai Perjalananmu →</a>
+            <a href="#spmb" className={styles.btnPrimary}>Daftar SPMB 2026/2027 →</a>
             <a href="#prestasi" className={styles.btnSecondary}>Lihat Prestasi Siswa</a>
           </div>
 
@@ -145,17 +145,17 @@ export default function Home() {
       {/* ===== NILAI JUARA ===== */}
       <section className={styles.values} id="profil">
         <div className={styles.sectionHeader}>
-          <div className={styles.sectionBadge}>Identitas Sekolah</div>
-          <h2>Dibentuk oleh Nilai <span className={styles.highlightRed}>JUARA</span></h2>
-          <p>Lima pilar karakter yang menjadi napas kehidupan di SMPN 5 Klaten.</p>
+          <div className={styles.sectionBadge}>Karakter &amp; Nilai</div>
+          <h2>Lima nilai yang membentuk siswa <span className={styles.highlightRed}>siap menghadapi dunia nyata</span></h2>
+          <p>Bukan hafalan, bukan teori — ini cara kami membentuk anak Anda menjadi pribadi yang kuat dari dalam.</p>
         </div>
         <div className={styles.valuesGrid}>
           {[
-            { letter: "J", title: "Jujur", desc: "Jujur adalah dasar kepercayaan. Kami membiasakan siswa berkata dan bertindak apa adanya.", color: "#944535" },
-            { letter: "U", title: "Unggul", desc: "Setiap anak punya keunggulan. Tugas kami membantu menemukannya dan mengembangkannya.", color: "#C0622F" },
-            { letter: "A", title: "Amanah", desc: "Belajar bertanggung jawab sejak dini. Dari tugas kecil hingga peran besar.", color: "#944535" },
-            { letter: "R", title: "Religius", desc: "Karakter kuat berawal dari nilai spiritual. Membentuk pribadi yang berakhlak mulia.", color: "#C0622F" },
-            { letter: "A", title: "Berdaya", desc: "Berdaya dalam ilmu, kreativitas, dan karya nyata. Siswa yang mampu memberi manfaat bagi diri dan lingkungannya.", color: "#944535" },
+            { letter: "J", title: "Jujur", desc: "Kami membiasakan siswa berkata dan bertindak apa adanya — karena kejujuran adalah fondasi kepercayaan yang dibutuhkan di mana pun.", color: "#944535" },
+            { letter: "U", title: "Unggul", desc: "Setiap anak punya keunggulan yang berbeda. Tugas kami menemukan dan mengembangkannya — bukan menyeragamkan.", color: "#C0622F" },
+            { letter: "A", title: "Amanah", desc: "Dari tugas kecil hingga peran besar, siswa belajar bahwa tanggung jawab bukan beban — tapi bukti kepercayaan.", color: "#944535" },
+            { letter: "R", title: "Religius", desc: "Karakter yang kuat dimulai dari dalam. Kami membimbing siswa tumbuh dengan akhlak yang baik sebagai kompas hidupnya.", color: "#C0622F" },
+            { letter: "A", title: "Aktif & Berdaya", desc: "Siswa kami tidak hanya belajar — mereka berkarya, berkontribusi, dan memberi dampak nyata bagi lingkungan sekitarnya.", color: "#944535" },
           ].map((v, i) => (
             <div key={i} className={`${styles.valueCard} reveal`}>
               <div className={styles.valueLetter} style={{ backgroundColor: v.color }}>{v.letter}</div>
@@ -169,16 +169,16 @@ export default function Home() {
       {/* ===== KURIKULUM ===== */}
       <section className={styles.kurikulum}>
         <div className={styles.sectionHeader}>
-          <div className={styles.sectionBadge}>Kurikulum</div>
-          <h2>Kurikulum <span className={styles.highlightRed}>Pembelajaran</span></h2>
-          <p>Dirancang untuk mencetak generasi JUARA — unggul dalam ilmu, kuat dalam karakter, dan cinta lingkungan.</p>
+          <div className={styles.sectionBadge}>Cara Kami Mengajar</div>
+          <h2>Belajar yang <span className={styles.highlightRed}>menyiapkan, bukan sekadar mengajar</span></h2>
+          <p>Kurikulum kami dirancang agar siswa tidak hanya tahu jawabannya — tapi tahu cara berpikir, bekerja sama, dan berkembang.</p>
         </div>
         <div className={styles.kurikulumGrid}>
           {[
-            { icon: "📚", title: "Kurikulum Merdeka", desc: "Pembelajaran yang fleksibel dan berpusat pada siswa dengan pendekatan project-based learning." },
-            { icon: "🎓", title: "Program Unggulan", desc: "Pengembangan karakter, literasi, dan numerasi terintegrasi dalam setiap mata pelajaran." },
-            { icon: "👥", title: "Pembelajaran Kolaboratif", desc: "Mendorong kerja sama tim dan komunikasi efektif antar siswa dalam proses belajar." },
-            { icon: "✅", title: "Asesmen Komprehensif", desc: "Penilaian holistik yang mencakup aspek kognitif, afektif, dan psikomotorik." },
+            { icon: "📚", title: "Kurikulum Merdeka", desc: "Siswa belajar sesuai minat dan kemampuannya — bukan satu ukuran untuk semua. Lebih mandiri, lebih bermakna." },
+            { icon: "🎓", title: "Program Unggulan", desc: "Literasi, numerasi, dan pembentukan karakter bukan pelajaran terpisah — tapi menyatu dalam setiap kegiatan belajar." },
+            { icon: "👥", title: "Belajar Bersama", desc: "Siswa belajar cara berdiskusi, mendengarkan, dan menyelesaikan masalah bersama — skill yang dibutuhkan di dunia nyata." },
+            { icon: "✅", title: "Penilaian Menyeluruh", desc: "Kami tidak hanya menilai dari ujian. Sikap, kreativitas, dan proses belajar siswa sama pentingnya." },
           ].map((k, i) => (
             <div key={i} className={`${styles.kurikulumCard} reveal`}>
               <div className={styles.kurikulumIcon}>{k.icon}</div>
@@ -214,7 +214,7 @@ export default function Home() {
           <div className={styles.achievementsLeft}>
             <div className={styles.sectionBadge}>Prestasi & Penghargaan</div>
             <h2>Pencapaian <span className={styles.highlightRed}>Juara</span> yang Kami Raih Bersama</h2>
-            <p>Berikut adalah prestasi nyata yang diraih oleh siswa, guru, dan sekolah dalam beberapa tahun terakhir.</p>
+            <p>Prestasi bukan kebetulan. Ini hasil kerja keras siswa, guru, dan seluruh keluarga ESPEMA dalam beberapa tahun terakhir.</p>
             <div className={styles.achievementHighlight}>
               <span>Sekolah Adiwiyata Nasional 2025 — penghargaan tertinggi bidang lingkungan hidup dari Kementerian LHK RI</span>
             </div>
@@ -237,8 +237,8 @@ export default function Home() {
       <section className={styles.testimonials}>
         <div className={styles.sectionHeader}>
           <div className={styles.sectionBadge}>Kata Mereka</div>
-          <h2>Suara <span className={styles.highlightRed}>Alumni ESPEMA</span></h2>
-          <p>Pengalaman nyata dari generasi JUARA yang telah merasakan langsung belajar di SMPN 5 Klaten.</p>
+          <h2>Apa kata mereka yang <span className={styles.highlightRed}>pernah ada di sini?</span></h2>
+          <p>Bukan janji kami — tapi cerita nyata dari alumni yang telah merasakan sendiri menjadi bagian dari ESPEMA.</p>
         </div>
         <div className={styles.testimonialsGrid}>
           {testimonials.map((t, i) => (
@@ -271,11 +271,11 @@ export default function Home() {
                 <div className={styles.ppdbBadge}>📢 SPMB 2026/2027 Dibuka</div>
                 <h2>Saatnya Jadi Bagian dari<br />Sekolah Para <span className={styles.ppdbHighlight}>JUARA.</span></h2>
                 <p>
-                  Seleksi Penerimaan Murid Baru (SPMB) SMPN 5 Klaten tahun ajaran 2026/2027 telah dibuka.<br />
-                  <strong>Tempat terbatas</strong> — pastikan putra-putri Anda mendapatkan lingkungan belajar terbaik sejak sekarang.
+                  Hanya <strong>256 kuota siswa</strong> tersedia untuk tahun ajaran 2026/2027.{" "}
+                  Daftarkan putra-putri Anda lebih awal &mdash; sebelum tempat habis dan kesempatan ini terlewat.
                 </p>
                 <div className={styles.ppdbActions}>
-                  <a href="/spmb" className={styles.btnPpdbPrimary}>Daftar Sekarang</a>
+                  <a href="/spmb" className={styles.btnPpdbPrimary}>Daftar Siswa Baru →</a>
                   <a href="/spmb" className={styles.btnPpdbSecondary}>Lihat Syarat & Jadwal</a>
                 </div>
               </>
@@ -316,7 +316,7 @@ export default function Home() {
         <div className={styles.sectionHeader}>
           <div className={styles.sectionBadge}>Berita & Pengumuman</div>
           <h2>Kabar Para <span className={styles.highlightRed}>Juara</span></h2>
-          <p>Ikuti perkembangan terbaru dari SMPN 5 Klaten.</p>
+          <p>Prestasi terbaru, info SPMB, dan kegiatan siswa — semua yang perlu Anda tahu ada di sini.</p>
         </div>
         <div className={styles.newsGrid}>
           {news.map((n, i) => (
@@ -347,8 +347,8 @@ export default function Home() {
           </div>
           <div className={styles.instagramCtaText}>
             <div className={styles.sectionBadge}>Media Sosial</div>
-            <h2>Ikuti Kami di <span className={styles.highlightRed}>Instagram</span></h2>
-            <p>Dapatkan update terbaru kegiatan, prestasi, dan momen berkesan SMPN 5 Klaten melalui Instagram kami.</p>
+            <h2>Lihat keseharian <span className={styles.highlightRed}>ESPEMA</span> dari dekat</h2>
+            <p>Prestasi, kegiatan seru, dan momen tak terlupakan para siswa — semuanya ada di Instagram kami. Jangan sampai ketinggalan.</p>
           </div>
           <a
             href="https://www.instagram.com/espema_klaten"
@@ -356,7 +356,7 @@ export default function Home() {
             rel="noopener noreferrer"
             className={styles.instagramCtaBtn}
           >
-            @espema_klaten
+            Ikuti @espema_klaten
           </a>
         </div>
       </section>
