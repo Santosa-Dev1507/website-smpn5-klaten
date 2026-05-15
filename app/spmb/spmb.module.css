@@ -78,8 +78,7 @@
   object-fit: cover;
   object-position: top center;
   display: block;
-  mix-blend-mode: luminosity;
-  opacity: 0.92;
+  opacity: 0.88;
 }
 .gratisContent {
   padding: 2.5rem 3rem 2.5rem 2rem;
@@ -92,8 +91,8 @@
   border: 1px solid rgba(250,214,166,0.35); text-transform: uppercase;
 }
 .gratisContent h3 {
-  font-size: 2rem; font-weight: 900; color: #fff;
-  margin-bottom: 0.75rem; line-height: 1.2;
+  font-size: 1.45rem; font-weight: 900; color: #fff;
+  margin-bottom: 0.75rem; line-height: 1.25;
 }
 .gratisContent h3 span { color: #FAD6A6; }
 .gratisContent p {
@@ -116,9 +115,9 @@
 }
 @media (max-width: 700px) {
   .gratisBannerInner { grid-template-columns: 1fr; }
-  .gratisAvatarWrap { max-height: 220px; }
+  .gratisAvatarWrap { display: none; }
   .gratisContent { padding: 2rem 1.5rem; }
-  .gratisContent h3 { font-size: 1.5rem; }
+  .gratisContent h3 { font-size: 1.25rem; }
 }
 .sectionHeader { text-align: center; margin-bottom: 3.5rem; }
 .sectionHeader h2 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem; color: #0D0C13; }
