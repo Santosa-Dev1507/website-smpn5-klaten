@@ -324,38 +324,59 @@
 }
 
 /* ===== PPDB CTA ===== */
-/* ===== SPMB GRATIS QUOTE CARD ===== */
-.spmbGratisCard {
-  display: flex; align-items: center; gap: 1.25rem;
-  background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 16px; padding: 1.25rem 1.5rem;
-  margin-bottom: 2rem; max-width: 480px;
+/* ===== SPMB GRATIS STAMP (circular) ===== */
+.ppdbDecor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
-.spmbGratisAvatar {
-  width: 64px; height: 64px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, #FAD6A6, #e8c08c);
-  border: 3px solid rgba(255,255,255,0.4);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; font-weight: 900; color: #944535;
-  overflow: hidden;
+.gratisStamp {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px dashed rgba(250,214,166,0.7);
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  z-index: 4;
+  padding: 1rem;
+  text-align: center;
 }
-.spmbGratisAvatar img {
-  width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+.gratisStamp span {
+  display: block;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
 }
-.spmbGratisBody {}
-.spmbGratisBadge {
-  display: inline-block; background: #FAD6A6; color: #944535;
-  font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.7rem;
-  border-radius: 50px; margin-bottom: 0.4rem; letter-spacing: 0.5px;
-  text-transform: uppercase;
+.gratisStampMain {
+  font-size: 0.95rem !important;
+  font-weight: 900 !important;
+  color: #FAD6A6 !important;
+  letter-spacing: 1px !important;
 }
-.spmbGratisBody p {
-  font-size: 0.88rem; color: rgba(255,255,255,0.95);
-  line-height: 1.5; margin: 0 0 0.35rem; font-style: italic;
-}
-.spmbGratisBody span {
-  font-size: 0.78rem; color: rgba(255,255,255,0.65); font-weight: 600;
+.gratisStampIcon {
+  margin-top: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #FAD6A6;
+  color: #944535;
+  font-size: 0.85rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ppdb { background: var(--primary); padding: 5rem 5%; overflow: hidden; }
