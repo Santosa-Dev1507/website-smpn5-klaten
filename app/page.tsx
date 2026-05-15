@@ -147,7 +147,7 @@ export default function Home() {
         <div className={styles.sectionHeader}>
           <div className={styles.sectionBadge}>Karakter &amp; Nilai</div>
           <h2>Lima nilai yang membentuk siswa <span className={styles.highlightRed}>siap menghadapi dunia nyata</span></h2>
-          <p>Bukan hafalan, bukan teori — ini cara kami membentuk anak Anda menjadi pribadi yang kuat dari dalam.</p>
+          <p>Bukan hafalan, bukan teori — ini cara kami membentuk anak Anda menjadi pribadi <strong>JUARA</strong> yang kuat dari dalam.</p>
         </div>
         <div className={styles.valuesGrid}>
           {[
