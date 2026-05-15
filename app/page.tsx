@@ -7,7 +7,7 @@ import Script from "next/script";
 
 // ===== KONFIGURASI SPMB =====
 // Ubah ke `true` saat pendaftaran dibuka, `false` saat belum dibuka
-const isSpmbOpen = true;
+const isSpmbOpen = false;
 
 // --- DATA PLACEHOLDER (Ganti dengan data asli nanti) ---
 
