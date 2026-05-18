@@ -1,112 +1,138 @@
 import styles from "./spmb.module.css";
 import Header from "../components/Header";
+import DomisiliSearch from "./DomisiliSearch";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SPMB 2025/2026 - SMPN 5 Klaten",
+  title: "SPMB 2026/2027 - SMPN 5 Klaten",
   description:
-    "Seleksi Penerimaan Murid Baru (SPMB) SMP Negeri 5 Klaten Tahun Ajaran 2025/2026. Informasi jalur pendaftaran, jadwal, dan persyaratan lengkap.",
+    "Seleksi Penerimaan Murid Baru (SPMB) SMP Negeri 5 Klaten Tahun Ajaran 2026/2027. Informasi jalur pendaftaran, jadwal, persyaratan, dan panduan lengkap.",
 };
 
 const alasan = [
-  { icon: "🌟", title: "Sekolah Penggerak", desc: "Periode 2022–2025 dengan inovasi pembelajaran untuk peningkatan kualitas pendidikan." },
+  { icon: "⭐", title: "Sekolah Penggerak", desc: "Program unggulan inovasi pembelajaran untuk peningkatan kualitas pendidikan nasional." },
   { icon: "💻", title: "Pembelajaran Modern", desc: "Pembelajaran mendalam, koding, dan AI untuk mempersiapkan siswa di era digital." },
-  { icon: "🌿", title: "Sekolah Adiwiyata", desc: "Berkomitmen pada pendidikan lingkungan hidup dan pembangunan berkelanjutan tingkat provinsi." },
-  { icon: "A", title: "Akreditasi A", desc: "Menjamin kualitas pendidikan dan fasilitas terbaik untuk proses belajar siswa." },
+  { icon: "🌿", title: "Sekolah Adiwiyata Nasional", desc: "Meraih penghargaan Adiwiyata Nasional dari Kementerian Lingkungan Hidup dan Kehutanan RI." },
+  { icon: "🏅", title: "Akreditasi A", desc: "Menjamin kualitas pendidikan dan fasilitas terbaik untuk proses belajar siswa." },
 ];
 
 const halBaru = [
-  { no: 1, old: "Jalur Zonasi", new: "Berubah nama menjadi Jalur Domisili" },
-  { no: 2, old: "Zonasi 50%\nAfirmasi 15%\nPrestasi 30%\nPerpindahan Ortu 5%", new: "Domisili 40%\nAfirmasi 20%\nPrestasi 35%\nMutasi 5%" },
-  { no: 3, old: "Tanggal KK dikeluarkan tidak ada batas", new: "KK diterbitkan paling singkat 1 (satu) tahun sebelum pendaftaran" },
-  { no: 4, old: "Piagam/sertifikat maksimal 1 tahun", new: "Piagam/sertifikat maksimal 3 (tiga) tahun dari tanggal pendaftaran" },
+  { no: 1, lama: "Jalur Domisili 40%\nAfirmasi 20%\nPrestasi 35%\nMutasi 5%", baru: "Jalur Domisili 40%\nAfirmasi 20%\nPrestasi 35%\nMutasi 5%" },
+  { no: 2, lama: "KK diterbitkan min. 1 tahun sebelum pendaftaran", baru: "KK diterbitkan min. 1 tahun sebelum pendaftaran (ketentuan tetap)" },
+  { no: 3, lama: "Piagam/sertifikat maks 3 tahun dari tanggal pendaftaran", baru: "Piagam/sertifikat maks 3 tahun (tetap berlaku)" },
+  { no: 4, lama: "Seleksi online via portal Dinas Pendidikan Klaten", baru: "Seleksi online via portal resmi — pantau pengumuman terbaru" },
+];
+
+const jalurIcons = [
+  <svg key="dom" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12l9-8 9 8" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M5 10v9a1 1 0 001 1h3v-5h6v5h3a1 1 0 001-1v-9" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  <svg key="prs" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" stroke="#944535" strokeWidth="2" strokeLinejoin="round"/></svg>,
+  <svg key="afr" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 11v6M9 14h6" stroke="#944535" strokeWidth="2" strokeLinecap="round"/><rect x="8" y="2" width="8" height="4" rx="1" stroke="#944535" strokeWidth="2"/></svg>,
+  <svg key="mut" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9" cy="7" r="4" stroke="#944535" strokeWidth="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
 ];
 
 const jalur = [
   {
-    icon: "🏠",
     title: "Jalur Domisili (40%)",
-    desc: "Bagi calon murid yang berdomisili di dalam wilayah yang ditetapkan.",
-    details: ["KK terbit minimal 1 tahun", "Akta Kelahiran & SKL/Ijazah", "Seleksi: Usia tertua, Nilai SKL, Waktu daftar"],
-    color: "#944535",
+    desc: "Bagi calon murid yang berdomisili di wilayah yang ditetapkan.",
+    details: ["KK terbit minimal 1 tahun sebelum daftar", "Akta Kelahiran & SKL/Ijazah SD", "Seleksi: Usia tertua → Nilai → Waktu daftar"],
   },
   {
-    icon: "🏆",
     title: "Jalur Prestasi (35%)",
     desc: "Bagi calon murid dengan prestasi akademik maupun non-akademik.",
-    details: ["Rata-rata rapor 5 semester (Mat, BI, IPA)", "Sertifikat kejuaraan maks 3 tahun", "Hanya 1 piagam tertinggi yang dinilai"],
-    color: "#C0622F",
+    details: ["Rata-rata rapor 5 semester (Mat, BI, IPA)", "Sertifikat kejuaraan maks 3 tahun terakhir", "Hanya 1 piagam tertinggi yang dinilai"],
   },
   {
-    icon: "🤝",
     title: "Jalur Afirmasi (20%)",
     desc: "Bagi pendaftar dari keluarga tidak mampu (KIP/KKS) & penyandang disabilitas.",
-    details: ["Kartu PKH / KIP / Surat DISSOSP3APPKB", "Surat pernyataan tanggung jawab ortu", "Seleksi: Usia, Nilai, Waktu daftar"],
-    color: "#944535",
+    details: ["Kartu PKH / KIP / Surat DISSOSP3APPKB", "Surat pernyataan tanggung jawab orang tua", "Seleksi: Usia → Nilai → Waktu daftar"],
   },
   {
-    icon: "📋",
     title: "Jalur Mutasi (5%)",
-    desc: "Bagi calon murid yang mengikuti perpindahan tugas ortu/wali atau anak guru.",
-    details: ["Surat keterangan pindah tugas instansi", "Anak guru mendaftar di sekolah ortu", "Seleksi: Usia, Nilai, Waktu daftar"],
-    color: "#C0622F",
+    desc: "Bagi calon murid yang mengikuti perpindahan tugas orang tua/wali atau anak guru.",
+    details: ["Surat keterangan pindah tugas instansi", "Anak guru mendaftar di sekolah tempat ortu bertugas", "Seleksi: Usia → Nilai → Waktu daftar"],
   },
 ];
 
 const jadwal = [
-  { kegiatan: "Pendaftaran Online", tanggal: "16 - 19 Juni 2025 (Tutup 12.00)" },
-  { kegiatan: "Analisis & Peringkat", tanggal: "19 Juni 2025 (Pukul 18.00)" },
-  { kegiatan: "Pengumuman", tanggal: "20 Juni 2025 (Pukul 00.00)" },
-  { kegiatan: "Daftar Ulang", tanggal: "23 - 24 Juni 2025 (07.00 - 14.00)" },
-  { kegiatan: "Hari Pertama Masuk", tanggal: "14 Juli 2025" },
+  { kegiatan: "Pendaftaran Online", tanggal: "Juni 2026 (Jadwal menyusul)" },
+  { kegiatan: "Analisis & Peringkat", tanggal: "Juni 2026" },
+  { kegiatan: "Pengumuman Hasil", tanggal: "Juni 2026" },
+  { kegiatan: "Daftar Ulang", tanggal: "Juni – Juli 2026" },
+  { kegiatan: "Hari Pertama Masuk", tanggal: "14 Juli 2026" },
 ];
 
 const syarat = [
-  "Berusia maksimal 15 tahun per 1 Juli 2025 (pengecualian bagi difabel).",
-  "Memiliki Ijazah/SKL dari satuan pendidikan sebelumnya.",
+  "Berusia maksimal 15 tahun per 1 Juli 2026 (pengecualian bagi difabel).",
+  "Memiliki Ijazah/SKL dari satuan pendidikan dasar (SD/MI/sederajat).",
   "Akta Kelahiran asli dan fotokopi.",
   "Kartu Keluarga (KK) terbit minimal 1 tahun sebelum pendaftaran.",
   "Pas foto terbaru ukuran 3x4.",
   "Semua dokumen di-scan jelas maks 1 MB (PDF/JPG) untuk upload online.",
 ];
 
+const rekapPrev = [
+  { icon: "🏆", jalur: "Jalur Prestasi", info: "Nilai terendah diterima:", nilai: "262,45", satuan: "" },
+  { icon: "🏠", jalur: "Jalur Domisili", info: "Jarak terjauh diterima:", nilai: "1,5 KM", satuan: "(Desa Ngalas)" },
+  { icon: "🤝", jalur: "Jalur Afirmasi", info: "Usia termuda diterima:", nilai: "11 th 10 bl", satuan: "19 hr" },
+  { icon: "📋", jalur: "Jalur Mutasi", info: "Jumlah siswa diterima:", nilai: "2", satuan: "Siswa" },
+];
+
 export default function SpmbPage() {
   return (
     <main className={styles.main}>
-
       <Header activePage="SPMB" />
 
-      {/* PAGE HERO */}
+      {/* HERO */}
       <section className={styles.pageHero}>
         <div className={styles.pageHeroInner}>
           <div className={styles.heroBreadcrumb}><a href="/">Beranda</a> / SPMB</div>
-          <h1>Seleksi Penerimaan Murid Baru <span className={styles.highlight}>(SPMB)</span></h1>
+          <div className={styles.heroTagline}>Penerimaan Murid Baru 2026/2027</div>
+          <h1>
+            <span className={styles.heroWord}>Seleksi </span>
+            <span className={styles.heroWord}>Penerimaan </span>
+            <span className={`${styles.heroWord} ${styles.highlight}`}>Murid Baru</span>
+          </h1>
           <p>
-            Selamat datang di laman resmi SPMB SMP Negeri 5 Klaten Tahun Ajaran 2025/2026. Kami mengundang
-            putra-putri terbaik untuk bergabung menjadi generasi JUARA.
+            Selamat datang di laman resmi SPMB SMP Negeri 5 Klaten Tahun Ajaran 2026/2027.
+            Kami mengundang putra-putri terbaik untuk bergabung menjadi generasi <strong>JUARA</strong>.
           </p>
-          <a href="#daftar" className={styles.btnDaftar}>Panduan & Pendaftaran →</a>
+          <div className={styles.heroCtas}>
+            <a href="#daftar" className={styles.btnDaftar}>Portal Daftar Online →</a>
+            <a href="#jalur" className={styles.btnDaftarOutline}>Lihat Jalur</a>
+            <a href="#jadwal" className={styles.btnDaftarOutline}>Cek Jadwal</a>
+          </div>
         </div>
-        <div className={styles.pageHeroDecor}>
-          <div className={styles.decCircle1}></div>
-          <div className={styles.decCircle2}></div>
-          <div className={styles.heroStats}>
-            <div className={styles.heroStat}><strong>256</strong><span>Kuota Siswa (8 Kelas)</span></div>
-            <div className={styles.heroStatDivider}></div>
-            <div className={styles.heroStat}><strong>4</strong><span>Jalur Masuk</span></div>
-            <div className={styles.heroStatDivider}></div>
-            <div className={styles.heroStat}><strong>2025</strong><span>Tahun Ajaran</span></div>
+        <div className={styles.pageHeroRight}>
+          <div className={styles.heroStatsCard}>
+            <div className={styles.heroStat}>
+              <strong>256</strong>
+              <span>Kuota Siswa (8 Kelas)</span>
+            </div>
+            <div className={styles.heroStatDivider} />
+            <div className={styles.heroStat}>
+              <strong>4</strong>
+              <span>Jalur Masuk</span>
+            </div>
+            <div className={styles.heroStatDivider} />
+            <div className={styles.heroStat}>
+              <strong>2026</strong>
+              <span>Tahun Ajaran</span>
+            </div>
+          </div>
+          <div className={styles.heroNotice}>
+            <span className={styles.heroNoticeDot} />
+            <span>Jadwal resmi akan diumumkan oleh Dinas Pendidikan Klaten</span>
           </div>
         </div>
       </section>
 
-      {/* ── GRATIS BANNER ── */}
+      {/* GRATIS BANNER */}
       <section className={styles.gratisBanner}>
         <div className={styles.gratisBannerInner}>
           <div className={styles.gratisAvatarWrap}>
-            <img src="/panitia-spmb.png" alt="Panitia SPMB SMPN 5 Klaten" className={styles.gratisAvatarImg} />
+            <img src="/panitia-spmb.png?v=20260518" alt="Panitia SPMB SMPN 5 Klaten" className={styles.gratisAvatarImg} />
           </div>
-            <div className={styles.gratisContent}>
+          <div className={styles.gratisContent}>
             <h3>SPMB SMPN 5 Klaten <span>GRATIS</span>,<br />tanpa pungutan apapun.</h3>
             <p>
               Seluruh proses Seleksi Penerimaan Murid Baru (SPMB) di SMPN 5 Klaten tidak dipungut biaya
@@ -120,12 +146,12 @@ export default function SpmbPage() {
         </div>
       </section>
 
-      {/* 4 ALASAN MEMILIH */}
+      {/* 4 ALASAN */}
       <section className={styles.sectionAlt}>
         <div className={styles.sectionHeader}>
-          <div className={styles.badge}>Keunggulan</div>
+          <div className={styles.badge}>Keunggulan Kami</div>
           <h2>4 Alasan Memilih <span className={styles.highlight}>SMPN 5 Klaten</span></h2>
-          <p>Keunggulan dan prestasi yang menjadikan kami pilihan terbaik untuk pendidikan putra-putri Anda.</p>
+          <p>Keunggulan dan prestasi yang menjadikan kami pilihan terbaik untuk putra-putri Anda.</p>
         </div>
         <div className={styles.jalurGrid}>
           {alasan.map((a, i) => (
@@ -138,37 +164,8 @@ export default function SpmbPage() {
         </div>
       </section>
 
-      {/* PERUBAHAN BARU (TABLE) */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.badge}>Informasi Penting</div>
-          <h2>4 Hal Baru dalam <span className={styles.highlight}>SPMB 2025/2026</span></h2>
-          <p>Perubahan penting dalam sistem penerimaan murid baru tahun ini yang perlu Anda ketahui.</p>
-        </div>
-        <div style={{ width: "100%", maxWidth: "1000px", margin: "0 auto" }} className={styles.tableWrapper}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th style={{ width: "50px" }}>No</th>
-                <th>PPDB 2024/2025</th>
-                <th>SPMB 2025/2026</th>
-              </tr>
-            </thead>
-            <tbody>
-              {halBaru.map((h, i) => (
-                <tr key={i}>
-                  <td>{h.no}</td>
-                  <td style={{ whiteSpace: "pre-line" }}>{h.old}</td>
-                  <td style={{ whiteSpace: "pre-line", fontWeight: "600", color: "#944535" }}>{h.new}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
       {/* JALUR PENDAFTARAN */}
-      <section className={styles.sectionAlt} id="jalur">
+      <section className={styles.section} id="jalur">
         <div className={styles.sectionHeader}>
           <div className={styles.badge}>Jalur Pendaftaran</div>
           <h2>Pilih Jalur yang <span className={styles.highlight}>Sesuai</span></h2>
@@ -177,7 +174,7 @@ export default function SpmbPage() {
         <div className={styles.jalurGrid}>
           {jalur.map((j, i) => (
             <div key={i} className={styles.jalurCard}>
-              <div className={styles.jalurIcon}>{j.icon}</div>
+              <div className={styles.jalurIcon}>{jalurIcons[i]}</div>
               <h3>{j.title}</h3>
               <p>{j.desc}</p>
               <ul className={styles.jalurDetails}>
@@ -190,14 +187,46 @@ export default function SpmbPage() {
         </div>
       </section>
 
-      {/* JADWAL + SYARAT (2 KOLOM) */}
-      <section className={styles.section}>
-        <div className={styles.twoCol}>
+      {/* CEK DOMISILI RW */}
+      <section className={styles.section} id="cek-domisili">
+        <div className={styles.sectionHeader}>
+          <div className={styles.badge}>Jalur Domisili 2026/2027</div>
+          <h2>Cek Jarak <span className={styles.highlight}>RW Anda</span></h2>
+          <p>
+            Hal baru SPMB 2026/2027 — seleksi Jalur Domisili kini berdasarkan <strong>jarak RW</strong> dari masing-masing desa ke SMPN 5 Klaten.
+            Pilih desa dan nomor RW Anda untuk mengetahui jarak resmi.
+          </p>
+        </div>
+        <DomisiliSearch />
+      </section>
 
+      {/* REKAP SPMB 2025/2026 */}
+      <section className={styles.sectionAlt}>
+        <div className={styles.sectionHeader}>
+          <div className={styles.badge}>Referensi Tahun Lalu</div>
+          <h2>Rekap SPMB <span className={styles.highlight}>2025/2026</span></h2>
+          <p>Data penerimaan tahun ajaran sebelumnya sebagai gambaran dan referensi Anda.</p>
+        </div>
+        <div className={styles.rekapGrid}>
+          {rekapPrev.map((r, i) => (
+            <div key={i} className={styles.rekapCard}>
+              <div className={styles.rekapIcon}>{r.icon}</div>
+              <div className={styles.rekapJalur}>{r.jalur}</div>
+              <div className={styles.rekapInfo}>{r.info}</div>
+              <div className={styles.rekapNilai}>{r.nilai}</div>
+              {r.satuan && <div className={styles.rekapSatuan}>{r.satuan}</div>}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* JADWAL + SYARAT */}
+      <section className={styles.section} id="jadwal">
+        <div className={styles.twoCol}>
           {/* JADWAL */}
           <div>
             <div className={styles.badge}>Jadwal Pelaksanaan</div>
-            <h2 className={styles.colTitle}>Jadwal <span className={styles.highlight}>SPMB 2025</span></h2>
+            <h2 className={styles.colTitle}>Jadwal <span className={styles.highlight}>SPMB 2026</span></h2>
             <div className={styles.tableWrapper}>
               <table className={styles.table}>
                 <thead>
@@ -217,7 +246,7 @@ export default function SpmbPage() {
               </table>
             </div>
             <p className={styles.tableNote}>
-              Pelaksanaan pendaftaran dilakukan secara <strong>online</strong>. Bagi calon murid yang tidak bisa mendaftar dari rumah, dapat langsung menyerahkan berkas ke sekolah untuk dibantu oleh panitia.
+              ⚠️ Jadwal bersifat <strong>perkiraan</strong>. Jadwal resmi akan diumumkan oleh Dinas Pendidikan Kabupaten Klaten. Pantau terus laman ini atau hubungi sekolah untuk informasi terbaru.
             </p>
           </div>
 
@@ -234,62 +263,24 @@ export default function SpmbPage() {
               ))}
             </div>
           </div>
-
         </div>
       </section>
 
-      {/* REKAP PPDB 2024 */}
+      {/* REGULASI LENGKAP ACCORDION */}
       <section className={styles.sectionAlt}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.badge}>Referensi</div>
-          <h2>Rekap PPDB <span className={styles.highlight}>2024/2025</span></h2>
-          <p>Informasi penerimaan siswa pada tahun ajaran sebelumnya sebagai referensi Anda.</p>
-        </div>
-        <div className={styles.jalurGrid}>
-          <div className={styles.jalurCard} style={{ textAlign: "center" }}>
-            <div className={styles.jalurIcon}>🏆</div>
-            <h3>Jalur Prestasi</h3>
-            <p style={{ margin: 0, fontSize: "1.1rem" }}>Nilai terendah diterima:<br/><strong style={{fontSize:"1.5rem", color:"var(--primary)"}}>262,45</strong></p>
-          </div>
-          <div className={styles.jalurCard} style={{ textAlign: "center" }}>
-            <div className={styles.jalurIcon}>🏠</div>
-            <h3>Jalur Zonasi</h3>
-            <p style={{ margin: 0, fontSize: "1.1rem" }}>Jarak terjauh diterima:<br/><strong style={{fontSize:"1.5rem", color:"var(--primary)"}}>1,5 KM</strong> (Desa Ngalas)</p>
-          </div>
-          <div className={styles.jalurCard} style={{ textAlign: "center" }}>
-            <div className={styles.jalurIcon}>🤝</div>
-            <h3>Jalur Afirmasi</h3>
-            <p style={{ margin: 0 }}>Usia Termuda: <strong>11 th 10 bl 19 hr</strong><br/>Usia Tertua: <strong>13 th 5 bl 22 hr</strong></p>
-          </div>
-          <div className={styles.jalurCard} style={{ textAlign: "center" }}>
-            <div className={styles.jalurIcon}>📋</div>
-            <h3>Perpindahan Ortu</h3>
-            <p style={{ margin: 0, fontSize: "1.1rem" }}>Jumlah siswa diterima:<br/><strong style={{fontSize:"1.5rem", color:"var(--primary)"}}>2 Siswa</strong></p>
-          </div>
-        </div>
-      </section>
-
-      {/* REGULASI & TATA CARA LENGKAP */}
-      <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div className={styles.badge}>Buku Panduan</div>
           <h2>Detail Persyaratan & <span className={styles.highlight}>Regulasi SPMB</span></h2>
           <p>Informasi teknis dan detail lengkap mengenai tata cara pendaftaran, dokumen, dan kriteria seleksi.</p>
         </div>
-        
         <div className={styles.regulasiContainer}>
           <details className={styles.accordion}>
             <summary>Persyaratan Usia & Pengecualian</summary>
             <div className={styles.accordionContent}>
-              <p>Calon Murid kelas 7 (tujuh) SMP harus memenuhi persyaratan yaitu berusia paling tinggi 15 (lima belas) tahun pada tanggal 1 Juli tahun 2025.</p>
+              <p>Calon Murid kelas 7 (tujuh) SMP harus memenuhi persyaratan yaitu berusia paling tinggi 15 (lima belas) tahun pada tanggal 1 Juli tahun 2026.</p>
               <h4>Persyaratan usia dibuktikan dengan:</h4>
               <ul>
-                <li>Akta kelahiran atau surat keterangan lahir yang dikeluarkan oleh pihak yang berwenang dan dilegalisir oleh Lurah/Kepala Desa atau Pejabat setempat lain yang berwenang sesuai dengan domisili calon murid.</li>
-              </ul>
-              <h4>Persyaratan surat keterangan lahir, harus dibuktikan dengan:</h4>
-              <ul>
-                <li>Ijazah; atau</li>
-                <li>SKL dari satuan pendidikan sebelumnya</li>
+                <li>Akta kelahiran atau surat keterangan lahir yang dikeluarkan oleh pihak yang berwenang dan dilegalisir oleh Lurah/Kepala Desa.</li>
               </ul>
               <h4>Persyaratan usia dikecualikan untuk sekolah dengan kriteria:</h4>
               <ul>
@@ -297,16 +288,11 @@ export default function SpmbPage() {
                 <li>Menyelenggarakan pendidikan layanan khusus</li>
                 <li>Telah menyelesaikan kelas 6 (enam) SD atau bentuk lain yang sederajat</li>
               </ul>
-              <h4>Catatan Tambahan:</h4>
-              <ul>
-                <li>Bagi tamatan SD/MI sebelum tahun 2024/2025 menggunakan nilai ijazah tahun yang bersangkutan.</li>
-                <li>Bagi tamatan SD luar Kabupaten Klaten / MI yang lulus tahun pelajaran 2024/2025 menggunakan nilai SKL yang diterbitkan oleh sekolah yang bersangkutan.</li>
-              </ul>
             </div>
           </details>
 
           <details className={styles.accordion}>
-            <summary>Dokumen yang Perlu Disiapkan (Detail)</summary>
+            <summary>Dokumen yang Perlu Disiapkan</summary>
             <div className={styles.accordionContent}>
               <h4>Dokumen Pribadi:</h4>
               <ul>
@@ -330,19 +316,17 @@ export default function SpmbPage() {
             <div className={styles.accordionContent}>
               <h4>Jalur Domisili (40%):</h4>
               <ul>
-                <li>KK yang diterbitkan paling singkat 1 (satu) tahun sebelum tanggal pendaftaran penerimaan Murid baru.</li>
-                <li>KK tersebut dikecualikan dalam hal perubahan elemen data selain perpindahan domisili dibuktikan dengan surat hasil verifikasi dari panitia.</li>
+                <li>KK yang diterbitkan paling singkat 1 (satu) tahun sebelum tanggal pendaftaran.</li>
+                <li>KK tersebut dikecualikan dalam hal perubahan elemen data selain perpindahan domisili.</li>
                 <li>Hubungan dengan kepala keluarga sebagai anak atau dalam satu KK terdapat orangtua dan anak.</li>
                 <li>Dikecualikan jika kedua orang tua meninggal dan dibuktikan dengan akta kematian.</li>
-                <li>Bagi KK di luar Kabupaten Klaten yang merupakan lulusan SD di wilayah Kabupaten Klaten dibuktikan dengan surat keterangan dari Dinas Pendidikan Kabupaten Klaten.</li>
               </ul>
-              <p>Dalam hal terjadi persamaan jarak pendaftar, maka diseleksi berdasarkan: (1) Usia tertua calon siswa; (2) Jumlah nilai pada Surat Keterangan SPMB/ SKL/Ijazah; (3) Waktu pendaftaran SPMB.</p>
-              
+              <p>Jika terjadi persamaan jarak, seleksi berdasarkan: (1) Usia tertua; (2) Nilai SKL/Ijazah; (3) Waktu pendaftaran.</p>
               <h4>Jalur Afirmasi (20%):</h4>
               <ul>
-                <li>Berdomisili dalam wilayah domisili yang ditetapkan, berasal dari keluarga ekonomi tidak mampu (KKS/KIP).</li>
-                <li>Surat pernyataan dari orang tua/wali murid yang menyatakan bersedia diproses secara hukum jika terbukti memalsukan bukti.</li>
-                <li>Penyandang disabilitas dibuktikan dengan surat keterangan dari DISSOSP3APPKB memuat kategori dan kriteria disabilitas yang dapat diterima di sekolah umum dengan melampirkan surat keterangan hasil assessment dari jenjang Pendidikan sebelumnya dan surat keterangan dari dokter spesialis.</li>
+                <li>Berdomisili dalam wilayah yang ditetapkan, berasal dari keluarga ekonomi tidak mampu (KKS/KIP).</li>
+                <li>Surat pernyataan dari orang tua/wali yang bersedia diproses hukum jika memalsukan bukti.</li>
+                <li>Penyandang disabilitas dibuktikan dengan surat keterangan dari DISSOSP3APPKB.</li>
               </ul>
             </div>
           </details>
@@ -352,17 +336,16 @@ export default function SpmbPage() {
             <div className={styles.accordionContent}>
               <h4>Jalur Prestasi (35%):</h4>
               <ul>
-                <li>Surat Keterangan SPMB tiga mata pelajaran (Bahasa Indonesia, Matematika, IPA) dari akumulasi rata-rata nilai raport lima semester (kelas 4, 5, dan 6 semester 1).</li>
-                <li>Piagam penghargaan akademik/non-akademik tingkat kecamatan hingga internasional (diterbitkan maksimal 3 tahun terakhir). Hanya 1 piagam tertinggi yang dinilai.</li>
-                <li><strong>Jenis Piagam Akademik:</strong> OSN, SISPRES, LCC, Lomba Tunas Bahasa Ibu, Lomba Dokter Kecil, Lomba Bercerita.</li>
-                <li><strong>Jenis Piagam Olahraga:</strong> POPDA, O2SN, Semua cabor KONI tingkat daerah/nasional, Lomba Marching Band.</li>
-                <li><strong>Jenis Piagam Kesenian & Keagamaan:</strong> FLS2N, MAPSI, JSM, Paduan Suara, FLSDAK, FKP.</li>
-                <li><strong>Jenis Piagam Ketrampilan:</strong> Jambore/Kemah Bakti, PMR, POCIL Klaten, Robotik.</li>
+                <li>Nilai rapor 3 mata pelajaran (Bahasa Indonesia, Matematika, IPA) dari akumulasi rata-rata 5 semester.</li>
+                <li>Piagam penghargaan akademik/non-akademik (diterbitkan maksimal 3 tahun terakhir). Hanya 1 piagam tertinggi yang dinilai.</li>
+                <li><strong>Piagam Akademik:</strong> OSN, SISPRES, LCC, Lomba Tunas Bahasa Ibu, Dokter Kecil, Bercerita.</li>
+                <li><strong>Piagam Olahraga:</strong> POPDA, O2SN, semua cabor KONI tingkat daerah/nasional, Marching Band.</li>
+                <li><strong>Piagam Kesenian & Keagamaan:</strong> FLS2N, MAPSI, JSM, Paduan Suara, FLSDAK, FKP.</li>
+                <li><strong>Piagam Ketrampilan:</strong> Jambore/Kemah Bakti, PMR, POCIL Klaten, Robotik.</li>
               </ul>
-
               <h4>Jalur Mutasi (5%):</h4>
               <ul>
-                <li>Orang tua pindah tugas yang masih berdomisili di Luar Daerah dibuktikan dengan surat keterangan dari instansi pemerintah/lembaga/kantor/perusahaan dan surat keterangan Dinas Pendidikan.</li>
+                <li>Orang tua pindah tugas yang masih berdomisili di luar daerah, dibuktikan dengan surat keterangan instansi dan Dinas Pendidikan.</li>
                 <li>Anak Guru yang mendaftar di tempat orang tuanya bertugas.</li>
               </ul>
             </div>
@@ -380,20 +363,20 @@ export default function SpmbPage() {
               </ul>
               <h4>Pengumuman & Daftar Ulang:</h4>
               <ul>
-                <li>Satuan Pendidikan wajib membuat jurnal harian tentang rekap peringkat nilai pendaftar.</li>
-                <li>Calon murid yang diterima wajib mendaftar ulang sesuai jadwal dengan membawa persyaratan asli (termasuk menunjukkan ijazah asli).</li>
-                <li>Pendaftar yang tidak mendaftar ulang pada waktunya dinyatakan gugur dan digantikan oleh peringkat di bawahnya.</li>
+                <li>Satuan Pendidikan wajib membuat jurnal harian rekap peringkat nilai pendaftar.</li>
+                <li>Calon murid yang diterima wajib mendaftar ulang sesuai jadwal dengan membawa persyaratan asli.</li>
+                <li>Pendaftar yang tidak mendaftar ulang pada waktunya dinyatakan gugur.</li>
               </ul>
             </div>
           </details>
         </div>
       </section>
 
-      {/* CTA DAFTAR */}
+      {/* CTA */}
       <section className={styles.ctaSection} id="daftar">
         <div className={styles.ctaInner}>
           <h2>Siap Bergabung dengan Keluarga <span className={styles.highlightPeach}>JUARA?</span></h2>
-          <p>Pendaftaran dilakukan secara online melalui portal resmi Dinas Pendidikan Klaten. Pastikan dokumen Anda sudah di-scan dengan jelas sesuai persyaratan.</p>
+          <p>Pendaftaran dilakukan secara online melalui portal resmi Dinas Pendidikan Klaten. Pantau terus laman ini untuk informasi jadwal terbaru.</p>
           <div className={styles.ctaActions}>
             <a href="#" className={styles.btnCtaPrimary}>Portal Pendaftaran Online</a>
             <a href="https://wa.me/6289537781555" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Tanya via WhatsApp</a>
@@ -408,7 +391,6 @@ export default function SpmbPage() {
           <a href="/">← Kembali ke Beranda</a>
         </div>
       </footer>
-
     </main>
   );
 }

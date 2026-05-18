@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import StatsCounter from "./components/StatsCounter";
 import ScrollReveal from "./components/ScrollReveal";
 import Script from "next/script";
+import InstagramFeed from "./components/InstagramFeed";
 
 // ===== KONFIGURASI SPMB =====
 // Ubah ke `true` saat pendaftaran dibuka, `false` saat belum dibuka
@@ -311,7 +312,7 @@ export default function Home() {
               <span>Biaya</span>
             </div>
             <div className={styles.ppdbImageWrapper}>
-              <img src="/foto-spmb.webp" alt="Siswa Berprestasi" className={styles.ppdbImage} />
+              <img src="/foto-spmb.png?v=20260518" alt="Siswa Berprestasi" className={styles.ppdbImage} />
             </div>
             <div className={styles.ppdbInfo}>
               <div className={styles.ppdbInfoItem}><strong>Juni</strong><span>Buka Pendaftaran</span></div>
@@ -348,31 +349,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== INSTAGRAM CTA ===== */}
-      <section className={styles.instagramSection}>
-        <div className={styles.instagramCta}>
-          <div className={styles.instagramCtaIcon}>
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-            </svg>
-          </div>
-          <div className={styles.instagramCtaText}>
-            <div className={styles.sectionBadge}>Media Sosial</div>
-            <h2>Lihat keseharian <span className={styles.highlightRed}>ESPEMA</span> dari dekat</h2>
-            <p>Prestasi, kegiatan seru, dan momen tak terlupakan para siswa — semuanya ada di Instagram kami. Jangan sampai ketinggalan.</p>
-          </div>
-          <a
-            href="https://www.instagram.com/espema_klaten"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.instagramCtaBtn}
-          >
-            Ikuti @espema_klaten
-          </a>
-        </div>
-      </section>
+      {/* ===== INSTAGRAM FEED ===== */}
+      <InstagramFeed />
 
       {/* ===== FOOTER ===== */}
       <footer className={styles.footer}>

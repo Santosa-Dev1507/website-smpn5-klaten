@@ -1,6 +1,18 @@
 {
   "version": 1,
   "skills": {
+    "animate-text": {
+      "source": "pixel-point/animate-text",
+      "sourceType": "github",
+      "skillPath": "skills/animate-text/SKILL.md",
+      "computedHash": "81b7719e45013fcf651f1f4c9a1ca2af9618e99667ff5cd3e5d102369235ec5e"
+    },
+    "copywriting": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "skills/copywriting/SKILL.md",
+      "computedHash": "20663e361c3b6767e1318de69111b75edc1fb19ded6369cffca677b8bd0c8696"
+    },
     "css-animations": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
@@ -12,6 +24,12 @@
       "sourceType": "github",
       "skillPath": "skills/ui-animation/SKILL.md",
       "computedHash": "c90e52ff919640a8d841fbfd2d58c2b635433f4c113a0d3a3390d20d1ef1d867"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "6337038fe1fe6bbe1b9f252ab678ee575859190bab6f0f246f4061824eb40875"
     }
   }
 }
