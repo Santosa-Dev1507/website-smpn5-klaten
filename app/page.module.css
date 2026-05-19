@@ -334,38 +334,38 @@
   gap: 1rem;
 }
 .gratisStamp {
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  border: 3px dashed rgba(250,214,166,0.7);
+  border: 2px dashed rgba(250,214,166,0.7);
   background: rgba(255,255,255,0.10);
   backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 2px;
   position: absolute;
-  top: -12px;
-  right: -12px;
+  top: -8px;
+  right: -8px;
   z-index: 4;
-  padding: 1.25rem;
+  padding: 0.8rem;
   text-align: center;
 }
 .gratisStamp span {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.68rem;
   color: rgba(255,255,255,0.9);
   font-weight: 700;
   letter-spacing: 0.3px;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 .gratisStampMain {
-  font-size: 1.3rem !important;
+  font-size: 1rem !important;
   font-weight: 900 !important;
   color: #FAD6A6 !important;
-  letter-spacing: 2px !important;
-  line-height: 1.2 !important;
+  letter-spacing: 1.5px !important;
+  line-height: 1.15 !important;
 }
 
 .ppdb { background: var(--primary); padding: 5rem 5%; overflow: hidden; }
@@ -530,7 +530,7 @@
   .instagramCtaText h2 { font-size: 1.5rem; }
   
   /* Shrink stamp on mobile to prevent overlapping faces */
-  .gratisStamp { width: 130px; height: 130px; padding: 0.8rem; top: -5px; right: -5px; }
-  .gratisStamp span { font-size: 0.65rem; }
-  .gratisStampMain { font-size: 1rem !important; letter-spacing: 1px !important; }
+  .gratisStamp { width: 105px; height: 105px; padding: 0.5rem; top: -5px; right: -5px; }
+  .gratisStamp span { font-size: 0.52rem; }
+  .gratisStampMain { font-size: 0.78rem !important; letter-spacing: 0.5px !important; }
 }
