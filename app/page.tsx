@@ -312,7 +312,7 @@ export default function Home() {
               <span>Biaya</span>
             </div>
             <div className={styles.ppdbImageWrapper}>
-              <img src="/foto-spmb.png?v=20260518" alt="Siswa Berprestasi" className={styles.ppdbImage} />
+              <img src="/foto-spmb.png" alt="Siswa Berprestasi" className={styles.ppdbImage} />
             </div>
             <div className={styles.ppdbInfo}>
               <div className={styles.ppdbInfoItem}><strong>Juni</strong><span>Buka Pendaftaran</span></div>

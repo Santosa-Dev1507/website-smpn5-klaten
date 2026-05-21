@@ -130,7 +130,7 @@ export default function SpmbPage() {
       <section className={styles.gratisBanner}>
         <div className={styles.gratisBannerInner}>
           <div className={styles.gratisAvatarWrap}>
-            <img src="/panitia-spmb.png?v=20260518" alt="Panitia SPMB SMPN 5 Klaten" className={styles.gratisAvatarImg} />
+            <img src="/panitia-spmb.png" alt="Panitia SPMB SMPN 5 Klaten" className={styles.gratisAvatarImg} />
           </div>
           <div className={styles.gratisContent}>
             <h3>SPMB SMPN 5 Klaten <span>GRATIS</span>,<br />tanpa pungutan apapun.</h3>

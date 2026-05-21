@@ -334,8 +334,8 @@
   gap: 1rem;
 }
 .gratisStamp {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: 2px dashed rgba(250,214,166,0.7);
   background: rgba(255,255,255,0.10);
@@ -346,8 +346,8 @@
   justify-content: center;
   gap: 2px;
   position: absolute;
-  top: -8px;
-  right: -8px;
+  top: 0;
+  right: 0;
   z-index: 4;
   padding: 0.8rem;
   text-align: center;
@@ -530,7 +530,7 @@
   .instagramCtaText h2 { font-size: 1.5rem; }
   
   /* Shrink stamp on mobile to prevent overlapping faces */
-  .gratisStamp { width: 105px; height: 105px; padding: 0.5rem; top: -5px; right: -5px; }
-  .gratisStamp span { font-size: 0.52rem; }
-  .gratisStampMain { font-size: 0.78rem !important; letter-spacing: 0.5px !important; }
+  .gratisStamp { width: 115px; height: 115px; padding: 0.5rem; top: 0; right: 0; }
+  .gratisStamp span { font-size: 0.55rem; }
+  .gratisStampMain { font-size: 0.85rem !important; letter-spacing: 0.5px !important; }
 }
