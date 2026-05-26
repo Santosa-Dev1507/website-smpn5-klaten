@@ -10,6 +10,10 @@ import InstagramFeed from "./components/InstagramFeed";
 // Ubah ke `true` saat pendaftaran dibuka, `false` saat belum dibuka
 const isSpmbOpen = false;
 
+// ===== KONFIGURASI PENGUMUMAN HASIL TKA =====
+// Ubah ke `true` saat pengumuman hasil TKA dibuka, `false` saat sudah lewat masanya
+const isTkaOpen = true;
+
 // --- DATA PLACEHOLDER (Ganti dengan data asli nanti) ---
 
 const ekskulList = [
@@ -119,6 +123,16 @@ export default function Home() {
             </div>
             <a href="/pengumuman" className={styles.btnAnnouncement}>Cek Kelulusan</a>
           </div>
+
+          {isTkaOpen && (
+            <div className={styles.announcementAlert}>
+              <div className={styles.announcementIcon}>📊</div>
+              <div className={styles.announcementText}>
+                <strong>Hasil Tes Kemampuan Akademik (TKA) Sudah Tersedia</strong>
+              </div>
+              <a href="/hasiltka" className={styles.btnAnnouncement}>Cek Hasil TKA</a>
+            </div>
+          )}
 
           <div className={styles.heroActions}>
             <a href="#spmb" className={styles.btnPrimary}>Daftar SPMB 2026/2027 →</a>
