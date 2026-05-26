@@ -181,6 +181,18 @@ export default function HasilTkaPage() {
                 </p>
               )}
 
+              <div className={styles.resultNote}>
+                <strong>Catatan Penting:</strong>
+                <ol>
+                  <li>
+                    Jika terjadi perbedaan nilai, yang dipakai adalah yang tercantum dalam <strong>Sertifikat Hasil TKA (SHTKA)</strong>.
+                  </li>
+                  <li>
+                    Pengambilan Sertifikat Hasil TKA (SHTKA) akan diinformasikan secepatnya.
+                  </li>
+                </ol>
+              </div>
+
               <button onClick={handleReset} className={styles.btnReset}>
                 ← Cek NISN Lain
               </button>
