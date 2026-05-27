@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // Struktur kolom CSV yang diharapkan (urutan kolom, mulai index 0):
-// 0: nisn | 1: nama | 2: kelas | 3: tanggal_lahir (YYYY-MM-DD) | 4: b_indonesia | 5: matematika
+// 0: nisn | 1: nama | 2: kelas | 3: tanggal_lahir (YYYY-MM-DD) | 4: b_indonesia | 5: matematika | 6: tempat_lahir
 const COL = {
   nisn: 0,
   nama: 1,
@@ -9,6 +9,7 @@ const COL = {
   tanggalLahir: 3,
   bhsIndonesia: 4,
   matematika: 5,
+  tempatLahir: 6,
 };
 
 // Parser CSV sederhana yang menangani koma di dalam tanda kutip
@@ -121,6 +122,8 @@ export async function POST(request: NextRequest) {
       nisn: foundRow[COL.nisn],
       nama: foundRow[COL.nama],
       kelas: foundRow[COL.kelas],
+      tempatLahir: (foundRow[COL.tempatLahir] || "").trim(),
+      tanggalLahir: foundRow[COL.tanggalLahir],
       bhsIndonesia,
       matematika,
       rataRata,

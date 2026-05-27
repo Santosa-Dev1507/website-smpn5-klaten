@@ -7,6 +7,8 @@ interface TkaResult {
   nisn: string;
   nama: string;
   kelas: string;
+  tempatLahir: string;
+  tanggalLahir: string;
   bhsIndonesia: number | null;
   matematika: number | null;
   rataRata: number | null;
@@ -59,6 +61,17 @@ export default function HasilTkaPage() {
 
   const renderScore = (value: number | null) =>
     value === null ? <span className={styles.scoreEmpty}>—</span> : value;
+
+  // Format tanggal lahir dari "YYYY-MM-DD" → "12 Juni 2011"
+  const formatTanggalLahir = (iso: string) => {
+    if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+    const [y, m, d] = iso.split("-").map(Number);
+    const bulan = [
+      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+      "Juli", "Agustus", "September", "Oktober", "November", "Desember",
+    ];
+    return `${d} ${bulan[m - 1]} ${y}`;
+  };
 
   return (
     <main className={styles.main}>
@@ -146,6 +159,14 @@ export default function HasilTkaPage() {
                   <span>
                     <strong>Kelas:</strong> {result.kelas}
                   </span>
+                  {(result.tempatLahir || result.tanggalLahir) && (
+                    <span>
+                      <strong>Tempat, Tanggal Lahir:</strong>{" "}
+                      {[result.tempatLahir, formatTanggalLahir(result.tanggalLahir)]
+                        .filter(Boolean)
+                        .join(", ")}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -185,7 +206,10 @@ export default function HasilTkaPage() {
                 <strong>Catatan Penting:</strong>
                 <ol>
                   <li>
-                    Data bersumber dari DKHTKA. Jika terjadi perbedaan nilai, yang dipakai adalah yang tercantum dalam <strong>Sertifikat Hasil TKA (SHTKA)</strong>.
+                    Harap cek NISN, nama, tempat, dan tanggal lahir. Jika ada kesalahan, hubungi wali kelas.
+                  </li>
+                  <li>
+                    Jika terjadi perbedaan nilai, yang dipakai adalah yang tercantum dalam <strong>Sertifikat Hasil TKA (SHTKA)</strong>.
                   </li>
                   <li>
                     Pengambilan Sertifikat Hasil TKA (SHTKA) akan diinformasikan secepatnya.
