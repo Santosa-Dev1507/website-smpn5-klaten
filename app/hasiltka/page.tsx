@@ -185,7 +185,7 @@ export default function HasilTkaPage() {
                 <strong>Catatan Penting:</strong>
                 <ol>
                   <li>
-                    Jika terjadi perbedaan nilai, yang dipakai adalah yang tercantum dalam <strong>Sertifikat Hasil TKA (SHTKA)</strong>.
+                    Data bersumber dari DKHTKA. Jika terjadi perbedaan nilai, yang dipakai adalah yang tercantum dalam <strong>Sertifikat Hasil TKA (SHTKA)</strong>.
                   </li>
                   <li>
                     Pengambilan Sertifikat Hasil TKA (SHTKA) akan diinformasikan secepatnya.
