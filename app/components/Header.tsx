@@ -112,8 +112,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
         </div>
 
         <div className={styles.mobileFooter}>
-          <p>📍 Jl. Kaliajir, Klaten Utara</p>
-          <p>📞 (0272) 321XXX</p>
+          <p>📍 Jalan Kendali Sodo, Jomboran, Klaten Tengah</p>
         </div>
       </nav>
     </>
