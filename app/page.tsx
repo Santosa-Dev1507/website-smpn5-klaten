@@ -12,7 +12,7 @@ const isSpmbOpen = false;
 
 // ===== KONFIGURASI PENGUMUMAN HASIL TKA =====
 // Ubah ke `true` saat pengumuman hasil TKA dibuka, `false` saat sudah lewat masanya
-const isTkaOpen = true;
+const isTkaOpen = false;
 
 // --- DATA PLACEHOLDER (Ganti dengan data asli nanti) ---
 
