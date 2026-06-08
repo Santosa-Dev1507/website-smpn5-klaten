@@ -206,7 +206,7 @@ export default function DomisiliSearch() {
             </div>
           </div>
           <p className={styles.domisiliNote}>
-            * Jarak dihitung dari titik RW ke SMPN 5 Klaten berdasarkan data resmi panitia SPMB 2026/2027.
+            * Berdasarkan Lampiran Keputusan Bupati Klaten Nomor 12/Tahun 2026 tentang Wilayah Penerimaan Murid Baru Jenjang Sekolah Menengah Pertama Tingkat Kabupaten Klaten Tahun Ajaran 2026/2027.
           </p>
         </div>
       )}
