@@ -201,7 +201,7 @@ export default function DomisiliSearch() {
           </div>
           <div className={styles.domisiliResultBody}>
             <div className={styles.domisiliJarak}>
-              <span className={styles.domisiliJarakAngka}>{rwData.jarak.toFixed(3).replace('.', ',')}</span>
+              <span className={styles.domisiliJarakAngka}>{rwData.jarak.toFixed(2).replace('.', ',')}</span>
               <span className={styles.domisiliJarakSatuan}>km dari SMPN 5 Klaten</span>
             </div>
           </div>
