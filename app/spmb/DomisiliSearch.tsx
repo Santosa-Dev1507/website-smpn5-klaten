@@ -3,98 +3,107 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './spmb.module.css';
 
+const CSV_URL =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSqnoxqUsT9bKiOfBopZlfIXjpahbxj-WKBYJVlsw4gmGpETmjFnYWnp8i6cJPmMuBBDo5MnROhlB0g/pub?output=csv';
+
 type RWData = { rw: number; jarak: number };
 type DesaData = { nama: string; kecamatan: string; rws: RWData[] };
 
-const DATA: DesaData[] = [
-  { nama: 'JOMBORAN', kecamatan: 'Klaten Tengah', rws: [
-    {rw:1,jarak:0.361},{rw:2,jarak:0},{rw:3,jarak:0.715},{rw:4,jarak:0.889},
-    {rw:5,jarak:0.829},{rw:6,jarak:0.613},{rw:7,jarak:0.668},{rw:8,jarak:0.779},
-    {rw:9,jarak:0.810},{rw:10,jarak:0.915},{rw:11,jarak:0.927},
-  ]},
-  { nama: 'BUNTALAN', kecamatan: 'Klaten Tengah', rws: [
-    {rw:1,jarak:1.199},{rw:2,jarak:0.942},{rw:3,jarak:0.574},{rw:4,jarak:0.518},
-    {rw:5,jarak:0.503},{rw:6,jarak:0.729},{rw:7,jarak:0.942},{rw:8,jarak:1.112},
-    {rw:9,jarak:1.113},{rw:10,jarak:0.713},{rw:11,jarak:0.709},{rw:12,jarak:0.701},
-  ]},
-  { nama: 'GUMULAN', kecamatan: 'Klaten Tengah', rws: [
-    {rw:1,jarak:1.10},{rw:2,jarak:1.17},{rw:3,jarak:0.843},{rw:4,jarak:1.51},
-    {rw:5,jarak:0.944},{rw:6,jarak:1.15},{rw:7,jarak:1.53},{rw:8,jarak:1.66},
-    {rw:9,jarak:1.61},{rw:10,jarak:1.58},{rw:11,jarak:1.06},{rw:12,jarak:1.37},
-  ]},
-  { nama: 'MOJAYAN', kecamatan: 'Klaten Tengah', rws: [
-    {rw:1,jarak:2.00},{rw:2,jarak:1.71},{rw:3,jarak:1.15},{rw:4,jarak:1.03},
-    {rw:5,jarak:1.32},{rw:6,jarak:1.21},{rw:7,jarak:1.28},{rw:8,jarak:1.55},
-    {rw:9,jarak:2.10},{rw:10,jarak:1.31},{rw:11,jarak:1.32},{rw:12,jarak:1.68},
-  ]},
-  { nama: 'NGALAS', kecamatan: 'Klaten Selatan', rws: [
-    {rw:1,jarak:1.84},{rw:2,jarak:1.58},{rw:3,jarak:1.40},{rw:4,jarak:1.37},
-    {rw:5,jarak:1.28},{rw:6,jarak:1.09},{rw:7,jarak:1.06},{rw:8,jarak:0.802},
-  ]},
-  { nama: 'NGEMPLAK', kecamatan: 'Kalikotes', rws: [
-    {rw:1,jarak:1.33},{rw:2,jarak:1.98},{rw:3,jarak:1.47},{rw:4,jarak:1.25},
-    {rw:5,jarak:1.41},{rw:6,jarak:1.63},{rw:7,jarak:1.91},{rw:8,jarak:2.11},
-    {rw:9,jarak:2.19},{rw:10,jarak:2.28},{rw:11,jarak:2.32},{rw:12,jarak:2.75},{rw:13,jarak:2.80},
-  ]},
-  { nama: 'KALIKOTES', kecamatan: 'Kalikotes', rws: [
-    {rw:1,jarak:1.78},{rw:2,jarak:2.01},{rw:3,jarak:2.13},{rw:4,jarak:2.52},
-    {rw:5,jarak:1.69},{rw:6,jarak:1.58},{rw:7,jarak:1.41},{rw:8,jarak:2.46},
-    {rw:9,jarak:1.55},{rw:10,jarak:1.82},
-  ]},
-  { nama: 'MERBUNG', kecamatan: 'Klaten Selatan', rws: [
-    {rw:1,jarak:2.24},{rw:2,jarak:1.88},{rw:3,jarak:1.78},{rw:4,jarak:1.70},
-    {rw:5,jarak:1.52},{rw:6,jarak:1.75},{rw:7,jarak:1.572},{rw:8,jarak:1.618},
-    {rw:9,jarak:1.35},{rw:10,jarak:1.34},{rw:11,jarak:1.41},{rw:12,jarak:1.40},
-    {rw:13,jarak:1.45},{rw:14,jarak:1.51},{rw:15,jarak:1.36},
-  ]},
-  { nama: 'JIMBUNG', kecamatan: 'Kalikotes', rws: [
-    {rw:1,jarak:3.19},{rw:2,jarak:3.04},{rw:3,jarak:2.60},{rw:4,jarak:2.66},
-    {rw:5,jarak:2.40},{rw:6,jarak:2.20},{rw:7,jarak:2.45},{rw:8,jarak:2.54},
-    {rw:9,jarak:1.93},{rw:10,jarak:1.13},{rw:11,jarak:1.53},{rw:12,jarak:2.14},
-    {rw:13,jarak:2.21},{rw:14,jarak:2.52},{rw:15,jarak:2.52},{rw:16,jarak:2.67},
-    {rw:17,jarak:2.83},{rw:18,jarak:2.99},{rw:19,jarak:2.85},{rw:20,jarak:2.45},
-    {rw:21,jarak:2.69},{rw:22,jarak:2.64},{rw:23,jarak:2.82},{rw:24,jarak:1.50},
-    {rw:25,jarak:1.64},{rw:26,jarak:1.79},{rw:27,jarak:2.30},{rw:28,jarak:3.05},{rw:29,jarak:2.02},
-  ]},
-  { nama: 'TAMBONGWETAN', kecamatan: 'Kalikotes', rws: [
-    {rw:1,jarak:2.68},{rw:2,jarak:2.34},{rw:3,jarak:2.22},{rw:4,jarak:2.37},
-    {rw:5,jarak:2.52},{rw:6,jarak:2.36},{rw:7,jarak:2.24},{rw:8,jarak:3.09},
-  ]},
-  { nama: 'DANGURAN', kecamatan: 'Klaten Selatan', rws: [
-    {rw:1,jarak:2.48},{rw:2,jarak:2.17},{rw:3,jarak:1.72},{rw:4,jarak:2.17},
-    {rw:5,jarak:1.46},{rw:6,jarak:2.81},{rw:7,jarak:2.86},{rw:8,jarak:2.56},
-    {rw:9,jarak:2.49},{rw:10,jarak:2.47},{rw:11,jarak:2.73},{rw:12,jarak:2.75},
-    {rw:13,jarak:2.23},{rw:14,jarak:1.91},{rw:15,jarak:2.35},
-  ]},
-  { nama: 'GLODOGAN', kecamatan: 'Klaten Selatan', rws: [
-    {rw:1,jarak:2.39},{rw:2,jarak:2.79},{rw:3,jarak:2.71},{rw:4,jarak:2.91},
-    {rw:5,jarak:2.38},{rw:6,jarak:2.19},{rw:7,jarak:2.11},{rw:8,jarak:2.27},{rw:9,jarak:1.95},
-  ]},
-  { nama: 'KARANGPAKEL', kecamatan: 'Trucuk', rws: [
-    {rw:1,jarak:2.85},{rw:2,jarak:2.68},{rw:3,jarak:2.96},{rw:4,jarak:3.28},
-    {rw:5,jarak:3.18},{rw:6,jarak:3.53},{rw:7,jarak:4.06},
-  ]},
-  { nama: 'GEMBLEGAN', kecamatan: 'Kalikotes', rws: [
-    {rw:1,jarak:2.78},{rw:2,jarak:3.28},{rw:3,jarak:3.00},{rw:4,jarak:3.73},
-    {rw:5,jarak:3.55},{rw:6,jarak:3.89},{rw:7,jarak:3.63},{rw:8,jarak:3.41},
-    {rw:9,jarak:3.15},{rw:10,jarak:3.12},{rw:11,jarak:2.75},{rw:12,jarak:2.59},{rw:13,jarak:3.32},
-  ]},
-  { nama: 'JOGOSETRAN', kecamatan: 'Kalikotes', rws: [
-    {rw:1,jarak:4.19},{rw:2,jarak:3.97},{rw:3,jarak:3.04},{rw:4,jarak:4.11},
-    {rw:5,jarak:3.55},{rw:6,jarak:3.76},{rw:7,jarak:3.74},{rw:8,jarak:3.67},
-    {rw:9,jarak:3.99},{rw:10,jarak:4.15},{rw:11,jarak:3.82},{rw:12,jarak:3.84},
-  ]},
-  { nama: 'KRAKITAN', kecamatan: 'Bayat', rws: [
-    {rw:13,jarak:3.38},{rw:14,jarak:3.02},{rw:15,jarak:2.42},{rw:16,jarak:2.56},
-    {rw:17,jarak:2.11},{rw:18,jarak:1.97},{rw:19,jarak:2.51},
-  ]},
-];
+/** Parse satu baris CSV yang mungkin punya nilai di dalam tanda kutip */
+function parseCSVRow(row: string): string[] {
+  const result: string[] = [];
+  let cur = '';
+  let inQuote = false;
+  for (let i = 0; i < row.length; i++) {
+    const ch = row[i];
+    if (ch === '"') {
+      inQuote = !inQuote;
+    } else if (ch === ',' && !inQuote) {
+      result.push(cur.trim());
+      cur = '';
+    } else {
+      cur += ch;
+    }
+  }
+  result.push(cur.trim());
+  return result;
+}
 
+/** Konversi string angka yang mungkin memakai koma desimal → number */
+function toNumber(s: string): number {
+  // Ganti koma desimal ke titik jika format "1,53" (bukan "1,000.00")
+  const normalized = s.replace(',', '.');
+  return parseFloat(normalized);
+}
+
+/** Parse seluruh CSV menjadi array DesaData */
+function parseCSV(text: string): DesaData[] {
+  const rows = text
+    .split(/\r?\n/)
+    .map((r) => parseCSVRow(r));
+
+  // Lewati baris header (baris pertama)
+  const dataRows = rows.slice(1);
+
+  const result: DesaData[] = [];
+  let currentDesa: DesaData | null = null;
+
+  for (const cols of dataRows) {
+    // Kolom: NO, Desa, RW, Kecamatan, Jarak (Km)
+    const [, desaCol, rwCol, kecamatanCol, jarakCol] = cols;
+
+    // Baris desa baru — kolom Desa terisi, kolom RW kosong
+    if (desaCol && desaCol.trim() !== '' && (!rwCol || rwCol.trim() === '')) {
+      currentDesa = { nama: desaCol.trim(), kecamatan: '', rws: [] };
+      result.push(currentDesa);
+      continue;
+    }
+
+    // Baris RW — kolom RW terisi
+    const rwNum = parseInt(rwCol, 10);
+    if (!isNaN(rwNum) && currentDesa && jarakCol && jarakCol.trim() !== '') {
+      const jarak = toNumber(jarakCol);
+      if (!isNaN(jarak)) {
+        if (!currentDesa.kecamatan && kecamatanCol) {
+          currentDesa.kecamatan = kecamatanCol.trim();
+        }
+        currentDesa.rws.push({ rw: rwNum, jarak });
+      }
+    }
+  }
+
+  return result;
+}
 
 export default function DomisiliSearch() {
+  const [data, setData] = useState<DesaData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [selectedDesa, setSelectedDesa] = useState('');
   const [selectedRW, setSelectedRW] = useState('');
   const desaRef = useRef<HTMLSelectElement>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchData() {
+      try {
+        const res = await fetch(CSV_URL, { cache: 'no-store' });
+        if (!res.ok) throw new Error('fetch failed');
+        const text = await res.text();
+        if (!cancelled) {
+          setData(parseCSV(text));
+          setLoading(false);
+        }
+      } catch {
+        if (!cancelled) {
+          setError(true);
+          setLoading(false);
+        }
+      }
+    }
+    fetchData();
+    return () => { cancelled = true; };
+  }, []);
 
   // Sinkronisasi jika browser restore nilai select dari cache form
   useEffect(() => {
@@ -104,12 +113,28 @@ export default function DomisiliSearch() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const desaData = DATA.find(d => d.nama === selectedDesa);
-  const rwData = desaData?.rws.find(r => r.rw === Number(selectedRW));
+  const desaData = data.find((d) => d.nama === selectedDesa);
+  const rwData = desaData?.rws.find((r) => r.rw === Number(selectedRW));
 
   function handleDesaChange(val: string) {
     setSelectedDesa(val);
     setSelectedRW('');
+  }
+
+  if (loading) {
+    return (
+      <div className={styles.domisiliWrap} style={{ textAlign: 'center', padding: '2rem 0' }}>
+        <p style={{ opacity: 0.6 }}>Memuat data jarak RW…</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.domisiliWrap} style={{ textAlign: 'center', padding: '2rem 0' }}>
+        <p style={{ color: '#e55' }}>Gagal memuat data. Silakan muat ulang halaman.</p>
+      </div>
+    );
   }
 
   return (
@@ -125,12 +150,12 @@ export default function DomisiliSearch() {
               ref={desaRef}
               id="select-desa"
               value={selectedDesa}
-              onChange={e => handleDesaChange(e.target.value)}
+              onChange={(e) => handleDesaChange(e.target.value)}
               className={styles.domisiliSelect}
               autoComplete="off"
             >
               <option value="">-- Pilih Desa --</option>
-              {DATA.map(d => (
+              {data.map((d) => (
                 <option key={d.nama} value={d.nama}>
                   {d.nama} ({d.kecamatan})
                 </option>
@@ -149,14 +174,14 @@ export default function DomisiliSearch() {
             <select
               id="select-rw"
               value={selectedRW}
-              onChange={e => setSelectedRW(e.target.value)}
+              onChange={(e) => setSelectedRW(e.target.value)}
               className={styles.domisiliSelect}
               autoComplete="off"
             >
               <option value="">
                 {selectedDesa ? '-- Pilih RW --' : '-- Pilih Desa dahulu --'}
               </option>
-              {desaData?.rws.map(r => (
+              {desaData?.rws.map((r) => (
                 <option key={r.rw} value={String(r.rw)}>
                   RW {String(r.rw).padStart(2, '0')}
                 </option>
