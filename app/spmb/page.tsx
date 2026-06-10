@@ -301,8 +301,55 @@ export default function SpmbPage() {
         </div>
       </section>
 
+      {/* JADWAL + SYARAT */}
+      <section className={styles.section} id="jadwal">
+        <div className={styles.twoCol}>
+          {/* JADWAL */}
+          <div>
+            <div className={styles.badge}>Jadwal Pelaksanaan</div>
+            <h2 className={styles.colTitle}>Jadwal <span className={styles.highlight}>SPMB 2026</span></h2>
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Kegiatan</th>
+                    <th>Tanggal</th>
+                    <th>Waktu</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {jadwal.map((j, i) => (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{j.kegiatan}</td>
+                      <td><span className={styles.dateBadge}>{j.tanggal}</span></td>
+                      <td>{j.waktu || "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* SYARAT */}
+          <div>
+            <div className={styles.badge}>Persyaratan</div>
+            <h2 className={styles.colTitle}>Persyaratan <span className={styles.highlight}>Umum</span></h2>
+            <div className={styles.syaratList}>
+              {syarat.map((s, i) => (
+                <div key={i} className={styles.syaratItem}>
+                  <div className={styles.syaratNumber}>{i + 1}</div>
+                  <p>{s}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* JALUR PENDAFTARAN */}
-      <section className={styles.section} id="jalur">
+      <section className={styles.sectionAlt} id="jalur">
         <div className={styles.sectionHeader}>
           <div className={styles.badge}>Jalur Pendaftaran</div>
           <h2>Pilih Jalur yang <span className={styles.highlight}>Sesuai</span></h2>
@@ -406,55 +453,8 @@ export default function SpmbPage() {
         </div>
       </section>
 
-      {/* JADWAL + SYARAT */}
-      <section className={styles.section} id="jadwal">
-        <div className={styles.twoCol}>
-          {/* JADWAL */}
-          <div>
-            <div className={styles.badge}>Jadwal Pelaksanaan</div>
-            <h2 className={styles.colTitle}>Jadwal <span className={styles.highlight}>SPMB 2026</span></h2>
-            <div className={styles.tableWrapper}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Kegiatan</th>
-                    <th>Tanggal</th>
-                    <th>Waktu</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {jadwal.map((j, i) => (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>{j.kegiatan}</td>
-                      <td><span className={styles.dateBadge}>{j.tanggal}</span></td>
-                      <td>{j.waktu || "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* SYARAT */}
-          <div>
-            <div className={styles.badge}>Persyaratan</div>
-            <h2 className={styles.colTitle}>Persyaratan <span className={styles.highlight}>Umum</span></h2>
-            <div className={styles.syaratList}>
-              {syarat.map((s, i) => (
-                <div key={i} className={styles.syaratItem}>
-                  <div className={styles.syaratNumber}>{i + 1}</div>
-                  <p>{s}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* REGULASI LENGKAP ACCORDION */}
-      <section className={styles.sectionAlt}>
+      <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div className={styles.badge}>Buku Panduan</div>
           <h2>Detail Persyaratan & <span className={styles.highlight}>Regulasi SPMB</span></h2>
