@@ -3,18 +3,18 @@
 /* ── PAGE HERO ── */
 .pageHero {
   display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem;
-  padding: 5rem 5% 5rem; background: linear-gradient(135deg, #fdf8f2 0%, #fff 70%);
+  padding: 6rem 5% 6rem; background: linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #fdf8f2 100%);
   align-items: center; min-height: 55vh; position: relative; overflow: hidden;
 }
 .pageHeroInner { display: flex; flex-direction: column; align-items: flex-start; }
-.heroBreadcrumb { font-size: 0.82rem; color: #888; margin-bottom: 1rem; font-weight: 500; }
+.heroBreadcrumb { font-size: 0.82rem; color: #555; margin-bottom: 1rem; font-weight: 600; }
 .heroBreadcrumb a { color: #944535; }
 .heroTagline {
   display: inline-block; background: rgba(148,69,53,0.1); color: #944535;
   font-size: 0.78rem; font-weight: 800; padding: 0.35rem 1rem;
   border-radius: 50px; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px;
 }
-.pageHero h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1.25rem; color: #0D0C13; }
+.pageHero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.15; margin-bottom: 1.25rem; color: #0D0C13; letter-spacing: -0.02em; }
 .highlight { color: #944535; }
 .pageHero p { font-size: 1.1rem; color: #555; line-height: 1.7; margin-bottom: 2rem; max-width: 90%; }
 .heroCtas { display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -75,10 +75,10 @@
 
 /* ── SECTIONS ── */
 .section { padding: 6rem 5%; background: #fff; }
-.sectionAlt { padding: 6rem 5%; background: #fdf8f2; }
+.sectionAlt { padding: 6rem 5%; background: linear-gradient(180deg, #fdf8f2 0%, #fffbf7 100%); }
 .sectionHeader { text-align: center; margin-bottom: 3.5rem; }
 .sectionHeader h2 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.75rem; color: #0D0C13; }
-.sectionHeader p { font-size: 1.05rem; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+.sectionHeader p { font-size: 1.05rem; color: #555; max-width: 600px; margin: 0 auto; line-height: 1.65; }
 .badge {
   display: inline-block; background: rgba(148,69,53,0.1); color: #944535;
   font-weight: 700; font-size: 0.78rem; padding: 0.35rem 1rem;
@@ -116,22 +116,38 @@
   max-width: 1100px; margin: 0 auto;
 }
 .jalurCard {
-  background: #fff; padding: 2rem; border-radius: 20px;
-  border: 1px solid #eaeaea; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-  transition: all 0.4s ease; display: flex; flex-direction: column; gap: 0;
+  background: #fff; padding: 2.2rem; border-radius: 24px;
+  border: 1px solid #eaeaea; box-shadow: 0 10px 30px rgba(13,12,19,0.03), 0 1px 3px rgba(13,12,19,0.01);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; gap: 0;
   animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .jalurCard:nth-child(1) { animation-delay: 0ms; }
 .jalurCard:nth-child(2) { animation-delay: 80ms; }
 .jalurCard:nth-child(3) { animation-delay: 160ms; }
 .jalurCard:nth-child(4) { animation-delay: 240ms; }
-.jalurCard:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(148,69,53,0.1); border-color: #FAD6A6; }
+.jalurCard:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(148,69,53,0.08), 0 1px 3px rgba(148,69,53,0.02); border-color: #FAD6A6; }
 
 /* Header */
 .jalurCardHeader { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
 .jalurCardTitleWrap { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
 .jalurIcon { font-size: 2rem; flex-shrink: 0; display: block; margin-top: 0.1rem; }
 .jalurCard h3 { font-size: 1.2rem; font-weight: 800; color: #0D0C13; margin: 0; }
+.jalurIconAlasan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: rgba(148, 69, 53, 0.07);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  color: #944535;
+  transition: background 0.3s, transform 0.3s;
+}
+.jalurCard:hover .jalurIconAlasan {
+  background: rgba(148, 69, 53, 0.12);
+  transform: scale(1.05);
+}
 
 /* Kuota badge */
 .jalurKuota {
@@ -140,7 +156,7 @@
   border: 1px solid rgba(148,69,53,0.2); border-radius: 50px;
   padding: 0.3rem 0.9rem; width: fit-content;
 }
-.jalurKuota span { font-size: 0.78rem; font-weight: 600; color: #777; }
+.jalurKuota span { font-size: 0.78rem; font-weight: 600; color: #5b5b5b; }
 .jalurKuota strong { font-size: 0.9rem; font-weight: 900; color: #944535; }
 
 /* Description */
@@ -176,7 +192,7 @@
   font-size: 0.72rem; font-weight: 800; color: #b45309;
   text-transform: uppercase; letter-spacing: 0.6px;
   cursor: pointer; list-style: none; user-select: none;
-  padding: 0.35rem 0; transition: opacity 0.2s;
+  padding: 0.75rem 0; transition: opacity 0.2s;
 }
 .jalurCatatanSummary::-webkit-details-marker { display: none; }
 .jalurCatatanSummary::after { content: "▸"; font-size: 0.75rem; color: #b45309; margin-left: 0.2rem; transition: transform 0.25s ease; }
@@ -253,19 +269,19 @@
   max-width: 1100px; margin: 0 auto;
 }
 .rekapCard {
-  background: #fff; border-radius: 20px; border: 1px solid #eaeaea;
-  padding: 2rem 1.5rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-  transition: all 0.4s ease; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  background: #fff; border-radius: 24px; border: 1px solid #eaeaea;
+  padding: 2.2rem 1.5rem; text-align: center; box-shadow: 0 10px 30px rgba(13,12,19,0.03);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
   animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .rekapCard:nth-child(1) { animation-delay: 0ms; }
 .rekapCard:nth-child(2) { animation-delay: 80ms; }
 .rekapCard:nth-child(3) { animation-delay: 160ms; }
 .rekapCard:nth-child(4) { animation-delay: 240ms; }
-.rekapCard:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(148,69,53,0.1); border-color: #FAD6A6; }
+.rekapCard:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(148,69,53,0.08); border-color: #FAD6A6; }
 .rekapIcon { font-size: 2rem; margin-bottom: 0.25rem; }
 .rekapJalur { font-size: 0.85rem; font-weight: 800; color: #944535; text-transform: uppercase; letter-spacing: 0.5px; }
-.rekapInfo { font-size: 0.82rem; color: #777; }
+.rekapInfo { font-size: 0.82rem; color: #5b5b5b; }
 .rekapNilai { font-size: 1.8rem; font-weight: 900; color: #0D0C13; line-height: 1.1; }
 .rekapSatuan { font-size: 0.85rem; color: #555; font-weight: 600; }
 
@@ -323,7 +339,7 @@
 .footerMiniInner {
   display: flex; justify-content: space-between; align-items: center;
   max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 0.5rem;
-  font-size: 0.82rem; color: rgba(255,255,255,0.4);
+  font-size: 0.82rem; color: rgba(255,255,255,0.6);
 }
 .footerMiniInner a { color: #FAD6A6; font-weight: 600; transition: opacity 0.2s; }
 .footerMiniInner a:hover { opacity: 0.7; }

@@ -2,6 +2,7 @@ import styles from "./spmb.module.css";
 import Header from "../components/Header";
 import DomisiliSearch from "./DomisiliSearch";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "SPMB 2026/2027 - SMPN 5 Klaten",
@@ -10,23 +11,52 @@ export const metadata: Metadata = {
 };
 
 const alasan = [
-  { icon: "⭐", title: "Sekolah Penggerak", desc: "Program unggulan inovasi pembelajaran untuk peningkatan kualitas pendidikan nasional." },
-  { icon: "💻", title: "Pembelajaran Modern", desc: "Pembelajaran mendalam, koding, dan AI untuk mempersiapkan siswa di era digital." },
-  { icon: "🌿", title: "Sekolah Adiwiyata Nasional", desc: "Meraih penghargaan Adiwiyata Nasional dari Kementerian Lingkungan Hidup dan Kehutanan RI." },
-  { icon: "🏅", title: "Akreditasi A", desc: "Menjamin kualitas pendidikan dan fasilitas terbaik untuk proses belajar siswa." },
-];
-
-const halBaru = [
-  { no: 1, lama: "Jalur Domisili 40%\nAfirmasi 20%\nPrestasi 35%\nMutasi 5%", baru: "Jalur Domisili 40%\nAfirmasi 20%\nPrestasi 35%\nMutasi 5%" },
-  { no: 2, lama: "KK diterbitkan min. 1 tahun sebelum pendaftaran", baru: "KK diterbitkan min. 1 tahun sebelum pendaftaran (ketentuan tetap)" },
-  { no: 3, lama: "Piagam/sertifikat maks 3 tahun dari tanggal pendaftaran", baru: "Piagam/sertifikat maks 3 tahun (tetap berlaku)" },
-  { no: 4, lama: "Seleksi online via portal Dinas Pendidikan Klaten", baru: "Seleksi online via portal resmi — pantau pengumuman terbaru" },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>
+    ),
+    title: "Sekolah Penggerak",
+    desc: "Program unggulan inovasi pembelajaran untuk peningkatan kualitas pendidikan nasional."
+  },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+        <line x1="2" y1="20" x2="22" y2="20"/>
+        <line x1="12" y1="17" x2="12" y2="20"/>
+      </svg>
+    ),
+    title: "Pembelajaran Modern",
+    desc: "Pembelajaran mendalam, koding, dan AI untuk mempersiapkan siswa di era digital."
+  },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 8a8.5 8.5 0 0 1-9 10Z"/>
+        <path d="M19 2c-2.26 4.33-5.27 7.14-8 10"/>
+      </svg>
+    ),
+    title: "Sekolah Adiwiyata Nasional",
+    desc: "Meraih penghargaan Adiwiyata Nasional dari Kementerian Lingkungan Hidup dan Kehutanan RI."
+  },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="12" cy="8" r="7"/>
+        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+      </svg>
+    ),
+    title: "Akreditasi A",
+    desc: "Menjamin kualitas pendidikan dan fasilitas terbaik untuk proses belajar siswa."
+  },
 ];
 
 const jalurIcons = [
   <svg key="dom" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12l9-8 9 8" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M5 10v9a1 1 0 001 1h3v-5h6v5h3a1 1 0 001-1v-9" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-  <svg key="prs" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" stroke="#944535" strokeWidth="2" strokeLinejoin="round"/></svg>,
   <svg key="afr" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 11v6M9 14h6" stroke="#944535" strokeWidth="2" strokeLinecap="round"/><rect x="8" y="2" width="8" height="4" rx="1" stroke="#944535" strokeWidth="2"/></svg>,
+  <svg key="prs" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" stroke="#944535" strokeWidth="2" strokeLinejoin="round"/></svg>,
   <svg key="mut" width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9" cy="7" r="4" stroke="#944535" strokeWidth="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
 ];
 
@@ -124,19 +154,64 @@ const jadwal = [
 ];
 
 const syarat = [
-  "Berusia maksimal 15 tahun per 1 Juli 2026 (pengecualian bagi difabel).",
-  "Memiliki Ijazah/SKL dari satuan pendidikan dasar (SD/MI/sederajat).",
-  "Akta Kelahiran asli dan fotokopi.",
-  "Kartu Keluarga (KK) terbit minimal 1 tahun sebelum pendaftaran.",
-  "Pas foto terbaru ukuran 3x4.",
-  "Semua dokumen di-scan jelas maks 1 MB (PDF/JPG) untuk upload online.",
+  "Berusia maksimal 15 tahun per 1 Juli 2026 (kecuali bagi calon peserta didik penyandang disabilitas di sekolah yang menyelenggarakan layanan inklusi).",
+  "Telah menyelesaikan kelas 6 (enam) SD atau bentuk lain yang sederajat, dibuktikan dengan Ijazah atau Surat Keterangan Lulus (SKL).",
+  "Pas foto terbaru ukuran 3x4 dengan pakaian seragam sekolah (background warna bebas).",
+  "Semua berkas di-scan dengan jelas (maksimal 1 MB per file) dalam format PDF atau JPG untuk diunggah pada portal online.",
 ];
 
 const rekapPrev = [
-  { icon: "🏆", jalur: "Jalur Prestasi", info: "Nilai terendah diterima:", nilai: "262,45", satuan: "" },
-  { icon: "🏠", jalur: "Jalur Domisili", info: "Jarak terjauh diterima:", nilai: "1,5 KM", satuan: "(Desa Ngalas)" },
-  { icon: "🤝", jalur: "Jalur Afirmasi", info: "Usia termuda diterima:", nilai: "11 th 10 bl", satuan: "19 hr" },
-  { icon: "📋", jalur: "Jalur Mutasi", info: "Jumlah siswa diterima:", nilai: "2", satuan: "Siswa" },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"/>
+        <path d="M12 2a6 6 0 0 1 6 6v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8a6 6 0 0 1 6-6Z"/>
+      </svg>
+    ),
+    jalur: "Jalur Prestasi",
+    info: "Nilai terendah diterima:",
+    nilai: "262,45",
+    satuan: ""
+  },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    ),
+    jalur: "Jalur Domisili",
+    info: "Jarak terjauh diterima:",
+    nilai: "1,5 KM",
+    satuan: "(Desa Ngalas)"
+  },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+      </svg>
+    ),
+    jalur: "Jalur Afirmasi",
+    info: "Usia termuda diterima:",
+    nilai: "11 th 10 bl",
+    satuan: "19 hr"
+  },
+  {
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+        <path d="M9 14h6"/><path d="M9 18h6"/><path d="M9 10h3"/>
+      </svg>
+    ),
+    jalur: "Jalur Mutasi",
+    info: "Jumlah siswa diterima:",
+    nilai: "2",
+    satuan: "Siswa"
+  },
 ];
 
 export default function SpmbPage() {
@@ -183,7 +258,7 @@ export default function SpmbPage() {
           </div>
           <div className={styles.heroNotice}>
             <span className={styles.heroNoticeDot} />
-            <span>Jadwal resmi akan diumumkan oleh Dinas Pendidikan Klaten</span>
+            <span>Pendaftaran Online dibuka tanggal 29 Juni – 2 Juli 2026</span>
           </div>
         </div>
       </section>
@@ -192,7 +267,7 @@ export default function SpmbPage() {
       <section className={styles.gratisBanner}>
         <div className={styles.gratisBannerInner}>
           <div className={styles.gratisAvatarWrap}>
-            <img src="/panitia-spmb.png" alt="Panitia SPMB SMPN 5 Klaten" className={styles.gratisAvatarImg} />
+            <Image src="/panitia-spmb.png" alt="Panitia SPMB SMPN 5 Klaten" width={400} height={450} priority className={styles.gratisAvatarImg} />
           </div>
           <div className={styles.gratisContent}>
             <h3>SPMB SMPN 5 Klaten <span>GRATIS</span>,<br />tanpa pungutan apapun.</h3>
@@ -218,7 +293,7 @@ export default function SpmbPage() {
         <div className={styles.jalurGrid}>
           {alasan.map((a, i) => (
             <div key={i} className={styles.jalurCard}>
-              <div className={styles.jalurIcon}>{a.icon}</div>
+              <div className={styles.jalurIconAlasan}>{a.icon}</div>
               <h3>{a.title}</h3>
               <p>{a.desc}</p>
             </div>
@@ -390,11 +465,11 @@ export default function SpmbPage() {
             <summary>Persyaratan Usia & Pengecualian</summary>
             <div className={styles.accordionContent}>
               <p>Calon Murid kelas 7 (tujuh) SMP harus memenuhi persyaratan yaitu berusia paling tinggi 15 (lima belas) tahun pada tanggal 1 Juli tahun 2026.</p>
-              <h4>Persyaratan usia dibuktikan dengan:</h4>
+              <h3>Persyaratan usia dibuktikan dengan:</h3>
               <ul>
                 <li>Akta kelahiran atau surat keterangan lahir yang dikeluarkan oleh pihak yang berwenang dan dilegalisir oleh Lurah/Kepala Desa.</li>
               </ul>
-              <h4>Persyaratan usia dikecualikan untuk sekolah dengan kriteria:</h4>
+              <h3>Persyaratan usia dikecualikan untuk sekolah dengan kriteria:</h3>
               <ul>
                 <li>Menyelenggarakan pendidikan khusus</li>
                 <li>Menyelenggarakan pendidikan layanan khusus</li>
@@ -406,14 +481,14 @@ export default function SpmbPage() {
           <details className={styles.accordion}>
             <summary>Dokumen yang Perlu Disiapkan</summary>
             <div className={styles.accordionContent}>
-              <h4>Dokumen Pribadi:</h4>
+              <h3>Dokumen Pribadi:</h3>
               <ul>
                 <li>Akta kelahiran (asli dan fotokopi)</li>
                 <li>Kartu Keluarga (diterbitkan minimal 1 tahun sebelum pendaftaran)</li>
                 <li>Pas foto terbaru ukuran 3x4</li>
                 <li>Ijazah/SKL SD atau sederajat</li>
               </ul>
-              <h4>Dokumen Tambahan (Sesuai Jalur Pendaftaran):</h4>
+              <h3>Dokumen Tambahan (Sesuai Jalur Pendaftaran):</h3>
               <ul>
                 <li><strong>Jalur Prestasi:</strong> Piagam/sertifikat kejuaraan (maksimal 3 tahun terakhir)</li>
                 <li><strong>Jalur Afirmasi:</strong> Surat keterangan tidak mampu atau Kartu Indonesia Pintar (KIP)</li>
@@ -426,7 +501,7 @@ export default function SpmbPage() {
           <details className={styles.accordion}>
             <summary>Ketentuan Detail: Jalur Domisili & Afirmasi</summary>
             <div className={styles.accordionContent}>
-              <h4>Jalur Domisili (40%):</h4>
+              <h3>Jalur Domisili (40%):</h3>
               <ul>
                 <li>KK yang diterbitkan paling singkat 1 (satu) tahun sebelum tanggal pendaftaran.</li>
                 <li>KK tersebut dikecualikan dalam hal perubahan elemen data selain perpindahan domisili.</li>
@@ -434,11 +509,11 @@ export default function SpmbPage() {
                 <li>Dikecualikan jika kedua orang tua meninggal dan dibuktikan dengan akta kematian.</li>
               </ul>
               <p>Jika terjadi persamaan jarak, seleksi berdasarkan: (1) Usia tertua; (2) Nilai SKL/Ijazah; (3) Waktu pendaftaran.</p>
-              <h4>Jalur Afirmasi (20%):</h4>
+              <h3>Jalur Afirmasi (20%):</h3>
               <ul>
                 <li>Berdomisili dalam wilayah yang ditetapkan, berasal dari keluarga ekonomi tidak mampu (KKS/KIP).</li>
                 <li>Surat pernyataan dari orang tua/wali yang bersedia diproses hukum jika memalsukan bukti.</li>
-                <li>Penyandang disabilitas dibuktikan dengan surat keterangan dari DISSOSP3APPKB.</li>
+                <li>Penyandang disabilitas dibuktikan dengan surat keterangan dari DINSOSP3AKB.</li>
               </ul>
             </div>
           </details>
@@ -446,19 +521,21 @@ export default function SpmbPage() {
           <details className={styles.accordion}>
             <summary>Ketentuan Detail: Jalur Prestasi & Mutasi</summary>
             <div className={styles.accordionContent}>
-              <h4>Jalur Prestasi (35%):</h4>
+              <h3>Jalur Prestasi (35%):</h3>
               <ul>
-                <li>Nilai rapor 3 mata pelajaran (Bahasa Indonesia, Matematika, IPA) dari akumulasi rata-rata 5 semester.</li>
+                <li>Nilai hasil wisuda/kelulusan SD berupa SHTKA (Surat Hasil Test Kemampuan Akademik) untuk tahun ajaran 2025/2026.</li>
+                <li>Surat Keterangan Nilai 2 Mata Pelajaran (SD Negeri/Swasta Kab. Klaten) atau Nilai 2 Mapel dari Transkrip Nilai (lulusan SD luar Kab. Klaten & Madrasah).</li>
                 <li>Piagam penghargaan akademik/non-akademik (diterbitkan maksimal 3 tahun terakhir). Hanya 1 piagam tertinggi yang dinilai.</li>
                 <li><strong>Piagam Akademik:</strong> OSN, SISPRES, LCC, Lomba Tunas Bahasa Ibu, Dokter Kecil, Bercerita.</li>
                 <li><strong>Piagam Olahraga:</strong> POPDA, O2SN, semua cabor KONI tingkat daerah/nasional, Marching Band.</li>
-                <li><strong>Piagam Kesenian & Keagamaan:</strong> FLS2N, MAPSI, JSM, Paduan Suara, FLSDAK, FKP.</li>
+                <li><strong>Piagam Kesenian & Keagamaan:</strong> FLS3N, MAPSI, JSM, Paduan Suara, FLSDAK, FKP.</li>
                 <li><strong>Piagam Ketrampilan:</strong> Jambore/Kemah Bakti, PMR, POCIL Klaten, Robotik.</li>
               </ul>
-              <h4>Jalur Mutasi (5%):</h4>
+              <h3>Jalur Mutasi (5%):</h3>
               <ul>
                 <li>Orang tua pindah tugas yang masih berdomisili di luar daerah, dibuktikan dengan surat keterangan instansi dan Dinas Pendidikan.</li>
                 <li>Anak Guru yang mendaftar di tempat orang tuanya bertugas.</li>
+                <li>Anak Guru yang mendaftar di sekolah tempat orang tua mengajar dibuktikan dengan surat keterangan dari Dinas Pendidikan.</li>
               </ul>
             </div>
           </details>
@@ -466,14 +543,14 @@ export default function SpmbPage() {
           <details className={styles.accordion}>
             <summary>Pelaksanaan, Pengumuman & Daftar Ulang</summary>
             <div className={styles.accordionContent}>
-              <h4>Sistem Online:</h4>
+              <h3>Sistem Online:</h3>
               <ul>
                 <li>Calon Murid dapat memilih 2 (dua) sekolah untuk 1 (satu) jalur pendaftaran dalam 1 wilayah domisili.</li>
                 <li>Selain jalur domisili, dapat mendaftar melalui jalur afirmasi atau prestasi.</li>
                 <li>Pendaftar yang tidak masuk peringkat di pilihan 1/2 dapat mendaftar ke SMP lain selama masih dalam waktu pendaftaran.</li>
                 <li>Bagi yang tidak bisa online dari rumah, panitia sekolah siap membantu proses entri data.</li>
               </ul>
-              <h4>Pengumuman & Daftar Ulang:</h4>
+              <h3>Pengumuman & Daftar Ulang:</h3>
               <ul>
                 <li>Satuan Pendidikan wajib membuat jurnal harian rekap peringkat nilai pendaftar.</li>
                 <li>Calon murid yang diterima wajib mendaftar ulang sesuai jadwal dengan membawa persyaratan asli.</li>
