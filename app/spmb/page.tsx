@@ -499,9 +499,9 @@ export default function SpmbPage() {
               </ul>
               <h3>Dokumen Tambahan (Sesuai Jalur Pendaftaran):</h3>
               <ul>
-                <li><strong>Jalur Prestasi:</strong> Piagam/sertifikat kejuaraan (maksimal 3 tahun terakhir)</li>
-                <li><strong>Jalur Afirmasi:</strong> Surat keterangan tidak mampu atau Kartu Indonesia Pintar (KIP)</li>
-                <li><strong>Jalur Mutasi:</strong> Surat keterangan pindah tugas orang tua/wali</li>
+                <li><strong>Jalur Prestasi:</strong> SHTKA, Surat Keterangan Nilai 2 Mapel, dan Piagam/sertifikat penghargaan kejuaraan (maksimal 3 tahun terakhir) bagi yang memiliki.</li>
+                <li><strong>Jalur Afirmasi:</strong> Kartu Keluarga Sejahtera (KKS) dan/atau Kartu Indonesia Pintar (KIP) yang terverifikasi di SiPintar, surat pernyataan orangtua bersedia diproses hukum jika memalsukan dokumen, serta surat keterangan disabilitas (bagi difabel).</li>
+                <li><strong>Jalur Mutasi:</strong> SK Tugas perpindahan orangtua/wali dari instansi/kantor/perusahaan (maksimal 1 tahun sebelum pendaftaran), Surat Keterangan Dinas Pendidikan, atau SK Kepala Sekolah tempat bertugas (bagi anak guru).</li>
               </ul>
               <p><strong>Catatan Penting:</strong> Semua dokumen harus discan dengan jelas maksimal 1 MB dalam format PDF atau JPG.</p>
             </div>
@@ -517,12 +517,12 @@ export default function SpmbPage() {
                 <li>Hubungan dengan kepala keluarga sebagai anak atau dalam satu KK terdapat orangtua dan anak.</li>
                 <li>Dikecualikan jika kedua orang tua meninggal dan dibuktikan dengan akta kematian.</li>
               </ul>
-              <p>Jika terjadi persamaan jarak, seleksi berdasarkan: (1) Usia tertua; (2) Nilai SKL/Ijazah; (3) Waktu pendaftaran.</p>
+              <p>Jika terjadi persamaan jarak, seleksi berdasarkan: (1) Usia tertua; (2) Waktu pendaftaran.</p>
               <h3>Jalur Afirmasi (20%):</h3>
               <ul>
                 <li>Berdomisili dalam wilayah yang ditetapkan, berasal dari keluarga ekonomi tidak mampu (KKS/KIP).</li>
                 <li>Surat pernyataan dari orang tua/wali yang bersedia diproses hukum jika memalsukan bukti.</li>
-                <li>Penyandang disabilitas dibuktikan dengan surat keterangan dari DINSOSP3AKB.</li>
+                <li>Penyandang disabilitas dibuktikan dengan: (1) Surat keterangan DINSOSP3AKB; (2) Surat hasil assessment jenjang sebelumnya; (3) Surat keterangan dokter/dokter spesialis.</li>
               </ul>
             </div>
           </details>
@@ -535,9 +535,9 @@ export default function SpmbPage() {
                 <li>Nilai hasil wisuda/kelulusan SD berupa SHTKA (Surat Hasil Test Kemampuan Akademik) untuk tahun ajaran 2025/2026.</li>
                 <li>Surat Keterangan Nilai 2 Mata Pelajaran (SD Negeri/Swasta Kab. Klaten) atau Nilai 2 Mapel dari Transkrip Nilai (lulusan SD luar Kab. Klaten & Madrasah).</li>
                 <li>Piagam penghargaan akademik/non-akademik (diterbitkan maksimal 3 tahun terakhir). Hanya 1 piagam tertinggi yang dinilai.</li>
-                <li><strong>Piagam Akademik:</strong> OSN, SISPRES, LCC, Lomba Tunas Bahasa Ibu, Dokter Kecil, Bercerita.</li>
-                <li><strong>Piagam Olahraga:</strong> POPDA, O2SN, semua cabor KONI tingkat daerah/nasional, Marching Band.</li>
-                <li><strong>Piagam Kesenian & Keagamaan:</strong> FLS3N, MAPSI, JSM, Paduan Suara, FLSDAK, FKP.</li>
+                <li><strong>Piagam Akademik:</strong> OSN, SISPRES, LCC, FTBI (Tunas Bahasa Ibu), Dokter Kecil, Bercerita, KSM, AKSIOMA, JSIT.</li>
+                <li><strong>Piagam Olahraga:</strong> POPDA, O2SN, Marching Band, PORSEMA, semua cabor KONI tingkat daerah/provinsi/nasional.</li>
+                <li><strong>Piagam Kesenian & Keagamaan:</strong> FLS3N, MAPSI, MAPAK, JSM, Paduan Suara/Vocal Group, FLSDAK, FKP.</li>
                 <li><strong>Piagam Ketrampilan:</strong> Jambore/Kemah Bakti, PMR, POCIL Klaten, Robotik.</li>
               </ul>
               <h3>Jalur Mutasi (5%):</h3>
