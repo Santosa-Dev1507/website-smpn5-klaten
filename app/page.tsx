@@ -331,9 +331,9 @@ export default function Home() {
               <img src="/foto-spmb.png" alt="Siswa Berprestasi" className={styles.ppdbImage} />
             </div>
             <div className={styles.ppdbInfo}>
-              <div className={styles.ppdbInfoItem}><strong>29 Juni</strong><span>Buka Daftar</span></div>
+              <div className={styles.ppdbInfoItem}><strong>29 Juni 2026</strong><span>Pendaftaran</span></div>
               <div className={styles.ppdbInfoDivider}></div>
-              <div className={styles.ppdbInfoItem}><strong>4 Juli</strong><span>Pengumuman</span></div>
+              <div className={styles.ppdbInfoItem}><strong>4 Juli 2026</strong><span>Pengumuman</span></div>
               <div className={styles.ppdbInfoDivider}></div>
               <div className={styles.ppdbInfoItem}><strong>256</strong><span>Kuota Siswa</span></div>
             </div>
