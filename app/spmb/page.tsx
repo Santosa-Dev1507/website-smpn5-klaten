@@ -309,8 +309,8 @@ export default function SpmbPage() {
               Seleksi Jalur Domisili kini ditentukan berdasarkan <strong>jarak resmi dari RW tempat tinggal</strong> ke sekolah (sesuai Perbup No. 12/400.3/7 Tahun 2026).
             </p>
             <div className={styles.halBaruCompare}>
-              <div className={styles.compareLama}><span>Lama:</span> Batas administrasi desa</div>
-              <div className={styles.compareBaru}><span>Baru:</span> Jarak RW terukur (sistem koordinat)</div>
+              <div className={styles.compareLama}><span>Lama:</span> jarak balaidesa ke sekolah</div>
+              <div className={styles.compareBaru}><span>Baru:</span> Jarak masing masing RW ke SMP N 5 Klaten</div>
             </div>
           </div>
 
@@ -322,11 +322,11 @@ export default function SpmbPage() {
               <h3>Nilai TKA & Rapor</h3>
             </div>
             <p className={styles.halBaruDesc}>
-              Seleksi Jalur Prestasi mengintegrasikan nilai ujian kelulusan <strong>SHTKA (Surat Hasil Test Kemampuan Akademik)</strong> untuk lulusan tahun ajaran 2025/2026.
+              Seleksi Jalur Prestasi mengintegrasikan nilai <strong>Test Kemampuan Akademik (TKA)</strong> untuk lulusan tahun ajaran 2025/2026.
             </p>
             <div className={styles.halBaruCompare}>
               <div className={styles.compareLama}><span>Lama:</span> Nilai akumulasi rapor saja</div>
-              <div className={styles.compareBaru}><span>Baru:</span> Kombinasi SHTKA + Nilai Rapor</div>
+              <div className={styles.compareBaru}><span>Baru:</span> Kombinasi Nilai TKA + Nilai Rapor</div>
             </div>
           </div>
 
@@ -335,7 +335,7 @@ export default function SpmbPage() {
               <div className={styles.halBaruIcon}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
               </div>
-              <h3>Syarat Nilai 2 Mapel</h3>
+              <h3>Menggunakan Nilai 2 Mapel</h3>
             </div>
             <p className={styles.halBaruDesc}>
               Ketentuan Surat Keterangan Nilai pendaftar kini disederhanakan dan hanya menggunakan <strong>2 mata pelajaran utama</strong> yang diujikan.
