@@ -420,6 +420,42 @@
 .ppdbInfoItem span { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.7); font-weight: 500; }
 .ppdbInfoDivider { width: 1px; height: 48px; background: rgba(255,255,255,0.2); }
 
+/* ===== SPMB COUNTDOWN ===== */
+.countdownWrapper {
+  margin-top: 1.5rem;
+}
+.countdownLabel {
+  font-size: 0.85rem; font-weight: 600;
+  color: rgba(255,255,255,0.65); margin-bottom: 0.75rem;
+  letter-spacing: 0.3px;
+}
+.countdownGrid {
+  display: flex; gap: 0.75rem;
+}
+.countdownUnit {
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px; padding: 0.65rem 1rem; min-width: 62px;
+  backdrop-filter: blur(8px);
+  transition: transform var(--dur-base) var(--ease-enter),
+              background var(--dur-base) var(--ease-enter);
+}
+.countdownUnit:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+.countdownNumber {
+  font-size: 1.8rem; font-weight: 900; color: var(--secondary);
+  line-height: 1; font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+}
+.countdownUnitLabel {
+  font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.6);
+  text-transform: uppercase; letter-spacing: 0.8px; margin-top: 0.3rem;
+}
+.countdownOpen {
+  background: rgba(250,214,166,0.2); border: 1px solid rgba(250,214,166,0.4);
+  color: var(--secondary); font-weight: 700; font-size: 1rem;
+  padding: 0.75rem 1.25rem; border-radius: 14px; text-align: center;
+}
+
 /* ===== BERITA ===== */
 .news { padding: 6rem 5%; background: var(--light); }
 .newsGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }

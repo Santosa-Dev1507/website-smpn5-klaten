@@ -5,6 +5,7 @@ import StatsCounter from "./components/StatsCounter";
 import ScrollReveal from "./components/ScrollReveal";
 import Script from "next/script";
 import InstagramFeed from "./components/InstagramFeed";
+import SpmbCountdown from "./components/SpmbCountdown";
 
 // ===== KONFIGURASI SPMB =====
 // Ubah ke `true` saat pendaftaran dibuka, `false` saat belum dibuka
@@ -308,7 +309,8 @@ export default function Home() {
                   Pendaftaran SPMB SMPN 5 Klaten tahun ajaran 2026/2027 akan segera dibuka.<br />
                   Pantau terus halaman ini atau hubungi kami untuk informasi terbaru.
                 </p>
-                <div className={styles.ppdbActions}>
+                <SpmbCountdown />
+                <div className={styles.ppdbActions} style={{ marginTop: "1.5rem" }}>
                   <a href="https://chat.whatsapp.com/CQbZAGUZmb22MOKr4LnWmz?mlu=2&s=em&p=a" target="_blank" rel="noopener noreferrer" className={styles.btnPpdbPrimary}>💬 Gabung Grup WhatsApp</a>
                   <a href="/spmb" className={styles.btnPpdbSecondary}>Lihat Informasi SPMB</a>
                 </div>
@@ -329,11 +331,11 @@ export default function Home() {
               <img src="/foto-spmb.png" alt="Siswa Berprestasi" className={styles.ppdbImage} />
             </div>
             <div className={styles.ppdbInfo}>
-              <div className={styles.ppdbInfoItem}><strong>29 Juni</strong><span>Buka Pendaftaran</span></div>
+              <div className={styles.ppdbInfoItem}><strong>29 Juni</strong><span>Buka Daftar</span></div>
               <div className={styles.ppdbInfoDivider}></div>
               <div className={styles.ppdbInfoItem}><strong>4 Juli</strong><span>Pengumuman</span></div>
               <div className={styles.ppdbInfoDivider}></div>
-              <div className={styles.ppdbInfoItem}><strong>13 Juli</strong><span>Masuk Sekolah</span></div>
+              <div className={styles.ppdbInfoItem}><strong>256</strong><span>Kuota Siswa</span></div>
             </div>
           </div>
         </div>
