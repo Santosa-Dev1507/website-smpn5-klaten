@@ -256,10 +256,6 @@ export default function SpmbPage() {
               <span>Tahun Ajaran</span>
             </div>
           </div>
-          <div className={styles.heroNotice}>
-            <span className={styles.heroNoticeDot} />
-            <span>Pendaftaran Online dibuka tanggal 29 Juni – 2 Juli 2026</span>
-          </div>
         </div>
       </section>
 

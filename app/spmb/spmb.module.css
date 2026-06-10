@@ -42,19 +42,6 @@
 .heroStat strong { display: block; font-size: 2rem; font-weight: 900; color: #944535; }
 .heroStat span { display: block; font-size: 0.8rem; color: #555; font-weight: 500; }
 .heroStatDivider { width: 1px; height: 44px; background: #eaeaea; flex-shrink: 0; }
-.heroNotice {
-  display: flex; align-items: center; gap: 0.6rem; background: #fff8e1;
-  border: 1px solid #f59e0b; border-radius: 12px; padding: 0.75rem 1.2rem;
-  font-size: 0.83rem; color: #92400e; font-weight: 600; width: 100%;
-}
-.heroNoticeDot {
-  width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; flex-shrink: 0;
-  animation: pulse 1.8s ease-in-out infinite;
-}
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.4); opacity: 0.6; }
-}
 @keyframes softBlurIn {
   from { opacity: 0; filter: blur(8px); transform: translateY(12px); }
   to { opacity: 1; filter: blur(0); transform: translateY(0); }
