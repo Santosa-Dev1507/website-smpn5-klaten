@@ -225,8 +225,8 @@ export default function SpmbPage() {
           <div className={styles.heroBreadcrumb}><a href="/">Beranda</a> / SPMB</div>
           <div className={styles.heroTagline}>Penerimaan Murid Baru 2026/2027</div>
           <h1>
-            <span className={styles.heroWord}>Seleksi </span>
-            <span className={styles.heroWord}>Penerimaan </span>
+            <span className={styles.heroWord}>Seleksi</span>{" "}
+            <span className={styles.heroWord}>Penerimaan</span>{" "}
             <span className={`${styles.heroWord} ${styles.highlight}`}>Murid Baru</span>
           </h1>
           <p>
