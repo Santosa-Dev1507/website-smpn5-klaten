@@ -365,8 +365,7 @@ export default function SpmbPage() {
                 <div className={styles.jalurCardTitleWrap}>
                   <h3>{j.title}</h3>
                   <div className={styles.jalurKuota}>
-                    <span>{j.persen} &times; 256</span>
-                    <strong>{j.kuota} Siswa</strong>
+                    <strong>Kuota {j.kuota} Siswa</strong>
                   </div>
                 </div>
               </div>
