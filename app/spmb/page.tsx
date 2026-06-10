@@ -54,11 +54,11 @@ const jalur = [
 ];
 
 const jadwal = [
-  { kegiatan: "Pendaftaran Online", tanggal: "Juni 2026 (Jadwal menyusul)" },
-  { kegiatan: "Analisis & Peringkat", tanggal: "Juni 2026" },
-  { kegiatan: "Pengumuman Hasil", tanggal: "Juni 2026" },
-  { kegiatan: "Daftar Ulang", tanggal: "Juni – Juli 2026" },
-  { kegiatan: "Hari Pertama Masuk", tanggal: "14 Juli 2026" },
+  { kegiatan: "Pendaftaran", tanggal: "29 Juni – 2 Juli 2026", waktu: "Mulai Senin 29 Juni Pukul 07.00 WIB · Penutupan Kamis 2 Juli Pukul 12.00 WIB" },
+  { kegiatan: "Analisis & Penyusunan Peringkat", tanggal: "2 – 3 Juli 2026", waktu: "Mulai 2 Juli Pukul 12.00 WIB s.d. 3 Juli 2026 Pukul 12.00 WIB" },
+  { kegiatan: "Pengumuman Hasil", tanggal: "4 Juli 2026", waktu: "Pukul 07.00 WIB" },
+  { kegiatan: "Daftar Ulang", tanggal: "6 – 7 Juli 2026", waktu: "07.00 – 14.00 WIB" },
+  { kegiatan: "Hari Pertama Masuk Sekolah", tanggal: "13 Juli 2026", waktu: "" },
 ];
 
 const syarat = [
@@ -231,15 +231,19 @@ export default function SpmbPage() {
               <table className={styles.table}>
                 <thead>
                   <tr>
+                    <th>No</th>
                     <th>Kegiatan</th>
-                    <th>Tanggal / Waktu</th>
+                    <th>Tanggal</th>
+                    <th>Waktu</th>
                   </tr>
                 </thead>
                 <tbody>
                   {jadwal.map((j, i) => (
                     <tr key={i}>
+                      <td>{i + 1}</td>
                       <td>{j.kegiatan}</td>
                       <td><span className={styles.dateBadge}>{j.tanggal}</span></td>
+                      <td>{j.waktu || "—"}</td>
                     </tr>
                   ))}
                 </tbody>
