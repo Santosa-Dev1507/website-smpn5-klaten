@@ -43,7 +43,7 @@ const jalur = [
       "Pas foto 3×4 berseragam sekolah, background warna bebas",
     ],
     catatanKhusus: [
-      "KK dikecualikan jika perubahan elemen data bukan perpindahan domisili — dibuktikan surat verifikasi panitia",
+      "KK dikecualikan jika perubahan elemen data bukan perpindahan domisili",
       "Hubungan dalam KK: anak kandung kepala keluarga, atau dalam satu KK terdapat orangtua dan anak",
       "Jika kedua orangtua meninggal, KK dapat dikecualikan dengan melampirkan akta kematian",
       "KK orangtua di luar Kab. Klaten + lulusan SD/MI di Klaten: wajib surat keterangan dari Dinas Pendidikan",
