@@ -394,7 +394,7 @@ export default function SpmbPage() {
                     <summary className={styles.jalurCatatanSummary}>
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#b45309" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                       Catatan Khusus
-                      <span className={styles.jalurCatatanCount}>{j.catatanKhusus.length} poin</span>
+                      <span className={styles.jalurCatatanCount}>Lihat Detail</span>
                     </summary>
                     <ul className={styles.jalurNoteList}>
                       {j.catatanKhusus.map((c, ci) => (
