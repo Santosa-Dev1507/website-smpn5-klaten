@@ -104,11 +104,19 @@
 .gratisContent h3 span { color: #FAD6A6; }
 .gratisContent p { font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 1.25rem; max-width: 620px; }
 .gratisMeta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-.gratisStamp {
+.gratisStampLink {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  background: rgba(250,214,166,0.15); border: 1px solid rgba(250,214,166,0.3);
-  border-radius: 8px; padding: 0.3rem 0.75rem;
-  font-size: 0.78rem; font-weight: 700; color: #FAD6A6;
+  background: #25D366; border: 1px solid #128C7E;
+  border-radius: 8px; padding: 0.45rem 1rem;
+  font-size: 0.8rem; font-weight: 800; color: #fff;
+  transition: all 0.2s ease; cursor: pointer;
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.15);
+}
+.gratisStampLink:hover {
+  background: #128C7E;
+  border-color: #075E54;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 211, 102, 0.25);
 }
 
 .jalurGrid {
