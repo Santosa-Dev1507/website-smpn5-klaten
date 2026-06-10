@@ -236,36 +236,63 @@ export default function SpmbPage() {
         <div className={styles.jalurGrid}>
           {jalur.map((j, i) => (
             <div key={i} className={styles.jalurCard}>
+
+              {/* Header: icon + title + kuota */}
               <div className={styles.jalurCardHeader}>
                 <div className={styles.jalurIcon}>{jalurIcons[i]}</div>
-                <div>
+                <div className={styles.jalurCardTitleWrap}>
                   <h3>{j.title}</h3>
-                  <div className={styles.jalurKuota}>{j.persen} &times; 256 = <strong>{j.kuota} Siswa</strong></div>
+                  <div className={styles.jalurKuota}>
+                    <span>{j.persen} &times; 256</span>
+                    <strong>{j.kuota} Siswa</strong>
+                  </div>
                 </div>
               </div>
+
               <p className={styles.jalurDesc}>{j.desc}</p>
 
-              <div className={styles.jalurDocsLabel}>📋 Dokumen yang Diperlukan</div>
-              <ul className={styles.jalurDetails}>
+              {/* Dokumen Wajib */}
+              <div className={styles.jalurSectionLabel}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="#15803d" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Dokumen yang Diperlukan
+              </div>
+              <ul className={styles.jalurDocList}>
                 {j.dokumen.map((d, di) => (
-                  <li key={di}><span className={styles.checkmark}>✓</span>{d}</li>
+                  <li key={di} className={styles.jalurDocItem}>
+                    <span className={styles.docCheck} aria-hidden="true">✓</span>
+                    <span>{d}</span>
+                  </li>
                 ))}
               </ul>
 
+              {/* Catatan Khusus — collapsible */}
               {j.catatanKhusus.length > 0 && (
                 <>
-                  <div className={styles.jalurDocsLabel} style={{marginTop: "1.25rem"}}>📌 Catatan Khusus</div>
-                  <ul className={styles.jalurDetails}>
-                    {j.catatanKhusus.map((c, ci) => (
-                      <li key={ci}><span className={styles.checkmarkNote}>→</span>{c}</li>
-                    ))}
-                  </ul>
+                  <div className={styles.jalurDivider} />
+                  <details className={styles.jalurCatatanDetails}>
+                    <summary className={styles.jalurCatatanSummary}>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#b45309" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      Catatan Khusus
+                      <span className={styles.jalurCatatanCount}>{j.catatanKhusus.length} poin</span>
+                    </summary>
+                    <ul className={styles.jalurNoteList}>
+                      {j.catatanKhusus.map((c, ci) => (
+                        <li key={ci} className={styles.jalurNoteItem}>
+                          <span className={styles.noteArrow} aria-hidden="true">→</span>
+                          <span>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 </>
               )}
 
+              {/* Dasar Seleksi */}
               <div className={styles.jalurSeleksi}>
-                <span>⚡ Dasar Seleksi:</span> {j.seleksi}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="#944535" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <span>Dasar Seleksi:</span> {j.seleksi}
               </div>
+
             </div>
           ))}
         </div>

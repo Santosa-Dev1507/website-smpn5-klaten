@@ -111,51 +111,110 @@
   font-size: 0.78rem; font-weight: 700; color: #FAD6A6;
 }
 
-/* ── JALUR GRID ── */
 .jalurGrid {
   display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem;
   max-width: 1100px; margin: 0 auto;
 }
 .jalurCard {
-  background: #fff; padding: 2.5rem; border-radius: 20px;
+  background: #fff; padding: 2rem; border-radius: 20px;
   border: 1px solid #eaeaea; box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-  transition: all 0.4s ease;
+  transition: all 0.4s ease; display: flex; flex-direction: column; gap: 0;
   animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .jalurCard:nth-child(1) { animation-delay: 0ms; }
 .jalurCard:nth-child(2) { animation-delay: 80ms; }
 .jalurCard:nth-child(3) { animation-delay: 160ms; }
 .jalurCard:nth-child(4) { animation-delay: 240ms; }
-.jalurCard:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(148,69,53,0.1); border-color: #FAD6A6; }
-.jalurIcon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
-.jalurCard h3 { font-size: 1.25rem; font-weight: 800; color: #944535; margin-bottom: 0.75rem; }
-.jalurCard p { font-size: 0.95rem; color: #555; line-height: 1.65; margin-bottom: 1.25rem; }
+.jalurCard:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(148,69,53,0.1); border-color: #FAD6A6; }
+
+/* Header */
+.jalurCardHeader { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+.jalurCardTitleWrap { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+.jalurIcon { font-size: 2rem; flex-shrink: 0; display: block; margin-top: 0.1rem; }
+.jalurCard h3 { font-size: 1.2rem; font-weight: 800; color: #0D0C13; margin: 0; }
+
+/* Kuota badge */
+.jalurKuota {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: linear-gradient(135deg, rgba(148,69,53,0.08) 0%, rgba(250,214,166,0.25) 100%);
+  border: 1px solid rgba(148,69,53,0.2); border-radius: 50px;
+  padding: 0.3rem 0.9rem; width: fit-content;
+}
+.jalurKuota span { font-size: 0.78rem; font-weight: 600; color: #777; }
+.jalurKuota strong { font-size: 0.9rem; font-weight: 900; color: #944535; }
+
+/* Description */
+.jalurDesc { font-size: 0.88rem; color: #555; line-height: 1.65; margin-bottom: 1rem; }
+
+/* Section label (Dokumen/Seleksi) */
+.jalurSectionLabel {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.72rem; font-weight: 800; color: #15803d;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  margin-bottom: 0.6rem;
+}
+
+/* Dokumen list — hijau */
+.jalurDocList { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0; }
+.jalurDocItem {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  background: #f0fdf4; border-left: 3px solid #4ade80;
+  border-radius: 0 8px 8px 0; padding: 0.5rem 0.75rem;
+  font-size: 0.86rem; color: #1a2e1a; line-height: 1.5;
+  transition: background 0.2s;
+}
+.jalurDocItem:hover { background: #dcfce7; }
+.docCheck { color: #15803d; font-weight: 900; flex-shrink: 0; margin-top: 0.1rem; font-size: 0.85rem; }
+
+/* Divider */
+.jalurDivider { height: 1px; background: #f0f0f0; margin: 1rem 0; }
+
+/* Catatan Khusus — amber collapsible */
+.jalurCatatanDetails { margin-bottom: 0; }
+.jalurCatatanSummary {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.72rem; font-weight: 800; color: #b45309;
+  text-transform: uppercase; letter-spacing: 0.6px;
+  cursor: pointer; list-style: none; user-select: none;
+  padding: 0.35rem 0; transition: opacity 0.2s;
+}
+.jalurCatatanSummary::-webkit-details-marker { display: none; }
+.jalurCatatanSummary::after { content: "▸"; font-size: 0.75rem; color: #b45309; margin-left: 0.2rem; transition: transform 0.25s ease; }
+.jalurCatatanDetails[open] .jalurCatatanSummary::after { transform: rotate(90deg); }
+.jalurCatatanSummary:hover { opacity: 0.75; }
+.jalurCatatanCount {
+  margin-left: auto; background: rgba(180,83,9,0.1);
+  color: #b45309; font-size: 0.7rem; font-weight: 700;
+  padding: 0.15rem 0.55rem; border-radius: 50px;
+}
+.jalurNoteList { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.6rem; }
+.jalurNoteItem {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  background: #fffbeb; border-left: 3px solid #fbbf24;
+  border-radius: 0 8px 8px 0; padding: 0.5rem 0.75rem;
+  font-size: 0.84rem; color: #78350f; line-height: 1.5;
+  transition: background 0.2s;
+}
+.jalurNoteItem:hover { background: #fef3c7; }
+.noteArrow { color: #b45309; font-weight: 800; flex-shrink: 0; margin-top: 0.1rem; font-size: 0.85rem; }
+
+/* Seleksi bar */
+.jalurSeleksi {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  margin-top: 1rem; padding: 0.75rem 1rem;
+  background: rgba(148,69,53,0.05); border-left: 3px solid #944535;
+  border-radius: 0 8px 8px 0; font-size: 0.83rem; color: #444; line-height: 1.55;
+}
+.jalurSeleksi span { font-weight: 800; color: #944535; white-space: nowrap; }
+.jalurSeleksi svg { flex-shrink: 0; margin-top: 0.15rem; }
+
+/* Deprecated — kept for alasan cards */
 .jalurDetails { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
 .jalurDetails li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.88rem; color: #333; font-weight: 500; line-height: 1.55; }
 .checkmark { color: #944535; font-weight: 800; flex-shrink: 0; margin-top: 0.05rem; }
 .checkmarkNote { color: #777; font-weight: 700; flex-shrink: 0; margin-top: 0.05rem; }
+.jalurDocsLabel { font-size: 0.78rem; font-weight: 800; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.6rem; display: block; }
 
-/* Jalur card redesign */
-.jalurCardHeader { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.85rem; }
-.jalurKuota {
-  display: inline-flex; align-items: center; gap: 0.3rem;
-  background: rgba(148,69,53,0.08); color: #944535;
-  font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.75rem;
-  border-radius: 50px; margin-top: 0.25rem;
-}
-.jalurKuota strong { font-weight: 900; }
-.jalurDesc { font-size: 0.92rem; color: #555; line-height: 1.6; margin-bottom: 1rem; }
-.jalurDocsLabel {
-  font-size: 0.78rem; font-weight: 800; color: #333;
-  text-transform: uppercase; letter-spacing: 0.5px;
-  margin-bottom: 0.6rem; display: block;
-}
-.jalurSeleksi {
-  margin-top: 1.25rem; padding: 0.75rem 1rem;
-  background: rgba(148,69,53,0.06); border-left: 3px solid #944535;
-  border-radius: 0 8px 8px 0; font-size: 0.83rem; color: #444; line-height: 1.5;
-}
-.jalurSeleksi span { font-weight: 800; color: #944535; }
 
 /* ── TWO COL ── */
 .twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; max-width: 1100px; margin: 0 auto; align-items: flex-start; }
