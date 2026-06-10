@@ -32,24 +32,86 @@ const jalurIcons = [
 
 const jalur = [
   {
-    title: "Jalur Domisili (40%)",
-    desc: "Bagi calon murid yang berdomisili di wilayah yang ditetapkan.",
-    details: ["KK terbit minimal 1 tahun sebelum daftar", "Akta Kelahiran & SKL/Ijazah SD", "Seleksi: Usia tertua → Nilai → Waktu daftar"],
+    title: "Jalur Domisili",
+    persen: "40%",
+    kuota: 102,
+    desc: "Diperuntukkan bagi calon murid yang berdomisili di wilayah yang ditetapkan oleh Bupati Klaten.",
+    dokumen: [
+      "Kartu Keluarga (KK) — diterbitkan min. 1 tahun sebelum tanggal pendaftaran",
+      "Akta Kelahiran",
+      "Ijazah / Surat Keterangan Lulus (SKL) SD atau sederajat",
+      "Pas foto 3×4 berseragam sekolah, background warna bebas",
+    ],
+    catatanKhusus: [
+      "KK dikecualikan jika perubahan elemen data bukan perpindahan domisili — dibuktikan surat verifikasi panitia",
+      "Hubungan dalam KK: anak kandung kepala keluarga, atau dalam satu KK terdapat orangtua dan anak",
+      "Jika kedua orangtua meninggal, KK dapat dikecualikan dengan melampirkan akta kematian",
+      "KK orangtua di luar Kab. Klaten + lulusan SD/MI di Klaten: wajib surat keterangan dari Dinas Pendidikan",
+    ],
+    seleksi: "Jarak terdekat → Usia tertua → Waktu pendaftaran SPMB",
   },
   {
-    title: "Jalur Prestasi (35%)",
-    desc: "Bagi calon murid dengan prestasi akademik maupun non-akademik.",
-    details: ["Rata-rata rapor 5 semester (Mat, BI, IPA)", "Sertifikat kejuaraan maks 3 tahun terakhir", "Hanya 1 piagam tertinggi yang dinilai"],
+    title: "Jalur Afirmasi",
+    persen: "20%",
+    kuota: 51,
+    desc: "Ditujukan bagi calon murid dari keluarga ekonomi tidak mampu dan/atau penyandang disabilitas yang berdomisili dalam wilayah yang ditetapkan.",
+    dokumen: [
+      "Kartu Keluarga (KK)",
+      "Akta Kelahiran",
+      "Ijazah / Surat Keterangan Lulus (SKL) SD atau sederajat",
+      "Pas foto 3×4 berseragam sekolah, background warna bebas",
+      "KKS (Kartu Keluarga Sejahtera) dan/atau KIP (Kartu Indonesia Pintar) — KIP harus terverifikasi di aplikasi SiPintar",
+      "Surat pernyataan orangtua/wali bersedia diproses hukum jika terbukti memalsukan dokumen",
+    ],
+    catatanKhusus: [
+      "Penyandang disabilitas: surat keterangan dari DINSOSP3AKB yang memuat kategori & kriteria disabilitas yang dapat diterima di sekolah umum",
+      "Penyandang disabilitas: surat keterangan hasil assessment dari jenjang pendidikan sebelumnya",
+      "Penyandang disabilitas: surat keterangan dari dokter / dokter spesialis",
+    ],
+    seleksi: "Usia tertua → Waktu pendaftaran SPMB",
   },
   {
-    title: "Jalur Afirmasi (20%)",
-    desc: "Bagi pendaftar dari keluarga tidak mampu (KIP/KKS) & penyandang disabilitas.",
-    details: ["Kartu PKH / KIP / Surat DISSOSP3APPKB", "Surat pernyataan tanggung jawab orang tua", "Seleksi: Usia → Nilai → Waktu daftar"],
+    title: "Jalur Prestasi",
+    persen: "35%",
+    kuota: 90,
+    desc: "Ditujukan bagi calon murid yang memiliki prestasi akademik maupun non-akademik.",
+    dokumen: [
+      "Kartu Keluarga (KK)",
+      "Akta Kelahiran",
+      "Ijazah dan Transkrip Nilai — untuk lulusan sebelum TA 2025/2026",
+      "Surat Keterangan Lulus (SKL) — untuk lulusan TA 2025/2026",
+      "Pas foto 3×4 berseragam sekolah, background warna bebas",
+      "Surat Keterangan Nilai 2 Mata Pelajaran TA 2025/2026 (SD Negeri/Swasta Kab. Klaten) — atau Nilai 2 Mapel dari Transkrip Nilai (lulusan SD luar Kab. Klaten & Madrasah sederajat)",
+      "SHTKA — bagi lulusan tahun ajaran 2025/2026",
+      "Piagam/sertifikat penghargaan lomba, bagi yang memiliki — diterbitkan maks. 3 tahun dari tanggal pendaftaran",
+    ],
+    catatanKhusus: [
+      "Hanya 1 (satu) piagam dengan nilai tertinggi yang diperhitungkan jika memiliki lebih dari satu",
+      "Piagam Akademik: OSN, SISPRES, LCC, FTBI, Dokter Kecil, Bercerita, KSM, AKSIOMA, JSIT",
+      "Piagam Olahraga: POPDA, O2SN, Marching Band, PORSEMA, semua cabor KONI tingkat daerah/provinsi/nasional",
+      "Piagam Kesenian & Keagamaan: FLS3N, MAPSI, MAPAK, JSM, Paduan Suara/Vocal Group, FLSDAK, FKP",
+      "Piagam Ketrampilan: Jambore/Kemah Bakti, PMR, POCIL Klaten, Robotik",
+    ],
+    seleksi: "Nilai akhir tertinggi → Usia tertua → Waktu pendaftaran SPMB",
   },
   {
-    title: "Jalur Mutasi (5%)",
-    desc: "Bagi calon murid yang mengikuti perpindahan tugas orang tua/wali atau anak guru.",
-    details: ["Surat keterangan pindah tugas instansi", "Anak guru mendaftar di sekolah tempat ortu bertugas", "Seleksi: Usia → Nilai → Waktu daftar"],
+    title: "Jalur Mutasi",
+    persen: "5%",
+    kuota: 13,
+    desc: "Ditujukan bagi calon murid yang mengikuti perpindahan tugas orangtua/wali, atau anak guru yang mendaftar di sekolah tempat orangtua mengajar.",
+    dokumen: [
+      "Kartu Keluarga (KK)",
+      "Akta Kelahiran",
+      "SKL / Ijazah SD atau sederajat",
+      "Pas foto 3×4 berseragam sekolah, background warna bebas",
+    ],
+    catatanKhusus: [
+      "Orangtua pindah tugas: surat keterangan dari instansi/lembaga/kantor/perusahaan — diterbitkan maks. 1 tahun sebelum pendaftaran",
+      "Orangtua pindah tugas: surat keterangan dari Dinas Pendidikan",
+      "Anak Guru: surat keputusan dari Kepala Satuan Pendidikan tempat orangtua bertugas",
+      "Anak Guru: surat keterangan dari Dinas Pendidikan",
+    ],
+    seleksi: "Usia tertua → Waktu pendaftaran SPMB",
   },
 ];
 
@@ -174,14 +236,36 @@ export default function SpmbPage() {
         <div className={styles.jalurGrid}>
           {jalur.map((j, i) => (
             <div key={i} className={styles.jalurCard}>
-              <div className={styles.jalurIcon}>{jalurIcons[i]}</div>
-              <h3>{j.title}</h3>
-              <p>{j.desc}</p>
+              <div className={styles.jalurCardHeader}>
+                <div className={styles.jalurIcon}>{jalurIcons[i]}</div>
+                <div>
+                  <h3>{j.title}</h3>
+                  <div className={styles.jalurKuota}>{j.persen} &times; 256 = <strong>{j.kuota} Siswa</strong></div>
+                </div>
+              </div>
+              <p className={styles.jalurDesc}>{j.desc}</p>
+
+              <div className={styles.jalurDocsLabel}>📋 Dokumen yang Diperlukan</div>
               <ul className={styles.jalurDetails}>
-                {j.details.map((d, di) => (
+                {j.dokumen.map((d, di) => (
                   <li key={di}><span className={styles.checkmark}>✓</span>{d}</li>
                 ))}
               </ul>
+
+              {j.catatanKhusus.length > 0 && (
+                <>
+                  <div className={styles.jalurDocsLabel} style={{marginTop: "1.25rem"}}>📌 Catatan Khusus</div>
+                  <ul className={styles.jalurDetails}>
+                    {j.catatanKhusus.map((c, ci) => (
+                      <li key={ci}><span className={styles.checkmarkNote}>→</span>{c}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+
+              <div className={styles.jalurSeleksi}>
+                <span>⚡ Dasar Seleksi:</span> {j.seleksi}
+              </div>
             </div>
           ))}
         </div>
