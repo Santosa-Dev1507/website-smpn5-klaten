@@ -479,11 +479,70 @@
   .heroWord,
   .jalurCard,
   .rekapCard,
-  .domisiliResult {
+  .domisiliResult,
+  .halBaruCard {
     animation: none !important;
   }
   .heroNoticeDot { animation: none; }
   .accordionContent { transition: none; }
   .jalurCard,
-  .rekapCard { transition: box-shadow 0.2s, border-color 0.2s; }
+  .rekapCard,
+  .halBaruCard { transition: box-shadow 0.2s, border-color 0.2s; }
+}
+
+/* ── HAL BARU SECTION ── */
+.halBaruGrid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+  max-width: 1100px; margin: 0 auto;
+}
+.halBaruCard {
+  background: #fff; padding: 2rem; border-radius: 24px;
+  border: 1px solid #eaeaea; box-shadow: 0 10px 30px rgba(13,12,19,0.02);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.halBaruCard:nth-child(1) { animation-delay: 0ms; }
+.halBaruCard:nth-child(2) { animation-delay: 80ms; }
+.halBaruCard:nth-child(3) { animation-delay: 160ms; }
+
+.halBaruCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(148,69,53,0.06);
+  border-color: #FAD6A6;
+}
+.halBaruCardHeader {
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.halBaruIcon {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; background: rgba(148, 69, 53, 0.07);
+  border-radius: 12px; color: #944535;
+}
+.halBaruCard h3 {
+  font-size: 1.1rem; font-weight: 800; color: #0D0C13; margin: 0;
+}
+.halBaruDesc {
+  font-size: 0.88rem; color: #555; line-height: 1.6; margin: 0; flex-grow: 1;
+}
+.halBaruCompare {
+  background: #fdf8f2; border-radius: 12px; padding: 0.75rem 1rem;
+  font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.35rem;
+  border: 1px solid rgba(148,69,53,0.08);
+}
+.compareLama {
+  color: #777; text-decoration: line-through;
+}
+.compareLama span {
+  font-weight: 700; color: #999;
+}
+.compareBaru {
+  color: #1a2e1a; font-weight: 600;
+}
+.compareBaru span {
+  font-weight: 800; color: #15803d;
+}
+
+@media (max-width: 900px) {
+  .halBaruGrid { grid-template-columns: 1fr; gap: 1.5rem; }
 }

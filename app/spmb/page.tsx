@@ -289,6 +289,66 @@ export default function SpmbPage() {
         </div>
       </section>
 
+      {/* HAL BARU DI SPMB */}
+      <section className={styles.section} id="perubahan">
+        <div className={styles.sectionHeader}>
+          <div className={styles.badge}>Informasi Terbaru</div>
+          <h2>Hal Baru di SPMB <span className={styles.highlight}>TA 2026/2027</span></h2>
+          <p>Beberapa perubahan regulasi resmi berdasarkan SK Bupati Klaten untuk proses seleksi tahun ini.</p>
+        </div>
+        <div className={styles.halBaruGrid}>
+          
+          <div className={styles.halBaruCard}>
+            <div className={styles.halBaruCardHeader}>
+              <div className={styles.halBaruIcon}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <h3>Seleksi Jarak RW</h3>
+            </div>
+            <p className={styles.halBaruDesc}>
+              Seleksi Jalur Domisili kini ditentukan berdasarkan <strong>jarak resmi dari RW tempat tinggal</strong> ke sekolah (sesuai Perbup No. 12/400.3/7 Tahun 2026).
+            </p>
+            <div className={styles.halBaruCompare}>
+              <div className={styles.compareLama}><span>Lama:</span> Batas administrasi desa</div>
+              <div className={styles.compareBaru}><span>Baru:</span> Jarak RW terukur (sistem koordinat)</div>
+            </div>
+          </div>
+
+          <div className={styles.halBaruCard}>
+            <div className={styles.halBaruCardHeader}>
+              <div className={styles.halBaruIcon}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
+              </div>
+              <h3>Nilai TKA & Rapor</h3>
+            </div>
+            <p className={styles.halBaruDesc}>
+              Seleksi Jalur Prestasi mengintegrasikan nilai ujian kelulusan <strong>SHTKA (Surat Hasil Test Kemampuan Akademik)</strong> untuk lulusan tahun ajaran 2025/2026.
+            </p>
+            <div className={styles.halBaruCompare}>
+              <div className={styles.compareLama}><span>Lama:</span> Nilai akumulasi rapor saja</div>
+              <div className={styles.compareBaru}><span>Baru:</span> Kombinasi SHTKA + Nilai Rapor</div>
+            </div>
+          </div>
+
+          <div className={styles.halBaruCard}>
+            <div className={styles.halBaruCardHeader}>
+              <div className={styles.halBaruIcon}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <h3>Syarat Nilai 2 Mapel</h3>
+            </div>
+            <p className={styles.halBaruDesc}>
+              Ketentuan Surat Keterangan Nilai pendaftar kini disederhanakan dan hanya menggunakan <strong>2 mata pelajaran utama</strong> yang diujikan.
+            </p>
+            <div className={styles.halBaruCompare}>
+              <div className={styles.compareLama}><span>Lama:</span> 3 Mapel (BI, MTK, IPA)</div>
+              <div className={styles.compareBaru}><span>Baru:</span> 2 Mapel (BI & Matematika)</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* 4 ALASAN */}
       <section className={styles.sectionAlt}>
         <div className={styles.sectionHeader}>
