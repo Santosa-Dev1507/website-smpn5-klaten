@@ -303,7 +303,7 @@ export default function SpmbPage() {
               <div className={styles.halBaruIcon}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               </div>
-              <h3>Seleksi Jarak RW</h3>
+              <h3>Seleksi jalur domisilli menggunakan Jarak RW</h3>
             </div>
             <p className={styles.halBaruDesc}>
               Seleksi Jalur Domisili kini ditentukan berdasarkan <strong>jarak resmi dari RW tempat tinggal</strong> ke sekolah (sesuai Perbup No. 12/400.3/7 Tahun 2026).
@@ -312,6 +312,9 @@ export default function SpmbPage() {
               <div className={styles.compareLama}><span>Lama:</span> jarak balaidesa ke sekolah</div>
               <div className={styles.compareBaru}><span>Baru:</span> Jarak masing masing RW ke SMP N 5 Klaten</div>
             </div>
+            <a href="#cek-domisili" className={styles.halBaruLink}>
+              Cek Jarak RW Anda &rarr;
+            </a>
           </div>
 
           <div className={styles.halBaruCard}>

@@ -542,6 +542,22 @@
 .compareBaru span {
   font-weight: 800; color: #15803d;
 }
+.halBaruLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #944535;
+  text-decoration: none;
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  transition: color 0.2s, transform 0.2s;
+}
+.halBaruLink:hover {
+  color: #c25944;
+  transform: translateX(4px);
+}
 
 @media (max-width: 900px) {
   .halBaruGrid { grid-template-columns: 1fr; gap: 1.5rem; }
