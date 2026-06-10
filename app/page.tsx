@@ -15,6 +15,11 @@ const isSpmbOpen = false;
 // Ubah ke `true` saat pengumuman hasil TKA dibuka, `false` saat sudah lewat masanya
 const isTkaOpen = false;
 
+// ===== KONFIGURASI PENGUMUMAN KELULUSAN =====
+// Ubah ke `true` saat pengumuman kelulusan dibuka, `false` saat ditutup/disembunyikan
+const isKelulusanOpen = false;
+
+
 // --- DATA PLACEHOLDER (Ganti dengan data asli nanti) ---
 
 const ekskulList = [
@@ -117,13 +122,15 @@ export default function Home() {
             dan disiapkan untuk masa depan yang lebih dari sekadar nilai.
           </p>
 
-          <div className={styles.announcementAlert}>
-            <div className={styles.announcementIcon}>🎓</div>
-            <div className={styles.announcementText}>
-              <strong>Pengumuman Kelulusan TA 2025/2026</strong>
+          {isKelulusanOpen && (
+            <div className={styles.announcementAlert}>
+              <div className={styles.announcementIcon}>🎓</div>
+              <div className={styles.announcementText}>
+                <strong>Pengumuman Kelulusan TA 2025/2026</strong>
+              </div>
+              <a href="/pengumuman" className={styles.btnAnnouncement}>Cek Kelulusan</a>
             </div>
-            <a href="/pengumuman" className={styles.btnAnnouncement}>Cek Kelulusan</a>
-          </div>
+          )}
 
           {isTkaOpen && (
             <div className={styles.announcementAlert}>
