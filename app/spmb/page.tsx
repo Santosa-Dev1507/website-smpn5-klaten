@@ -249,9 +249,6 @@ export default function SpmbPage() {
                 </tbody>
               </table>
             </div>
-            <p className={styles.tableNote}>
-              ⚠️ Jadwal bersifat <strong>perkiraan</strong>. Jadwal resmi akan diumumkan oleh Dinas Pendidikan Kabupaten Klaten. Pantau terus laman ini atau hubungi sekolah untuk informasi terbaru.
-            </p>
           </div>
 
           {/* SYARAT */}
