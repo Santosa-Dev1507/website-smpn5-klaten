@@ -7,9 +7,8 @@ import Script from "next/script";
 import InstagramFeed from "./components/InstagramFeed";
 import SpmbCountdown from "./components/SpmbCountdown";
 
-// ===== KONFIGURASI SPMB =====
-// Ubah ke `true` saat pendaftaran dibuka, `false` saat belum dibuka
-const isSpmbOpen = false;
+// Menggunakan waktu target: 28 Juni 2026 23:59:00 WIB (UTC+7)
+const isSpmbOpen = new Date() >= new Date("2026-06-28T23:59:00+07:00");
 
 // ===== KONFIGURASI PENGUMUMAN HASIL TKA =====
 // Ubah ke `true` saat pengumuman hasil TKA dibuka, `false` saat sudah lewat masanya
