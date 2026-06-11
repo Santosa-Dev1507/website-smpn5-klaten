@@ -155,7 +155,7 @@
 .jalurKuota strong { font-size: 0.9rem; font-weight: 900; color: #944535; }
 
 /* Description */
-.jalurDesc { font-size: 0.88rem; color: #555; line-height: 1.65; margin-bottom: 1rem; }
+.jalurDesc { font-size: 0.9rem; color: #555; line-height: 1.65; margin-bottom: 1rem; }
 
 /* Section label (Dokumen/Seleksi) */
 .jalurSectionLabel {
@@ -171,7 +171,7 @@
   display: flex; align-items: flex-start; gap: 0.6rem;
   background: #f0fdf4; border-left: 3px solid #4ade80;
   border-radius: 0 8px 8px 0; padding: 0.5rem 0.75rem;
-  font-size: 0.86rem; color: #1a2e1a; line-height: 1.5;
+  font-size: 0.9rem; color: #1a2e1a; line-height: 1.5;
   transition: background 0.2s;
 }
 .jalurDocItem:hover { background: #dcfce7; }
@@ -203,7 +203,7 @@
   display: flex; align-items: flex-start; gap: 0.6rem;
   background: #fffbeb; border-left: 3px solid #fbbf24;
   border-radius: 0 8px 8px 0; padding: 0.5rem 0.75rem;
-  font-size: 0.84rem; color: #78350f; line-height: 1.5;
+  font-size: 0.88rem; color: #78350f; line-height: 1.5;
   transition: background 0.2s;
 }
 .jalurNoteItem:hover { background: #fef3c7; }
@@ -291,6 +291,7 @@
   cursor: pointer; background: #fdf8f2; list-style: none; display: flex; justify-content: space-between; align-items: center;
 }
 .accordion summary::-webkit-details-marker { display: none; }
+.accordion summary::marker { display: none; }
 .accordion summary::after { content: '+'; font-size: 1.5rem; color: #944535; transition: transform 0.3s; }
 .accordion[open] summary::after { transform: rotate(45deg); }
 .accordionContent {
@@ -300,7 +301,7 @@
   transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1), padding 0.3s ease;
 }
 .accordion[open] .accordionContent {
-  max-height: 800px;
+  max-height: 2000px;
   padding: 1.5rem;
 }
 .accordionContent h4 { font-size: 1rem; color: #944535; margin-top: 1.5rem; margin-bottom: 0.5rem; }
@@ -383,6 +384,9 @@
 @media (max-width: 480px) {
   .rekapGrid { grid-template-columns: 1fr 1fr; }
   .rekapNilai { font-size: 1.4rem; }
+  /* Sembunyikan kolom No urut di layar sangat kecil agar tabel tidak terlalu padat */
+  .table th:first-child,
+  .table td:first-child { display: none; }
 }
 
 /* ── DOMISILI SEARCH ── */
@@ -454,7 +458,7 @@
   font-size: 0.85rem; font-weight: 800; letter-spacing: 0.5px;
 }
 .domisiliNote {
-  font-size: 0.78rem; color: #999; line-height: 1.6;
+  font-size: 0.82rem; color: #999; line-height: 1.6;
   margin: 0; padding-top: 1rem;
   border-top: 1px solid #f0f0f0;
 }
@@ -531,13 +535,38 @@
   border: 1px solid rgba(148,69,53,0.08);
 }
 .compareLama {
-  color: #777; text-decoration: line-through;
+  color: #9ca3af;
+  text-decoration: line-through;
+  padding-left: 1.3rem;
+  position: relative;
+}
+.compareLama::before {
+  content: "✕";
+  position: absolute;
+  left: 0;
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 0.65rem;
+  text-decoration: none;
+  top: 0.1em;
 }
 .compareLama span {
-  font-weight: 700; color: #999;
+  font-weight: 700; color: #9ca3af;
 }
 .compareBaru {
-  color: #1a2e1a; font-weight: 600;
+  color: #1a2e1a;
+  font-weight: 600;
+  padding-left: 1.3rem;
+  position: relative;
+}
+.compareBaru::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #15803d;
+  font-weight: 700;
+  font-size: 0.72rem;
+  top: 0.05em;
 }
 .compareBaru span {
   font-weight: 800; color: #15803d;
@@ -561,4 +590,65 @@
 
 @media (max-width: 900px) {
   .halBaruGrid { grid-template-columns: 1fr; gap: 1.5rem; }
+}
+
+/* ── SKELETON LOADER (DomisiliSearch loading state) ── */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position:  600px 0; }
+}
+.skeletonBase {
+  background: linear-gradient(90deg, #f3f3f3 25%, #e8e8e8 50%, #f3f3f3 75%);
+  background-size: 1200px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 8px;
+}
+.skeletonLabel {
+  composes: skeletonBase;
+  height: 11px;
+  width: 55%;
+  margin-bottom: 0.5rem;
+}
+.skeletonInput {
+  composes: skeletonBase;
+  height: 52px;
+  width: 100%;
+  border-radius: 14px;
+}
+.skeletonCard {
+  composes: skeletonBase;
+  height: 130px;
+  width: 100%;
+  border-radius: 20px;
+}
+
+/* ── RETRY BUTTON (DomisiliSearch error state) ── */
+.retryButton {
+  background: #944535;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 0.65rem 1.75rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.3px;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(148, 69, 53, 0.22);
+}
+.retryButton:hover {
+  background: #7a382a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(148, 69, 53, 0.3);
+}
+.retryButton:active { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .skeletonLabel,
+  .skeletonInput,
+  .skeletonCard {
+    animation: none;
+    background: #f0f0f0;
+  }
 }

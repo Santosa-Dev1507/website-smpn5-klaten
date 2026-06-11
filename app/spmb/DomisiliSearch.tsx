@@ -75,17 +75,40 @@ function parseCSV(text: string): DesaData[] {
   return result;
 }
 
+/** Skeleton loader — ditampilkan saat data sedang dimuat */
+function DomisiliSkeleton() {
+  return (
+    <div className={styles.domisiliWrap}>
+      <div className={styles.domisiliDropdowns}>
+        <div className={styles.domisiliField}>
+          <div className={styles.skeletonLabel} />
+          <div className={styles.skeletonInput} />
+        </div>
+        <div className={styles.domisiliField}>
+          <div className={styles.skeletonLabel} />
+          <div className={styles.skeletonInput} />
+        </div>
+      </div>
+      <div className={styles.skeletonCard} />
+    </div>
+  );
+}
+
 export default function DomisiliSearch() {
   const [data, setData] = useState<DesaData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const [selectedDesa, setSelectedDesa] = useState('');
   const [selectedRW, setSelectedRW] = useState('');
   const desaRef = useRef<HTMLSelectElement>(null);
 
+  // retryCount digunakan sebagai trigger untuk fetch ulang saat retry
   useEffect(() => {
     let cancelled = false;
     async function fetchData() {
+      setLoading(true);
+      setError(false);
       try {
         const res = await fetch(CSV_URL, { cache: 'no-store' });
         if (!res.ok) throw new Error('fetch failed');
@@ -103,7 +126,7 @@ export default function DomisiliSearch() {
     }
     fetchData();
     return () => { cancelled = true; };
-  }, []);
+  }, [retryCount]);
 
   // Sinkronisasi jika browser restore nilai select dari cache form
   useEffect(() => {
@@ -122,17 +145,29 @@ export default function DomisiliSearch() {
   }
 
   if (loading) {
-    return (
-      <div className={styles.domisiliWrap} style={{ textAlign: 'center', padding: '2rem 0' }}>
-        <p style={{ opacity: 0.6 }}>Memuat data jarak RW…</p>
-      </div>
-    );
+    return <DomisiliSkeleton />;
   }
 
   if (error) {
     return (
-      <div className={styles.domisiliWrap} style={{ textAlign: 'center', padding: '2rem 0' }}>
-        <p style={{ color: '#e55' }}>Gagal memuat data. Silakan muat ulang halaman.</p>
+      <div className={styles.domisiliWrap} style={{ textAlign: 'center', padding: '2.5rem 1rem' }}>
+        <svg
+          width="44" height="44" viewBox="0 0 24 24" fill="none"
+          aria-hidden="true" style={{ marginBottom: '0.75rem', opacity: 0.75 }}
+        >
+          <circle cx="12" cy="12" r="10" stroke="#ef4444" strokeWidth="2" />
+          <line x1="12" y1="7" x2="12" y2="13" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" />
+          <circle cx="12" cy="17" r="1.2" fill="#ef4444" />
+        </svg>
+        <p style={{ color: '#b91c1c', fontWeight: 600, marginBottom: '1.25rem', fontSize: '0.95rem' }}>
+          Gagal memuat data jarak RW. Periksa koneksi internet Anda.
+        </p>
+        <button
+          onClick={() => setRetryCount((c) => c + 1)}
+          className={styles.retryButton}
+        >
+          ↺ Coba Lagi
+        </button>
       </div>
     );
   }
@@ -161,11 +196,11 @@ export default function DomisiliSearch() {
                 </option>
               ))}
             </select>
-            <span className={styles.domisiliArrow}>▾</span>
+            <span className={styles.domisiliArrow} aria-hidden="true">▾</span>
           </div>
         </div>
 
-        {/* DROPDOWN RW */}
+        {/* DROPDOWN RW — disabled saat desa belum dipilih */}
         <div className={styles.domisiliField}>
           <label htmlFor="select-rw" className={styles.domisiliLabel}>
             Nomor RW
@@ -176,6 +211,7 @@ export default function DomisiliSearch() {
               value={selectedRW}
               onChange={(e) => setSelectedRW(e.target.value)}
               className={styles.domisiliSelect}
+              disabled={!selectedDesa}
               autoComplete="off"
             >
               <option value="">
@@ -187,40 +223,43 @@ export default function DomisiliSearch() {
                 </option>
               ))}
             </select>
-            <span className={styles.domisiliArrow}>▾</span>
+            <span className={styles.domisiliArrow} aria-hidden="true">▾</span>
           </div>
         </div>
       </div>
 
-      {/* HASIL */}
-      {rwData && (
-        <div className={styles.domisiliResult}>
-          <div className={styles.domisiliResultHeader}>
-            <span className={styles.domisiliResultDesa}>{selectedDesa}</span>
-            <span className={styles.domisiliResultRW}>RW {String(selectedRW).padStart(2, '0')}</span>
-          </div>
-          <div className={styles.domisiliResultBody}>
-            <div className={styles.domisiliJarak}>
-              <span className={styles.domisiliJarakAngka}>{rwData.jarak.toFixed(2).replace('.', ',')}</span>
-              <span className={styles.domisiliJarakSatuan}>km dari SMPN 5 Klaten</span>
+      {/* aria-live: perubahan hasil diumumkan ke screen reader secara otomatis */}
+      <div aria-live="polite" aria-atomic="true">
+        {/* HASIL */}
+        {rwData && (
+          <div className={styles.domisiliResult}>
+            <div className={styles.domisiliResultHeader}>
+              <span className={styles.domisiliResultDesa}>{selectedDesa}</span>
+              <span className={styles.domisiliResultRW}>RW {String(selectedRW).padStart(2, '0')}</span>
             </div>
+            <div className={styles.domisiliResultBody}>
+              <div className={styles.domisiliJarak}>
+                <span className={styles.domisiliJarakAngka}>{rwData.jarak.toFixed(2).replace('.', ',')}</span>
+                <span className={styles.domisiliJarakSatuan}>km dari SMPN 5 Klaten</span>
+              </div>
+            </div>
+            <p className={styles.domisiliNote}>
+              * Berdasarkan Lampiran Keputusan Bupati Klaten Nomor 12/Tahun 2026 tentang Wilayah Penerimaan Murid Baru Jenjang Sekolah Menengah Pertama Tingkat Kabupaten Klaten Tahun Ajaran 2026/2027.
+            </p>
           </div>
-          <p className={styles.domisiliNote}>
-            * Berdasarkan Lampiran Keputusan Bupati Klaten Nomor 12/Tahun 2026 tentang Wilayah Penerimaan Murid Baru Jenjang Sekolah Menengah Pertama Tingkat Kabupaten Klaten Tahun Ajaran 2026/2027.
-          </p>
-        </div>
-      )}
+        )}
 
-      {/* EMPTY STATE saat desa dipilih tapi belum pilih RW */}
-      {selectedDesa && !selectedRW && (
-        <div className={styles.domisiliEmpty}>
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="rgba(148,69,53,0.12)" stroke="#944535" strokeWidth="1.5" strokeLinejoin="round"/>
-            <circle cx="12" cy="9" r="2.5" fill="#944535"/>
-          </svg>
-          <p>Pilih nomor RW untuk melihat jarak dari SMPN 5 Klaten</p>
-        </div>
-      )}
+        {/* EMPTY STATE saat desa dipilih tapi belum pilih RW */}
+        {selectedDesa && !selectedRW && (
+          <div className={styles.domisiliEmpty}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="rgba(148,69,53,0.12)" stroke="#944535" strokeWidth="1.5" strokeLinejoin="round"/>
+              <circle cx="12" cy="9" r="2.5" fill="#944535"/>
+            </svg>
+            <p>Pilih nomor RW untuk melihat jarak dari SMPN 5 Klaten</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

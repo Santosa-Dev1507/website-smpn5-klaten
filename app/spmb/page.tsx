@@ -252,7 +252,7 @@ export default function SpmbPage() {
             </div>
             <div className={styles.heroStatDivider} />
             <div className={styles.heroStat}>
-              <strong>2026</strong>
+              <strong>2026/2027</strong>
               <span>Tahun Ajaran</span>
             </div>
           </div>
@@ -303,7 +303,7 @@ export default function SpmbPage() {
               <div className={styles.halBaruIcon}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               </div>
-              <h3>Seleksi jalur domisilli menggunakan Jarak RW</h3>
+              <h3>Seleksi Jalur Domisili menggunakan Jarak RW</h3>
             </div>
             <p className={styles.halBaruDesc}>
               Seleksi Jalur Domisili kini ditentukan berdasarkan <strong>jarak resmi dari RW tempat tinggal</strong> ke sekolah (sesuai Perbup No. 12/400.3/7 Tahun 2026).
@@ -435,6 +435,7 @@ export default function SpmbPage() {
                   <h3>{j.title}</h3>
                   <div className={styles.jalurKuota}>
                     <strong>Kuota {j.kuota} Siswa</strong>
+                    <span>· {j.persen}</span>
                   </div>
                 </div>
               </div>
@@ -636,7 +637,7 @@ export default function SpmbPage() {
           <p>Pendaftaran dilakukan secara online melalui portal resmi Dinas Pendidikan Klaten. Pantau terus laman ini untuk informasi jadwal terbaru.</p>
           <div className={styles.ctaActions}>
             <a href="#" className={styles.btnCtaPrimary}>Portal Pendaftaran Online</a>
-            <a href="https://wa.me/6289537781555" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Tanya via WhatsApp</a>
+            <a href="https://wa.me/62895377815555" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Tanya via WhatsApp</a>
           </div>
         </div>
       </section>
