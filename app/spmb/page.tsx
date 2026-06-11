@@ -237,6 +237,7 @@ export default function SpmbPage() {
             <a href="#daftar" className={styles.btnDaftar}>Portal Daftar Online →</a>
             <a href="#jalur" className={styles.btnDaftarOutline}>Lihat Jalur</a>
             <a href="#jadwal" className={styles.btnDaftarOutline}>Cek Jadwal</a>
+            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Unduh Flyer 📄</a>
           </div>
         </div>
         <div className={styles.pageHeroRight}>
@@ -637,6 +638,7 @@ export default function SpmbPage() {
           <p>Pendaftaran dilakukan secara online melalui portal resmi Dinas Pendidikan Klaten. Pantau terus laman ini untuk informasi jadwal terbaru.</p>
           <div className={styles.ctaActions}>
             <a href="#" className={styles.btnCtaPrimary}>Portal Pendaftaran Online</a>
+            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Unduh Flyer 📄</a>
             <a href="https://wa.me/62895377815555" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Tanya via WhatsApp</a>
           </div>
         </div>
