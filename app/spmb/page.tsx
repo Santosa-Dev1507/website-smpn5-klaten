@@ -146,11 +146,11 @@ const jalur = [
 ];
 
 const jadwal = [
-  { kegiatan: "Pendaftaran", tanggal: "29 Juni – 2 Juli 2026", waktu: "Mulai Senin 29 Juni Pukul 07.00 WIB · Penutupan Kamis 2 Juli Pukul 12.00 WIB" },
-  { kegiatan: "Analisis & Penyusunan Peringkat", tanggal: "2 – 3 Juli 2026", waktu: "Mulai 2 Juli Pukul 12.00 WIB s.d. 3 Juli 2026 Pukul 12.00 WIB" },
-  { kegiatan: "Pengumuman Hasil", tanggal: "4 Juli 2026", waktu: "Pukul 07.00 WIB" },
+  { kegiatan: "Pendaftaran", tanggal: "29 Juni – 2 Juli 2026", waktu: "Mulai Senin 29 Juni Pukul 00.00 WIB · Penutupan Kamis 2 Juli Pukul 12.00 WIB" },
+  { kegiatan: "Analisis & Penyusunan Peringkat", tanggal: "2 – 3 Juli 2026", waktu: "Mulai 2 Juli Pukul 12.00 WIB s.d. 3 Juli 2026 Pukul 23.59 WIB" },
+  { kegiatan: "Pengumuman", tanggal: "4 Juli 2026", waktu: "00.00 WIB" },
   { kegiatan: "Daftar Ulang", tanggal: "6 – 7 Juli 2026", waktu: "07.00 – 14.00 WIB" },
-  { kegiatan: "Hari Pertama Masuk Sekolah", tanggal: "13 Juli 2026", waktu: "" },
+  { kegiatan: "Hari Pertama Masuk Sekolah", tanggal: "13 Juli 2026", waktu: "-" },
 ];
 
 const syarat = [
