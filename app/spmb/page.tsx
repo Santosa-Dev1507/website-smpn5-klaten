@@ -330,7 +330,7 @@ export default function SpmbPage() {
             </p>
             <div className={styles.halBaruCompare}>
               <div className={styles.compareLama}><span>Lama:</span> Nilai akumulasi rapor saja</div>
-              <div className={styles.compareBaru}><span>Baru:</span> Kombinasi Nilai TKA + Nilai Rapor</div>
+              <div className={styles.compareBaru}><span>Baru:</span> Kombinasi Nilai TKA + Nilai Rapor + Piagam</div>
             </div>
           </div>
 
