@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import SpmbPopup from "./components/SpmbPopup";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ 
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({
           `}
         </Script>
         {children}
+        <SpmbPopup />
       </body>
     </html>
   );
