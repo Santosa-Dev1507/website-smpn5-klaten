@@ -8,7 +8,7 @@ export default function SpmbPopup() {
 
   useEffect(() => {
     // Check local storage so it only shows once
-    const hasSeenPopup = localStorage.getItem("spmb_popup_seen");
+    const hasSeenPopup = localStorage.getItem("spmb_popup_seen_v3");
     
     if (!hasSeenPopup) {
       // Delay slightly for a smoother experience
@@ -23,25 +23,25 @@ export default function SpmbPopup() {
   const handleClose = () => {
     setIsOpen(false);
     // Set to local storage after closing so it doesn't appear again
-    localStorage.setItem("spmb_popup_seen", "true");
+    localStorage.setItem("spmb_popup_seen_v3", "true");
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="popup-overlay" onClick={handleClose}>
-      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-        <button className="popup-close" onClick={handleClose} aria-label="Close popup">
+    <div className="spmb-info-overlay" onClick={handleClose}>
+      <div className="spmb-info-content" onClick={(e) => e.stopPropagation()}>
+        <button className="spmb-info-close" onClick={handleClose} aria-label="Close popup">
           &times;
         </button>
         {/* We use standard img for simplicity or next/image if image is local */}
-        <div className="popup-image-wrapper">
+        <div className="spmb-info-image-wrapper">
           <Image
             src="/flyer-spmb.jpeg"
             alt="Pengumuman SPMB"
             width={800}
             height={1000}
-            className="popup-image"
+            className="spmb-info-image"
             priority
           />
         </div>

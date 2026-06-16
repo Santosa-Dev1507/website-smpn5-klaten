@@ -48,8 +48,8 @@ a {
   }
 }
 
-/* SPMB Popup Styles */
-.popup-overlay {
+/* SPMB Announcement Styles */
+.spmb-info-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -64,7 +64,7 @@ a {
   backdrop-filter: blur(4px);
 }
 
-.popup-content {
+.spmb-info-content {
   position: relative;
   background: white;
   border-radius: 12px;
@@ -72,10 +72,10 @@ a {
   max-height: 90vh;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  animation: popupFadeIn 0.3s ease-out;
+  animation: spmbInfoFadeIn 0.3s ease-out;
 }
 
-@keyframes popupFadeIn {
+@keyframes spmbInfoFadeIn {
   from {
     opacity: 0;
     transform: scale(0.95);
@@ -86,7 +86,7 @@ a {
   }
 }
 
-.popup-close {
+.spmb-info-close {
   position: absolute;
   top: 10px;
   right: 15px;
@@ -106,11 +106,11 @@ a {
   transition: background 0.2s;
 }
 
-.popup-close:hover {
+.spmb-info-close:hover {
   background: rgba(0, 0, 0, 0.8);
 }
 
-.popup-image-wrapper {
+.spmb-info-image-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -118,7 +118,7 @@ a {
   max-height: 90vh;
 }
 
-.popup-image {
+.spmb-info-image {
   width: auto;
   height: auto;
   max-width: 100%;
