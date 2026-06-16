@@ -37,7 +37,7 @@ export default function SpmbPopup() {
         {/* We use standard img for simplicity or next/image if image is local */}
         <div className="popup-image-wrapper">
           <Image
-            src="/flyer-spmb.jpg"
+            src="/flyer-spmb.jpeg"
             alt="Pengumuman SPMB"
             width={800}
             height={1000}
