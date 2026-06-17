@@ -64,7 +64,7 @@ const jalur = [
   {
     title: "Jalur Domisili",
     persen: "40%",
-    kuota: 102,
+    kuota: 103,
     desc: "Diperuntukkan bagi calon murid yang berdomisili di wilayah yang ditetapkan oleh Bupati Klaten.",
     dokumen: [
       "Kartu Keluarga (KK) — diterbitkan min. 1 tahun sebelum tanggal pendaftaran",
@@ -127,7 +127,7 @@ const jalur = [
   {
     title: "Jalur Mutasi",
     persen: "5%",
-    kuota: 13,
+    kuota: 12,
     desc: "Ditujukan bagi calon murid yang mengikuti perpindahan tugas orangtua/wali, atau anak guru yang mendaftar di sekolah tempat orangtua mengajar.",
     dokumen: [
       "Kartu Keluarga (KK)",
@@ -237,7 +237,7 @@ export default function SpmbPage() {
             <a href="#daftar" className={styles.btnDaftar}>Portal Daftar Online →</a>
             <a href="#jalur" className={styles.btnDaftarOutline}>Lihat Jalur</a>
             <a href="#jadwal" className={styles.btnDaftarOutline}>Cek Jadwal</a>
-            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Unduh Flyer 📄</a>
+            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Unduh Brosur dan Dokumen Pendukung 📄</a>
           </div>
         </div>
         <div className={styles.pageHeroRight}>
@@ -637,8 +637,8 @@ export default function SpmbPage() {
           <h2>Siap Bergabung dengan Keluarga <span className={styles.highlightPeach}>JUARA?</span></h2>
           <p>Pendaftaran dilakukan secara online melalui portal resmi Dinas Pendidikan Klaten. Pantau terus laman ini untuk informasi jadwal terbaru.</p>
           <div className={styles.ctaActions}>
-            <a href="#" className={styles.btnCtaPrimary}>Portal Pendaftaran Online</a>
-            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Unduh Flyer 📄</a>
+            <a href="https://spmb.klaten.go.id/" target="_blank" rel="noopener noreferrer" className={styles.btnCtaPrimary}>Portal Pendaftaran Online</a>
+            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Unduh Brosur dan Dokumen Pendukung 📄</a>
             <a href="https://wa.me/62895377815555" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Tanya via WhatsApp</a>
           </div>
         </div>
