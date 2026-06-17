@@ -244,7 +244,7 @@ export default function DomisiliSearch() {
               </div>
             </div>
             <p className={styles.domisiliNote}>
-              * Berdasarkan Lampiran Keputusan Bupati Klaten Nomor 12/Tahun 2026 tentang Wilayah Penerimaan Murid Baru Jenjang Sekolah Menengah Pertama Tingkat Kabupaten Klaten Tahun Ajaran 2026/2027.
+              * Berdasarkan Lampiran SK Bupati Klaten No 12/400.3/6 tahun 2026 tentang Wilayah Penerimaan Murid Baru Jenjang Sekolah Menengah Pertama Tingkat Kabupaten Klaten Tahun Ajaran 2026/2027.
             </p>
           </div>
         )}
