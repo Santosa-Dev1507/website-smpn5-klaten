@@ -1,91 +1,187 @@
 import styles from "./alumni.module.css";
 import Header from "../components/Header";
+import AlumniForm from "./AlumniForm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Alumni ESPEMA — SMPN 5 Klaten",
   description:
-    "Halaman resmi alumni SMP Negeri 5 Klaten (ESPEMA). Tetap terhubung, berbagi cerita, dan berkontribusi untuk almamater tercinta.",
+    "Halaman resmi alumni SMP Negeri 5 Klaten (ESPEMA). Unduh dokumen kelulusan, tetap terhubung, dan berkontribusi untuk almamater tercinta.",
 };
 
 const milestones = [
-  { tahun: "1987", label: "Angkatan Pertama Lulus", icon: "🎓" },
-  { tahun: "2000", label: "Jaringan Alumni Mulai Terbentuk", icon: "🤝" },
-  { tahun: "2014", label: "Reuni Besar Pertama", icon: "🎉" },
-  { tahun: "2025", label: "Alumni Tersebar di Seluruh Indonesia", icon: "🌏" },
+  {
+    tahun: "1987",
+    label: "Angkatan Pertama Lulus",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+    ),
+  },
+  {
+    tahun: "2000",
+    label: "Jaringan Alumni Mulai Terbentuk",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+    ),
+  },
+  {
+    tahun: "2014",
+    label: "Reuni Besar Pertama",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
+      </svg>
+    ),
+  },
+  {
+    tahun: "2025",
+    label: "Alumni Tersebar di Seluruh Indonesia",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    ),
+  },
 ];
 
 const manfaat = [
   {
-    icon: "🔗",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    ),
     title: "Tetap Terhubung",
     desc: "Bergabung dalam komunitas alumni ESPEMA dan tetap terhubung dengan teman-teman lama lintas angkatan.",
   },
   {
-    icon: "💼",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+      </svg>
+    ),
     title: "Jaringan Profesional",
     desc: "Manfaatkan jaringan alumni yang tersebar di berbagai bidang untuk pengembangan karier dan usaha.",
   },
   {
-    icon: "🎓",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+    ),
     title: "Kontribusi untuk Adik Kelas",
     desc: "Berbagi pengalaman, motivasi, dan inspirasi kepada siswa aktif SMPN 5 Klaten sebagai role model.",
   },
   {
-    icon: "🏫",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    ),
     title: "Dukung Almamater",
     desc: "Bersama memajukan SMPN 5 Klaten melalui program beasiswa, donasi buku, atau kegiatan sosial sekolah.",
   },
 ];
 
+const stories = [
+  {
+    foto: "/alumni-1.png",
+    nama: "Rizal Kurniawan",
+    angkatan: "Angkatan 2018",
+    profesi: "Software Engineer — Shopee Indonesia",
+    kutipan:
+      "ESPEMA mengajarkan saya tentang disiplin dan kerja keras. Nilai-nilai itu yang terus saya bawa hingga hari ini dan menjadi fondasi karier saya.",
+  },
+  {
+    foto: "/alumni-2.png",
+    nama: "Sari Dewi Pratiwi",
+    angkatan: "Angkatan 2019",
+    profesi: "Dokter Muda — RSUD Klaten",
+    kutipan:
+      "Guru-guru ESPEMA yang luar biasa menanamkan rasa ingin tahu yang tinggi. Itulah yang mendorong saya untuk terus belajar dan akhirnya bisa menjadi dokter.",
+  },
+  {
+    foto: "/alumni-3.png",
+    nama: "Fadhil Ananda",
+    angkatan: "Angkatan 2020",
+    profesi: "Mahasiswa Teknik — Universitas Gadjah Mada",
+    kutipan:
+      "Masa SMP di ESPEMA adalah masa paling berkesan. Di sinilah saya belajar arti persahabatan sejati dan semangat pantang menyerah.",
+  },
+];
+
 export default function AlumniPage() {
   return (
-    <main className={styles.main}>
+    <main className={styles.main} id="main-content">
+      <a href="#main-content" className={styles.skipLink}>
+        Lewati ke konten utama
+      </a>
       <Header activePage="Alumni" />
 
-      {/* PAGE HERO */}
+      {/* ── HERO ── */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <div className={styles.heroBadge}>👋 Selamat Datang, Alumni ESPEMA</div>
+          <div className={styles.heroBadge}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            Selamat Datang, Alumni ESPEMA
+          </div>
           <h1>
             Satu Almamater,<br />
             Selamanya <span className={styles.highlight}>ESPEMA JUARA</span>
           </h1>
           <p>
             Jarak memisahkan, tapi ikatan almamater tidak pernah putus.
-            SMPN 5 Klaten bangga dengan setiap alumni yang telah melangkah jauh
-            dan mengharumkan nama ESPEMA di mana pun berada.
+            Lengkapi data Anda dan unduh dokumen kelulusan — kontribusi kecil
+            Anda sangat berarti untuk kemajuan SMPN 5 Klaten.
           </p>
           <div className={styles.heroActions}>
+            <a href="#pendataan" className={styles.btnPrimary} aria-label="Ambil dokumen kelulusan saya">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Ambil Dokumenku
+            </a>
             <a
               href="https://wa.me/6289537781555?text=Halo,%20saya%20alumni%20ESPEMA%20dan%20ingin%20bergabung%20ke%20grup%20alumni."
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.btnPrimary}
+              className={styles.btnSecondary}
+              aria-label="Gabung grup WhatsApp alumni ESPEMA"
             >
-              💬 Gabung Grup Alumni
-            </a>
-            <a href="#cerita" className={styles.btnSecondary}>
-              Baca Cerita Alumni
+              Gabung Komunitas
             </a>
           </div>
         </div>
-        <div className={styles.heroDecor}>
+        <div className={styles.heroDecor} aria-hidden="true">
           <div className={styles.heroCard}>
-            <div className={styles.heroCardIcon}>🏫</div>
+            <div className={styles.heroCardIcon}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </div>
             <strong>SMPN 5 Klaten</strong>
             <span>Berdiri sejak 1984</span>
           </div>
           <div className={styles.heroCardAlt}>
-            <div className={styles.heroCardIcon}>🎓</div>
+            <div className={styles.heroCardIcon}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
             <strong>38+ Angkatan</strong>
             <span>Alumni Berprestasi</span>
           </div>
         </div>
       </section>
 
-      {/* MILESTONE */}
-      <section className={styles.milestoneSection}>
+      {/* ── MILESTONE STRIP ── */}
+      <section className={styles.milestoneSection} aria-label="Jejak sejarah alumni ESPEMA">
         <div className={styles.milestoneInner}>
           {milestones.map((m, i) => (
             <div key={i} className={styles.milestoneItem}>
@@ -97,16 +193,50 @@ export default function AlumniPage() {
         </div>
       </section>
 
-      {/* MANFAAT BERGABUNG */}
-      <section className={styles.section}>
+      {/* ── TRACER STUDY & DOKUMEN ALUMNI (PRIORITAS UTAMA) ── */}
+      <section className={styles.formSection} id="pendataan" aria-labelledby="pendataan-heading">
+        <div className={styles.formSectionInner}>
+          <div className={styles.formSectionLeft}>
+            <div className={styles.badge}>Dokumen Kelulusan</div>
+            <h2 id="pendataan-heading">
+              Unduh <span className={styles.highlight}>Ijazah & SH TKA</span><br />Milik Anda
+            </h2>
+            <p>
+              Masukkan NISN dan lengkapi profil singkat Anda. Data ini membantu
+              sekolah dalam program tracer study alumni. Sebagai apresiasi, Anda
+              akan langsung dapat mengakses dokumen kelulusan Anda.
+            </p>
+            <ul className={styles.formBenefitList} aria-label="Keuntungan mengisi form">
+              {[
+                "Akses langsung file PDF Ijazah & SH TKA",
+                "Data Anda membantu akreditasi sekolah",
+                "Bergabung otomatis ke komunitas alumni",
+              ].map((b, i) => (
+                <li key={i}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className={styles.formSectionRight}>
+            <AlumniForm />
+          </div>
+        </div>
+      </section>
+
+      {/* ── MANFAAT ── */}
+      <section className={styles.section} aria-labelledby="manfaat-heading">
         <div className={styles.sectionHeader}>
           <div className={styles.badge}>Komunitas Alumni</div>
-          <h2>Kenapa Harus <span className={styles.highlight}>Bergabung?</span></h2>
+          <h2 id="manfaat-heading">Kenapa Harus <span className={styles.highlight}>Bergabung?</span></h2>
           <p>Menjadi bagian dari komunitas alumni ESPEMA bukan sekadar kenangan — ini tentang masa depan bersama.</p>
         </div>
         <div className={styles.manfaatGrid}>
           {manfaat.map((m, i) => (
-            <div key={i} className={styles.manfaatCard}>
+            <div key={i} className={styles.manfaatCard} style={{ animationDelay: `${i * 80}ms` }}>
               <div className={styles.manfaatIcon}>{m.icon}</div>
               <h3>{m.title}</h3>
               <p>{m.desc}</p>
@@ -115,66 +245,49 @@ export default function AlumniPage() {
         </div>
       </section>
 
-      {/* CERITA ALUMNI PLACEHOLDER */}
-      <section className={styles.sectionAlt} id="cerita">
+      {/* ── CERITA ALUMNI ── */}
+      <section className={styles.sectionAlt} id="cerita" aria-labelledby="cerita-heading">
         <div className={styles.sectionHeader}>
           <div className={styles.badge}>Inspirasi Alumni</div>
-          <h2>Cerita <span className={styles.highlight}>Para JUARA</span></h2>
-          <p>Alumni ESPEMA yang telah menorehkan prestasi dan menginspirasi.</p>
+          <h2 id="cerita-heading">Cerita <span className={styles.highlight}>Para JUARA</span></h2>
+          <p>Alumni ESPEMA yang telah menorehkan prestasi dan menginspirasi generasi berikutnya.</p>
         </div>
         <div className={styles.storyGrid}>
-          {[1, 2, 3].map((_, i) => (
-            <div key={i} className={styles.storyCard}>
+          {stories.map((s, i) => (
+            <article key={i} className={styles.storyCard} style={{ animationDelay: `${i * 100}ms` }}>
               <div className={styles.storyPhoto}>
-                <img
-                  src={`https://placehold.co/300x300/fdf8f2/944535?text=Foto+Alumni`}
-                  alt="Foto Alumni"
-                />
+                <img src={s.foto} alt={`Foto alumni ${s.nama}`} loading="lazy" />
               </div>
               <div className={styles.storyContent}>
-                <div className={styles.storyAngkatan}>Angkatan [Tahun]</div>
-                <h4>[Nama Alumni]</h4>
-                <p className={styles.storyJob}>🏢 [Profesi / Posisi saat ini]</p>
-                <p className={styles.storyQuote}>
-                  "ESPEMA mengajarkan saya tentang disiplin dan kerja keras. Nilai-nilai itu yang terus saya bawa hingga hari ini."
+                <div className={styles.storyAngkatan}>{s.angkatan}</div>
+                <h3>{s.nama}</h3>
+                <p className={styles.storyJob}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", marginRight: "4px", verticalAlign: "middle" }}>
+                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                  {s.profesi}
                 </p>
+                <blockquote className={styles.storyQuote}>
+                  &ldquo;{s.kutipan}&rdquo;
+                </blockquote>
               </div>
-            </div>
+            </article>
           ))}
         </div>
         <p className={styles.storyNote}>
-          ✏️ <strong>Punya cerita inspiratif?</strong> Kirimkan profil dan foto Anda ke{" "}
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", marginRight: "6px", verticalAlign: "middle" }}>
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/>
+          </svg>
+          <strong>Punya cerita inspiratif?</strong> Kirimkan profil dan foto Anda ke{" "}
           <a href="mailto:smp5negeriklaten@gmail.com">smp5negeriklaten@gmail.com</a>{" "}
           dan kami akan tampilkan di sini.
         </p>
       </section>
 
-      {/* DAFTAR ANGKATAN PLACEHOLDER */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.badge}>Direktori Alumni</div>
-          <h2>Cari <span className={styles.highlight}>Teman Lama</span></h2>
-          <p>Direktori alumni ESPEMA sedang dalam pengembangan. Bergabunglah sekarang agar data Anda masuk!</p>
-        </div>
-        <div className={styles.direktoriPlaceholder}>
-          <div className={styles.direktoriIcon}>🔍</div>
-          <h3>Direktori Sedang Disiapkan</h3>
-          <p>Kami sedang mengumpulkan data alumni dari seluruh angkatan. Daftarkan diri Anda sekarang dan jadilah yang pertama!</p>
-          <a
-            href="https://wa.me/6289537781555?text=Halo,%20saya%20alumni%20ESPEMA%20ingin%20mendaftarkan%20diri%20ke%20direktori%20alumni."
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.btnPrimary}
-          >
-            Daftarkan Diri Saya
-          </a>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className={styles.ctaSection}>
+      {/* ── CTA ── */}
+      <section className={styles.ctaSection} aria-labelledby="cta-heading">
         <div className={styles.ctaInner}>
-          <h2>Bangga Jadi <span className={styles.highlightPeach}>Alumni ESPEMA?</span></h2>
+          <h2 id="cta-heading">Bangga Jadi <span className={styles.highlightPeach}>Alumni ESPEMA?</span></h2>
           <p>
             Tunjukkan dengan bergabung ke komunitas resmi kami. Bersama kita terus jaga
             semangat JUARA yang dulu ditanamkan di bangku SMPN 5 Klaten.
@@ -185,21 +298,29 @@ export default function AlumniPage() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.btnCtaPrimary}
+              aria-label="Gabung grup WhatsApp alumni ESPEMA"
             >
-              💬 Gabung WhatsApp Alumni
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ display: "inline", marginRight: "6px" }}>
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.552 4.103 1.516 5.83L.057 23.27a.5.5 0 0 0 .611.637l5.601-1.47A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.14-1.424l-.368-.22-3.32.871.886-3.236-.24-.374A9.952 9.952 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              Gabung WhatsApp Alumni
             </a>
-            <a href="/" className={styles.btnCtaSecondary}>
-              ← Kembali ke Beranda
+            <a href="/" className={styles.btnCtaSecondary} aria-label="Kembali ke halaman beranda">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", marginRight: "4px" }}>
+                <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+              </svg>
+              Kembali ke Beranda
             </a>
           </div>
         </div>
       </section>
 
-      {/* FOOTER MINI */}
+      {/* ── FOOTER MINI ── */}
       <footer className={styles.footerMini}>
         <div className={styles.footerMiniInner}>
           <p>© 2026 SMPN 5 Klaten — Tempat Tumbuhnya Generasi JUARA.</p>
-          <a href="/">← Kembali ke Beranda</a>
+          <a href="/" aria-label="Kembali ke halaman beranda">← Kembali ke Beranda</a>
         </div>
       </footer>
     </main>
