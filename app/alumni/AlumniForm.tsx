@@ -16,27 +16,77 @@ export default function AlumniForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStep("loading");
     setErrorMsg("");
 
     const formData = new FormData(e.currentTarget);
+    const nisn     = (formData.get("nisn")   as string ?? "").trim();
+    const nama     = (formData.get("nama")   as string ?? "").trim();
+    const email    = (formData.get("email")  as string ?? "").trim();
+    const telepon  = (formData.get("telepon") as string ?? "").trim();
+    const tahunLulus = (formData.get("tahunLulus") as string ?? "").trim();
 
-    const result = await validateNisn({
-      nisn:          (formData.get("nisn")          as string ?? "").trim(),
-      nama:          (formData.get("nama")          as string ?? "").trim(),
-      email:         (formData.get("email")         as string ?? "").trim(),
-      telepon:       (formData.get("telepon")       as string ?? "").trim(),
-      tahunLulus:    (formData.get("tahunLulus")    as string ?? "").trim(),
-      kelasTerakhir: (formData.get("kelasTerakhir") as string ?? "").trim(),
-      status:        (formData.get("status")        as string ?? "").trim(),
-      instansi:      (formData.get("instansi")      as string ?? "").trim(),
-    });
+    // ── Validasi sisi klien ──────────────────────────────────────
+    if (!nisn) {
+      setErrorMsg("NISN wajib diisi. Masukkan 10 digit angka NISN Anda.");
+      return;
+    }
+    if (!/^\d+$/.test(nisn)) {
+      setErrorMsg("NISN hanya boleh berisi angka.");
+      return;
+    }
+    if (!nama) {
+      setErrorMsg("Nama lengkap wajib diisi.");
+      return;
+    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setErrorMsg("Masukkan alamat email yang valid.");
+      return;
+    }
+    if (!telepon) {
+      setErrorMsg("Nomor WhatsApp wajib diisi.");
+      return;
+    }
+    if (!tahunLulus) {
+      setErrorMsg("Tahun lulus wajib diisi.");
+      return;
+    }
+    // ─────────────────────────────────────────────────────────────
 
-    if (result.success && result.data) {
-      setDocData(result.data);
-      setStep("success");
-    } else {
-      setErrorMsg(result.message || "Terjadi kesalahan.");
+    setStep("loading");
+
+    try {
+      // Timeout 15 detik agar tidak berputar selamanya
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error("timeout")), 15000)
+      );
+
+      const result = await Promise.race([
+        validateNisn({
+          nisn,
+          nama,
+          email,
+          telepon,
+          tahunLulus,
+          kelasTerakhir: (formData.get("kelasTerakhir") as string ?? "").trim(),
+          status:        (formData.get("status")        as string ?? "").trim(),
+          instansi:      (formData.get("instansi")      as string ?? "").trim(),
+        }),
+        timeoutPromise,
+      ]);
+
+      if (result.success && result.data) {
+        setDocData(result.data);
+        setStep("success");
+      } else {
+        setErrorMsg(result.message || "Terjadi kesalahan.");
+        setStep("form");
+      }
+    } catch (err: any) {
+      if (err?.message === "timeout") {
+        setErrorMsg("Permintaan memakan waktu terlalu lama. Periksa koneksi internet Anda dan coba lagi.");
+      } else {
+        setErrorMsg("Terjadi kesalahan. Silakan coba lagi.");
+      }
       setStep("form");
     }
   };
