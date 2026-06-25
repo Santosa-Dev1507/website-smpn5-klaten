@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import DomisiliSearch from "./DomisiliSearch";
 import type { Metadata } from "next";
 import Image from "next/image";
+import YoutubeEmbed from "@/components/YoutubeEmbed";
 
 export const metadata: Metadata = {
   title: "SPMB 2026/2027 - SMPN 5 Klaten",
@@ -628,6 +629,21 @@ export default function SpmbPage() {
               </ul>
             </div>
           </details>
+        </div>
+      </section>
+
+      {/* VIDEO TUTORIAL PENDAFTARAN */}
+      <section className={styles.sectionAlt} id="tutorial">
+        <div className={styles.sectionHeader}>
+          <div className={styles.badge}>Panduan Pendaftaran</div>
+          <h2>Video Tutorial <span className={styles.highlight}>Cara Mendaftar</span></h2>
+          <p>Tonton panduan lengkap cara mendaftar secara online. Ikuti setiap langkah agar proses pendaftaran berjalan lancar.</p>
+        </div>
+        <div className={styles.videoWrapper}>
+          <YoutubeEmbed
+            videoId="96ErfkToIwQ"
+            title="Tutorial Pendaftaran SPMB SMPN 5 Klaten 2026/2027"
+          />
         </div>
       </section>
 

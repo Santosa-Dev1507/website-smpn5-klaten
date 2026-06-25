@@ -311,7 +311,9 @@
 .accordionContent p { margin-bottom: 1rem; }
 
 /* ── CTA ── */
+.videoWrapper { max-width: 820px; margin: 0 auto; }
 .ctaSection { background: #944535; padding: 5rem 5%; }
+
 .ctaInner { max-width: 720px; margin: 0 auto; text-align: center; }
 .ctaInner h2 { font-size: 2.4rem; font-weight: 800; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
 .highlightPeach { color: #FAD6A6; }
