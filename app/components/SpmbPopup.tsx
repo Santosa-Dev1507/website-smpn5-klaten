@@ -7,20 +7,14 @@ export default function SpmbPopup() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const hasSeenPopup = localStorage.getItem("spmb_popup_seen_v3");
-
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-      }, 1000);
-
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleClose = () => {
     setIsOpen(false);
-    localStorage.setItem("spmb_popup_seen_v3", "true");
   };
 
   if (!isOpen) return null;
@@ -33,7 +27,7 @@ export default function SpmbPopup() {
         </button>
         <div className="spmb-info-image-wrapper">
           <Image
-            src="/flyer-spmb.jpeg"
+            src="/flyer-spmb.png"
             alt="Pengumuman SPMB SMP Negeri 5 Klaten TA 2026/2027"
             width={800}
             height={1000}
