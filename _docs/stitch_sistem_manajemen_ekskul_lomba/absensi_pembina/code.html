@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1a1c1d",
+                    "on-tertiary-fixed-variant": "#00429c",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f3f3f5",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-tint": "#4c56af",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#bdc2ff",
+                    "on-secondary-container": "#007165",
+                    "on-tertiary-container": "#6b95f3",
+                    "on-tertiary-fixed": "#001945",
+                    "on-primary-fixed": "#000767",
+                    "inverse-surface": "#2f3132",
+                    "primary": "#000666",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "surface-bright": "#f9f9fb",
+                    "on-primary-container": "#8690ee",
+                    "surface-variant": "#e2e2e4",
+                    "on-error": "#ffffff",
+                    "primary-container": "#1a237e",
+                    "surface": "#f9f9fb",
+                    "tertiary-fixed": "#d9e2ff",
+                    "secondary-fixed-dim": "#70d8c8",
+                    "background": "#f9f9fb",
+                    "tertiary-container": "#002c6e",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-container-high": "#e8e8ea",
+                    "outline-variant": "#c6c5d4",
+                    "on-primary-fixed-variant": "#343d96",
+                    "on-surface": "#1a1c1d",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#8df5e4",
+                    "surface-container": "#eeeef0",
+                    "tertiary-fixed-dim": "#b0c6ff",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#001944",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#8df5e4",
+                    "inverse-on-surface": "#f0f0f2",
+                    "outline": "#767683",
+                    "surface-dim": "#d9dadc",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#454652",
+                    "secondary": "#006b5f",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#e0e0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xl": "32px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xxl": "48px",
+                    "lg": "24px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .custom-radio:checked {
+            background-color: currentColor;
+            background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-lg min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-surface-bright dark:bg-surface-dim shadow-sm docked full-width top-0 z-40 sticky">
+<div class="flex justify-between items-center w-full px-lg h-16">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Logo Sekolah" class="w-full h-full object-cover" data-alt="A professional and clean minimalist school logo representing SMPN Manajemen, featuring academic symbols and a structured shield shape. The logo uses a palette of deep navy blue and crisp white, presented in a modern flat design style with high contrast suitable for an educational institutional brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-__3la-Uh7GED7g3A2d7CaaZxmFmCTY5skgGgE7MWZbIlv3Re5wEacOMZrZ8Syc8YDQnh9q-B8pkov0Zz3shbpBFdv6ppHhzlSRqQ_BHZ2CNzClpgzta7KIt7wqlBJJ3wIp1LYyEQ8ZE4JRKDHDBFKCqrjbBek1NGxzRDiLajlARTx4d5R2q6iPYGF9-MxKx10g7cqzEMWp8fgOVV9nql98iN9BNC8_RMAb3kM7TsOkppIQUBYvoIXTWORjMFjWZW6u7EC7f6AaNF"/>
+</div>
+<h1 class="text-title-md font-title-md font-bold text-primary dark:text-primary-fixed">SMPN Manajemen</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-md pt-lg">
+<!-- Session Info Header -->
+<section class="mb-lg">
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-sm border-l-4 border-primary">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<p class="text-label-md font-label-md text-primary uppercase tracking-wider mb-xs">Sesi Aktif</p>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-xs">Ekskul Basket - Tim A</h2>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+<span class="text-body-sm font-body-sm">Senin, 24 Mei 2024</span>
+<span class="mx-xs">•</span>
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+<span class="text-body-sm font-body-sm">15:00 - 17:00 WIB</span>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<div class="bg-secondary-container text-on-secondary-container px-md py-sm rounded-lg flex flex-col items-center min-w-[80px]">
+<span class="text-title-md font-title-md">24</span>
+<span class="text-label-md font-label-md">Siswa</span>
+</div>
+<div class="bg-surface-container text-on-surface-variant px-md py-sm rounded-lg flex flex-col items-center min-w-[80px]">
+<span class="text-title-md font-title-md">Lapangan 1</span>
+<span class="text-label-md font-label-md">Lokasi</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Search and Filter (Task-Focused) -->
+<div class="flex items-center justify-between mb-md gap-md">
+<div class="relative flex-1 max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-xl text-body-sm focus:ring-2 focus:ring-primary-container" placeholder="Cari nama siswa..." type="text"/>
+</div>
+<button class="flex items-center gap-xs px-md py-2 text-primary font-bold hover:bg-surface-container-high rounded-xl transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+<span class="hidden md:inline">Filter</span>
+</button>
+</div>
+<!-- Attendance List -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden border border-outline-variant">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant border-b border-outline-variant">
+<th class="px-lg py-md font-label-md text-label-md uppercase tracking-wider">Siswa</th>
+<th class="px-lg py-md font-label-md text-label-md uppercase tracking-wider text-center">Kehadiran</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Student Row 1 -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-bold text-primary">
+                                        AN
+                                    </div>
+<div>
+<p class="font-bold text-on-surface">Aditya Nugraha</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">NISN: 009283741</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center justify-center gap-sm md:gap-lg">
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input checked="" class="w-5 h-5 text-secondary border-outline focus:ring-secondary-container custom-radio" name="att_1" type="radio" value="hadir"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-secondary transition-colors">Hadir</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-on-tertiary-container border-outline focus:ring-tertiary-fixed custom-radio" name="att_1" type="radio" value="izin"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-tertiary-container transition-colors">Izin</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-on-primary-container border-outline focus:ring-primary-fixed custom-radio" name="att_1" type="radio" value="sakit"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-primary-container transition-colors">Sakit</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline focus:ring-error-container custom-radio" name="att_1" type="radio" value="alpa"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-error transition-colors">Alpa</span>
+</label>
+</div>
+</td>
+</tr>
+<!-- Student Row 2 -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-bold text-primary">
+                                        BS
+                                    </div>
+<div>
+<p class="font-bold text-on-surface">Budi Santoso</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">NISN: 009283742</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center justify-center gap-sm md:gap-lg">
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-secondary border-outline focus:ring-secondary-container custom-radio" name="att_2" type="radio" value="hadir"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-secondary transition-colors">Hadir</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-on-tertiary-container border-outline focus:ring-tertiary-fixed custom-radio" name="att_2" type="radio" value="izin"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-tertiary-container transition-colors">Izin</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input checked="" class="w-5 h-5 text-on-primary-container border-outline focus:ring-primary-fixed custom-radio" name="att_2" type="radio" value="sakit"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-primary-container transition-colors">Sakit</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline focus:ring-error-container custom-radio" name="att_2" type="radio" value="alpa"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-error transition-colors">Alpa</span>
+</label>
+</div>
+</td>
+</tr>
+<!-- Student Row 3 -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-bold text-primary">
+                                        CL
+                                    </div>
+<div>
+<p class="font-bold text-on-surface">Citra Lestari</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">NISN: 009283743</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center justify-center gap-sm md:gap-lg">
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input checked="" class="w-5 h-5 text-secondary border-outline focus:ring-secondary-container custom-radio" name="att_3" type="radio" value="hadir"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-secondary transition-colors">Hadir</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-on-tertiary-container border-outline focus:ring-tertiary-fixed custom-radio" name="att_3" type="radio" value="izin"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-tertiary-container transition-colors">Izin</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-on-primary-container border-outline focus:ring-primary-fixed custom-radio" name="att_3" type="radio" value="sakit"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-primary-container transition-colors">Sakit</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-error border-outline focus:ring-error-container custom-radio" name="att_3" type="radio" value="alpa"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-error transition-colors">Alpa</span>
+</label>
+</div>
+</td>
+</tr>
+<!-- Student Row 4 -->
+<tr class="hover:bg-surface-container-lowest/50 transition-colors">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex-shrink-0 flex items-center justify-center font-bold text-primary">
+                                        DP
+                                    </div>
+<div>
+<p class="font-bold text-on-surface">Dimas Pratama</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">NISN: 009283744</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<div class="flex items-center justify-center gap-sm md:gap-lg">
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-secondary border-outline focus:ring-secondary-container custom-radio" name="att_4" type="radio" value="hadir"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-secondary transition-colors">Hadir</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-on-tertiary-container border-outline focus:ring-tertiary-fixed custom-radio" name="att_4" type="radio" value="izin"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-tertiary-container transition-colors">Izin</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input class="w-5 h-5 text-on-primary-container border-outline focus:ring-primary-fixed custom-radio" name="att_4" type="radio" value="sakit"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-on-primary-container transition-colors">Sakit</span>
+</label>
+<label class="flex flex-col items-center gap-xs cursor-pointer group">
+<input checked="" class="w-5 h-5 text-error border-outline focus:ring-error-container custom-radio" name="att_4" type="radio" value="alpa"/>
+<span class="text-label-md font-label-md text-on-surface-variant group-hover:text-error transition-colors">Alpa</span>
+</label>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Summary Action Bar -->
+<div class="p-lg bg-surface-container border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-md">
+<div class="text-body-sm font-body-sm text-on-surface-variant">
+                    Menampilkan <span class="font-bold text-on-surface">4</span> dari <span class="font-bold text-on-surface">24</span> siswa.
+                </div>
+<div class="flex items-center gap-md w-full md:w-auto">
+<button class="flex-1 md:flex-none px-xl py-md rounded-xl text-primary font-bold hover:bg-surface-container-high transition-colors active:scale-95">
+                        Batal
+                    </button>
+<button class="flex-1 md:flex-none px-xl py-md rounded-xl bg-primary text-on-primary font-bold shadow-lg shadow-primary/20 hover:bg-primary-container transition-colors active:scale-95">
+                        Simpan Data
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-md py-sm bg-surface-container-lowest dark:bg-surface-container-low shadow-lg z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-md font-label-md">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span class="text-label-md font-label-md">Absen</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-md font-label-md">Ekskul</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="text-label-md font-label-md">Lomba</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 p-2 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-md font-label-md">Profil</span>
+</a>
+</nav>
+</body></html>

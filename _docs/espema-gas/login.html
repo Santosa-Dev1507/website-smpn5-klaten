@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIM Ekstrakurikuler - SMPN 5 Klaten</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            primary: '#000666', 
+            'primary-light': '#1a237e',
+            secondary: '#006b5f',
+            'secondary-light': '#8df5e4',
+            surface: '#f9f9fb',
+            dark: '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+    /* Login Form Styles */
+    .role-btn { transition: all 0.3s ease; }
+    .role-btn.active {
+      background-color: #000666;
+      color: white;
+      border-color: #000666;
+    }
+    .role-btn.active .icon-container { background-color: rgba(255,255,255,0.2); }
+    
+    .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+
+    /* Scribble Line */
+    .scribble {
+      position: absolute;
+      width: 100%;
+      height: auto;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="bg-surface text-gray-800 font-sans">
+
+  <!-- NAVBAR -->
+  <nav class="absolute top-0 left-0 w-full z-50 px-6 py-4 flex items-center justify-between pointer-events-none">
+    <div class="flex items-center gap-2 pointer-events-auto bg-white/80 backdrop-blur px-4 py-2 rounded-full shadow-sm">
+      <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1">school</span>
+      <span class="font-display font-bold text-primary tracking-wide">SMPN 5 Klaten</span>
+    </div>
+  </nav>
+
+  <!-- ==========================================
+       SECTION 1: HERO & LOGIN (Mansonry Layout) 
+       ========================================== -->
+  <section class="relative min-h-screen flex items-center justify-center pt-20 pb-12 overflow-hidden bg-gray-100">
+    <!-- Background Grid (Collage) -->
+    <div class="absolute inset-0 z-0 grid grid-cols-2 md:grid-cols-4 grid-rows-3 gap-2 md:gap-4 p-2 md:p-4 opacity-60 md:opacity-100">
+      <div class="rounded-2xl overflow-hidden row-span-2 col-span-1 shadow-md">
+        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Belajar">
+      </div>
+      <div class="rounded-2xl overflow-hidden col-span-1 shadow-md">
+        <img src="https://images.unsplash.com/photo-1511649475669-e288648b2339?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Olahraga">
+      </div>
+      <div class="rounded-2xl overflow-hidden row-span-2 col-span-1 shadow-md hidden md:block">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Seni">
+      </div>
+      <div class="rounded-2xl overflow-hidden col-span-1 shadow-md">
+        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Diskusi">
+      </div>
+      <div class="rounded-2xl overflow-hidden row-span-2 col-span-1 shadow-md hidden md:block">
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Edukasi">
+      </div>
+      <div class="rounded-2xl overflow-hidden col-span-1 shadow-md">
+        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Musik">
+      </div>
+      <div class="rounded-2xl overflow-hidden col-span-1 shadow-md">
+        <img src="https://images.unsplash.com/photo-1514068523299-ee8ee5fc9c46?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Band">
+      </div>
+    </div>
+
+    <!-- Overlay so the form is readable on mobile -->
+    <div class="absolute inset-0 bg-black/30 z-0 md:bg-white/20 md:backdrop-blur-[2px]"></div>
+
+    <!-- Centered Form Card -->
+    <div class="relative z-10 w-full max-w-md mx-4 bg-white p-8 rounded-[2rem] shadow-2xl border border-white/50 backdrop-blur-md">
+      
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-display font-extrabold text-gray-900 leading-tight mb-3">
+          Setiap Siswa <br/>
+          Adalah <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-blue-600">Juara</span> <br/>
+          Pada Waktunya.
+        </h1>
+        <p class="text-gray-500 text-sm">Masuk untuk menjelajahi ekstrakurikuler, jadwal kompetisi, dan portofolio prestasimu.</p>
+      </div>
+
+      <!-- Role Selector -->
+      <div class="mb-6">
+        <div class="grid grid-cols-3 gap-2 p-1 bg-gray-100 rounded-2xl">
+          <button type="button" class="role-btn active flex flex-col items-center py-2 rounded-xl text-gray-500" data-role="siswa" onclick="selectRole('siswa')">
+            <span class="material-symbols-outlined text-[20px] mb-1">face</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider">Siswa</span>
+          </button>
+          <button type="button" class="role-btn flex flex-col items-center py-2 rounded-xl text-gray-500" data-role="pembina" onclick="selectRole('pembina')">
+            <span class="material-symbols-outlined text-[20px] mb-1">local_library</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider">Pembina</span>
+          </button>
+          <button type="button" class="role-btn flex flex-col items-center py-2 rounded-xl text-gray-500" data-role="admin" onclick="selectRole('admin')">
+            <span class="material-symbols-outlined text-[20px] mb-1">admin_panel_settings</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider">Admin</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide" id="usernameLabel">Nomor Induk (NISN)</label>
+          <input type="text" id="username" placeholder="Masukkan NISN Anda" required
+            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-secondary focus:border-secondary focus:bg-white outline-none transition-all">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-gray-700 mb-1 uppercase tracking-wide">Kata Sandi</label>
+          <div class="relative">
+            <input type="password" id="password" placeholder="••••••••" required
+              class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-secondary focus:border-secondary focus:bg-white outline-none transition-all">
+            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400">
+              <span class="material-symbols-outlined text-[20px]" id="eyeIcon">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="errorMsg" class="hidden bg-red-50 text-red-600 text-xs px-4 py-3 rounded-xl flex items-center gap-2">
+          <span class="material-symbols-outlined text-[16px]">error</span>
+          <span id="errorText" class="font-medium">Error message</span>
+        </div>
+
+        <button type="submit" id="loginBtn"
+          class="w-full bg-secondary hover:bg-secondary/90 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-secondary/30 mt-2">
+          Masuk ke Portal
+        </button>
+      </form>
+      
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 2: EXPLORE EKSKUL (Dark Navy)
+       ========================================== -->
+  <section class="py-20 px-6 bg-primary text-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Jelajahi Ekstrakurikuler Pilihan</h2>
+        <p class="text-white/70 max-w-2xl mx-auto">Dari olahraga hingga teknologi, temukan wadah yang tepat untuk menyalurkan minat dan meraih prestasimu di tingkat nasional maupun internasional.</p>
+      </div>
+
+      <!-- Grid Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Card 1 -->
+        <div class="bg-white/10 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/20 transition-colors group cursor-pointer">
+          <div class="h-40 bg-gray-300 relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Basket">
+            <div class="absolute top-3 left-3 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">Olahraga</div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg mb-1">Bola Basket</h3>
+            <p class="text-white/60 text-sm mb-4">Tim kebanggaan dengan fasilitas lapangan standar nasional.</p>
+            <div class="flex items-center text-secondary-light text-sm font-semibold">
+              Lihat Detail <span class="material-symbols-outlined text-[18px] ml-1">arrow_right_alt</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white/10 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/20 transition-colors group cursor-pointer">
+          <div class="h-40 bg-gray-300 relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Pramuka">
+            <div class="absolute top-3 left-3 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">Wajib</div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg mb-1">Pramuka Inti</h3>
+            <p class="text-white/60 text-sm mb-4">Membangun karakter disiplin, tangguh, dan berjiwa kepemimpinan.</p>
+            <div class="flex items-center text-secondary-light text-sm font-semibold">
+              Lihat Detail <span class="material-symbols-outlined text-[18px] ml-1">arrow_right_alt</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white/10 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/20 transition-colors group cursor-pointer">
+          <div class="h-40 bg-gray-300 relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1547690693-e4d3db25ccbc?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Robotik">
+            <div class="absolute top-3 left-3 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">Teknologi</div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg mb-1">Robotika & IoT</h3>
+            <p class="text-white/60 text-sm mb-4">Persiapan lomba inovasi teknologi dan pemrograman dasar.</p>
+            <div class="flex items-center text-secondary-light text-sm font-semibold">
+              Lihat Detail <span class="material-symbols-outlined text-[18px] ml-1">arrow_right_alt</span>
+            </div>
+          </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="bg-white/10 border border-white/10 rounded-2xl overflow-hidden hover:bg-white/20 transition-colors group cursor-pointer">
+          <div class="h-40 bg-gray-300 relative overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Tari">
+            <div class="absolute top-3 left-3 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">Seni</div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-bold text-lg mb-1">Tari Tradisional</h3>
+            <p class="text-white/60 text-sm mb-4">Melestarikan budaya bangsa melalui gerak tari nusantara.</p>
+            <div class="flex items-center text-secondary-light text-sm font-semibold">
+              Lihat Detail <span class="material-symbols-outlined text-[18px] ml-1">arrow_right_alt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-10">
+        <button class="px-6 py-3 rounded-full border border-white/30 text-white font-semibold hover:bg-white hover:text-primary transition-colors">
+          Lihat Semua 15+ Ekstrakurikuler
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 3: BENEFITS (White Background)
+       ========================================== -->
+  <section class="py-20 px-6 bg-white">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+      <!-- Left: Text -->
+      <div class="w-full md:w-1/2">
+        <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-6">Berkembang Lebih Jauh<br/>Bersama <span class="text-secondary">Sistem Kami</span></h2>
+        
+        <div class="space-y-6">
+          <div class="flex gap-4">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-secondary">track_changes</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900 text-lg">Pantau Perkembangan Berkala</h4>
+              <p class="text-gray-500 text-sm leading-relaxed">Presensi digital yang transparan dan rekam jejak penilaian otomatis untuk memantau aktivitas siswamu setiap minggu.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-secondary">workspace_premium</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900 text-lg">Portofolio Prestasi Juara</h4>
+              <p class="text-gray-500 text-sm leading-relaxed">Setiap piala dan piagam yang dimenangkan akan dicatat selamanya sebagai e-Portofolio untuk pendaftaran jenjang berikutnya.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-secondary">groups</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-gray-900 text-lg">Komunitas & Jejaring Alumni</h4>
+              <p class="text-gray-500 text-sm leading-relaxed">Berinteraksi dengan sesama siswa beda angkatan yang memiliki minat dan bakat yang sama di ekstrakurikuler.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right: Image/Graphic -->
+      <div class="w-full md:w-1/2 relative">
+        <!-- Abstract shape behind -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-secondary-light to-blue-100 rounded-[3rem] transform rotate-3 scale-105 -z-10"></div>
+        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=800&q=80" alt="Students learning" class="rounded-[3rem] shadow-xl w-full h-auto object-cover aspect-[4/3] border-4 border-white">
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 4: TESTIMONIALS (With Green Scribble)
+       ========================================== -->
+  <section class="py-24 px-6 bg-surface relative overflow-hidden text-center z-10">
+    <!-- Decorative SVG scribble (like the green string) -->
+    <svg class="absolute top-10 left-0 w-full h-full pointer-events-none opacity-20 -z-10 text-secondary" viewBox="0 0 1000 500" preserveAspectRatio="none">
+      <path d="M-50,250 C150,400 300,50 500,250 C700,450 850,100 1050,250" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="10 10"/>
+    </svg>
+
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">Mengapa Siswa Menyukai SMPN 5 Klaten</h2>
+      <p class="text-gray-500 mb-12">Mendengar langsung dari mereka yang telah menemukan *passion* dan menorehkan prestasi.</p>
+
+      <div class="bg-white p-8 md:p-12 rounded-3xl shadow-lg relative">
+        <span class="material-symbols-outlined absolute -top-5 left-10 text-6xl text-secondary opacity-20">format_quote</span>
+        <h3 class="text-xl md:text-2xl font-bold text-gray-800 leading-relaxed mb-6 relative z-10">
+          "Karena sistem ini, pendaftaran lomba FLS2N menjadi sangat mudah. Jadwal latihan tertata rapi, dan semua piagamku tersimpan aman secara digital!"
+        </h3>
+        <div class="flex items-center justify-center gap-4">
+          <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
+            <img src="https://ui-avatars.com/api/?name=Siti+Aisyah&background=000666&color=fff" alt="Avatar">
+          </div>
+          <div class="text-left">
+            <p class="font-bold text-gray-900">Siti Aisyah</p>
+            <p class="text-sm text-gray-500">Juara 1 Tari Tradisional Tingkat Provinsi</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SECTION 5: FAQ & FOOTER (Dark Background)
+       ========================================== -->
+  <footer class="bg-dark text-white pt-20 pb-10 px-6">
+    <div class="max-w-4xl mx-auto mb-20">
+      <h2 class="text-3xl font-display font-bold text-center mb-10">Frequently Asked Questions</h2>
+      
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <details class="group bg-white/5 border border-white/10 rounded-xl p-4 cursor-pointer">
+          <summary class="flex justify-between items-center font-semibold list-none">
+            Apakah siswa wajib mengikuti ekstrakurikuler?
+            <span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+          </summary>
+          <div class="mt-4 text-white/60 text-sm leading-relaxed">
+            Ya, setiap siswa diwajibkan mengikuti minimal 1 ekstrakurikuler wajib (Pramuka) dan diperbolehkan memilih maksimal 2 ekstrakurikuler pilihan sesuai minat dan bakat.
+          </div>
+        </details>
+        <!-- FAQ 2 -->
+        <details class="group bg-white/5 border border-white/10 rounded-xl p-4 cursor-pointer">
+          <summary class="flex justify-between items-center font-semibold list-none">
+            Bagaimana jika lupa password untuk login?
+            <span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+          </summary>
+          <div class="mt-4 text-white/60 text-sm leading-relaxed">
+            Silakan menghubungi Wali Kelas Anda atau datang langsung ke ruang Tata Usaha (Admin) untuk meminta reset password. Akun Anda terhubung langsung dengan NISN.
+          </div>
+        </details>
+        <!-- FAQ 3 -->
+        <details class="group bg-white/5 border border-white/10 rounded-xl p-4 cursor-pointer">
+          <summary class="flex justify-between items-center font-semibold list-none">
+            Siapa yang berhak mengisi nilai dan presensi?
+            <span class="material-symbols-outlined transition group-open:rotate-180">expand_more</span>
+          </summary>
+          <div class="mt-4 text-white/60 text-sm leading-relaxed">
+            Hanya Guru Pembina yang berwenang untuk melakukan absensi dan memberikan penilaian akhir semester pada masing-masing kegiatan ekstrakurikuler.
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="max-w-6xl mx-auto border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary">school</span>
+        <span class="font-bold tracking-wider">SMPN 5 KLATEN</span>
+      </div>
+      <div class="text-white/50 text-xs text-center md:text-left">
+        &copy; 2024 Sistem Informasi Manajemen Ekstrakurikuler & Lomba. All rights reserved.
+      </div>
+      <div class="flex gap-4">
+        <a href="#" class="text-white/50 hover:text-white transition"><span class="material-symbols-outlined text-xl">language</span></a>
+        <a href="#" class="text-white/50 hover:text-white transition"><span class="material-symbols-outlined text-xl">mail</span></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT UNTUK LOGIN -->
+  <script>
+    var selectedRole = 'siswa';
+    var isLoading = false;
+    var roleConfig = {
+      siswa: { label: 'Nomor Induk (NISN)' },
+      pembina: { label: 'NIP / NUPTK' },
+      admin: { label: 'Username Admin' }
+    };
+
+    function selectRole(role) {
+      selectedRole = role;
+      document.querySelectorAll('.role-btn').forEach(function(btn) {
+        if (btn.dataset.role === role) {
+          btn.classList.add('active');
+          btn.classList.remove('text-gray-500');
+        } else {
+          btn.classList.remove('active');
+          btn.classList.add('text-gray-500');
+        }
+      });
+      document.getElementById('usernameLabel').textContent = roleConfig[role].label;
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      hideError();
+    }
+
+    function togglePassword() {
+      var input = document.getElementById('password');
+      var icon = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text'; icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password'; icon.textContent = 'visibility';
+      }
+    }
+
+    function showError(msg) {
+      var errorEl = document.getElementById('errorMsg');
+      errorEl.classList.remove('hidden');
+      document.getElementById('errorText').textContent = msg;
+      var form = document.getElementById('loginForm');
+      form.classList.remove('shake');
+      void form.offsetWidth;
+      form.classList.add('shake');
+    }
+
+    function hideError() {
+      document.getElementById('errorMsg').classList.add('hidden');
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      if (isLoading) return;
+
+      var username = document.getElementById('username').value.trim();
+      var password = document.getElementById('password').value;
+      hideError();
+
+      setLoading(true);
+
+      if (typeof google !== 'undefined' && google.script) {
+        google.script.run
+          .withSuccessHandler(function(result) {
+            setLoading(false);
+            if (result.success) {
+              localStorage.setItem('espema_token', result.token);
+              localStorage.setItem('espema_role', result.role);
+              localStorage.setItem('espema_nama', result.nama);
+              localStorage.setItem('espema_user_id', result.user_id);
+              localStorage.setItem('espema_username', result.username);
+
+              var btn = document.getElementById('loginBtn');
+              btn.innerHTML = 'Berhasil! Mengalihkan...';
+              
+              setTimeout(function() {
+                google.script.run
+                  .withSuccessHandler(function(url) {
+                    window.location.href = url + '?page=app';
+                  }).getWebAppUrl();
+              }, 600);
+            } else {
+              showError(result.message || 'Kredensial tidak valid.');
+            }
+          })
+          .withFailureHandler(function(err) {
+            setLoading(false);
+            showError('Terjadi kesalahan koneksi ke server.');
+          })
+          .login(username, password, selectedRole);
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+          showError('Mode Lokal: Gagal terhubung ke Google Server.');
+        }, 1000);
+      }
+    }
+
+    function setLoading(state) {
+      isLoading = state;
+      var btn = document.getElementById('loginBtn');
+      if (state) {
+        btn.disabled = true;
+        btn.classList.add('opacity-70');
+        btn.innerHTML = 'Memverifikasi...';
+      } else {
+        btn.disabled = false;
+        btn.classList.remove('opacity-70');
+        btn.innerHTML = 'Masuk ke Portal';
+      }
+    }
+  </script>
+</body>
+</html>

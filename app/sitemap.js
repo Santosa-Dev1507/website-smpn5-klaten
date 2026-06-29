@@ -30,5 +30,11 @@ export default function sitemap() {
       changeFrequency: 'yearly',
       priority: 0.5,
     },
+    {
+      url: 'https://www.smpn5klaten.sch.id/ekstrakurikuler',
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ]
 }

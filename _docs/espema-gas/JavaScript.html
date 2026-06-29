@@ -1,0 +1,346 @@
+<script>
+// ============================================================
+// Core Application Logic (SPA Routing & State)
+// ============================================================
+
+const STATE = {
+  token: localStorage.getItem('espema_token'),
+  role: localStorage.getItem('espema_role'),
+  nama: localStorage.getItem('espema_nama'),
+  userId: localStorage.getItem('espema_user_id'),
+  username: localStorage.getItem('espema_username')
+};
+
+// Navigasi per Role
+const NAV_CONFIG = {
+  admin: [
+    { id: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
+    { id: 'ekskul', label: 'Daftar Ekskul', icon: 'list_alt' },
+    { id: 'jadwal', label: 'Jadwal Lomba', icon: 'calendar_month' },
+    { id: 'laporan', label: 'Pusat Laporan', icon: 'analytics' }
+  ],
+  pembina: [
+    { id: 'absensi', label: 'Absensi', icon: 'fact_check' },
+    { id: 'laporan_bos', label: 'Laporan BOS', icon: 'assessment' }
+  ],
+  siswa: [
+    { id: 'beranda', label: 'Beranda', icon: 'home' },
+    { id: 'ekskul', label: 'Ekskul', icon: 'groups' },
+    { id: 'jadwal', label: 'Lomba', icon: 'emoji_events' },
+    { id: 'portofolio', label: 'Portofolio', icon: 'person' }
+  ]
+};
+
+// Initialize App
+document.addEventListener('DOMContentLoaded', () => {
+  if (!STATE.token) {
+    window.location.href = '?page=login';
+    return;
+  }
+  
+  initUI();
+  
+  // Set default route based on role
+  const defaultRoute = STATE.role === 'admin' ? 'dashboard' : 
+                       STATE.role === 'pembina' ? 'absensi' : 'beranda';
+                       
+  window.addEventListener('hashchange', handleRoute);
+  
+  if (!window.location.hash) {
+    window.location.hash = defaultRoute;
+  } else {
+    handleRoute();
+  }
+});
+
+function initUI() {
+  document.getElementById('headerNama').textContent = STATE.nama;
+  document.getElementById('sidebarNama').textContent = STATE.nama;
+  
+  const roleDisplay = STATE.role === 'admin' ? 'Administrator' : 
+                      STATE.role === 'pembina' ? 'Pembina Ekskul' : 'Siswa';
+  
+  document.getElementById('headerRole').textContent = roleDisplay;
+  document.getElementById('sidebarRole').textContent = roleDisplay;
+  
+  const initials = STATE.nama ? STATE.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '?';
+  document.getElementById('avatarInitials').textContent = initials;
+  document.getElementById('sidebarAvatar').textContent = initials;
+  
+  renderNavigation();
+}
+
+function renderNavigation() {
+  const items = NAV_CONFIG[STATE.role] || [];
+  
+  // Sidebar (Desktop)
+  const sidebarNav = document.getElementById('sidebarNav');
+  sidebarNav.innerHTML = items.map(item => `
+    <a href="#${item.id}" class="nav-link" id="nav-${item.id}">
+      <span class="material-symbols-outlined">${item.icon}</span>
+      <span>${item.label}</span>
+    </a>
+  `).join('');
+  
+  // Bottom Nav (Mobile)
+  const bottomNav = document.getElementById('bottomNav');
+  bottomNav.innerHTML = items.map(item => `
+    <a href="#${item.id}" class="bnav-item" id="bnav-${item.id}">
+      <span class="material-symbols-outlined">${item.icon}</span>
+      <span class="mt-1">${item.label}</span>
+    </a>
+  `).join('');
+}
+
+function updateActiveNav(pageId) {
+  document.querySelectorAll('.nav-link, .bnav-item').forEach(el => el.classList.remove('active'));
+  const desktopNav = document.getElementById(`nav-${pageId}`);
+  const mobileNav = document.getElementById(`bnav-${pageId}`);
+  
+  if (desktopNav) desktopNav.classList.add('active');
+  if (mobileNav) mobileNav.classList.add('active');
+}
+
+// ============================================================
+// Routing & View Rendering
+// ============================================================
+
+function handleRoute() {
+  const hash = window.location.hash.substring(1) || 'dashboard';
+  const pageContent = document.getElementById('pageContent');
+  
+  updateActiveNav(hash);
+  
+  // Show loading
+  pageContent.innerHTML = `
+    <div class="flex flex-col items-center justify-center min-h-[60vh]">
+      <div class="w-12 h-12 border-4 border-[#c6c5d4] border-t-[#000666] rounded-full animate-spin mb-4"></div>
+      <p class="text-[#454652] text-sm">Memuat data...</p>
+    </div>
+  `;
+  
+  // Route handling
+  switch(hash) {
+    case 'dashboard':
+      if (STATE.role === 'admin') renderAdminDashboard(pageContent);
+      else window.location.hash = NAV_CONFIG[STATE.role][0].id;
+      break;
+    case 'beranda':
+      if (STATE.role === 'siswa') renderBerandaSiswa(pageContent);
+      else window.location.hash = NAV_CONFIG[STATE.role][0].id;
+      break;
+    case 'ekskul':
+      renderDaftarEkskul(pageContent);
+      break;
+    case 'jadwal':
+      renderJadwal(pageContent);
+      break;
+    case 'absensi':
+      if (STATE.role === 'pembina' || STATE.role === 'admin') renderAbsensi(pageContent);
+      else window.location.hash = NAV_CONFIG[STATE.role][0].id;
+      break;
+    case 'portofolio':
+      if (STATE.role === 'siswa') renderPortofolio(pageContent);
+      else window.location.hash = NAV_CONFIG[STATE.role][0].id;
+      break;
+    case 'laporan':
+      if (STATE.role === 'admin') renderLaporan(pageContent);
+      else window.location.hash = NAV_CONFIG[STATE.role][0].id;
+      break;
+    case 'laporan_bos':
+      if (STATE.role === 'pembina' || STATE.role === 'admin') renderLaporanBOS(pageContent);
+      else window.location.hash = NAV_CONFIG[STATE.role][0].id;
+      break;
+    default:
+      pageContent.innerHTML = `<div class="text-center py-20">Halaman tidak ditemukan.</div>`;
+  }
+}
+
+// ============================================================
+// View Controllers (Placeholders mapped to Server Logic)
+// ============================================================
+
+function renderAdminDashboard(container) {
+  google.script.run
+    .withSuccessHandler(res => {
+      if(!res.success) {
+        container.innerHTML = `<div class="text-red-500">${res.message}</div>`;
+        return;
+      }
+      const d = res.data;
+      container.innerHTML = `
+        <div class="flex flex-col md:flex-row justify-between mb-8">
+          <div>
+            <h2 class="text-2xl font-bold text-[#000666]">Ringkasan Ekstrakurikuler</h2>
+            <p class="text-[#454652]">Selamat datang di panel administrasi.</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          <div class="card p-6 border-l-4 border-[#006b5f]">
+            <div class="text-[#454652] text-xs font-bold uppercase mb-2">Total Siswa</div>
+            <div class="text-3xl font-bold text-[#1a1c1d]">${d.totalSiswa}</div>
+          </div>
+          <div class="card p-6 border-l-4 border-[#000666]">
+            <div class="text-[#454652] text-xs font-bold uppercase mb-2">Unit Ekskul</div>
+            <div class="text-3xl font-bold text-[#1a1c1d]">${d.totalEkskul}</div>
+          </div>
+          <div class="card p-6 border-l-4 border-[#001944]">
+            <div class="text-[#454652] text-xs font-bold uppercase mb-2">Kompetisi</div>
+            <div class="text-3xl font-bold text-[#1a1c1d]">${d.totalLomba}</div>
+          </div>
+          <div class="card p-6 border-l-4 border-[#8690ee]">
+            <div class="text-[#454652] text-xs font-bold uppercase mb-2">Prestasi</div>
+            <div class="text-3xl font-bold text-[#1a1c1d]">${d.totalPrestasi}</div>
+          </div>
+        </div>
+        <!-- Tambahkan tabel lomba dll di sini -->
+        <div class="card p-6">
+           <h3 class="font-bold text-[#000666] mb-4">Lomba Terdekat</h3>
+           ${d.lombaList.length ? `
+             <table class="w-full text-left text-sm">
+               <thead><tr class="bg-[#f3f3f5]"><th class="p-3">Nama</th><th class="p-3">Tanggal</th><th class="p-3">Status</th></tr></thead>
+               <tbody>
+                 ${d.lombaList.map(l => `<tr class="border-b border-[#eeeef0]"><td class="p-3">${l.nama}</td><td class="p-3">${new Date(l.tanggal).toLocaleDateString()}</td><td class="p-3"><span class="stat-badge bg-[#e0e0ff] text-[#000767]">${l.status}</span></td></tr>`).join('')}
+               </tbody>
+             </table>
+           ` : '<p class="text-[#454652] text-sm">Belum ada lomba terdaftar.</p>'}
+        </div>
+      `;
+    })
+    .getStatistikAdmin(STATE.token);
+}
+
+function renderDaftarEkskul(container) {
+  google.script.run
+    .withSuccessHandler(res => {
+      if(!res.success) {
+        container.innerHTML = `<div class="text-red-500">${res.message}</div>`;
+        return;
+      }
+      container.innerHTML = `
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-[#000666]">Ekstrakurikuler</h2>
+          <p class="text-[#454652]">Daftar unit kegiatan siswa.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          ${res.data.map(e => `
+            <div class="card p-6 flex flex-col">
+              <div class="flex justify-between items-start mb-2">
+                <span class="stat-badge bg-[#8df5e4] text-[#00201c]">${e.kategori}</span>
+                <span class="text-xs font-bold flex items-center text-[#006b5f]"><span class="material-symbols-outlined text-sm mr-1 icon-filled">star</span>${e.rating || '-'}</span>
+              </div>
+              <h3 class="text-lg font-bold text-[#000666] mb-2">${e.nama}</h3>
+              <p class="text-sm text-[#454652] mb-4 flex-1">${e.deskripsi || ''}</p>
+              <div class="text-xs text-[#767683] space-y-1 mb-4">
+                <div class="flex items-center"><span class="material-symbols-outlined text-sm mr-2">event</span>${e.jadwal}</div>
+                <div class="flex items-center"><span class="material-symbols-outlined text-sm mr-2">schedule</span>${e.waktu}</div>
+              </div>
+              ${STATE.role === 'siswa' ? `
+                <button onclick="daftarEkskul('${e.id}')" class="w-full py-2 bg-[#000666] text-white rounded-lg font-semibold text-sm hover:opacity-90">Daftar Sekarang</button>
+              ` : ''}
+            </div>
+          `).join('')}
+        </div>
+      `;
+    })
+    .getEkskulList(STATE.token);
+}
+
+// Simple implementations for other views to complete the SPA structure
+function renderBerandaSiswa(container) {
+  container.innerHTML = `<div class="card p-6"><h2 class="text-xl font-bold text-[#000666] mb-4">Halo, ${STATE.nama}</h2><p>Selamat datang di Beranda Siswa.</p></div>`;
+}
+
+function renderJadwal(container) {
+  google.script.run
+    .withSuccessHandler(res => {
+      container.innerHTML = `
+        <div class="mb-6"><h2 class="text-2xl font-bold text-[#000666]">Jadwal Kompetisi</h2></div>
+        <div class="card p-6">
+          <p class="text-[#454652] text-sm mb-4">Daftar lomba yang tersedia:</p>
+          <div class="space-y-4">
+            ${(res.data || []).map(l => `
+              <div class="p-4 border border-[#eeeef0] rounded-lg">
+                <div class="flex justify-between"><span class="font-bold text-[#000666]">${l.nama}</span> <span class="stat-badge bg-[#e0e0ff]">${l.tingkat}</span></div>
+                <div class="text-xs text-[#767683] mt-2">${new Date(l.tanggal).toLocaleDateString()} - ${l.lokasi}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    })
+    .getLombaList(STATE.token);
+}
+
+function renderAbsensi(container) {
+  container.innerHTML = `<div class="card p-6"><h2 class="text-xl font-bold text-[#000666] mb-4">Modul Absensi</h2><p>Fitur absensi digital akan dimuat di sini.</p></div>`;
+}
+
+function renderPortofolio(container) {
+  google.script.run
+    .withSuccessHandler(res => {
+      container.innerHTML = `
+        <div class="mb-6"><h2 class="text-2xl font-bold text-[#000666]">Portofolio Prestasi</h2></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          ${(res.data || []).map(p => `
+            <div class="card p-4">
+              <div class="font-bold text-[#1a1c1d]">${p.lomba_nama}</div>
+              <div class="text-[#006b5f] font-semibold text-sm my-1">${p.hasil}</div>
+              <div class="text-xs text-[#767683]">${new Date(p.tanggal).toLocaleDateString()}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    })
+    .getPrestasiList(STATE.token);
+}
+
+function renderLaporan(container) {
+  container.innerHTML = `<div class="card p-6"><h2 class="text-xl font-bold text-[#000666] mb-4">Pusat Laporan</h2><p>Rekap dan ekspor data ada di sini.</p></div>`;
+}
+
+function renderLaporanBOS(container) {
+  container.innerHTML = `<div class="card p-6"><h2 class="text-xl font-bold text-[#000666] mb-4">Laporan BOS</h2><p>Konfigurasi laporan untuk dana BOS.</p></div>`;
+}
+
+// ============================================================
+// Actions & Utilities
+// ============================================================
+
+function daftarEkskul(id) {
+  showToast('Memproses pendaftaran...');
+  google.script.run
+    .withSuccessHandler(res => {
+      showToast(res.message);
+    })
+    .daftarEkskul(STATE.token, id);
+}
+
+function handleLogout() {
+  document.getElementById('logoutModal').classList.remove('hidden');
+}
+
+function closeLogoutModal() {
+  document.getElementById('logoutModal').classList.add('hidden');
+}
+
+function confirmLogout() {
+  google.script.run.logout(STATE.token);
+  localStorage.clear();
+  window.location.href = '?page=login';
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast') || createToastElement();
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+function createToastElement() {
+  const div = document.createElement('div');
+  div.id = 'toast';
+  document.body.appendChild(div);
+  return div;
+}
+</script>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1a1c1d",
+                    "on-tertiary-fixed-variant": "#00429c",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f3f3f5",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-tint": "#4c56af",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#bdc2ff",
+                    "on-secondary-container": "#007165",
+                    "on-tertiary-container": "#6b95f3",
+                    "on-tertiary-fixed": "#001945",
+                    "on-primary-fixed": "#000767",
+                    "inverse-surface": "#2f3132",
+                    "primary": "#000666",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "surface-bright": "#f9f9fb",
+                    "on-primary-container": "#8690ee",
+                    "surface-variant": "#e2e2e4",
+                    "on-error": "#ffffff",
+                    "primary-container": "#1a237e",
+                    "surface": "#f9f9fb",
+                    "tertiary-fixed": "#d9e2ff",
+                    "secondary-fixed-dim": "#70d8c8",
+                    "background": "#f9f9fb",
+                    "tertiary-container": "#002c6e",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-container-high": "#e8e8ea",
+                    "outline-variant": "#c6c5d4",
+                    "on-primary-fixed-variant": "#343d96",
+                    "on-surface": "#1a1c1d",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#8df5e4",
+                    "surface-container": "#eeeef0",
+                    "tertiary-fixed-dim": "#b0c6ff",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#001944",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#8df5e4",
+                    "inverse-on-surface": "#f0f0f2",
+                    "outline": "#767683",
+                    "surface-dim": "#d9dadc",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#454652",
+                    "secondary": "#006b5f",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#e0e0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xl": "32px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xxl": "48px",
+                    "lg": "24px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<header class="bg-surface-bright shadow-sm flex justify-between items-center w-full px-lg h-16 sticky top-0 z-50">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary text-title-md">arrow_back</span>
+<h1 class="text-primary font-bold text-title-md">Konfigurasi Laporan BOS</h1>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-colors" data-icon="notifications">notifications</span>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<div class="lg:flex">
+<aside class="hidden lg:flex flex-col p-md gap-sm fixed left-0 h-full w-72 border-r border-outline-variant bg-surface">
+<div class="flex items-center gap-md mb-xl p-sm">
+<div class="w-12 h-12 bg-primary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="school">school</span>
+</div>
+<div>
+<p class="text-primary font-bold text-title-md">SMPN Jakarta</p>
+<p class="text-on-surface-variant text-body-sm">Admin Sekolah</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-r-full" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="font-body-sm">Laporan BOS</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="font-body-sm">Daftar Ekskul</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="font-body-sm">Jadwal Kompetisi</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-sm">Pengaturan</span>
+</a>
+</nav>
+</aside>
+<main class="lg:ml-72 flex-1 p-lg mb-20 md:mb-0">
+<div class="max-w-4xl mx-auto space-y-lg">
+<section class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="md:col-span-2 space-y-lg">
+<div class="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant">
+<h2 class="text-title-md font-bold text-primary mb-md">Parameter Laporan</h2>
+<form class="space-y-md">
+<div class="space-y-xs">
+<label class="block text-on-surface font-semibold text-body-sm">Nama Pembina (Custom)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="person">person</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Masukkan nama pembina..." type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="block text-on-surface font-semibold text-body-sm">Jumlah Pertemuan</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="groups">groups</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Contoh: 12" type="number"/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="block text-on-surface font-semibold text-body-sm">Jumlah Peserta</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" data-icon="group_add">group_add</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Contoh: 45" type="number"/>
+</div>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="block text-on-surface font-semibold text-body-sm">Periode Laporan (Rentang Tanggal)</label>
+<div class="flex items-center gap-sm">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-body-sm" data-icon="calendar_today">calendar_today</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-body-sm" type="date"/>
+</div>
+<span class="text-outline">s/d</span>
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-body-sm" data-icon="calendar_month">calendar_month</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-body-sm" type="date"/>
+</div>
+</div>
+</div>
+</form>
+</div>
+<div class="bg-primary-container rounded-xl p-lg flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container" data-icon="database">database</span>
+</div>
+<div>
+<p class="text-white font-bold text-body-lg">Gunakan Data Real</p>
+<p class="text-on-primary-container text-body-sm">Sinkronisasi otomatis dengan database absensi</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-on-primary-container peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+</div>
+<aside class="space-y-lg">
+<div class="bg-surface-container-low border-l-4 border-secondary rounded-xl p-lg shadow-sm">
+<h3 class="font-bold text-primary mb-sm flex items-center gap-xs">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+                                Ringkasan Laporan
+                            </h3>
+<div class="space-y-sm text-on-surface-variant text-body-sm">
+<div class="flex justify-between">
+<span>Tipe Laporan:</span>
+<span class="font-semibold text-on-surface">Eksternal (BOS)</span>
+</div>
+<div class="flex justify-between">
+<span>Status Data:</span>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-label-md">Disesuaikan</span>
+</div>
+<hr class="border-outline-variant"/>
+<p class="italic text-xs">Pastikan semua parameter sesuai dengan Juknis BOS terbaru sebelum melakukan generate.</p>
+</div>
+</div>
+<div class="space-y-md">
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold flex items-center justify-center gap-md shadow-lg active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="picture_as_pdf">picture_as_pdf</span>
+                                Generate PDF
+                            </button>
+<button class="w-full border-2 border-secondary text-secondary py-4 rounded-xl font-bold flex items-center justify-center gap-md hover:bg-secondary-container transition-all">
+<span class="material-symbols-outlined" data-icon="table_view">table_view</span>
+                                Ekspor Excel
+                            </button>
+</div>
+<div class="rounded-xl overflow-hidden shadow-sm aspect-video relative group">
+<img alt="Workspace administrative" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A clean, modern administrative workspace with a high-end laptop showing data charts, professional documents neatly arranged on a white oak desk, and soft natural lighting from a nearby window. The atmosphere is professional and organized, featuring a color palette of deep navy blues and soft grays, matching the academic authority aesthetic of the brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt9jL4XDRzVeiF_FifB-lLCAS1fZ27pWyT6GRREzapnPeLsBvvO-IJWYVDDB0p5CafbEMxXC7ZlIRhtL0yFzE9yG2kXrLVEiISjEd9BS97xalkNvdkHZmhXA7CX9UoorWQKeixLCIhoXnQR2W36EcOoZn1E4QeKqCN9qGds7N4X1mLdaGJ8BitBbp3lpe5nVvB55X9wSD1IRQcV_T9WnaATdnMrRNI8aZ35dMK4IPxHEa7SP9CpBU8K2dMaiFNeR4uDD-36ykM0w7a"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-md">
+<p class="text-white text-body-sm font-semibold">Tinjauan Draft Laporan</p>
+</div>
+</div>
+</aside>
+</section>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="px-lg py-md border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h3 class="font-bold text-primary">Riwayat Generate Laporan</h3>
+<button class="text-primary font-semibold text-body-sm flex items-center gap-xs">
+                            Lihat Semua <span class="material-symbols-outlined text-body-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-body-sm">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant">
+<th class="px-lg py-md font-bold text-on-surface">Tanggal</th>
+<th class="px-lg py-md font-bold text-on-surface">Periode</th>
+<th class="px-lg py-md font-bold text-on-surface">Oleh</th>
+<th class="px-lg py-md font-bold text-on-surface">Format</th>
+<th class="px-lg py-md font-bold text-on-surface">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">14 Mei 2024</td>
+<td class="px-lg py-md">Apr - Mei 2024</td>
+<td class="px-lg py-md">Admin Utama</td>
+<td class="px-lg py-md"><span class="px-2 py-1 bg-error-container text-on-error-container rounded-lg text-xs font-bold uppercase tracking-wider">PDF</span></td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline font-semibold">Download</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-lg py-md">02 Mei 2024</td>
+<td class="px-lg py-md">Jan - Mar 2024</td>
+<td class="px-lg py-md">Admin Keuangan</td>
+<td class="px-lg py-md"><span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded-lg text-xs font-bold uppercase tracking-wider">XLSX</span></td>
+<td class="px-lg py-md">
+<button class="text-primary hover:underline font-semibold">Download</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-md py-sm bg-surface-container-lowest shadow-lg z-50 rounded-t-xl border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-md font-label-md">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-md font-label-md">Ekskul</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events">emoji_events</span>
+<span class="text-label-md font-label-md">Lomba</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="text-label-md font-label-md">Laporan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-md font-label-md">Profil</span>
+</a>
+</nav>
+</body></html>

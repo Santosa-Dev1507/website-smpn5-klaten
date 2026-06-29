@@ -6,6 +6,7 @@ import styles from "./Header.module.css";
 const navLinks = [
   { label: "Beranda", href: "/" },
   { label: "Profil", href: "/profil" },
+  { label: "Ekskul", href: "/ekstrakurikuler" },
   { label: "Alumni", href: "/alumni" },
   { label: "Prestasi", href: "/#prestasi" },
 ];

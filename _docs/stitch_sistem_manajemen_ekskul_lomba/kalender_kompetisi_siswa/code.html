@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jadwal Kompetisi - SMPN Manajemen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1a1c1d",
+                    "on-tertiary-fixed-variant": "#00429c",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f3f3f5",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-tint": "#4c56af",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#bdc2ff",
+                    "on-secondary-container": "#007165",
+                    "on-tertiary-container": "#6b95f3",
+                    "on-tertiary-fixed": "#001945",
+                    "on-primary-fixed": "#000767",
+                    "inverse-surface": "#2f3132",
+                    "primary": "#000666",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "surface-bright": "#f9f9fb",
+                    "on-primary-container": "#8690ee",
+                    "surface-variant": "#e2e2e4",
+                    "on-error": "#ffffff",
+                    "primary-container": "#1a237e",
+                    "surface": "#f9f9fb",
+                    "tertiary-fixed": "#d9e2ff",
+                    "secondary-fixed-dim": "#70d8c8",
+                    "background": "#f9f9fb",
+                    "tertiary-container": "#002c6e",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-container-high": "#e8e8ea",
+                    "outline-variant": "#c6c5d4",
+                    "on-primary-fixed-variant": "#343d96",
+                    "on-surface": "#1a1c1d",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#8df5e4",
+                    "surface-container": "#eeeef0",
+                    "tertiary-fixed-dim": "#b0c6ff",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#001944",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#8df5e4",
+                    "inverse-on-surface": "#f0f0f2",
+                    "outline": "#767683",
+                    "surface-dim": "#d9dadc",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#454652",
+                    "secondary": "#006b5f",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#e0e0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xl": "32px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xxl": "48px",
+                    "lg": "24px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface selection:bg-secondary-container">
+<!-- Top Navigation Bar -->
+<header class="bg-surface-bright flex justify-between items-center w-full px-lg h-16 shadow-sm sticky top-0 z-40">
+<div class="flex items-center gap-md">
+<span class="text-title-md font-title-md font-bold text-primary">SMPN Manajemen</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden">
+<img alt="Logo Sekolah" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoZehthe2QfGG_H1iMYNm0GJiRSCpn0NPIT5-yMRhXgMIKhNNYY3zUtPVj537uztSo5yWxbvQ1Sk2Yp3nOcTrRmv-kpzheKrlGHUbWPfQVPerGe1VF0d1xWDLkrz3HXCkxnUvNl8yt01GQNnfEV934HphYfcOuAs5-xC3ktLOPXxvUyOKHV3OhJsWsBJnQjN4DfHuVHp_6P_dOjGX15hEGTF3lp6ZcvWK7Clnk1I7JhR-_fEp1KTqONNfTodzhd8sXHXS9ktGkoMk1"/>
+</div>
+</div>
+</header>
+<div class="flex max-w-[1440px] mx-auto min-h-[calc(100vh-64px)]">
+<!-- Sidebar Navigation -->
+<aside class="hidden lg:flex flex-col p-md gap-sm bg-surface w-72 border-r border-outline-variant h-[calc(100vh-64px)] sticky top-16">
+<div class="px-md py-lg mb-md flex items-center gap-md">
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="school">school</span>
+</div>
+<div>
+<p class="text-title-md font-title-md text-primary font-bold">Admin Sekolah</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Manajemen Akademik</p>
+</div>
+</div>
+<nav class="space-y-sm">
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-r-full group" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body-sm font-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-r-full group" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span class="text-body-sm font-body-sm">Daftar Ekskul</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-r-full" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="text-body-sm font-body-sm">Jadwal Kompetisi</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-r-full group" href="#">
+<span class="material-symbols-outlined" data-icon="assessment">assessment</span>
+<span class="text-body-sm font-body-sm">Rekap Kehadiran</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-r-full group" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-sm font-body-sm">Pengaturan</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-lg md:p-xl overflow-hidden pb-32">
+<!-- Header Section -->
+<div class="mb-xl">
+<h1 class="text-headline-lg font-headline-lg text-on-background mb-xs">Jadwal Kompetisi</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Pantau agenda lomba siswa SMPN 5 Klaten bulan ini.</p>
+</div>
+<!-- Bento Layout Content -->
+<div class="grid grid-cols-12 gap-lg">
+<!-- Filter Section (Quick Action Chips) -->
+<div class="col-span-12 flex flex-wrap gap-md items-center bg-surface-container-lowest p-md rounded-xl shadow-sm border border-outline-variant/30">
+<span class="text-label-md font-label-md text-on-surface-variant uppercase tracking-wider">Filter Kategori:</span>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-full text-label-md font-label-md shadow-md">Semua</button>
+<button class="bg-surface-container-high text-on-surface-variant px-lg py-sm rounded-full text-label-md font-label-md hover:bg-outline-variant/30 transition-colors">Akademik</button>
+<button class="bg-surface-container-high text-on-surface-variant px-lg py-sm rounded-full text-label-md font-label-md hover:bg-outline-variant/30 transition-colors">Seni</button>
+<button class="bg-surface-container-high text-on-surface-variant px-lg py-sm rounded-full text-label-md font-label-md hover:bg-outline-variant/30 transition-colors">Olahraga</button>
+<button class="bg-surface-container-high text-on-surface-variant px-lg py-sm rounded-full text-label-md font-label-md hover:bg-outline-variant/30 transition-colors">Pramuka</button>
+</div>
+<!-- Monthly Calendar View -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant/30">
+<div class="flex justify-between items-center mb-lg">
+<div class="flex items-center gap-md">
+<h2 class="text-title-md font-title-md text-on-surface">September 2023</h2>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-body-lg" data-icon="chevron_left">chevron_left</span></button>
+<button class="p-xs hover:bg-surface-container-high rounded-lg"><span class="material-symbols-outlined text-body-lg" data-icon="chevron_right">chevron_right</span></button>
+</div>
+</div>
+<button class="flex items-center gap-sm text-secondary font-semibold text-body-sm hover:underline">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+                            Lihat Full Calendar
+                        </button>
+</div>
+<div class="grid grid-cols-7 gap-xs text-center border-b border-outline-variant pb-sm mb-sm">
+<div class="text-label-md font-label-md text-on-surface-variant">Min</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Sen</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Sel</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Rab</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Kam</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Jum</div>
+<div class="text-label-md font-label-md text-on-surface-variant">Sab</div>
+</div>
+<div class="grid grid-cols-7 gap-xs h-[400px]">
+<!-- Calendar Days Example (Partial Mock) -->
+<div class="bg-surface p-sm rounded-lg opacity-40 text-label-md">27</div>
+<div class="bg-surface p-sm rounded-lg opacity-40 text-label-md">28</div>
+<div class="bg-surface p-sm rounded-lg opacity-40 text-label-md">29</div>
+<div class="bg-surface p-sm rounded-lg opacity-40 text-label-md">30</div>
+<div class="bg-surface p-sm rounded-lg opacity-40 text-label-md">31</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">1</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">2</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">3</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">4</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">5</div>
+<!-- Day with competition -->
+<div class="bg-secondary-container/20 p-sm rounded-lg text-label-md border-2 border-secondary relative">
+<span class="font-bold text-secondary">6</span>
+<div class="mt-xs bg-secondary w-full h-1 rounded-full"></div>
+</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">7</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">8</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">9</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">10</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">11</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">12</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">13</div>
+<!-- Current Day -->
+<div class="bg-primary-container text-on-primary-container p-sm rounded-lg text-label-md ring-2 ring-primary relative">
+<span class="font-bold">14</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-on-primary-container rounded-full"></span>
+</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">15</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">16</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">17</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">18</div>
+<!-- Day with competition -->
+<div class="bg-error-container/30 p-sm rounded-lg text-label-md border-2 border-error relative">
+<span class="font-bold text-error">19</span>
+<div class="mt-xs bg-error w-full h-1 rounded-full"></div>
+</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">20</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">21</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">22</div>
+<div class="bg-surface p-sm rounded-lg text-label-md hover:bg-surface-container shadow-sm transition-colors cursor-pointer border border-transparent">23</div>
+</div>
+</div>
+<!-- Upcoming Competitions Sidebar -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-lg">
+<div class="bg-surface-container-lowest p-lg rounded-xl shadow-sm border border-outline-variant/30 flex-1">
+<h2 class="text-title-md font-title-md text-on-surface mb-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="rocket_launch">rocket_launch</span>
+                            Lomba Terdekat
+                        </h2>
+<div class="space-y-lg">
+<!-- Competition Card 1 -->
+<div class="group bg-surface rounded-xl p-md border-l-4 border-secondary hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-sm">
+<span class="px-sm py-xs bg-secondary-container text-on-secondary-container rounded text-[10px] font-bold uppercase tracking-widest">Nasional</span>
+<span class="text-label-md font-label-md text-on-surface-variant">19 Sep 2023</span>
+</div>
+<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors mb-xs">Olimpiade Matematika Nasional</h3>
+<p class="text-body-sm text-on-surface-variant mb-md">Kategori: Akademik</p>
+<button class="w-full py-sm bg-surface-container-highest text-primary font-bold rounded-lg text-label-md group-hover:bg-primary group-hover:text-on-primary transition-colors active:scale-95">Lihat Detail</button>
+</div>
+<!-- Competition Card 2 -->
+<div class="group bg-surface rounded-xl p-md border-l-4 border-on-tertiary-fixed-variant hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-sm">
+<span class="px-sm py-xs bg-tertiary-fixed text-on-tertiary-fixed-variant rounded text-[10px] font-bold uppercase tracking-widest">Provinsi</span>
+<span class="text-label-md font-label-md text-on-surface-variant">25 Sep 2023</span>
+</div>
+<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors mb-xs">FLS2N Seni Tari</h3>
+<p class="text-body-sm text-on-surface-variant mb-md">Kategori: Seni &amp; Budaya</p>
+<button class="w-full py-sm bg-surface-container-highest text-primary font-bold rounded-lg text-label-md group-hover:bg-primary group-hover:text-on-primary transition-colors active:scale-95">Lihat Detail</button>
+</div>
+<!-- Competition Card 3 -->
+<div class="group bg-surface rounded-xl p-md border-l-4 border-primary hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-sm">
+<span class="px-sm py-xs bg-primary-fixed text-on-primary-fixed-variant rounded text-[10px] font-bold uppercase tracking-widest">Kecamatan</span>
+<span class="text-label-md font-label-md text-on-surface-variant">02 Okt 2023</span>
+</div>
+<h3 class="font-bold text-on-surface group-hover:text-primary transition-colors mb-xs">Lomba Gerak Jalan Klaten</h3>
+<p class="text-body-sm text-on-surface-variant mb-md">Kategori: Olahraga</p>
+<button class="w-full py-sm bg-surface-container-highest text-primary font-bold rounded-lg text-label-md group-hover:bg-primary group-hover:text-on-primary transition-colors active:scale-95">Lihat Detail</button>
+</div>
+</div>
+</div>
+<!-- Highlight Promo Card -->
+<div class="relative overflow-hidden rounded-xl h-48 bg-primary-container text-on-primary-container p-lg flex flex-col justify-end">
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay" data-alt="A group of Indonesian students in middle school uniforms celebrating with a trophy in a modern, brightly lit gymnasium. The scene captures an atmosphere of achievement and school pride, with soft daylight filtering through large windows. The overall aesthetic is energetic and progress-oriented, featuring high-contrast blue and teal accents consistent with the academic branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZpxzQwT5XWHLHQYcq01Lh4B1KMDWTNfnfS5R7VTHQWa6anh6s_OYvTm4n4d004N-rMMry1TtdDBB2edfmPSHBSxjJS-Qjcx7Gkay1MJp8oUGV3EKD0mgyJATezBs1Eg7i3rYb9937YDTsOVtBNw9trwh9743pnrKos-zqBZBt0ezg-fAI_KoorVzjRz7K0bdUb_roiDpOgxzCZQP9jaql9uB3RBXTTzNY0GtzF54Q1TW0O2VNNIqGu0ryyOkNQtL_h5akXOJgBf-L"/>
+<div class="relative z-10">
+<p class="text-label-md font-label-md uppercase tracking-wider mb-xs opacity-80">Info Kompetisi</p>
+<h3 class="text-title-md font-title-md font-bold mb-md leading-tight">Daftarkan Tim Ekskul Anda Sekarang!</h3>
+<button class="flex items-center gap-sm bg-primary text-on-primary px-md py-sm rounded-full text-label-md font-bold shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-body-sm" data-icon="add">add</span>
+                                Ajukan Lomba
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-md py-sm bg-surface-container-lowest shadow-lg border-t border-outline-variant z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-md font-label-md">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-md font-label-md">Ekskul</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<span class="text-label-md font-label-md">Lomba</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="text-label-md font-label-md">Absen</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-md font-label-md">Profil</span>
+</a>
+</nav>
+</body></html>

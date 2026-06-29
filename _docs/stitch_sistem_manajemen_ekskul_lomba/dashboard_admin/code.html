@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SMPN Manajemen - SIM Ekstrakurikuler SMPN 5 Klaten</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1a1c1d",
+                    "on-tertiary-fixed-variant": "#00429c",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f3f3f5",
+                    "on-secondary-fixed": "#00201c",
+                    "surface-tint": "#4c56af",
+                    "on-tertiary": "#ffffff",
+                    "inverse-primary": "#bdc2ff",
+                    "on-secondary-container": "#007165",
+                    "on-tertiary-container": "#6b95f3",
+                    "on-tertiary-fixed": "#001945",
+                    "on-primary-fixed": "#000767",
+                    "inverse-surface": "#2f3132",
+                    "primary": "#000666",
+                    "primary-fixed-dim": "#bdc2ff",
+                    "surface-bright": "#f9f9fb",
+                    "on-primary-container": "#8690ee",
+                    "surface-variant": "#e2e2e4",
+                    "on-error": "#ffffff",
+                    "primary-container": "#1a237e",
+                    "surface": "#f9f9fb",
+                    "tertiary-fixed": "#d9e2ff",
+                    "secondary-fixed-dim": "#70d8c8",
+                    "background": "#f9f9fb",
+                    "tertiary-container": "#002c6e",
+                    "on-secondary-fixed-variant": "#005048",
+                    "surface-container-high": "#e8e8ea",
+                    "outline-variant": "#c6c5d4",
+                    "on-primary-fixed-variant": "#343d96",
+                    "on-surface": "#1a1c1d",
+                    "surface-container-highest": "#e2e2e4",
+                    "on-secondary": "#ffffff",
+                    "secondary-container": "#8df5e4",
+                    "surface-container": "#eeeef0",
+                    "tertiary-fixed-dim": "#b0c6ff",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#001944",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#8df5e4",
+                    "inverse-on-surface": "#f0f0f2",
+                    "outline": "#767683",
+                    "surface-dim": "#d9dadc",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#454652",
+                    "secondary": "#006b5f",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#e0e0ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "xl": "32px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "gutter": "24px",
+                    "container-max": "1280px",
+                    "xxl": "48px",
+                    "lg": "24px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "title-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen">
+<header class="bg-surface-bright dark:bg-surface-dim shadow-sm fixed top-0 w-full z-40 h-16 flex justify-between items-center px-lg">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h1 class="text-title-md font-title-md font-bold text-primary">SMPN Manajemen</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-sm hover:bg-surface-container-low transition-colors rounded-full relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="hidden md:flex items-center gap-sm">
+<div class="text-right">
+<p class="text-label-md font-label-md text-on-surface">Admin Sekolah</p>
+<p class="text-[10px] text-on-surface-variant">SMPN 5 Klaten</p>
+</div>
+<img alt="Avatar" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-r7Nj-O5hJLypBbSWhzqouf__nxDGvorLo7qYQylDpJEsAJuOtOPI2H61wLVcC6xq1KZ4-jdQ2Op8fbvnPdN8dgrSA42MJ9gu51eyt0PfL5tMNBP2Y1qE5aGGjpCddgY3nBnhYgMycOYeVJUwuOT_HuI2rsWrLOgrG1ZKMTdsX1sOhxDD66yqkciHZqVEBIqTTRl03DgDBf38GLIB77nVJCQi8KFvO0ZsblTT2OHSxdKEjhcSmNJ4za1fVTPoYVGQuYDzUpYYxJbU"/>
+</div>
+</div>
+</header>
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-72 bg-surface border-r border-outline-variant hidden lg:flex flex-col p-md gap-sm">
+<div class="mb-lg p-md bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-md mb-xs">
+<img alt="Admin" class="w-10 h-10 rounded-full bg-secondary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXaEkmMLndJXEPzi0dvos-B7hXmEAz0u91brOh3q0FBU-bOTs2p1fs5l-P33b4XnE5ozc9ZjefDLInuF5lYE5OAJQDRljJDEBsYgVMrt_X6JQg0_XJC01Aemq7DWw2-M0KHTY246mZ4_QCTLIFcYhmNxIXQT7l-EbqnZ3oognPF-Onh2CzpU_MaEQoQYjluyxQZt8IuiUsNuczMyLsDUKkJ4iRLbdV0sTYrHyAZcGBYsoLWAwl8EZ-YfXkKSng8eIjR1RVrI5eGW6o"/>
+<div>
+<h3 class="text-title-md font-title-md font-bold text-primary">Admin Sekolah</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Manajemen Akademik</p>
+</div>
+</div>
+<p class="text-body-sm font-body-sm text-outline px-xs">SMPN Jakarta</p>
+</div>
+<nav class="flex flex-col gap-xs">
+<a class="flex items-center gap-md px-md py-sm bg-secondary-container text-on-secondary-container font-semibold rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-body-sm font-body-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="text-body-sm font-body-sm">Daftar Ekskul</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-body-sm font-body-sm">Jadwal Kompetisi</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="text-body-sm font-body-sm">Rekap Kehadiran</span>
+</a>
+<div class="h-px bg-outline-variant my-sm"></div>
+<a class="flex items-center gap-md px-md py-sm text-on-surface-variant hover:bg-surface-container-high rounded-r-full transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-sm font-body-sm">Pengaturan</span>
+</a>
+</nav>
+</aside>
+<main class="lg:ml-72 pt-24 pb-28 px-md lg:px-lg max-w-container-max mx-auto">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-xl">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Ringkasan Ekstrakurikuler</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Selamat datang kembali di panel administrasi SMPN 5 Klaten.</p>
+</div>
+<div class="flex items-center gap-sm">
+<button class="flex items-center gap-sm px-lg py-md bg-surface-bright border border-secondary text-secondary font-bold rounded-xl hover:bg-surface-container-low active:scale-95 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+<span>Tambah Lomba</span>
+</button>
+<button class="flex items-center gap-sm px-lg py-md bg-primary text-on-primary font-bold rounded-xl shadow-lg hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">description</span>
+<span>Generate Laporan BOS</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+<div class="bg-surface-container-lowest p-lg rounded-xl border-l-4 border-secondary shadow-sm">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-secondary text-4xl">groups</span>
+<span class="text-label-md font-label-md text-on-secondary-container bg-secondary-container px-sm py-xs rounded-full">Siswa Aktif</span>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface">1,248</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-xs">+12% dari semester lalu</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border-l-4 border-primary shadow-sm">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-primary text-4xl">category</span>
+<span class="text-label-md font-label-md text-on-primary-container bg-primary-container/20 px-sm py-xs rounded-full">Unit Ekskul</span>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface">24</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-xs">Kesenian, Olahraga, &amp; Sains</div>
+</div>
+<div class="bg-surface-container-lowest p-lg rounded-xl border-l-4 border-tertiary-container shadow-sm">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-tertiary-container text-4xl">emoji_events</span>
+<span class="text-label-md font-label-md text-on-tertiary-container bg-tertiary-fixed px-sm py-xs rounded-full">Prestasi</span>
+</div>
+<div class="text-headline-lg font-headline-lg text-on-surface">15</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-xs">Penghargaan bulan ini</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="p-lg border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-title-md font-title-md text-primary">Kompetisi Mendatang</h3>
+<button class="text-body-sm font-body-sm text-secondary hover:underline">Lihat Semua</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-label-md font-label-md text-on-surface-variant">
+<tr>
+<th class="p-md">Nama Kompetisi</th>
+<th class="p-md">Cabang Ekskul</th>
+<th class="p-md">Tanggal</th>
+<th class="p-md">Status</th>
+</tr>
+</thead>
+<tbody class="text-body-sm font-body-sm">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md font-semibold">Olimpiade Sains Nasional</td>
+<td class="p-md">Klub Sains</td>
+<td class="p-md">15 Okt 2023</td>
+<td class="p-md">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full text-[10px] font-bold">TERDAFTAR</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md font-semibold">Lomba Baris Berbaris Klaten</td>
+<td class="p-md">Paskibra</td>
+<td class="p-md">22 Okt 2023</td>
+<td class="p-md">
+<span class="bg-tertiary-fixed text-on-tertiary-container px-sm py-xs rounded-full text-[10px] font-bold">PERSIAPAN</span>
+</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low transition-colors">
+<td class="p-md font-semibold">Turnamen Futsal Cup V</td>
+<td class="p-md">Futsal</td>
+<td class="p-md">05 Nov 2023</td>
+<td class="p-md">
+<span class="bg-outline-variant text-on-surface-variant px-sm py-xs rounded-full text-[10px] font-bold">MENUNGGU</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="p-md font-semibold">Festival Karawitan Jateng</td>
+<td class="p-md">Seni Musik</td>
+<td class="p-md">12 Nov 2023</td>
+<td class="p-md">
+<span class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-full text-[10px] font-bold">TERDAFTAR</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex flex-col gap-lg">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+<div class="p-lg border-b border-outline-variant">
+<h3 class="text-title-md font-title-md text-primary">Aktivitas Terbaru</h3>
+</div>
+<div class="p-lg flex flex-col gap-md">
+<div class="flex gap-md">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+</div>
+<div>
+<p class="text-body-sm font-body-sm text-on-surface font-semibold">Absensi Pramuka selesai</p>
+<p class="text-[10px] text-on-surface-variant">2 jam yang lalu</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-primary-container text-sm">person_add</span>
+</div>
+<div>
+<p class="text-body-sm font-body-sm text-on-surface font-semibold">5 Siswa baru di Ekskul Basket</p>
+<p class="text-[10px] text-on-surface-variant">5 jam yang lalu</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+</div>
+<div>
+<p class="text-body-sm font-body-sm text-on-surface font-semibold">Laporan Keuangan Perlu TTD</p>
+<p class="text-[10px] text-on-surface-variant">Kemarin</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative h-48 rounded-xl overflow-hidden group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A bright, modern indoor high school corridor with large windows, clean white walls, and a minimalist design. The lighting is natural and airy, reflecting a professional academic atmosphere. The overall style is corporate and organized with a soft color palette of light grays and blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtjVcldnlDPbWcHPtAug-d9ELWgOHLgNvQmc2CsnpxgHkv2Maq2bNuu5hm-3OpVIqF_4C1KV6DYihzGJU52Kxbe49denguU6EnKug602_rNbv7fs2FrPx0p-VZDhN9jPbrQK2jiUKTrktj7jiWjUyY0Xm2qxEGo0nr9Ng5ugu1hr1NPlpVwQrGh7upbGheyLHt-JasUAvLHR-cMv1RiaopdwiBc_voptWiCPe9Ht1jsuhm-0waRz7bec7CQ4p8MgM-O42bMjV6mj4m"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-lg">
+<p class="text-on-primary font-bold text-title-md">Dokumentasi Sekolah</p>
+<p class="text-primary-fixed text-body-sm">Lihat galeri kegiatan ekskul terbaru</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest shadow-lg border-t border-outline-variant flex justify-around items-center px-md py-sm z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-md font-label-md">Beranda</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-md font-label-md">Ekskul</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="text-label-md font-label-md">Lomba</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span class="text-label-md font-label-md">Absen</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-md font-label-md">Profil</span>
+</a>
+</nav>
+</body></html>
