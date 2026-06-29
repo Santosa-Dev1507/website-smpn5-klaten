@@ -15,7 +15,7 @@ const DUMMY_DATA = [
 ];
 
 // ─── PETUNJUK DAFTAR ULANG ─────────────────────────────────────────────────
-const JADWAL_DAFTAR_ULANG = "30 Juni – 2 Juli 2026, pukul 08.00–14.00 WIB";
+const JADWAL_DAFTAR_ULANG = "6–7 Juli 2026, pukul 08.00–14.00 WIB";
 const DOKUMEN_DAFTAR_ULANG = [
   "Kartu peserta SPMB (asli)",
   "Ijazah / Surat Keterangan Lulus SD/MI (asli + fotokopi 2 lembar)",

@@ -27,7 +27,7 @@ export default function SpmbPopup() {
         </button>
         <div className="spmb-info-image-wrapper">
           <Image
-            src="/flyer-spmb.png"
+            src="/flyer-spmb.jpg"
             alt="Pengumuman SPMB SMP Negeri 5 Klaten TA 2026/2027"
             width={800}
             height={1000}
