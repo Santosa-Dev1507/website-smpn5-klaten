@@ -97,9 +97,9 @@ export default function HasilSpmbClient() {
           nisn: foundRow[1]?.trim() || "",
           nama: foundRow[2]?.trim() || "",
           jalur: foundRow[3]?.trim() || "Tidak diketahui",
-          kelompok: foundRow[5]?.trim() || "-",
-          ruang: foundRow[6]?.trim() || "-",
-          status: "DITERIMA"
+          kelompok: foundRow[4]?.trim() || "-",
+          ruang: foundRow[5]?.trim() || "-",
+          status: "DITERIMA",
         });
         setSearchStatus("found");
       } else {
