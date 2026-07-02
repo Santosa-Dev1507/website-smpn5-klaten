@@ -3,19 +3,19 @@ import { useState } from "react";
 import Header from "../../components/Header";
 import styles from "./daftar.module.css";
 
-// Data ekskul statis — digunakan saat memilih
+// Data ekskul statis dengan logic wajib/pilihan & terbuka/tertutup
 const ekskulList = [
-  { id: "pramuka",      nama: "Pramuka",          emoji: "⚜️", kategori: "Kepanduan"    },
-  { id: "pmr",          nama: "PMR / UKS",         emoji: "🏥", kategori: "Sosial"       },
-  { id: "pbb",          nama: "PBB / Tata Upacara", emoji: "🎖️", kategori: "Kedisiplinan" },
-  { id: "btq",          nama: "BTQ",               emoji: "📖", kategori: "Keagamaan"   },
-  { id: "osn-mat",      nama: "OSN Matematika",    emoji: "📐", kategori: "Akademik"    },
-  { id: "osn-ips",      nama: "OSN IPS",           emoji: "🌍", kategori: "Akademik"    },
-  { id: "osn-ipa",      nama: "OSN IPA",           emoji: "🔬", kategori: "Akademik"    },
-  { id: "seni-tari",    nama: "Seni Tari",         emoji: "💃", kategori: "Seni"        },
-  { id: "paduan-suara", nama: "Paduan Suara",      emoji: "🎵", kategori: "Seni"        },
-  { id: "futsal",       nama: "Futsal",             emoji: "⚽", kategori: "Olahraga"   },
-  { id: "jiu-jitsu",   nama: "Jiu Jitsu",          emoji: "🥋", kategori: "Olahraga"   },
+  { id: "pramuka",      nama: "Pramuka",          emoji: "⚜️", kategori: "Kepanduan",    jenis: "wajib", pendaftaran: "terbuka" },
+  { id: "pmr",          nama: "PMR / UKS",         emoji: "🏥", kategori: "Sosial",       jenis: "pilihan", pendaftaran: "terbuka" },
+  { id: "pbb",          nama: "PBB / Tata Upacara", emoji: "🎖️", kategori: "Kedisiplinan", jenis: "pilihan", pendaftaran: "terbuka" },
+  { id: "tbq",          nama: "TBQ (Tuntas Baca Quran)", emoji: "📖", kategori: "Keagamaan",  jenis: "pilihan", pendaftaran: "tertutup" },
+  { id: "osn-mat",      nama: "OSN Matematika",    emoji: "📐", kategori: "Akademik",    jenis: "pilihan", pendaftaran: "tertutup" },
+  { id: "osn-ips",      nama: "OSN IPS",           emoji: "🌍", kategori: "Akademik",    jenis: "pilihan", pendaftaran: "tertutup" },
+  { id: "osn-ipa",      nama: "OSN IPA",           emoji: "🔬", kategori: "Akademik",    jenis: "pilihan", pendaftaran: "tertutup" },
+  { id: "seni-tari",    nama: "Seni Tari",         emoji: "💃", kategori: "Seni",        jenis: "pilihan", pendaftaran: "terbuka" },
+  { id: "paduan-suara", nama: "Paduan Suara",      emoji: "🎵", kategori: "Seni",        jenis: "pilihan", pendaftaran: "terbuka" },
+  { id: "futsal",       nama: "Futsal",             emoji: "⚽", kategori: "Olahraga",   jenis: "pilihan", pendaftaran: "terbuka" },
+  { id: "jiu-jitsu",   nama: "Jiu Jitsu",          emoji: "🥋", kategori: "Olahraga",   jenis: "pilihan", pendaftaran: "terbuka" },
 ];
 
 type Step = "login" | "pilih" | "sukses";
@@ -32,7 +32,7 @@ export default function DaftarEkskulPage() {
   const [nis, setNis]           = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser]         = useState<UserData | null>(null);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>(["pramuka"]); // Pramuka otomatis masuk
   const [loading, setLoading]   = useState(false);
   const [error, setError]       = useState("");
   const [info, setInfo]         = useState("");
@@ -61,6 +61,9 @@ export default function DaftarEkskulPage() {
 
   // ── Step 2: Pilih & Daftar ──
   function toggleEkskul(id: string) {
+    const ekskul = ekskulList.find(e => e.id === id);
+    if (ekskul?.jenis === "wajib") return; // Wajib tidak bisa diubah
+
     setSelected((prev) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
     );
@@ -172,27 +175,35 @@ export default function DaftarEkskulPage() {
 
             <form onSubmit={handleDaftar}>
               <div className={styles.ekskulCheckGrid}>
-                {ekskulList.map((ekskul) => {
-                  const isSelected = selected.includes(ekskul.id);
-                  return (
-                    <label
-                      key={ekskul.id}
-                      htmlFor={`check-${ekskul.id}`}
-                      className={`${styles.ekskulCheck} ${isSelected ? styles.ekskulCheckSelected : ""}`}
-                    >
-                      <input
-                        id={`check-${ekskul.id}`}
-                        type="checkbox"
-                        checked={isSelected}
-                        onChange={() => toggleEkskul(ekskul.id)}
-                        className={styles.checkboxHidden}
-                      />
-                      <span className={styles.checkEmoji}>{ekskul.emoji}</span>
-                      <span className={styles.checkName}>{ekskul.nama}</span>
-                      <span className={styles.checkKategori}>{ekskul.kategori}</span>
-                      {isSelected && <span className={styles.checkMark}>✓</span>}
-                    </label>
-                  );
+                {ekskulList
+                  .filter((e) => e.pendaftaran === "terbuka") // Hanya tampilkan yang terbuka
+                  .map((ekskul) => {
+                    const isSelected = selected.includes(ekskul.id);
+                    const isWajib = ekskul.jenis === "wajib";
+                    return (
+                      <label
+                        key={ekskul.id}
+                        htmlFor={`check-${ekskul.id}`}
+                        className={`${styles.ekskulCheck} ${isSelected ? styles.ekskulCheckSelected : ""}`}
+                        style={isWajib ? { opacity: 0.8, cursor: "not-allowed" } : {}}
+                      >
+                        <input
+                          id={`check-${ekskul.id}`}
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleEkskul(ekskul.id)}
+                          disabled={isWajib}
+                          className={styles.checkboxHidden}
+                        />
+                        <span className={styles.checkEmoji}>{ekskul.emoji}</span>
+                        <span className={styles.checkName}>
+                          {ekskul.nama} 
+                          {isWajib && <span style={{ fontSize: "0.65rem", marginLeft: "6px", backgroundColor: "#FAD6A6", color: "#944535", padding: "2px 6px", borderRadius: "4px", fontWeight: "bold" }}>WAJIB</span>}
+                        </span>
+                        <span className={styles.checkKategori}>{ekskul.kategori}</span>
+                        {isSelected && <span className={styles.checkMark}>✓</span>}
+                      </label>
+                    );
                 })}
               </div>
 

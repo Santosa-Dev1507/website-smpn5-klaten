@@ -50,6 +50,7 @@ function login(username, password, role) {
       role: user.role,
       username: user.username,
       user_id: user.id,
+      ekskulKu: user.kode_ekskul ? user.kode_ekskul.split(',') : [],
       message: 'Login berhasil'
     };
   } catch (e) {

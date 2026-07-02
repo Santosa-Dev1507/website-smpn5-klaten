@@ -129,13 +129,13 @@ const ekskulData = [
 ];
 
 const kategoriColor: Record<string, string> = {
-  Kepanduan: "#16a34a",
-  Sosial: "#dc2626",
-  Kedisiplinan: "#1d4ed8",
-  Keagamaan: "#7c3aed",
-  Akademik: "#0369a1",
-  Seni: "#d97706",
-  Olahraga: "#059669",
+  Kepanduan: "#006b5f", /* secondary */
+  Sosial: "#ba1a1a", /* error */
+  Kedisiplinan: "#1a237e", /* primary-container */
+  Keagamaan: "#6b95f3", /* tertiary-container */
+  Akademik: "#00429c", /* tertiary-fixed-variant */
+  Seni: "#007165", /* secondary-container text */
+  Olahraga: "#005048", /* secondary-fixed-variant text */
 };
 
 export default function EkstrakulikulerPage() {
@@ -179,30 +179,33 @@ export default function EkstrakulikulerPage() {
         ))}
       </div>
 
-      {/* ── Daftar Ekskul ── */}
-      <section className={`${styles.section} ${styles.sectionAlt}`}>
-        <div className={styles.sectionHeader}>
-          <span className={styles.sectionBadge}>Program Unggulan</span>
-          <h2 className={styles.sectionTitle}>Pilih Ekstrakurikulermu</h2>
-          <p className={styles.sectionDesc}>
-            Setiap ekskul dirancang untuk mengembangkan potensi unikmu bersama pembina berpengalaman.
-          </p>
-        </div>
+      {/* ── Filter Bar ── */}
+      <div className={styles.filterBar}>
+        <button className={`${styles.filterChip} ${styles.filterChipActive}`}>Semua</button>
+        <button className={styles.filterChip}>⚽ Olahraga</button>
+        <button className={styles.filterChip}>🎨 Seni</button>
+        <button className={styles.filterChip}>🔬 Sains & Akademik</button>
+        <button className={styles.filterChip}>🤝 Sosial & Kepanduan</button>
+      </div>
 
+      {/* ── Daftar Ekskul ── */}
+      <section className={styles.section}>
         <div className={styles.ekskulGrid}>
           {ekskulData.map((ekskul) => (
             <div key={ekskul.nama} className={`${styles.ekskulCard} reveal`} id={`ekskul-${ekskul.nama.toLowerCase().replace(/\s+/g, "-")}`}>
                 <div className={styles.ekskulImgPlaceholder} aria-hidden>
-                  {ekskul.emoji}
-                </div>
-                <div className={styles.ekskulBody}>
-                  <span
-                    className={styles.ekskulCategory}
-                    style={{ color: kategoriColor[ekskul.kategori] || "var(--primary)", background: `${kategoriColor[ekskul.kategori]}15` }}
-                  >
+                  <span className={styles.ekskulCategory} style={{ color: kategoriColor[ekskul.kategori], background: `${kategoriColor[ekskul.kategori]}20` }}>
                     {ekskul.kategori}
                   </span>
-                  <h3 className={styles.ekskulName}>{ekskul.nama}</h3>
+                  {ekskul.emoji}
+                </div>
+                <div className={styles.ekskulBody} style={{ borderLeftColor: kategoriColor[ekskul.kategori] }}>
+                  <div className={styles.ekskulHeader}>
+                    <h3 className={styles.ekskulName}>{ekskul.nama}</h3>
+                    <div className={styles.ekskulRating}>
+                      <span>⭐</span> 4.9
+                    </div>
+                  </div>
                   <p className={styles.ekskulDesc}>{ekskul.desc}</p>
                   <div className={styles.ekskulMeta}>
                     <div className={styles.ekskulMetaItem}>
@@ -214,15 +217,9 @@ export default function EkstrakulikulerPage() {
                       <span>{ekskul.lokasi}</span>
                     </div>
                   </div>
-                </div>
-                <div className={styles.ekskulFooter}>
-                  <div className={styles.ekskulPembina}>
-                    <span>Pembina</span>
-                    <strong>{ekskul.pembina}</strong>
-                  </div>
-                  <span className={styles.ekskulStatus}>
-                    ● Buka
-                  </span>
+                  <a href="/ekstrakurikuler/daftar" className={styles.ekskulBtn}>
+                    Daftar Sekarang
+                  </a>
                 </div>
             </div>
           ))}

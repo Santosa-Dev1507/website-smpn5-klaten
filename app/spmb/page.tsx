@@ -235,10 +235,9 @@ export default function SpmbPage() {
             Kami mengundang putra-putri terbaik untuk bergabung menjadi generasi <strong>JUARA</strong>.
           </p>
           <div className={styles.heroCtas}>
-            <a href="#daftar" className={styles.btnDaftar}>Portal Daftar Online →</a>
-            <a href="#jalur" className={styles.btnDaftarOutline}>Lihat Jalur</a>
-            <a href="#jadwal" className={styles.btnDaftarOutline}>Cek Jadwal</a>
-            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Unduh Brosur dan Dokumen Pendukung 📄</a>
+            <a href="/spmb/hasil" className={styles.btnDaftar}>🎉 Cek Hasil Kelulusan SPMB</a>
+            <a href="https://spmb.klaten.go.id/" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Portal Pendaftaran</a>
+            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Unduh Panduan</a>
           </div>
         </div>
         <div className={styles.pageHeroRight}>
@@ -653,8 +652,8 @@ export default function SpmbPage() {
           <h2>Siap Bergabung dengan Keluarga <span className={styles.highlightPeach}>JUARA?</span></h2>
           <p>Pendaftaran dilakukan secara online melalui portal resmi Dinas Pendidikan Klaten. Pantau terus laman ini untuk informasi jadwal terbaru.</p>
           <div className={styles.ctaActions}>
-            <a href="https://spmb.klaten.go.id/" target="_blank" rel="noopener noreferrer" className={styles.btnCtaPrimary}>Portal Pendaftaran Online</a>
-            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Unduh Brosur dan Dokumen Pendukung 📄</a>
+            <a href="/spmb/hasil" className={styles.btnCtaPrimary}>Cek Hasil Kelulusan SPMB</a>
+            <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Unduh Panduan</a>
             <a href="https://wa.me/62895377815555" target="_blank" rel="noopener noreferrer" className={styles.btnCtaSecondary}>Tanya via WhatsApp</a>
           </div>
         </div>

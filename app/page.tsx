@@ -142,7 +142,7 @@ export default function Home() {
           )}
 
           <div className={styles.heroActions}>
-            <a href="#spmb" className={styles.btnPrimary}>Daftar SPMB 2026/2027 →</a>
+            <a href="/spmb/hasil" className={styles.btnPrimary}>🎉 Cek Hasil Kelulusan SPMB</a>
             <a href="#prestasi" className={styles.btnSecondary}>Lihat Prestasi Siswa</a>
           </div>
 

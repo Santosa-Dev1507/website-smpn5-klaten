@@ -101,13 +101,13 @@
 
 .input {
   flex: 1;
-  padding: 13px 16px;
+  padding: 14px 16px;
   border: 2px solid var(--border-color);
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-main);
   outline: none;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
   background: var(--background-alt);
   font-family: inherit;
 }
@@ -115,6 +115,7 @@
 .input:focus {
   border-color: var(--primary);
   background: white;
+  box-shadow: 0 0 0 4px rgba(148, 69, 53, 0.15);
 }
 
 .input:disabled {
@@ -123,12 +124,12 @@
 }
 
 .btnCek {
-  padding: 13px 24px;
+  padding: 14px 24px;
   background: var(--primary);
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
@@ -431,6 +432,79 @@
 .btnNav:hover {
   background: var(--primary);
   color: white;
+}
+
+/* ─── WhatsApp Button ─── */
+.btnWa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  background: #25D366;
+  color: white;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  margin-top: 1rem;
+}
+.btnWa:hover {
+  background: #1ebc59;
+  transform: translateY(-2px);
+}
+
+/* ─── Placeholder Denah ─── */
+.denahPlaceholder {
+  margin-top: 16px;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+.denahIcon {
+  font-size: 32px;
+}
+.denahText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-main);
+  font-size: 14px;
+}
+.denahText strong {
+  color: var(--primary);
+  font-size: 16px;
+}
+.denahText span {
+  color: var(--text-muted);
+}
+.btnDenah {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: white;
+  color: var(--primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btnDenah:hover {
+  border-color: var(--primary);
+  background: var(--background-alt);
 }
 
 /* ─── Responsive ──────────────────────────────── */
