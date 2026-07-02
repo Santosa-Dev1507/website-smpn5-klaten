@@ -142,7 +142,9 @@ export default function HasilSpmbClient() {
 
           {/* ── Himbauan ── */}
           <div style={{ backgroundColor: "#EFF6FF", border: "1px solid #BFDBFE", borderRadius: "8px", padding: "1rem", marginBottom: "2rem", color: "#1E3A8A", display: "flex", gap: "12px", alignItems: "flex-start" }}>
-            <span style={{ fontSize: "1.2rem", lineHeight: "1" }} aria-hidden="true">ℹ️</span>
+            <span style={{ fontSize: "1.2rem", lineHeight: "1", display: "flex", alignItems: "center" }} aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </span>
             <div>
               <strong style={{ display: "block", marginBottom: "4px" }}>Himbauan Panitia SPMB</strong>
               <span style={{ fontSize: "0.95rem" }}>
@@ -188,7 +190,9 @@ export default function HasilSpmbClient() {
           {searchStatus === "found" && result && (
             <section className={`${styles.resultCard} ${styles.resultDiterima}`} id="result-diterima" aria-live="polite">
               <div className={styles.resultHeader}>
-                <div className={styles.resultIcon} aria-hidden="true">✅</div>
+                <div className={styles.resultIcon} aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{color: '#16a34a'}}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
                 <div>
                   <div className={styles.resultStatus}>DITERIMA</div>
                   <div className={styles.resultName}>{result.nama}</div>
@@ -222,7 +226,9 @@ export default function HasilSpmbClient() {
                 <h3 className={styles.daftarTitle}>Petunjuk Daftar Ulang</h3>
                 
                 <div className={styles.jadwalBox}>
-                  <span className={styles.jadwalIcon} aria-hidden="true">📅</span>
+                  <span className={styles.jadwalIcon} aria-hidden="true">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--primary)'}}><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  </span>
                   <div>
                     <div className={styles.jadwalLabel}>Jadwal Daftar Ulang</div>
                     <div className={styles.jadwalValue}>{JADWAL_DAFTAR_ULANG}</div>
@@ -258,7 +264,9 @@ export default function HasilSpmbClient() {
                 </ul>
 
                 <div style={{ marginTop: "1rem", padding: "0.8rem", backgroundColor: "#FEF3C7", color: "#92400E", borderRadius: "6px", fontSize: "0.85rem", display: "flex", gap: "8px" }}>
-                  <span aria-hidden="true">⚠️</span>
+                  <span aria-hidden="true" style={{ display: "flex", alignItems: "center" }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  </span>
                   <div>
                     <strong>Penting:</strong> Masukkan berkas ke dalam Map (<strong>Kuning</strong> untuk Laki-laki, <strong>Merah</strong> untuk Perempuan). Tempel Form A di bagian depan Map, dan berikan Form B terpisah kepada Panitia. Form bisa diperoleh dengan mengunduh panduan daftar ulang dibawah ini.
                   </div>
@@ -283,14 +291,18 @@ export default function HasilSpmbClient() {
                     rel="noopener noreferrer"
                     style={{ margin: "0" }}
                   >
-                    <span aria-hidden="true" style={{ fontSize: "1.2rem" }}>💬</span>
+                    <span aria-hidden="true" style={{ fontSize: "1.2rem", display: "flex", alignItems: "center" }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    </span>
                     Gabung Grup WA Calon Siswa
                   </a>
                 </div>
 
                 {/* ── Placeholder Denah ── */}
                 <div className={styles.denahPlaceholder}>
-                  <span className={styles.denahIcon} aria-hidden="true">🗺️</span>
+                  <span className={styles.denahIcon} aria-hidden="true">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--primary)'}}><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                  </span>
                   <div className={styles.denahText}>
                     <strong>Denah Lokasi Daftar Ulang</strong>
                     <span>Buka dokumen untuk melihat detail ruangan</span>
@@ -316,7 +328,9 @@ export default function HasilSpmbClient() {
           {searchStatus === "not-found" && (
             <section className={`${styles.resultCard} ${styles.resultTidak}`} id="result-tidak-ditemukan" aria-live="polite">
               <div className={styles.resultHeader}>
-                <div className={styles.resultIcon} aria-hidden="true">❌</div>
+                <div className={styles.resultIcon} aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{color: '#dc2626'}}><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                </div>
                 <div>
                   <div className={`${styles.resultStatus} ${styles.statusTidak}`}>TIDAK DITEMUKAN</div>
                   <div className={styles.resultName}>{query}</div>
@@ -342,7 +356,9 @@ export default function HasilSpmbClient() {
             </div>
             <div className={styles.pdfBox}>
               <div className={styles.pdfInfo}>
-                <span className={styles.pdfIcon} aria-hidden="true">📄</span>
+                <span className={styles.pdfIcon} aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{color: 'var(--primary)'}}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </span>
                 <div>
                   <div className={styles.pdfTitle}>Daftar Lengkap Peserta Diterima</div>
                   <div className={styles.pdfDesc}>

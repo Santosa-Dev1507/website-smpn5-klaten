@@ -235,7 +235,7 @@ export default function SpmbPage() {
             Kami mengundang putra-putri terbaik untuk bergabung menjadi generasi <strong>JUARA</strong>.
           </p>
           <div className={styles.heroCtas}>
-            <a href="/spmb/hasil" className={styles.btnDaftar}>🎉 Cek Hasil Kelulusan SPMB</a>
+            <a href="/spmb/hasil" className={styles.btnDaftar}>Cek Hasil Kelulusan SPMB</a>
             <a href="https://spmb.klaten.go.id/" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Portal Pendaftaran</a>
             <a href="https://drive.google.com/drive/folders/1wAxd3Ylg_MtOYALPdVDxO9V5WerCDFRu?usp=sharing" target="_blank" rel="noopener noreferrer" className={styles.btnDaftarOutline}>Unduh Panduan</a>
           </div>
