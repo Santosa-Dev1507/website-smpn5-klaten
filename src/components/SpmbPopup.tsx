@@ -29,7 +29,7 @@ export default function SpmbPopup() {
         </button>
         <div className="spmb-info-image-wrapper">
           <Image
-            src="/flyer-spmb.jpg"
+            src="/flyer-spmb.png"
             alt="Pengumuman SPMB"
             width={800}
             height={1000}
