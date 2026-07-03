@@ -14,7 +14,7 @@ const JADWAL_DAFTAR_ULANG = "Senin, 06 Juli 2026 (Offline pukul 07.30 WIB, & Onl
 
 const getDokumenDaftarUlang = (jalur: string) => {
   const baseDocs = [
-    "Bukti Pendaftaran Online (ASLI)",
+    "Cetak Bukti Penerimaan yang bisa diunduh melalui dasbord siswa (ASLI)",
     "Fotokopi Kartu Keluarga (KK)",
     "Fotokopi Akta Kelahiran",
     "Formulir Isian Buku Induk (sudah ditempel pas foto 3x4 sebanyak 3 lembar)",
