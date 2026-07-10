@@ -1,19 +1,9 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import Header from "../components/Header";
 import ScrollReveal from "../components/ScrollReveal";
 import styles from "./ekstrakurikuler.module.css";
-
-export const metadata: Metadata = {
-  title: "Ekstrakurikuler — SMPN 5 Klaten",
-  description:
-    "Temukan dan daftarkan diri ke kegiatan ekstrakurikuler SMPN 5 Klaten. 11 ekskul pilihan untuk mengembangkan bakat, karakter, dan prestasi siswa.",
-  alternates: { canonical: "/ekstrakurikuler" },
-  openGraph: {
-    title: "Ekstrakurikuler SMPN 5 Klaten",
-    description: "11 ekskul pilihan untuk mengembangkan bakat dan prestasi siswa SMPN 5 Klaten.",
-    url: "https://www.smpn5klaten.sch.id/ekstrakurikuler",
-  },
-};
 
 const ekskulData = [
   {
@@ -138,7 +128,22 @@ const kategoriColor: Record<string, string> = {
   Olahraga: "#005048", /* secondary-fixed-variant text */
 };
 
+const filters = [
+  { label: "Semua", kategoriList: null },
+  { label: "⚽ Olahraga", kategoriList: ["Olahraga"] },
+  { label: "🎨 Seni", kategoriList: ["Seni"] },
+  { label: "🔬 Sains & Akademik", kategoriList: ["Akademik"] },
+  { label: "🤝 Sosial & Kepanduan", kategoriList: ["Sosial", "Kepanduan", "Kedisiplinan", "Keagamaan"] },
+];
+
 export default function EkstrakulikulerPage() {
+  const [activeFilter, setActiveFilter] = useState("Semua");
+
+  const activeKategoriList = filters.find((f) => f.label === activeFilter)?.kategoriList;
+  const filteredEkskul = activeKategoriList
+    ? ekskulData.filter((e) => activeKategoriList.includes(e.kategori))
+    : ekskulData;
+
   return (
     <main>
       <ScrollReveal />
@@ -161,6 +166,9 @@ export default function EkstrakulikulerPage() {
           <a href="/ekstrakurikuler/pembina" className={styles.btnSecondary} id="btn-area-pembina">
             👤 Area Pembina
           </a>
+          <a href="/ekstrakurikuler/siswa" className={styles.btnSecondary} id="btn-dashboard-siswa">
+            📊 Dashboard Siswa
+          </a>
         </div>
       </section>
 
@@ -181,17 +189,21 @@ export default function EkstrakulikulerPage() {
 
       {/* ── Filter Bar ── */}
       <div className={styles.filterBar}>
-        <button className={`${styles.filterChip} ${styles.filterChipActive}`}>Semua</button>
-        <button className={styles.filterChip}>⚽ Olahraga</button>
-        <button className={styles.filterChip}>🎨 Seni</button>
-        <button className={styles.filterChip}>🔬 Sains & Akademik</button>
-        <button className={styles.filterChip}>🤝 Sosial & Kepanduan</button>
+        {filters.map((f) => (
+          <button
+            key={f.label}
+            className={`${styles.filterChip} ${activeFilter === f.label ? styles.filterChipActive : ""}`}
+            onClick={() => setActiveFilter(f.label)}
+          >
+            {f.label}
+          </button>
+        ))}
       </div>
 
       {/* ── Daftar Ekskul ── */}
       <section className={styles.section}>
         <div className={styles.ekskulGrid}>
-          {ekskulData.map((ekskul) => (
+          {filteredEkskul.map((ekskul) => (
             <div key={ekskul.nama} className={`${styles.ekskulCard} reveal`} id={`ekskul-${ekskul.nama.toLowerCase().replace(/\s+/g, "-")}`}>
                 <div className={styles.ekskulImgPlaceholder} aria-hidden>
                   <span className={styles.ekskulCategory} style={{ color: kategoriColor[ekskul.kategori], background: `${kategoriColor[ekskul.kategori]}20` }}>
@@ -239,6 +251,9 @@ export default function EkstrakulikulerPage() {
           </a>
           <a href="/ekstrakurikuler/pembina" className={styles.ctaBtnSecondary} id="btn-pembina-cta">
             👤 Login Pembina
+          </a>
+          <a href="/ekstrakurikuler/siswa" className={styles.ctaBtnSecondary} id="btn-dashboard-siswa-cta">
+            📊 Dashboard Siswa
           </a>
         </div>
       </section>

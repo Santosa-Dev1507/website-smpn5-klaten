@@ -23,12 +23,11 @@ const isKelulusanOpen = false;
 // --- DATA PLACEHOLDER (Ganti dengan data asli nanti) ---
 
 const ekskulList = [
-  { image: "/OSIS.jpg", name: "OSIS", desc: "Wadah pengembangan kepemimpinan dan manajerial organisasi siswa" },
-  { image: "/PMR.png", name: "PMR", desc: "Melatih keterampilan pertolongan pertama dan kepedulian sosial (Palang Merah Remaja)" },
-  { image: "/TBQ.png", name: "Tuntas Baca Al-Qur'an", desc: "Membangun kemampuan membaca Al-Qur'an dengan tartil dan benar" },
-  { image: "/Pramuka.png", name: "Pramuka", desc: "Membentuk karakter mandiri, tangguh, dan berjiwa kepemimpinan" },
-  { image: "/Jiujitsu.png", name: "Jiu Jitsu", desc: "Olahraga bela diri yang melatih disiplin, ketangkasan, dan mental" },
-  { image: "/senitari.png", name: "Seni Tari", desc: "Mengembangkan bakat seni dan kecintaan terhadap budaya Indonesia" },
+  { image: "/PMR.jpg", name: "PMR", desc: "Melatih keterampilan pertolongan pertama dan kepedulian sosial (Palang Merah Remaja)" },
+  { image: "/TBQ.jpg", name: "Tuntas Baca Al-Qur'an", desc: "Membangun kemampuan membaca Al-Qur'an dengan tartil dan benar" },
+  { image: "/Pramuka.jpg", name: "Pramuka", desc: "Membentuk karakter mandiri, tangguh, dan berjiwa kepemimpinan" },
+  { image: "/Jiujitsu.jpg", name: "Jiu Jitsu", desc: "Olahraga bela diri yang melatih disiplin, ketangkasan, dan mental" },
+  { image: "/senitari.jpg", name: "Seni Tari", desc: "Mengembangkan bakat seni dan kecintaan terhadap budaya Indonesia" },
   { image: "/PBB.jpg", name: "PBB (Baris Berbaris)", desc: "Melatih kedisiplinan, ketertiban, dan jiwa korsa siswa" },
 ];
 

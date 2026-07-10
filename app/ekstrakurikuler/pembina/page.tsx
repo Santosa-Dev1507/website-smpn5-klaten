@@ -101,6 +101,7 @@ export default function PembinaPage() {
       setUser({ id: data.user_id, nama: data.nama, role: data.role, token: data.token, username: data.username, ekskulKu: data.ekskulKu });
       setStep("dashboard");
       handleMuatLombaList(data.token);
+      handleMuatLaporan(data.token);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
     } finally {
@@ -200,13 +201,15 @@ export default function PembinaPage() {
     }
   }
 
-  async function handleMuatLaporan() {
+  async function handleMuatLaporan(tokenParam?: string | React.MouseEvent) {
+    const tokenToUse = typeof tokenParam === "string" ? tokenParam : user?.token;
+    if (!tokenToUse) return;
     setLapLoading(true);
     try {
       const res = await fetch("/api/ekstrakurikuler", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "getLaporanRekap", token: user?.token }),
+        body: JSON.stringify({ action: "getLaporanRekap", token: tokenToUse }),
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.message);
@@ -315,7 +318,7 @@ export default function PembinaPage() {
     <main>
       <Header activePage="Ekskul" />
 
-      <div className={styles.wrapper}>
+      <div className={styles.pageWrapper}>
 
         {/* ── Login ── */}
         {step === "login" && (
@@ -363,20 +366,21 @@ export default function PembinaPage() {
 
         {/* ── Dashboard ── */}
         {step === "dashboard" && user && (
-          <div className={styles.dashboard}>
-            {/* Header */}
-            <div className={styles.dashboardHeader}>
-              <div>
-                <h2 className={styles.dashboardTitle}>Ringkasan Ekstrakurikuler</h2>
-                <p className={styles.dashboardSubtitle}>Selamat datang kembali, {user.nama} ({user.role === "admin" ? "Admin" : "Pembina"})</p>
+          <div className={styles.dashboardContainer}>
+            <div className={styles.dashboard}>
+              {/* Header */}
+              <div className={styles.dashboardHeader}>
+                <div>
+                  <h2 className={styles.dashboardTitle}>Ringkasan Ekstrakurikuler</h2>
+                  <p className={styles.dashboardSubtitle}>Selamat datang kembali, {user.nama} ({user.role === "admin" ? "Admin" : "Pembina"})</p>
+                </div>
+                <button
+                  className={styles.btnSecondary}
+                  onClick={() => { setStep("login"); setUser(null); setSiswaDaftar([]); setLaporan(null); }}
+                >
+                  Keluar
+                </button>
               </div>
-              <button
-                className={styles.btnSecondary}
-                onClick={() => { setStep("login"); setUser(null); setSiswaDaftar([]); setLaporan(null); }}
-              >
-                Keluar
-              </button>
-            </div>
 
             {/* Stats Grid */}
             <div className={styles.statsGrid}>
@@ -385,7 +389,7 @@ export default function PembinaPage() {
                   <span className={styles.statIcon}>👥</span>
                   <span className={`${styles.statBadge} ${styles.bgTeal}`}>Siswa Aktif</span>
                 </div>
-                <div className={styles.statValue}>1,248</div>
+                <div className={styles.statValue}>{laporan && !("error" in laporan) ? (laporan as any).totalSiswaAktif || 0 : "..."}</div>
                 <div className={styles.statDesc}>Total terdaftar semester ini</div>
               </div>
               <div className={`${styles.statCard} ${styles.statCardNavy}`}>
@@ -393,7 +397,7 @@ export default function PembinaPage() {
                   <span className={styles.statIcon}>🏅</span>
                   <span className={`${styles.statBadge} ${styles.bgNavy}`}>Unit Ekskul</span>
                 </div>
-                <div className={styles.statValue}>24</div>
+                <div className={styles.statValue}>{laporan && !("error" in laporan) ? (laporan as any).totalUnitEkskul || 0 : "..."}</div>
                 <div className={styles.statDesc}>Kesenian, Olahraga, & Sains</div>
               </div>
               <div className={`${styles.statCard} ${styles.statCardBlue}`}>
@@ -401,7 +405,7 @@ export default function PembinaPage() {
                   <span className={styles.statIcon}>🏆</span>
                   <span className={`${styles.statBadge} ${styles.bgBlue}`}>Prestasi</span>
                 </div>
-                <div className={styles.statValue}>15</div>
+                <div className={styles.statValue}>{laporan && !("error" in laporan) ? (laporan as any).totalPrestasi || 0 : "..."}</div>
                 <div className={styles.statDesc}>Penghargaan bulan ini</div>
               </div>
             </div>
@@ -555,7 +559,7 @@ export default function PembinaPage() {
               </div>
 
               {/* ── Right Column ── */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div className={`${styles.rightColWrapper} ${activeTab === "absen" ? styles.mobileTabHidden : ""}`}>
                 {/* ── Laporan Card ── */}
                 <div className={`${styles.card} ${activeTab !== "laporan" ? styles.mobileTabHidden : ""}`}>
                   <div className={styles.cardHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -573,7 +577,8 @@ export default function PembinaPage() {
                     )}
                     {lapLoading && <div className={styles.loadingText}>Menghubungkan ke database...</div>}
                     {laporan && !("error" in laporan) && (
-                      <div className={styles.laporanGrid}>
+                      <>
+                        <div className={styles.laporanGrid}>
                         {(laporan.rekapEkskul as Array<{nama: string; jumlahSiswa: number; totalSesi: number; persenKehadiran: number}>)?.map((e) => (
                           <div key={e.nama} className={styles.laporanCard}>
                             <h3 className={styles.laporanNama}>{e.nama}</h3>
@@ -588,6 +593,33 @@ export default function PembinaPage() {
                           <p style={{ color: "#767683" }}>Belum ada data laporan ekskul.</p>
                         )}
                       </div>
+
+                      {/* ── Siswa Bermasalah Section ── */}
+                      <div className={styles.alertSection}>
+                        <h4 className={styles.alertSectionTitle}>
+                          ⚠️ Pantauan Siswa Bermasalah (Absen ≥ 2)
+                        </h4>
+                        <div className={styles.alertList}>
+                          {laporan.siswaBermasalah && (laporan.siswaBermasalah as any[]).length > 0 ? (
+                            (laporan.siswaBermasalah as any[]).map((siswa, idx) => (
+                              <div key={idx} className={styles.alertRow}>
+                                <div className={styles.alertInfo}>
+                                  <p className={styles.alertName}>{siswa.nama}</p>
+                                  <p className={styles.alertEkskul}>Ekskul: {siswa.ekskul}</p>
+                                </div>
+                                <div className={styles.alertBadge}>
+                                  Absen {siswa.tidakHadir}x
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <p style={{ color: "#767683", margin: 0, fontStyle: "italic", padding: "1rem", background: "#fff", borderRadius: "10px", border: "1px solid #e2e2e4" }}>
+                              Belum ada siswa yang absen ≥ 2 kali.
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      </>
                     )}
                     {laporan && "error" in laporan && (
                       <div className={styles.alertError}>{String(laporan.error)}</div>
@@ -763,8 +795,8 @@ export default function PembinaPage() {
                 </div>
 
               </div>
-
             </div>
+          </div>
           </div>
         )}
       </div>

@@ -17,7 +17,7 @@ const getDokumenDaftarUlang = (jalur: string) => {
     "Cetak Bukti Penerimaan yang bisa diunduh melalui dasbord siswa (ASLI)",
     "Fotokopi Kartu Keluarga (KK)",
     "Fotokopi Akta Kelahiran",
-    "Formulir Isian Buku Induk (sudah ditempel pas foto 3x4 sebanyak 3 lembar)",
+    "Formulir Isian Buku Induk (beserta pas foto 3x4 sebanyak 3 lembar)",
     "Sudah mengisi Formulir Dapodik (Pengecekan oleh admin)",
   ];
 

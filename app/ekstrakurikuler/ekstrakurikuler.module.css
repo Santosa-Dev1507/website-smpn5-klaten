@@ -214,6 +214,39 @@
   display: inline-block;
 }
 
+/* ── CTA Actions & Secondary Button ── */
+.ctaActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ctaBtnSecondary {
+  background: transparent;
+  color: #fff;
+  border: 2px solid #FAD6A6;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: inline-block;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.ctaBtnSecondary:hover {
+  background: rgba(250, 214, 166, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 2rem 5%;
+  font-size: 0.85rem;
+  color: #767683;
+  border-top: 1px solid #e2e2e4;
+  background: #fdf8f2;
+}
+
 @media (max-width: 768px) {
   .heroTitle { font-size: 2rem; }
   .statsBar { gap: 1.5rem; }

@@ -1,0 +1,1246 @@
+/* ===== MPLS PAGE — STITCH DESIGN SYSTEM (MARUN & EMAS) ===== */
+@import url('https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css');
+/* Colors: Primary #944535 (Marun), Secondary #FAD6A6 (Emas), Surface #fdf8f2 */
+
+.pageWrapper {
+  background-color: #fdf8f2;
+  color: #1a1c1d;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ── Typography & Globals ── */
+.section {
+  padding: 4rem 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #944535;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.sectionSubtitle {
+  font-size: 1rem;
+  color: #454652;
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.badge {
+  display: inline-block;
+  background: #FAD6A6;
+  color: #7a382a;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+
+/* ── Navbar ── */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #944535;
+  color: #fff;
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.navBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.navBadge {
+  background: #FAD6A6;
+  color: #7a382a;
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.navLinks {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navLink {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+.navLink:hover {
+  color: #fff;
+}
+
+/* ── Hero ── */
+.hero {
+  background: #944535;
+  color: #fff;
+  padding: 6rem 5% 8rem;
+  position: relative;
+  text-align: center;
+  clip-path: ellipse(150% 100% at 50% 0%);
+}
+
+.heroTitle {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.heroHighlight {
+  color: #FAD6A6;
+}
+
+.heroDesc {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+.heroSchoolChip {
+  display: inline-block;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Countdown ── */
+.countdownWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.cdBox {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  border-radius: 12px;
+  min-width: 80px;
+}
+
+.cdNum {
+  font-size: 2rem;
+  font-weight: 800;
+  display: block;
+}
+
+.cdLabel {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+/* ── Buttons ── */
+.heroActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  background: #FAD6A6;
+  color: #7a382a;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s, background 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btnPrimary:hover {
+  background: #fce4c5;
+  transform: translateY(-2px);
+}
+
+.btnOutline {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.5);
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.btnOutline:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
+}
+
+/* ── Nilai Dasar (Grid) ── */
+.nilaiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.nilaiCard {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  transition: transform 0.2s;
+}
+.nilaiCard:hover {
+  transform: translateY(-4px);
+}
+
+.nilaiIcon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.nilaiTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #944535;
+  margin-bottom: 0.5rem;
+}
+
+.nilaiDesc {
+  font-size: 0.9rem;
+  color: #454652;
+  line-height: 1.5;
+}
+
+/* ── Alur 3 Tahap ── */
+.alurContainer {
+  display: flex;
+  gap: 2rem;
+  position: relative;
+}
+
+.alurTahap {
+  flex: 1;
+  background: #fff;
+  padding: 2rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.alurNum {
+  width: 40px;
+  height: 40px;
+  background: #FAD6A6;
+  color: #7a382a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.alurTitle {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #944535;
+  margin-bottom: 0.5rem;
+}
+
+.alurDate {
+  display: inline-block;
+  font-size: 0.8rem;
+  background: #fdf8f2;
+  color: #944535;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border: 1px solid #FAD6A6;
+}
+
+.alurList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alurList li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #454652;
+  line-height: 1.4;
+}
+.alurList li::before {
+  content: "•";
+  color: #944535;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+  top: -2px;
+}
+
+/* ── Jadwal Accordion ── */
+.jadwalContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.accordionItem {
+  background: #fff;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  border-left: 6px solid #944535;
+  user-select: none;
+  background: #fff;
+  transition: background 0.2s;
+}
+.accordionHeader:hover {
+  background: #fafafc;
+}
+
+.accordionTitleWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordionHari {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a1c1d;
+}
+
+.accordionTema {
+  font-size: 0.85rem;
+  color: #767683;
+  margin-top: 0.2rem;
+}
+
+.accordionIcon {
+  color: #944535;
+  transition: transform 0.3s ease;
+}
+.accordionIcon.open {
+  transform: rotate(180deg);
+}
+
+.accordionBody {
+  display: none;
+  padding: 1.5rem;
+  border-top: 1px solid rgba(198, 197, 212, 0.3);
+  background: #fdf8f2;
+}
+.accordionBody.open {
+  display: block;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.jadwalTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.jadwalTable th, .jadwalTable td {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(198, 197, 212, 0.5);
+  text-align: left;
+}
+
+.jadwalTable th {
+  font-size: 0.85rem;
+  color: #767683;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.jadwalTable td {
+  font-size: 0.95rem;
+  color: #1a1c1d;
+}
+
+.colWaktu {
+  white-space: nowrap;
+  font-weight: 600;
+  color: #944535 !important;
+  width: 120px;
+}
+
+.colIcon {
+  width: 40px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.kegiatanTitle {
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.kegiatanDesc {
+  font-size: 0.85rem;
+  color: #454652;
+}
+
+/* ── Checklist Orang Tua ── */
+.checklistCard {
+  background: #fff;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.progressLabel {
+  font-weight: 600;
+  color: #454652;
+}
+
+.progressCounter {
+  font-weight: 700;
+  color: #944535;
+}
+
+.progressBarTrack {
+  width: 100%;
+  height: 8px;
+  background: #eeeef0;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #944535;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.checkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.checkItem:hover {
+  background: #fafafc;
+}
+
+.checkItem.done {
+  background: #fdf8f2;
+  border-color: #FAD6A6;
+}
+
+.checkBox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #944535;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.checkItem.done .checkBox {
+  background: #944535;
+}
+
+.checkIcon {
+  color: #fff;
+  opacity: 0;
+  font-size: 1.2rem;
+}
+.checkItem.done .checkIcon {
+  opacity: 1;
+}
+
+.checkContent {
+  flex: 1;
+}
+
+.checkTitle {
+  font-weight: 600;
+  color: #1a1c1d;
+  margin-bottom: 0.25rem;
+  transition: color 0.2s;
+}
+.checkItem.done .checkTitle {
+  text-decoration: line-through;
+  color: #767683;
+}
+
+.checkDesc {
+  font-size: 0.85rem;
+  color: #454652;
+}
+
+/* ── FAQ ── */
+.faqItem {
+  background: #fff;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.faqHeader {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #1a1c1d;
+}
+
+.faqHeader:hover {
+  background: #fafafc;
+}
+
+.faqIcon {
+  color: #944535;
+  font-size: 1.5rem;
+  transition: transform 0.3s;
+}
+.faqIcon.open {
+  transform: rotate(45deg);
+}
+
+.faqBody {
+  display: none;
+  padding: 0 1.5rem 1.25rem;
+  color: #454652;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.faqBody.open {
+  display: block;
+}
+
+/* ── CTA Evaluasi ── */
+.ctaSection {
+  padding: 4rem 5%;
+}
+
+.ctaBanner {
+  background: #944535;
+  border-radius: 24px;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #fff;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.ctaDesc {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.9);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.btnCta {
+  background: #FAD6A6;
+  color: #7a382a;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btnCta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(250, 214, 166, 0.3);
+}
+
+/* ── Footer ── */
+.footer {
+  background: #1a1c1d;
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 3rem 5%;
+  font-size: 0.9rem;
+}
+
+.footerBrand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.footerHashtags {
+  color: #FAD6A6;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+  
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .countdownWrapper {
+    gap: 0.5rem;
+  }
+  
+  .cdBox {
+    min-width: 65px;
+    padding: 0.75rem;
+  }
+  .cdNum {
+    font-size: 1.5rem;
+  }
+  
+  .alurContainer {
+    flex-direction: column;
+  }
+  
+  .jadwalTable th, .jadwalTable td {
+    display: block;
+    width: 100%;
+  }
+  
+  .colIcon {
+    display: none !important;
+  }
+  
+  .colWaktu {
+    border-bottom: none !important;
+    padding-bottom: 0.25rem !important;
+  }
+  
+  .kegiatanDesc {
+    margin-bottom: 1rem;
+  }
+  
+  .ctaTitle {
+    font-size: 1.75rem;
+  }
+  
+  .checklistCard {
+    padding: 1.5rem;
+  }
+
+  .infografisWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .infografisStep {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .infografisLine {
+    display: none;
+  }
+
+  .infografisCircle {
+    flex-shrink: 0;
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .barangGrid {
+    flex-direction: column;
+  }
+
+  .bukuSakuInner {
+    flex-direction: column;
+  }
+
+  .bukuSakuRight {
+    display: none;
+  }
+
+  .galeriGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Infografis ── */
+.infografisWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.infografisStep {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: fadeUp 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.infografisStep:nth-child(1) { animation-delay: 0ms; }
+.infografisStep:nth-child(2) { animation-delay: 60ms; }
+.infografisStep:nth-child(3) { animation-delay: 120ms; }
+.infografisStep:nth-child(4) { animation-delay: 180ms; }
+.infografisStep:nth-child(5) { animation-delay: 240ms; }
+.infografisStep:nth-child(6) { animation-delay: 300ms; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.infografisLine {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: #FAD6A6;
+  z-index: 0;
+}
+
+.infografisStep:last-child .infografisLine {
+  display: none;
+}
+
+.infografisCircle {
+  width: 56px;
+  height: 56px;
+  background: #944535;
+  color: #FAD6A6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  z-index: 1;
+  box-shadow: 0 4px 12px rgba(148, 69, 53, 0.3);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s;
+}
+
+.infografisStep:hover .infografisCircle {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(148, 69, 53, 0.4);
+}
+
+.infografisCard {
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.infografisWaktu {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #944535;
+  background: #fdf8f2;
+  border: 1px solid #FAD6A6;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
+
+.infografisJudul {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1a1c1d;
+  margin-bottom: 0.3rem;
+}
+
+.infografisDesc {
+  font-size: 0.8rem;
+  color: #767683;
+  line-height: 1.4;
+}
+
+/* ── Galeri ── */
+.galeriGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.galeriItem {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  background: #eee;
+}
+
+.galeriImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  display: block;
+}
+
+.galeriItem:hover .galeriImg {
+  transform: scale(1.06);
+}
+
+.galeriOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(148, 69, 53, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.galeriItem:hover .galeriOverlay {
+  opacity: 1;
+}
+
+/* ── Lightbox ── */
+.lightboxOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 200ms ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightboxContent {
+  max-width: 80vw;
+  max-height: 80vh;
+  text-align: center;
+}
+
+.lightboxImg {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 12px;
+  object-fit: contain;
+  animation: scaleIn 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.lightboxCaption {
+  color: rgba(255,255,255,0.9);
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.lightboxClose,
+.lightboxPrev,
+.lightboxNext {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: background 0.2s;
+}
+
+.lightboxClose { top: 1.5rem; right: 1.5rem; }
+.lightboxPrev { left: 1.5rem; top: 50%; transform: translateY(-50%); }
+.lightboxNext { right: 1.5rem; top: 50%; transform: translateY(-50%); }
+
+.lightboxClose:hover,
+.lightboxPrev:hover,
+.lightboxNext:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Informasi Praktis ── */
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.infoCard {
+  background: #fff;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.infoCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.infoCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.infoCardTitle {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a1c1d;
+  margin: 0;
+}
+
+/* Dress Code Table */
+.dresscodeTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.dresscodeTable th {
+  text-align: left;
+  color: #767683;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 0.5rem 0.5rem;
+  border-bottom: 2px solid #FAD6A6;
+}
+
+.dresscodeTable td {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid rgba(198, 197, 212, 0.3);
+  color: #454652;
+  vertical-align: top;
+}
+
+.dresscodeTable tr:last-child td {
+  border-bottom: none;
+}
+
+/* Barang Bawaan */
+.barangGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.barangLabel {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.barangList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.barangItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #454652;
+  padding: 0.4rem 0.6rem;
+  border-left: 3px solid;
+  margin-bottom: 0.4rem;
+  background: #fafafa;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Kontak */
+.kontakList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.kontakCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fdf8f2;
+  border: 1px solid #FAD6A6;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+}
+
+.kontakNama {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #1a1c1d;
+}
+
+.kontakPeran {
+  font-size: 0.8rem;
+  color: #767683;
+}
+
+.kontakWa {
+  font-size: 0.8rem;
+  color: #944535;
+  margin-top: 0.2rem;
+}
+
+.btnWa {
+  background: #25D366;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.btnWa:hover { background: #1ebe5d; }
+
+/* Peta */
+.mapWrapper {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(198, 197, 212, 0.3);
+}
+
+.btnMaps {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  background: #944535;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btnMaps:hover { opacity: 0.85; }
+
+/* Buku Saku */
+.bukuSakuCard {
+  background: linear-gradient(135deg, #fdf8f2 60%, #f5e9e9 100%);
+  border-color: #FAD6A6;
+}
+
+.bukuSakuInner {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.bukuSakuLeft {
+  flex: 1;
+}
+
+.bukuSakuBadge {
+  display: inline-block;
+  background: #FAD6A6;
+  color: #7a382a;
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.bukuSakuTitle {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #944535;
+  margin: 0 0 0.75rem;
+}
+
+.bukuSakuDesc {
+  font-size: 0.95rem;
+  color: #454652;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.bukuSakuList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bukuSakuList li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #454652;
+}
+
+.btnUnduh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #944535;
+  color: #fff;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s;
+}
+
+.btnUnduh:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(148, 69, 53, 0.3);
+}
+
+.bukuSakuRight {
+  flex-shrink: 0;
+}
+
+.bukuSakuMockup {
+  width: 180px;
+  height: 220px;
+  background: #944535;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 8px 8px 0 #FAD6A6;
+  text-align: center;
+  padding: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .infografisStep,
+  .nilaiCard,
+  .galeriImg,
+  .galeriOverlay,
+  .infografisCircle {
+    animation: none;
+    transition: none;
+  }
+}
+

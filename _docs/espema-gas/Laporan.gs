@@ -14,8 +14,10 @@ function getLaporanRekap(token) {
   var pendaftaran = getAllData('Pendaftaran');
 
   // Rekap per ekskul
+  var totalSiswaAktif = 0;
   var rekapEkskul = ekskul.map(function(e) {
     var siswaEkskul = pendaftaran.filter(function(p) { return p.ekskul_id === e.id && p.status === 'DITERIMA'; });
+    totalSiswaAktif += siswaEkskul.length;
     var absensiEkskul = absensi.filter(function(a) { return a.ekskul_id === e.id; });
     var hadir = absensiEkskul.filter(function(a) { return a.status === 'hadir'; }).length;
     return {
@@ -27,12 +29,38 @@ function getLaporanRekap(token) {
     };
   });
 
+  // Kalkulasi Siswa Bermasalah (Absen >= 2 kali di ekskul yang sama)
+  var absenCountMap = {};
+  absensi.forEach(function(a) {
+    if (a.status !== 'hadir') {
+      var key = a.user_id + '_' + a.ekskul_id;
+      if (!absenCountMap[key]) {
+        absenCountMap[key] = {
+          nama: a.siswa_nama,
+          ekskul: a.ekskul_nama,
+          tidakHadir: 0
+        };
+      }
+      absenCountMap[key].tidakHadir++;
+    }
+  });
+  
+  var siswaBermasalah = [];
+  for (var k in absenCountMap) {
+    if (absenCountMap[k].tidakHadir >= 2) {
+      siswaBermasalah.push(absenCountMap[k]);
+    }
+  }
+
   return {
     success: true,
     data: {
       rekapEkskul: rekapEkskul,
+      totalSiswaAktif: totalSiswaAktif,
+      totalUnitEkskul: ekskul.length,
       totalLomba: lomba.length,
       totalPrestasi: prestasi.length,
+      siswaBermasalah: siswaBermasalah,
       lombaList: lomba,
       prestasiList: prestasi
     }

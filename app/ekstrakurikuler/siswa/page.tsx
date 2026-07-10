@@ -1,27 +1,79 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Header from "../../components/Header";
 import styles from "./siswa.module.css";
 
 type Step = "login" | "dashboard";
+type Tab = "beranda" | "absen" | "keluar";
 
 interface UserData {
   nama: string;
   user_id: string;
   token: string;
   username: string;
+  ekskul?: string[];
 }
 
-export default function SiswaDashboardPage() {
-  const [step, setStep]         = useState<Step>("login");
-  const [activeTab, setActiveTab] = useState("beranda");
-  const [nis, setNis]           = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser]         = useState<UserData | null>(null);
-  const [loading, setLoading]   = useState(false);
-  const [error, setError]       = useState("");
+interface AbsensiData {
+  totalSesi: number;
+  hadir: number;
+  tidakHadir: number;
+  persentase: number;
+}
 
-  // ── Step 1: Login ──
+const ekskulJadwal = [
+  { nama: 'Pramuka', jadwal: 'Sabtu', waktu: '07:00–09:00', lokasi: 'Lapangan Sekolah', emoji: '⚜️' },
+  { nama: 'PMR / UKS', jadwal: 'Kamis', waktu: '15:00–16:30', lokasi: 'Ruang PMR', emoji: '🏥' },
+  { nama: 'PBB / Tata Upacara', jadwal: 'Jumat', waktu: '15:00–16:30', lokasi: 'Lapangan Upacara', emoji: '🎖️' },
+  { nama: 'BTQ', jadwal: 'Rabu', waktu: '15:00–16:00', lokasi: 'Masjid Sekolah', emoji: '📖' },
+  { nama: 'OSN Matematika', jadwal: 'Selasa', waktu: '14:30–16:00', lokasi: 'Ruang Kelas', emoji: '📐' },
+  { nama: 'OSN IPS', jadwal: 'Senin', waktu: '14:30–16:00', lokasi: 'Ruang Kelas', emoji: '🌍' },
+  { nama: 'OSN IPA', jadwal: 'Kamis', waktu: '14:30–16:00', lokasi: 'Laboratorium IPA', emoji: '🔬' },
+  { nama: 'Seni Tari', jadwal: 'Rabu', waktu: '14:00–15:30', lokasi: 'Aula Sekolah', emoji: '💃' },
+  { nama: 'Paduan Suara', jadwal: 'Jumat', waktu: '14:00–15:30', lokasi: 'Aula Sekolah', emoji: '🎵' },
+  { nama: 'Futsal', jadwal: 'Selasa & Kamis', waktu: '15:30–17:00', lokasi: 'Lapangan Futsal', emoji: '⚽' },
+  { nama: 'Jiu Jitsu', jadwal: 'Sabtu', waktu: '08:00–10:00', lokasi: 'Lapangan Sekolah', emoji: '🥋' },
+];
+
+const hariOrder = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as const;
+const hariIcons: Record<string, string> = {
+  Senin: '📅', Selasa: '📅', Rabu: '📅', Kamis: '📅', Jumat: '📅', Sabtu: '📅',
+};
+
+function groupByHari() {
+  const grouped: Record<string, typeof ekskulJadwal> = {};
+  for (const hari of hariOrder) {
+    grouped[hari] = [];
+  }
+  for (const item of ekskulJadwal) {
+    // Handle "Selasa & Kamis" etc.
+    for (const hari of hariOrder) {
+      if (item.jadwal.includes(hari)) {
+        grouped[hari].push(item);
+      }
+    }
+  }
+  return grouped;
+}
+
+const jadwalGrouped = groupByHari();
+
+export default function SiswaDashboardPage() {
+  const [step, setStep]           = useState<Step>("login");
+  const [activeTab, setActiveTab] = useState<Tab>("beranda");
+  const [nis, setNis]             = useState("");
+  const [password, setPassword]   = useState("");
+  const [user, setUser]           = useState<UserData | null>(null);
+  const [loading, setLoading]     = useState(false);
+  const [error, setError]         = useState("");
+
+  // Absensi state
+  const [absensi, setAbsensi]         = useState<AbsensiData | null>(null);
+  const [absenLoading, setAbsenLoading] = useState(false);
+  const [absenError, setAbsenError]   = useState("");
+  const [showWarningModal, setShowWarningModal] = useState(false);
+
+  // ── Login ──
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -34,7 +86,7 @@ export default function SiswaDashboardPage() {
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.message || "Login gagal.");
-      setUser({ nama: data.nama, user_id: data.user_id, token: data.token, username: data.username });
+      setUser({ nama: data.nama, user_id: data.user_id, token: data.token, username: data.username, ekskul: data.ekskul || ["Pramuka", "Futsal"] });
       setStep("dashboard");
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
@@ -43,18 +95,83 @@ export default function SiswaDashboardPage() {
     }
   }
 
+  // ── Fetch Absensi ──
+  const fetchAbsensi = useCallback(async () => {
+    if (!user) return;
+    setAbsenLoading(true);
+    setAbsenError("");
+    try {
+      const res = await fetch("/api/ekstrakurikuler", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "getAbsensiSiswa", token: user.token }),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message || "Gagal memuat data absensi.");
+      const totalSesi = Number(data.totalSesi) || 0;
+      const hadir = Number(data.hadir) || 0;
+      const tidakHadir = totalSesi - hadir;
+      const persentase = totalSesi > 0 ? Math.round((hadir / totalSesi) * 100) : 0;
+      setAbsensi({ totalSesi, hadir, tidakHadir, persentase });
+      if (tidakHadir >= 2) {
+        setShowWarningModal(true);
+      }
+    } catch {
+      setAbsenError("Belum ada data absensi.");
+      setAbsensi(null);
+    } finally {
+      setAbsenLoading(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user && !absensi && !absenLoading && !absenError) {
+      fetchAbsensi();
+    }
+  }, [user, absensi, absenLoading, absenError, fetchAbsensi]);
+
+  // ── Logout ──
+  function handleLogout() {
+    setUser(null);
+    setStep("login");
+    setActiveTab("beranda");
+    setAbsensi(null);
+    setAbsenError("");
+    setNis("");
+    setPassword("");
+    setShowWarningModal(false);
+  }
+
   return (
-    <main style={{ paddingBottom: step === "dashboard" ? "80px" : "0" }}>
+    <main className={`${styles.main} ${step === "dashboard" ? styles.mainDashboard : ""}`}>
+      {/* ── WARNING MODAL ── */}
+      {showWarningModal && (
+        <div className={styles.warningModalOverlay}>
+          <div className={styles.warningModalCard}>
+            <div className={styles.warningModalHeader}>
+              <span className={styles.warningModalIcon}>⚠️</span>
+              <h2 className={styles.warningModalTitle}>Peringatan Kehadiran!</h2>
+            </div>
+            <div className={styles.warningModalBody}>
+              <p>Anda telah tidak hadir ekstrakurikuler sebanyak <strong>{absensi?.tidakHadir} kali</strong>.</p>
+              <p>Jika mencapai 3 kali tanpa keterangan, nilai ekskul Anda akan dikurangi dan surat pemanggilan otomatis akan diteruskan ke Wali Kelas.</p>
+              <button className={styles.btnUnderstand} onClick={() => setShowWarningModal(false)}>
+                Saya Mengerti
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {step === "login" && <Header activePage="Ekskul" />}
 
-      <div className={styles.wrapper} style={step === "dashboard" ? { padding: "1.5rem 1rem", alignItems: "stretch", background: "#f9f9fb", minHeight: "100vh" } : {}}>
-        
-        {/* ── Step 1: Login ── */}
-        {step === "login" && (
-          <div className={styles.card} style={{ margin: "0 auto" }}>
+      {/* ── LOGIN STEP ── */}
+      {step === "login" && (
+        <div className={styles.wrapper}>
+          <div className={styles.card}>
             <div className={styles.cardIcon}>👤</div>
             <h1 className={styles.cardTitle}>Login Dashboard Siswa</h1>
-            <p className={styles.cardDesc}>Masukkan NIS dan password untuk melihat jadwal ekskul & prestasimu.</p>
+            <p className={styles.cardDesc}>Masukkan NIS dan password untuk melihat jadwal ekskul &amp; prestasimu.</p>
 
             {error && <div className={styles.alertError} role="alert">{error}</div>}
 
@@ -73,138 +190,163 @@ export default function SiswaDashboardPage() {
             </form>
             <p className={styles.hint}>Belum punya akun? Hubungi wali kelas atau TU.</p>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* ── Step 2: Dashboard ── */}
-        {step === "dashboard" && user && (
-          <div style={{ maxWidth: "800px", margin: "0 auto", width: "100%" }}>
-            
-            {/* Header Dashboard */}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-               <div>
-                 <p style={{ fontSize: "0.75rem", fontWeight: 700, color: "#944535", textTransform: "uppercase", letterSpacing: "0.05em" }}>Selamat Datang</p>
-                 <h1 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#1a1c1d" }}>Halo, {user.nama}</h1>
-                 <p style={{ fontSize: "0.85rem", color: "#555" }}>NIS: {user.username}</p>
-               </div>
-               <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#944535", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold", fontSize: "1.2rem" }}>
-                 {user.nama.charAt(0)}
-               </div>
+      {/* ── DASHBOARD STEP ── */}
+      {step === "dashboard" && user && (
+        <div className={styles.dashboardWrapper}>
+
+          {/* Header */}
+          <div className={styles.dashHeader}>
+            <div className={styles.dashHeaderInfo}>
+              <p className={styles.dashLabel}>Selamat Datang</p>
+              <h1 className={styles.dashName}>Halo, {user.nama}</h1>
+              <p className={styles.dashNis}>NIS: {user.username}</p>
             </div>
-
-            {/* TAB: BERANDA */}
-            {activeTab === "beranda" && (
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                
-                {/* Jadwal Hari Ini */}
-                <div style={{ background: "#fff", padding: "1.5rem", borderRadius: "16px", boxShadow: "0 2px 12px rgba(0,0,0,0.04)", borderLeft: "4px solid #944535" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-                    <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>Jadwal Ekskul Hari Ini</h3>
-                    <span style={{ fontSize: "0.75rem", background: "#FAD6A6", color: "#944535", padding: "4px 8px", borderRadius: "20px", fontWeight: "bold" }}>Ekskul Aktif</span>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                    {/* Dummy Schedule items */}
-                    <div style={{ display: "flex", gap: "1rem", alignItems: "center", padding: "0.75rem", background: "#f9f9fb", borderRadius: "8px", border: "1px solid #eaeaea" }}>
-                      <div style={{ width: "48px", height: "48px", background: "#944535", color: "#fff", borderRadius: "8px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                        <span style={{ fontSize: "10px", fontWeight: "bold" }}>15:00</span><span style={{ fontSize: "10px" }}>17:00</span>
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <h4 style={{ fontWeight: "bold", fontSize: "0.95rem" }}>Pramuka (Wajib)</h4>
-                        <p style={{ fontSize: "0.8rem", color: "#767683" }}>Lapangan Utama • Kak Budi</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Prestasi */}
-                <div style={{ background: "#944535", color: "#fff", padding: "1.5rem", borderRadius: "16px", position: "relative", overflow: "hidden" }}>
-                  <span className="material-symbols-outlined" style={{ position: "absolute", right: "-20px", top: "-20px", fontSize: "8rem", opacity: 0.1 }}>emoji_events</span>
-                  <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "1rem", position: "relative", zIndex: 1 }}>Prestasi Terbaru</h3>
-                  <div style={{ display: "flex", gap: "1rem", alignItems: "center", position: "relative", zIndex: 1 }}>
-                     <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#FAD6A6", color: "#944535", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                       <span className="material-symbols-outlined">emoji_events</span>
-                     </div>
-                     <div>
-                       <h4 style={{ fontWeight: "bold" }}>Juara 1 Lomba Sains</h4>
-                       <p style={{ fontSize: "0.8rem", opacity: 0.8 }}>Tingkat Kota Jakarta</p>
-                     </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB: EKSKUL (Daftar Ekskul yang Diikuti) */}
-            {activeTab === "ekskul" && (
-              <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem", alignItems: "center" }}>
-                    <h3 style={{ fontSize: "1.2rem", fontWeight: 800 }}>Ekskul yang Diikuti</h3>
-                    <a href="/ekstrakurikuler/daftar" style={{ fontSize: "0.8rem", fontWeight: "bold", color: "#944535", textDecoration: "none" }}>+ Tambah Ekskul</a>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                    
-                    {/* Dummy Data Ekskul */}
-                    <div style={{ background: "#000666", color: "#fff", padding: "1.25rem", borderRadius: "16px", position: "relative", overflow: "hidden", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                       <span style={{ position: "absolute", right: "-10px", top: "-10px", fontSize: "6rem", opacity: 0.15 }}>🏕️</span>
-                       <div style={{ position: "relative", zIndex: 1 }}>
-                         <h4 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Pramuka</h4>
-                         <p style={{ fontSize: "0.85rem", opacity: 0.8 }}>Wajib • Aktif</p>
-                       </div>
-                       <button style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", padding: "0.5rem 1rem", borderRadius: "8px", fontWeight: "bold", cursor: "pointer", position: "relative", zIndex: 1 }}>
-                         Detail
-                       </button>
-                    </div>
-
-                    <div style={{ background: "#006b5f", color: "#fff", padding: "1.25rem", borderRadius: "16px", position: "relative", overflow: "hidden", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                       <span style={{ position: "absolute", right: "-10px", top: "-10px", fontSize: "6rem", opacity: 0.15 }}>⚽</span>
-                       <div style={{ position: "relative", zIndex: 1 }}>
-                         <h4 style={{ fontWeight: "bold", fontSize: "1.2rem" }}>Futsal</h4>
-                         <p style={{ fontSize: "0.85rem", opacity: 0.8 }}>Pilihan • Menunggu Persetujuan</p>
-                       </div>
-                       <button style={{ background: "rgba(255,255,255,0.2)", border: "none", color: "#fff", padding: "0.5rem 1rem", borderRadius: "8px", fontWeight: "bold", cursor: "pointer", position: "relative", zIndex: 1 }}>
-                         Detail
-                       </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB LAIN (Lomba, Absen, Profil) */}
-            {["lomba", "absen", "profil"].includes(activeTab) && (
-              <div style={{ background: "#fff", padding: "3rem 1rem", borderRadius: "16px", textAlign: "center", color: "#767683" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: "3rem", color: "#c6c5d4", marginBottom: "1rem" }}>construction</span>
-                <p>Fitur {activeTab} sedang dalam pengembangan.</p>
-              </div>
-            )}
-
-            {/* ── Bottom Navigation ── */}
-            <nav style={{ position: "fixed", bottom: 0, left: 0, width: "100%", background: "#fff", display: "flex", justifyContent: "space-around", padding: "0.75rem 0", boxShadow: "0 -2px 10px rgba(0,0,0,0.05)", zIndex: 50, borderTop: "1px solid #eaeaea" }}>
-              <button onClick={() => setActiveTab("beranda")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "none", border: "none", color: activeTab === "beranda" ? "#944535" : "#767683" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: "1.5rem" }}>home</span>
-                <span style={{ fontSize: "0.7rem", fontWeight: activeTab === "beranda" ? 700 : 500 }}>Beranda</span>
-              </button>
-              <button onClick={() => setActiveTab("ekskul")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "none", border: "none", color: activeTab === "ekskul" ? "#944535" : "#767683" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: "1.5rem" }}>groups</span>
-                <span style={{ fontSize: "0.7rem", fontWeight: activeTab === "ekskul" ? 700 : 500 }}>Ekskul</span>
-              </button>
-              <button onClick={() => setActiveTab("lomba")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "none", border: "none", color: activeTab === "lomba" ? "#944535" : "#767683" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: "1.5rem" }}>emoji_events</span>
-                <span style={{ fontSize: "0.7rem", fontWeight: activeTab === "lomba" ? 700 : 500 }}>Lomba</span>
-              </button>
-              <button onClick={() => setActiveTab("absen")} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "none", border: "none", color: activeTab === "absen" ? "#944535" : "#767683" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: "1.5rem" }}>fact_check</span>
-                <span style={{ fontSize: "0.7rem", fontWeight: activeTab === "absen" ? 700 : 500 }}>Absen</span>
-              </button>
-              <button onClick={() => { setActiveTab("beranda"); setStep("login"); setUser(null); }} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", background: "none", border: "none", color: "#767683" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: "1.5rem" }}>logout</span>
-                <span style={{ fontSize: "0.7rem", fontWeight: 500 }}>Keluar</span>
-              </button>
-            </nav>
-
+            <div className={styles.dashAvatar}>
+              {user.nama.charAt(0)}
+            </div>
           </div>
-        )}
 
-      </div>
+          {/* ── WARNING BANNER ── */}
+          {absensi && absensi.tidakHadir >= 2 && (
+            <div className={styles.warningBanner}>
+              <span className={styles.warningBannerIcon}>⚠️</span>
+              <div className={styles.warningBannerContent}>
+                <h4>PERINGATAN TINGKAT 1</h4>
+                <p>Anda telah absen {absensi.tidakHadir} kali. Hindari absen ke-3 agar tidak ada pemanggilan orang tua.</p>
+              </div>
+            </div>
+          )}
+
+          {/* ─── TAB: BERANDA ─── */}
+          {activeTab === "beranda" && (
+            <div className={styles.berandaContent}>
+              {hariOrder.map((hari) => {
+                const myEkskul = user.ekskul || ["Pramuka", "Futsal"];
+                const items = jadwalGrouped[hari].filter(item => myEkskul.includes(item.nama));
+                if (items.length === 0) return null;
+                return (
+                  <div key={hari} className={styles.dayGroup}>
+                    <div className={styles.dayHeader}>
+                      <span className={styles.dayHeaderIcon}>{hariIcons[hari]}</span>
+                      {hari}
+                    </div>
+                    <div className={styles.dayItems}>
+                      {items.map((ekskul) => (
+                        <div key={`${hari}-${ekskul.nama}`} className={styles.scheduleItem}>
+                          <div className={styles.scheduleEmoji}>{ekskul.emoji}</div>
+                          <div className={styles.scheduleInfo}>
+                            <p className={styles.scheduleName}>{ekskul.nama}</p>
+                            <p className={styles.scheduleMeta}>
+                              <span>{ekskul.lokasi}</span>
+                            </p>
+                          </div>
+                          <span className={styles.scheduleTime}>{ekskul.waktu}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* ─── TAB: ABSEN ─── */}
+          {activeTab === "absen" && (
+            <div className={styles.absenContent}>
+              <div>
+                <h2 className={styles.absenTitle}>Rekap Absensi</h2>
+                <p className={styles.absenSubtitle}>Ringkasan kehadiran kegiatan ekskul kamu</p>
+              </div>
+
+              {absenLoading && (
+                <div className={styles.loadingState}>
+                  <div className={styles.loadingSpinner} />
+                  <p className={styles.loadingText}>Memuat data absensi...</p>
+                </div>
+              )}
+
+              {!absenLoading && absenError && (
+                <div className={styles.emptyState}>
+                  <span className={styles.emptyIcon}>📋</span>
+                  <p className={styles.emptyTitle}>Belum Ada Data</p>
+                  <p className={styles.emptyText}>{absenError}</p>
+                </div>
+              )}
+
+              {!absenLoading && !absenError && absensi && (
+                <div className={styles.statsGrid}>
+                  <div className={styles.statCard}>
+                    <div className={`${styles.statIcon} ${styles.statIconTotal}`}>📊</div>
+                    <span className={styles.statValue}>{absensi.totalSesi}</span>
+                    <span className={styles.statLabel}>Total Sesi</span>
+                  </div>
+                  <div className={styles.statCard}>
+                    <div className={`${styles.statIcon} ${styles.statIconHadir}`}>✅</div>
+                    <span className={styles.statValue}>{absensi.hadir}</span>
+                    <span className={styles.statLabel}>Hadir</span>
+                  </div>
+                  <div className={styles.statCard}>
+                    <div className={`${styles.statIcon} ${styles.statIconAbsen}`}>❌</div>
+                    <span className={styles.statValue}>{absensi.tidakHadir}</span>
+                    <span className={styles.statLabel}>Tidak Hadir</span>
+                  </div>
+                  <div className={`${styles.statCard} ${styles.percentCard}`}>
+                    <div className={`${styles.statIcon} ${styles.statIconPersen}`}>📈</div>
+                    <span className={styles.statValue}>{absensi.persentase}%</span>
+                    <span className={styles.statLabel}>Persentase Kehadiran</span>
+                    <span className={styles.percentDecor}>📊</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ─── TAB: KELUAR ─── */}
+          {activeTab === "keluar" && (
+            <div className={styles.keluarContent}>
+              <div className={styles.keluarCard}>
+                <span className={styles.keluarIcon}>👋</span>
+                <h2 className={styles.keluarTitle}>Keluar dari Dashboard</h2>
+                <p className={styles.keluarDesc}>
+                  Kamu akan keluar dari sesi ini. Data tidak akan hilang, kamu bisa login kembali kapan saja.
+                </p>
+                <button className={styles.btnLogout} onClick={handleLogout}>
+                  Keluar Sekarang
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ── Bottom Navigation ── */}
+          <nav className={styles.bottomNav}>
+            <button
+              onClick={() => setActiveTab("beranda")}
+              className={`${styles.navBtn} ${activeTab === "beranda" ? styles.navBtnActive : ""}`}
+            >
+              <span className={`material-symbols-outlined ${styles.navIcon}`}>home</span>
+              <span className={`${styles.navLabel} ${activeTab === "beranda" ? styles.navLabelActive : ""}`}>Beranda</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("absen")}
+              className={`${styles.navBtn} ${activeTab === "absen" ? styles.navBtnActive : ""}`}
+            >
+              <span className={`material-symbols-outlined ${styles.navIcon}`}>fact_check</span>
+              <span className={`${styles.navLabel} ${activeTab === "absen" ? styles.navLabelActive : ""}`}>Absen</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("keluar")}
+              className={`${styles.navBtn} ${activeTab === "keluar" ? styles.navBtnActive : ""}`}
+            >
+              <span className={`material-symbols-outlined ${styles.navIcon}`}>logout</span>
+              <span className={`${styles.navLabel} ${activeTab === "keluar" ? styles.navLabelActive : ""}`}>Keluar</span>
+            </button>
+          </nav>
+
+        </div>
+      )}
     </main>
   );
 }
