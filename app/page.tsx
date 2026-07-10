@@ -6,7 +6,6 @@ import ScrollReveal from "./components/ScrollReveal";
 import Script from "next/script";
 import InstagramFeed from "./components/InstagramFeed";
 import SpmbCountdown from "./components/SpmbCountdown";
-import PengumumanCta from "./components/PengumumanCta";
 
 // Menggunakan waktu target: 28 Juni 2026 23:59:00 WIB (UTC+7)
 const isSpmbOpen = new Date() >= new Date("2026-06-28T23:59:00+07:00");
@@ -142,7 +141,7 @@ export default function Home() {
           )}
 
           <div className={styles.heroActions}>
-            <PengumumanCta primaryClassName={styles.btnPrimary} />
+            <a href="/mpls" className={styles.btnPrimary}>Info Panduan MPLS</a>
             <a href="#prestasi" className={styles.btnSecondary}>Lihat Prestasi Siswa</a>
           </div>
 

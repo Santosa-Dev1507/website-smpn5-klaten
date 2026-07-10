@@ -139,7 +139,8 @@ const MplsPage = () => {
         { waktu: "07.00–08.00", ikon: "ti ti-run", judul: "Pertemuan Pagi Ceria", desc: "Senam Anak Indonesia Hebat, menyanyikan lagu, dan berdoa bersama" },
         { waktu: "08.40–09.40", ikon: "ti ti-palette", judul: "Unjuk Karya (Bakat dan Minat Murid)", desc: "Menunjukkan bakat seni, olahraga, atau permainan tradisional secara sukarela, dilanjutkan apresiasi" },
         { waktu: "09.40–10.00", ikon: "ti ti-coffee", judul: "Istirahat", desc: "Waktu istirahat" },
-        { waktu: "10.00–11.00", ikon: "ti ti-users-group", judul: "Perkenalan Walikelas", desc: "Wali kelas berkenalan, membuat struktur kelas, dan menginformasikan jadwal pelajaran" },
+        { waktu: "10.00–10.30", ikon: "ti ti-users-group", judul: "Perkenalan Walikelas", desc: "Wali kelas berkenalan, membuat struktur kelas, dan menginformasikan jadwal pelajaran" },
+        { waktu: "10.30–11.00", ikon: "ti ti-flag", judul: "Penutupan", desc: "Penutupan resmi rangkaian kegiatan MPLS" },
       ]
     }
   ];
@@ -479,8 +480,7 @@ const MplsPage = () => {
             </div>
             <div className={styles.kontakList}>
               {[
-                { nama: "[Nama Penanggung Jawab 1]", peran: "Koordinator MPLS", wa: "+62 812-XXXX-XXXX" },
-                { nama: "[Nama Penanggung Jawab 2]", peran: "Sekretaris Panitia", wa: "+62 813-XXXX-XXXX" },
+                { nama: "Namjuari, S.Pd.", peran: "Koordinator MPLS", wa: "081389092883" },
               ].map((k, i) => (
                 <div key={i} className={styles.kontakCard}>
                   <div className={styles.kontakInfo}>
