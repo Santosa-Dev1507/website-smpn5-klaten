@@ -224,45 +224,81 @@ const MplsPage = () => {
         </div>
       </header>
 
-      {/* 3. TENTANG MPLS */}
+      {/* 3. KEBIJAKAN MPLS RAMAH */}
       <section id="tentang" className={styles.section}>
         <div style={{ textAlign: "center" }}>
-          <span className={styles.badge}>Nilai Dasar</span>
+          <span className={styles.badge}>Kebijakan Resmi</span>
         </div>
-        <h2 className={styles.sectionTitle}>Tentang MPLS Ramah</h2>
-        <p className={styles.sectionSubtitle}>Enam pilar utama yang menjadi fondasi kami dalam menyambut kedatangan anak Anda di sekolah.</p>
+        <h2 className={styles.sectionTitle}>Kebijakan MPLS Ramah Tahun 2026</h2>
+        <p className={styles.sectionSubtitle}>Disampaikan bahwa :</p>
+
+        <div style={{ maxWidth: "800px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1rem", marginBottom: "2.5rem" }}>
+          {[
+            { ikon: "ti ti-school", teks: "MPLS merupakan kegiatan pengenalan lingkungan sekolah bagi murid baru." },
+            { ikon: "ti ti-calendar-event", teks: "Dilaksanakan selama 5 hari pada tanggal 13–17 Juli 2026." },
+            { ikon: "ti ti-star", teks: "Berorientasi pada pembentukan karakter." },
+            { ikon: "ti ti-shield-check", teks: "Mengedepankan prinsip: aman, nyaman, menggembirakan, bermakna, inklusif, dan bebas kekerasan." },
+          ].map((item, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "1rem", background: "#fff", padding: "1rem 1.25rem", borderRadius: "12px", border: "1px solid rgba(198,197,212,0.3)", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+              <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#944535", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <i className={item.ikon} style={{ color: "#fff", fontSize: "1.1rem" }}></i>
+              </div>
+              <p style={{ margin: 0, fontSize: "0.95rem", color: "#454652", lineHeight: 1.6 }} dangerouslySetInnerHTML={{ __html: item.teks.replace(/(aman|nyaman|menggembirakan|bermakna|inklusif|bebas kekerasan|pembentukan karakter|5 hari|13–17 Juli 2026)/gi, "<strong>$1</strong>") }} />
+            </div>
+          ))}
+        </div>
+
+        {/* 6 Prinsip MPLS Ramah */}
+        <div style={{ textAlign: "center", marginBottom: "1.25rem" }}>
+          <p style={{ fontSize: "0.9rem", fontWeight: 700, color: "#767683", textTransform: "uppercase", letterSpacing: "0.08em" }}>MPLS Ramah Berarti:</p>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", justifyContent: "center" }}>
+          {[
+            { ikon: "ti ti-shield", label: "Aman", warna: "#166534", bg: "#f0fdf4" },
+            { ikon: "ti ti-mood-smile", label: "Nyaman", warna: "#1d4ed8", bg: "#eff6ff" },
+            { ikon: "ti ti-confetti", label: "Menggembirakan", warna: "#b45309", bg: "#fffbeb" },
+            { ikon: "ti ti-book-open", label: "Bermakna", warna: "#7c3aed", bg: "#f5f3ff" },
+            { ikon: "ti ti-users", label: "Inklusif", warna: "#0891b2", bg: "#ecfeff" },
+            { ikon: "ti ti-hand-stop", label: "Bebas Kekerasan", warna: "#dc2626", bg: "#fef2f2" },
+          ].map((p, i) => (
+            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.4rem", padding: "0.75rem 1.25rem", borderRadius: "12px", border: `2px solid ${p.warna}20`, background: p.bg, minWidth: "110px" }}>
+              <i className={p.ikon} style={{ fontSize: "1.5rem", color: p.warna }}></i>
+              <span style={{ fontSize: "0.8rem", fontWeight: 700, color: p.warna, textAlign: "center" }}>{p.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3b. TUJUAN MPLS RAMAH */}
+      <section className={styles.section} style={{ paddingTop: 0 }}>
+        <div style={{ textAlign: "center" }}>
+          <span className={styles.badge}>Tujuan</span>
+        </div>
+        <h2 className={styles.sectionTitle}>Tujuan MPLS Ramah</h2>
+        <p className={styles.sectionSubtitle}>MPLS Ramah diselenggarakan untuk membantu murid baru agar:</p>
 
         <div className={styles.nilaiGrid}>
-          <div className={styles.nilaiCard}>
-            <div className={styles.nilaiIcon}><i className="ti ti-heart-handshake"></i></div>
-            <h3 className={styles.nilaiTitle}>Humanis</h3>
-            <p className={styles.nilaiDesc}>Memuliakan martabat anak dan memperlakukannya tanpa kekerasan serta penuh kasih sayang.</p>
-          </div>
-          <div className={styles.nilaiCard}>
-            <div className={styles.nilaiIcon}><i className="ti ti-world"></i></div>
-            <h3 className={styles.nilaiTitle}>Inklusif</h3>
-            <p className={styles.nilaiDesc}>Mengakomodasi dan menjamin perlakuan setara bagi semua anak, termasuk penyandang disabilitas.</p>
-          </div>
-          <div className={styles.nilaiCard}>
-            <div className={styles.nilaiIcon}><i className="ti ti-users"></i></div>
-            <h3 className={styles.nilaiTitle}>Partisipatif</h3>
-            <p className={styles.nilaiDesc}>Melibatkan orang tua, guru, dan murid secara bermakna untuk menciptakan budaya sekolah yang aman.</p>
-          </div>
-          <div className={styles.nilaiCard}>
-            <div className={styles.nilaiIcon}><i className="ti ti-scale"></i></div>
-            <h3 className={styles.nilaiTitle}>Nondiskriminatif</h3>
-            <p className={styles.nilaiDesc}>Perlakuan yang adil tanpa membeda-bedakan suku, agama, gender, maupun kondisi fisik.</p>
-          </div>
-          <div className={styles.nilaiCard}>
-            <div className={styles.nilaiIcon}><i className="ti ti-friends"></i></div>
-            <h3 className={styles.nilaiTitle}>Harmonis</h3>
-            <p className={styles.nilaiDesc}>Membangun hubungan yang selaras, saling menghormati, dan berkeadaban antarwarga sekolah.</p>
-          </div>
-          <div className={styles.nilaiCard}>
-            <div className={styles.nilaiIcon}><i className="ti ti-plant"></i></div>
-            <h3 className={styles.nilaiTitle}>Berkelanjutan</h3>
-            <p className={styles.nilaiDesc}>Budaya aman dan nyaman ini akan terus menjadi kebiasaan rutin sekolah setelah MPLS usai.</p>
-          </div>
+          {[
+            { ikon: "ti ti-building", judul: "Mengenal Lingkungan Sekolah", desc: "Memahami tata letak, fasilitas, dan lingkungan sekolah secara menyeluruh." },
+            { ikon: "ti ti-chalkboard", judul: "Mengenal Guru & Tenaga Kependidikan", desc: "Berkenalan dengan seluruh pendidik dan staf yang akan mendampingi proses belajar." },
+            { ikon: "ti ti-friends", judul: "Mengenal Teman Baru", desc: "Membangun pertemanan yang positif dan harmonis sejak hari pertama." },
+            { ikon: "ti ti-notebook", judul: "Mengenal Kurikulum & Sistem Pembelajaran", desc: "Memahami cara belajar, penilaian, dan alur kegiatan akademik di sekolah." },
+            { ikon: "ti ti-leaf", judul: "Mengenal Budaya & Program Sekolah", desc: "Mengenal nilai, kebiasaan, dan program unggulan yang menjadi ciri khas sekolah." },
+            { ikon: "ti ti-sparkles", judul: "Mengenali Potensi Diri", desc: "Mengembangkan karakter positif dan menemukan bakat serta minat masing-masing." },
+          ].map((t, i) => (
+            <div key={i} className={styles.nilaiCard}>
+              <div className={styles.nilaiIcon}><i className={t.ikon}></i></div>
+              <h3 className={styles.nilaiTitle}>{t.judul}</h3>
+              <p className={styles.nilaiDesc}>{t.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Pesan Penutup */}
+        <div style={{ maxWidth: "720px", margin: "2rem auto 0", background: "linear-gradient(135deg, #944535, #C0622F)", borderRadius: "16px", padding: "1.5rem 2rem", textAlign: "center" }}>
+          <p style={{ margin: 0, color: "#fff", fontSize: "0.95rem", lineHeight: 1.7, fontStyle: "italic" }}>
+            "Melalui MPLS Ramah, murid baru diharapkan dapat beradaptasi dengan baik, merasa <strong>aman</strong>, <strong>nyaman</strong>, <strong>bahagia</strong>, dan siap belajar di sekolah."
+          </p>
         </div>
       </section>
 
@@ -467,6 +503,7 @@ const MplsPage = () => {
                 <ul style={{ margin: 0, paddingLeft: "1.2rem", fontSize: "0.85rem", color: "#454652", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                   <li>Membawa alat tulis dan buku catatan.</li>
                   <li>Membawa HP dengan paket data untuk hari ke-3.</li>
+                  <li>Membawa perlengkapan ibadah.</li>
                 </ul>
               </div>
             </div>
