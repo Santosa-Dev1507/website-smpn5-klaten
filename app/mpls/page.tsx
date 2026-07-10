@@ -149,7 +149,7 @@ const MplsPage = () => {
   const checklistData = [
     { id: 1, judul: "Isi instrumen deteksi dini", desc: "Via portal Kemendikdasmen (6-26 Juli)" },
     { id: 2, judul: "Daftar Cek Kesehatan Gratis (CKG)", desc: <span style={{display: "inline-flex", alignItems: "center", gap: "0.2rem"}}>Via aplikasi Satu Sehat Mobile <a href="https://drive.google.com/file/d/1JD1LVAscF00UzLuzi8skqrPdZ9voklLi/view" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{color: "#944535", textDecoration: "underline", marginLeft: "4px"}}>(Unduh Panduan)</a></span> },
-    { id: 3, judul: "Tanda tangani pakta integritas", desc: <span style={{display: "inline-flex", alignItems: "center", gap: "0.2rem"}}>Dokumen komitmen dari sekolah <a href="https://drive.google.com/file/d/1DMp6ZUflH89Nos2cPtcyTIKcZm7IncCe/view?usp=sharing" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{color: "#944535", textDecoration: "underline", marginLeft: "4px"}}>(Unduh File)</a></span> },
+    { id: 3, judul: "Tanda tangani pakta integritas", desc: "Dokumen komitmen dari sekolah" },
     { id: 4, judul: "Siapkan bekal makanan sehat bergizi", desc: "Sesuai panduan gizi seimbang tiap hari" },
     { id: 5, judul: "Antar anak di hari pertama", desc: "Sangat disarankan Ayah dan Ibu ikut mengantar" },
   ];
@@ -552,7 +552,7 @@ const MplsPage = () => {
               <li><a href="https://drive.google.com/file/d/1JD1LVAscF00UzLuzi8skqrPdZ9voklLi/view" target="_blank" rel="noopener noreferrer" style={{ color: "#944535", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}><i className="ti ti-stethoscope"></i> Panduan CKG SATUSEHAT</a></li>
               <li><a href="https://cerdasberkarakter.kemendikdasmen.go.id/deteksidini" target="_blank" rel="noopener noreferrer" style={{ color: "#944535", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}><i className="ti ti-notes"></i> Portal Deteksi Dini</a></li>
               <li><a href="https://bit.ly/mpls7KAIH" target="_blank" rel="noopener noreferrer" style={{ color: "#944535", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}><i className="ti ti-book"></i> Materi Tujuh Kebiasaan Hebat</a></li>
-              <li><a href="https://drive.google.com/file/d/1DMp6ZUflH89Nos2cPtcyTIKcZm7IncCe/view?usp=sharing" target="_blank" rel="noopener noreferrer" style={{ color: "#944535", textDecoration: "none", display: "flex", alignItems: "center", gap: "0.5rem" }}><i className="ti ti-file-text"></i> Unduh Pakta Integritas</a></li>
+
             </ul>
           </div>
 
