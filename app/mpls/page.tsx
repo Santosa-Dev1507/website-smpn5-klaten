@@ -495,7 +495,7 @@ const MplsPage = () => {
                 <li>Menyiapkan unjuk karya kelas.</li>
                 <li>Mengisi <a href="https://forms.gle/MJ76wScopZiYvBRK6" target="_blank" rel="noopener noreferrer" style={{ color: "#944535", fontWeight: 600 }}>tautan tugas "7 Kebiasaan Anak Indonesia Hebat"</a>.</li>
                 <li>Membawa card holder ukuran B3 dengan warna tali merah untuk putri dan biru untuk putra</li>
-                <li>Memakai pita merah putih di lengan kanan baik putra maupun putri.</li>
+                <li>Memakai pita merah putih di lengan kanan baik putra maupun putri <span style={{ fontStyle: "italic", color: "#888" }}>(panjang maksimal 15 cm, lebar 2 cm)</span>.</li>
                 <li>Membuat poster deklarasi "Anti Bullying/Anti Judol/Anti NAPZA/ dengan ukuran A3 dibawa saat hari Rabu, 15 Juli 2026.</li>
               </ol>
               
