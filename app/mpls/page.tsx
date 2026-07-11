@@ -490,10 +490,10 @@ const MplsPage = () => {
                 <li>Memakai nametag MPLS yang sudah disediakan.</li>
 
                 <li>Membuat yel-yel dan jargon kelas.</li>
-                <li>Mencatat materi selama MPLS dan mengerjakan tugas serta dikumpulkan di tautan yang sudah disediakan.</li>
+                <li>Mencatat materi selama MPLS dan mengerjakan tugas serta dikumpulkan di <a href="https://forms.gle/SLkyBapyEPBnJCzw8" target="_blank" rel="noopener noreferrer" style={{ color: "#944535", fontWeight: 600 }}>tautan pengumpulan tugas</a>.</li>
 
                 <li>Menyiapkan unjuk karya kelas.</li>
-                <li>Mengisi tautan tugas "7 Kebiasaan Anak Indonesia Hebat".</li>
+                <li>Mengisi <a href="https://forms.gle/MJ76wScopZiYvBRK6" target="_blank" rel="noopener noreferrer" style={{ color: "#944535", fontWeight: 600 }}>tautan tugas "7 Kebiasaan Anak Indonesia Hebat"</a>.</li>
                 <li>Membawa card holder ukuran B3 dengan warna tali merah untuk putri dan biru untuk putra</li>
                 <li>Memakai pita merah putih di lengan kanan baik putra maupun putri.</li>
                 <li>Membuat poster deklarasi "Anti Bullying/Anti Judol/Anti NAPZA/ dengan ukuran A3 dibawa saat hari Rabu, 15 Juli 2026.</li>
