@@ -63,7 +63,7 @@ const MplsPage = () => {
     { hari: "Senin, 13 Juli", pakaian: "Merah Putih (Seragam SD)" },
     { hari: "Selasa, 14 Juli", pakaian: "Seragam Olahraga" },
     { hari: "Rabu, 15 Juli", pakaian: "Merah Putih (Seragam SD)" },
-    { hari: "Kamis, 16 Juli", pakaian: "Merah Putih (Seragam SD)" },
+    { hari: "Kamis, 16 Juli", pakaian: "Seragam Olah Raga (SD)" },
     { hari: "Jumat, 17 Juli", pakaian: "Batik" },
   ];
 
@@ -495,6 +495,7 @@ const MplsPage = () => {
                 <li>Menyiapkan unjuk karya kelas.</li>
                 <li>Mengisi tautan tugas "7 Kebiasaan Anak Indonesia Hebat".</li>
                 <li>Membawa card holder ukuran B3 dengan warna tali merah untuk putri dan biru untuk putra</li>
+                <li>Memakai pita merah putih di lengan kanan baik putra maupun putri.</li>
                 <li>Membuat poster deklarasi "Anti Bullying/Anti Judol/Anti NAPZA/ dengan ukuran A3 dibawa saat hari Rabu, 15 Juli 2026.</li>
               </ol>
               
@@ -531,7 +532,7 @@ const MplsPage = () => {
                 </div>
               ))}
             </div>
-            <p style={{ fontSize: "0.8rem", color: "#767683", marginTop: "1rem" }}>*Kontak tersedia pada hari kerja pukul 07.00–15.00 WIB</p>
+            <p style={{ fontSize: "0.8rem", color: "#767683", marginTop: "1rem" }}>*Kontak tersedia pada hari kerja pukul 07.00–14.00 WIB</p>
           </div>
 
           {/* Peta Lokasi */}
