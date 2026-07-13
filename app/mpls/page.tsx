@@ -79,10 +79,11 @@ const MplsPage = () => {
         { waktu: "07.40–08.40", ikon: "ti ti-building-school", judul: "Pengenalan Diri & Wawasan Wiyata Mandala", desc: "Perkenalan diri, warga sekolah, visi misi, tata tertib, budaya sekolah, dan membuat kesepakatan kelas" },
         { waktu: "08.40–09.40", ikon: "ti ti-map", judul: "Aku dan Sekolahku", desc: "Tur keliling sekolah interaktif mengenal fasilitas dan mencatat denah (siswa membuat lembar observasi)" },
         { waktu: "09.40–10.00", ikon: "ti ti-coffee", judul: "Istirahat", desc: "Waktu istirahat" },
-        { waktu: "10.00–11.00", ikon: "ti ti-star", judul: "Aku Anak Indonesia Hebat, Karakterku Kuat", desc: "Pengenalan 7 Kebiasaan Anak Indonesia Hebat dengan bernyanyi, beraksi, dan simulasi catatan harian" },
-        { waktu: "11.00–11.30", ikon: "ti ti-messages", judul: "Refleksi & Pengecekan Persiapan Hari Selanjutnya", desc: "Merefleksikan pengalaman hari pertama MPLS" },
+        { waktu: "10.00–10.20", ikon: "ti ti-bowl-spoon", judul: "Santap MBG", desc: "Murid menikmati MBG" },
+        { waktu: "10.20–11.30", ikon: "ti ti-star", judul: "Aku Anak Indonesia Hebat, Karakterku Kuat", desc: "Pengenalan 7 Kebiasaan Anak Indonesia Hebat dengan bernyanyi, beraksi, dan simulasi catatan harian" },
         { waktu: "11.30–12.00", ikon: "ti ti-building-mosque", judul: "Shalat Zuhur", desc: "Shalat zuhur berjamaah di masjid sekolah" },
-        { waktu: "12.00", ikon: "ti ti-home", judul: "Murid Pulang", desc: "Waktu pulang" },
+        { waktu: "12.00–12.30", ikon: "ti ti-messages", judul: "Refleksi & Pengecekan Persiapan Hari Selanjutnya", desc: "Merefleksikan pengalaman hari pertama MPLS, menumbuhkan motivasi untuk hari berikutnya. Guru menanyakan secara singkat: \"Apa kegiatan favoritmu hari ini?\", \"Bagaimana perasaanmu?\"" },
+        { waktu: "12.30", ikon: "ti ti-home", judul: "Murid Pulang", desc: "Waktu pulang" },
       ]
     },
     {
