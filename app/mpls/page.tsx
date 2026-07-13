@@ -94,10 +94,11 @@ const MplsPage = () => {
         { waktu: "07.00–08.30", ikon: "ti ti-run", judul: "Pertemuan Pagi Ceria, Cek denyut jantung, dan tes fleksibilitas", desc: "Kegiatan Senam Anak Indonesia Hebat, menyanyikan Lagu Indonesia Raya, dan berdoa bersama" },
         { waktu: "08.30–09.40", ikon: "ti ti-friends", judul: "Ruang Perjumpaan Murid Baru", desc: "Berbagi cerita harapan dan kekhawatiran murid baru, mendiskusikan solusi dengan Pohon Harapan dan Pohon Solusi" },
         { waktu: "09.40–10.00", ikon: "ti ti-coffee", judul: "Istirahat", desc: "Waktu istirahat" },
-        { waktu: "10.00–11.00", ikon: "ti ti-shield", judul: "Siaga Bencana", desc: "Membangun kesiapsiagaan bencana, mengenali ancaman, informasi peringatan dini, jalur evakuasi, dan praktik penyelamatan" },
-        { waktu: "11.00–11.30", ikon: "ti ti-messages", judul: "Refleksi & Persiapan Hari Selanjutnya", desc: "Merefleksikan hari ini, menumbuhkan motivasi" },
-        { waktu: "11.30–12.00", ikon: "ti ti-building-mosque", judul: "Shalat Zuhur", desc: "Shalat zuhur berjamaah di masjid sekolah" },
-        { waktu: "12.00", ikon: "ti ti-home", judul: "Murid Pulang", desc: "Waktu pulang" },
+        { waktu: "10.00–10.20", ikon: "ti ti-bowl-spoon", judul: "Santap MBG", desc: "Murid menikmati MBG" },
+        { waktu: "10.20–11.30", ikon: "ti ti-shield", judul: "Siaga Bencana", desc: "Membangun kesiapsiagaan bencana di sekolah. Murid diajak belajar untuk mengenali ancaman dan bahaya bencana (termasuk bahaya sehari-hari), informasi peringatan dini, jalur evakuasi, peralatan keselamatan, dan mempraktikkan tindakan penyelamatan serta evakuasi dalam situasi. Perlengkapan: kertas plano, sticky note, spidol, infografis LBANM, Double tape. Link: https://s.id/kiespa b." },
+        { waktu: "11.30–12.00", ikon: "ti ti-building-mosque", judul: "Shalat Zuhur", desc: "Shalat zuhur di masjid sekolah" },
+        { waktu: "12.00–12.30", ikon: "ti ti-messages", judul: "Refleksi & Persiapan Hari Selanjutnya", desc: "Mengajak murid merefleksikan pengalaman hari pertama, menumbuhkan motivasi untuk hari berikutnya, serta menutup kegiatan dengan semangat kebersamaan. Guru menanyakan secara singkat: \"Apa kegiatan favoritmu hari ini?\", \"Bagaimana perasaanmu?\"" },
+        { waktu: "12.30", ikon: "ti ti-home", judul: "Murid Pulang", desc: "Waktu pulang" },
       ]
     },
     {
@@ -109,10 +110,11 @@ const MplsPage = () => {
         { waktu: "07.00–09.00", ikon: "ti ti-device-laptop", judul: "Identifikasi Kondisi Sosial-Emosional & Asesmen", desc: "Mengisi instrumen kondisi sosial-emosional, konsentrasi belajar, asesmen literasi/numerasi, dan identifikasi bakat minat menggunakan perangkat gawai/laptop" },
         { waktu: "09.00–09.40", ikon: "ti ti-movie", judul: "Literasi Digital", desc: "Nonton bersama film pencegahan judi online dan kampanye 3S (Screen Time, Screen Zone, Screen Break)" },
         { waktu: "09.40–10.00", ikon: "ti ti-coffee", judul: "Istirahat", desc: "Waktu istirahat" },
-        { waktu: "10.00–11.00", ikon: "ti ti-ban", judul: "Pencegahan Isu NAPZA", desc: "Pengenalan NAPZA bersama Polres: Kenali, Pahami, Jauhi. Menonton film pendek, refleksi, dan komitmen" },
-        { waktu: "11.00–11.30", ikon: "ti ti-messages", judul: "Refleksi & Persiapan Hari Selanjutnya", desc: "Merefleksikan hari ini, siswa diingatkan untuk membawa tanaman esok hari" },
-        { waktu: "11.30–12.00", ikon: "ti ti-building-mosque", judul: "Shalat Zuhur", desc: "Shalat zuhur berjamaah di masjid sekolah" },
-        { waktu: "12.00", ikon: "ti ti-home", judul: "Murid Pulang", desc: "Waktu pulang" },
+        { waktu: "10.00–10.20", ikon: "ti ti-bowl-spoon", judul: "Santap MBG", desc: "Siswa menikmati MBG" },
+        { waktu: "10.20–11.30", ikon: "ti ti-ban", judul: "Pencegahan Isu NAPZA (Narkotika, Psikotropika, dan Zat Adiktif)", desc: "Pengenalan NAPZA bersama Polres: Kenali, Pahami, Jauhi. Menonton film pendek bahaya NAPZA, refleksi dan komitmen." },
+        { waktu: "11.30–12.00", ikon: "ti ti-building-mosque", judul: "Shalat Zuhur", desc: "Shalat zuhur di masjid sekolah" },
+        { waktu: "12.00–12.30", ikon: "ti ti-messages", judul: "Refleksi & Persiapan Hari Selanjutnya", desc: "Mengajak murid merefleksikan pengalaman hari pertama, menumbuhkan motivasi untuk hari berikutnya, serta menutup kegiatan dengan semangat kebersamaan. Murid diingatkan agar besok membawa tanaman. Guru menanyakan secara singkat: \"Apa kegiatan favoritmu hari ini?\", \"Bagaimana perasaanmu?\"" },
+        { waktu: "12.30", ikon: "ti ti-home", judul: "Murid Pulang", desc: "Waktu pulang" },
       ]
     },
     {
@@ -125,9 +127,11 @@ const MplsPage = () => {
         { waktu: "07.30–09.00", ikon: "ti ti-leaf", judul: "ASRI: Aku, Kamu, dan Lingkungan Kita Bersama", desc: "Kegiatan menanam pohon, memilah sampah, atau membersihkan lingkungan sekolah bersama Tim OSIS dan Wali Kelas" },
         { waktu: "09.00–09.40", ikon: "ti ti-notebook", judul: "Pengenalan Kurikulum & Cara Belajar Efektif", desc: "Mengenal mata pelajaran wajib/pilihan, membangkitkan motivasi, teknik belajar efektif, dan mengatasi tantangan belajar" },
         { waktu: "09.40–10.00", ikon: "ti ti-coffee", judul: "Istirahat", desc: "Waktu istirahat" },
-        { waktu: "10.00–11.00", ikon: "ti ti-heart-handshake", judul: "Sahabat Hebat: Dengar, Peduli, dan Hargai", desc: "Mengenali tanda teman tidak baik-baik saja, mendengarkan dengan empati, kapan harus meminta bantuan, dan komitmen Sahabat Hebat" },
-        { waktu: "11.30–12.00", ikon: "ti ti-building-mosque", judul: "Shalat Zuhur", desc: "Shalat zuhur berjamaah di masjid sekolah" },
-        { waktu: "12.00–12.30", ikon: "ti ti-settings", judul: "Persiapan Kegiatan Berikutnya", desc: "Pengkondisian kelas untuk penutupan dan unjuk karya esok hari" },
+        { waktu: "10.00–10.20", ikon: "ti ti-bowl-spoon", judul: "Santap MBG", desc: "Murid menikmati hidangan MBG" },
+        { waktu: "10.20–11.30", ikon: "ti ti-heart-handshake", judul: "Sahabat Hebat: Dengar, Peduli, dan Hargai", desc: "Mengenali tanda teman tidak baik-baik saja, mendengarkan dengan empati, kapan harus meminta bantuan, dan komitmen Sahabat Hebat. Perlengkapan: LCD, proyektor, sound dan film. Dilaksanakan di masjid." },
+        { waktu: "11.30–12.00", ikon: "ti ti-building-mosque", judul: "Shalat Zuhur", desc: "Shalat zuhur di masjid sekolah" },
+        { waktu: "12.00–12.30", ikon: "ti ti-messages", judul: "Refleksi & Persiapan Hari Selanjutnya", desc: "Mengajak murid merefleksikan pengalaman hari pertama, menumbuhkan motivasi untuk hari berikutnya, serta menutup kegiatan dengan semangat kebersamaan. Murid diingatkan agar besok membawa tanaman. Guru menanyakan secara singkat: \"Apa kegiatan favoritmu hari ini?\", \"Bagaimana perasaanmu?\"" },
+        { waktu: "12.30", ikon: "ti ti-home", judul: "Murid Pulang", desc: "Waktu pulang" },
       ]
     },
     {
