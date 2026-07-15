@@ -148,13 +148,16 @@ export default function AlumniPage() {
               Ambil Dokumenku
             </a>
             <a
-              href="https://wa.me/6289537781555?text=Halo,%20saya%20alumni%20ESPEMA%20dan%20ingin%20bergabung%20ke%20grup%20alumni."
+              href="https://instagram.com/espema_klaten"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.btnSecondary}
-              aria-label="Gabung grup WhatsApp alumni ESPEMA"
+              aria-label="Ikuti Instagram resmi ESPEMA Klaten"
             >
-              Gabung Komunitas
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", marginRight: "6px" }}>
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+              Ikuti Instagram Kami
             </a>
           </div>
         </div>
@@ -289,22 +292,21 @@ export default function AlumniPage() {
         <div className={styles.ctaInner}>
           <h2 id="cta-heading">Bangga Jadi <span className={styles.highlightPeach}>Alumni ESPEMA?</span></h2>
           <p>
-            Tunjukkan dengan bergabung ke komunitas resmi kami. Bersama kita terus jaga
+            Tunjukkan dengan mengikuti media sosial resmi kami. Bersama kita terus jaga
             semangat JUARA yang dulu ditanamkan di bangku SMPN 5 Klaten.
           </p>
           <div className={styles.ctaActions}>
             <a
-              href="https://wa.me/6289537781555?text=Halo,%20saya%20alumni%20ESPEMA%20dan%20ingin%20bergabung."
+              href="https://instagram.com/espema_klaten"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.btnCtaPrimary}
-              aria-label="Gabung grup WhatsApp alumni ESPEMA"
+              aria-label="Ikuti Instagram resmi ESPEMA Klaten"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={{ display: "inline", marginRight: "6px" }}>
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.552 4.103 1.516 5.83L.057 23.27a.5.5 0 0 0 .611.637l5.601-1.47A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.14-1.424l-.368-.22-3.32.871.886-3.236-.24-.374A9.952 9.952 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", marginRight: "6px" }}>
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
               </svg>
-              Gabung WhatsApp Alumni
+              Ikuti @espema_klaten
             </a>
             <a href="/" className={styles.btnCtaSecondary} aria-label="Kembali ke halaman beranda">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", marginRight: "4px" }}>
