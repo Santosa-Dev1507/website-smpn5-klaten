@@ -81,8 +81,9 @@ export async function validateNisn(payload: FormPayload) {
         data: {
           nama: foundData.nama,
           // Konversi ke link download langsung di sisi server
-          linkIjazah: toDownloadUrl(foundData.linkIjazah ?? ""),
-          linkShtka:  toDownloadUrl(foundData.linkShtka ?? ""),
+          linkIjazah:         toDownloadUrl(foundData.linkIjazah         ?? ""),
+          linkShtka:          toDownloadUrl(foundData.linkShtka          ?? ""),
+          linkTranskripNilai: toDownloadUrl(foundData.linkTranskripNilai ?? ""),
         },
       };
     }

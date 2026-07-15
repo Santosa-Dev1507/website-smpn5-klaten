@@ -1,18 +1,41 @@
 "use client";
 
-import { useState, useId } from "react";
+import { useState, useId, useEffect } from "react";
 import styles from "./alumni.module.css";
 import { validateNisn } from "./actions";
+
+const LS_KEY = "espema_alumni_docs";
+
+type DocData = {
+  linkIjazah: string;
+  linkShtka: string;
+  linkTranskripNilai: string;
+  nama: string;
+};
 
 export default function AlumniForm() {
   const id = useId();
   const [step, setStep] = useState<"form" | "success" | "loading">("form");
   const [errorMsg, setErrorMsg] = useState("");
-  const [docData, setDocData] = useState<{
-    linkIjazah: string;
-    linkShtka: string;
-    nama: string;
-  } | null>(null);
+  const [docData, setDocData] = useState<DocData | null>(null);
+  const [savedDoc, setSavedDoc] = useState<DocData | null>(null);
+  const [showBanner, setShowBanner] = useState(false);
+
+  // Baca localStorage saat pertama kali render (client-only)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (raw) {
+        const parsed: DocData = JSON.parse(raw);
+        if (parsed?.nama) {
+          setSavedDoc(parsed);
+          setShowBanner(true);
+        }
+      }
+    } catch {
+      // Abaikan jika localStorage tidak bisa dibaca
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,6 +100,13 @@ export default function AlumniForm() {
       if (result.success && result.data) {
         setDocData(result.data);
         setStep("success");
+        // Simpan ke localStorage agar bisa diakses kembali di lain waktu
+        try {
+          localStorage.setItem(LS_KEY, JSON.stringify(result.data));
+          setSavedDoc(result.data);
+        } catch {
+          // Abaikan jika localStorage penuh atau diblokir
+        }
       } else {
         setErrorMsg(result.message || "Terjadi kesalahan.");
         setStep("form");
@@ -100,10 +130,52 @@ export default function AlumniForm() {
     );
   }
 
-  if (step === "success" && docData) {
-    const hasIjazah = docData.linkIjazah && docData.linkIjazah.trim() !== "";
-    const hasShtka = docData.linkShtka && docData.linkShtka.trim() !== "";
+  // Helper: render panel dokumen (dipakai di success state & banner)
+  const renderDocLinks = (data: DocData) => {
+    const hasIjazah         = !!data.linkIjazah?.trim();
+    const hasShtka          = !!data.linkShtka?.trim();
+    const hasTranskripNilai = !!data.linkTranskripNilai?.trim();
+    return (
+      <>
+        {!hasIjazah && !hasShtka && !hasTranskripNilai && (
+          <p className={styles.noDocNote}>
+            Dokumen Anda sedang disiapkan. Silakan hubungi sekolah untuk informasi lebih lanjut.
+          </p>
+        )}
+        <div className={styles.docLinks}>
+          {hasIjazah && (
+            <a href={data.linkIjazah} download className={styles.docButton}
+              aria-label={`Unduh file Ijazah milik ${data.nama}`}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/>
+              </svg>
+              Unduh File Ijazah
+            </a>
+          )}
+          {hasShtka && (
+            <a href={data.linkShtka} download className={styles.docButtonAlt}
+              aria-label={`Unduh file SH TKA milik ${data.nama}`}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+              </svg>
+              Unduh File SH TKA
+            </a>
+          )}
+          {hasTranskripNilai && (
+            <a href={data.linkTranskripNilai} download className={styles.docButtonAlt}
+              aria-label={`Unduh file Transkrip Nilai milik ${data.nama}`}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="16" y1="9" x2="10" y2="9"/>
+              </svg>
+              Unduh Transkrip Nilai
+            </a>
+          )}
+        </div>
+      </>
+    );
+  };
 
+  if (step === "success" && docData) {
     return (
       <div className={styles.successContainer} role="region" aria-live="polite" aria-label="Dokumen berhasil ditemukan">
         <div className={styles.successIconWrap} aria-hidden="true">
@@ -116,42 +188,7 @@ export default function AlumniForm() {
         <p className={styles.successNote}>
           Sebagai apresiasi, Anda sekarang dapat mengunduh dokumen kelulusan Anda di bawah ini:
         </p>
-
-        {!hasIjazah && !hasShtka && (
-          <p className={styles.noDocNote}>
-            Dokumen Anda sedang disiapkan. Silakan hubungi sekolah untuk informasi lebih lanjut.
-          </p>
-        )}
-
-        <div className={styles.docLinks}>
-          {hasIjazah && (
-            <a
-              href={docData.linkIjazah}
-              download
-              className={styles.docButton}
-              aria-label={`Unduh file Ijazah milik ${docData.nama}`}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/>
-              </svg>
-              Unduh File Ijazah
-            </a>
-          )}
-          {hasShtka && (
-            <a
-              href={docData.linkShtka}
-              download
-              className={styles.docButtonAlt}
-              aria-label={`Unduh file SH TKA milik ${docData.nama}`}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-              </svg>
-              Unduh File SH TKA
-            </a>
-          )}
-        </div>
-
+        {renderDocLinks(docData)}
         <button
           className={styles.resetBtn}
           onClick={() => { setStep("form"); setDocData(null); setErrorMsg(""); }}
@@ -165,6 +202,42 @@ export default function AlumniForm() {
 
   return (
     <div className={styles.formContainer}>
+
+      {/* ── Banner dokumen tersimpan ──────────────────────────── */}
+      {showBanner && savedDoc && (
+        <div className={styles.savedDocBanner} role="region" aria-label="Dokumen tersimpan dari sesi sebelumnya">
+          <div className={styles.savedDocBannerContent}>
+            <div className={styles.savedDocBannerIcon} aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              </svg>
+            </div>
+            <div className={styles.savedDocBannerText}>
+              <strong>Halo, {savedDoc.nama}!</strong>
+              <span>Anda sudah pernah mendaftar. Unduh kembali dokumen Anda di sini.</span>
+            </div>
+          </div>
+          <div className={styles.savedDocBannerActions}>
+            <button
+              className={styles.savedDocBannerBtn}
+              onClick={() => { setDocData(savedDoc); setStep("success"); setShowBanner(false); }}
+              aria-label="Lihat kembali dokumen kelulusan Anda"
+            >
+              Lihat Dokumen Saya
+            </button>
+            <button
+              className={styles.savedDocBannerDismiss}
+              onClick={() => setShowBanner(false)}
+              aria-label="Tutup pengingat dokumen"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className={styles.formHeader}>
         <div className={styles.formHeaderIcon} aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -172,7 +245,7 @@ export default function AlumniForm() {
           </svg>
         </div>
         <h3>Lengkapi Profil Alumni</h3>
-        <p>Isi data singkat Anda untuk mendapatkan akses ke dokumen kelulusan (Ijazah &amp; SH TKA).</p>
+        <p>Isi data singkat Anda untuk mendapatkan akses ke dokumen kelulusan (Ijazah, SH TKA &amp; Transkrip Nilai).</p>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.alumniForm} noValidate>
