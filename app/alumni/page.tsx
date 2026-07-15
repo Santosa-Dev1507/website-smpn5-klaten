@@ -202,7 +202,7 @@ export default function AlumniPage() {
           <div className={styles.formSectionLeft}>
             <div className={styles.badge}>Dokumen Kelulusan</div>
             <h2 id="pendataan-heading">
-              Unduh <span className={styles.highlight}>Ijazah & SH TKA</span><br />Milik Anda
+              Unduh <span className={styles.highlight}>Ijazah, Transkrip Nilai<br />& SH TKA</span><br />Milik Anda
             </h2>
             <p>
               Masukkan NISN dan lengkapi profil singkat Anda. Data ini membantu
@@ -211,7 +211,7 @@ export default function AlumniPage() {
             </p>
             <ul className={styles.formBenefitList} aria-label="Keuntungan mengisi form">
               {[
-                "Akses langsung file PDF Ijazah & SH TKA",
+                "Akses langsung file PDF Ijazah, Transkrip Nilai & SH TKA",
                 "Data Anda membantu akreditasi sekolah",
                 "Bergabung otomatis ke komunitas alumni",
               ].map((b, i) => (
