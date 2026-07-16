@@ -47,6 +47,7 @@ export default function AlumniForm() {
     const email    = (formData.get("email")  as string ?? "").trim();
     const telepon  = (formData.get("telepon") as string ?? "").trim();
     const tahunLulus = (formData.get("tahunLulus") as string ?? "").trim();
+    const instansi = (formData.get("instansi") as string ?? "").trim();
 
     // ── Validasi sisi klien ──────────────────────────────────────
     if (!nisn) {
@@ -71,6 +72,10 @@ export default function AlumniForm() {
     }
     if (!tahunLulus) {
       setErrorMsg("Tahun lulus wajib diisi.");
+      return;
+    }
+    if (!instansi) {
+      setErrorMsg("Nama sekolah atau instansi lanjutan wajib diisi.");
       return;
     }
     // ─────────────────────────────────────────────────────────────
@@ -248,7 +253,7 @@ export default function AlumniForm() {
         <p>Isi data singkat Anda untuk mendapatkan akses ke dokumen kelulusan (Ijazah, SH TKA &amp; Transkrip Nilai).</p>
       </div>
 
-      <form onSubmit={handleSubmit} className={styles.alumniForm} noValidate>
+      <form onSubmit={handleSubmit} className={styles.alumniForm}>
         {errorMsg && (
           <div
             className={styles.errorMessage}
@@ -367,12 +372,15 @@ export default function AlumniForm() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor={`${id}-instansi`}>Nama Sekolah / Instansi Saat Ini</label>
+          <label htmlFor={`${id}-instansi`}>
+            Nama Sekolah / Instansi Saat Ini <span className={styles.required} aria-label="wajib diisi">*</span>
+          </label>
           <input
             type="text"
             id={`${id}-instansi`}
             name="instansi"
-            placeholder="Contoh: SMAN 1 Klaten / Universitas Gadjah Mada"
+            required
+            placeholder="Contoh: SMAN 1 Klaten / SMKN 1 Klaten"
             autoComplete="organization"
           />
         </div>
