@@ -1,6 +1,12 @@
 "use server";
 
-import alumniDocs from "../../data/alumniDocs.json";
+// URL CSV publik Google Sheets — data alumni diambil langsung dari sini.
+// Update data cukup di Google Sheets, tidak perlu deploy ulang.
+const ALUMNI_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSe61fz7e8uqj44YUDETwIV2zgTl8WYY6kaqIwu6Ukk1r9-iGo14u-eVVmc47kSojHyo14apugUWhML/pub?output=csv";
+
+// Kolom CSV (0-indexed): NISN, Nama, Link SH TKA, Link Ijazah, Link Transkrip Nilai
+const COL = { nisn: 0, nama: 1, linkShtka: 2, linkIjazah: 3, linkTranskripNilai: 4 };
 
 interface FormPayload {
   nisn: string;
@@ -11,6 +17,26 @@ interface FormPayload {
   kelasTerakhir: string;
   status: string;
   instansi: string;
+}
+
+/** Parser CSV sederhana yang menangani nilai dengan koma di dalam tanda kutip */
+function parseCSVRow(row: string): string[] {
+  const result: string[] = [];
+  let current = "";
+  let inQuotes = false;
+  for (let i = 0; i < row.length; i++) {
+    const char = row[i];
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      result.push(current.trim());
+      current = "";
+    } else {
+      current += char;
+    }
+  }
+  result.push(current.trim());
+  return result;
 }
 
 /**
@@ -58,26 +84,45 @@ async function simpanKeSheet(data: FormPayload): Promise<void> {
   }
 }
 
-/** Validasi NISN dan simpan data tracer study ke Google Sheets */
+/** Validasi NISN dari Google Sheets CSV dan simpan data tracer study */
 export async function validateNisn(payload: FormPayload) {
   try {
     const nisn = payload.nisn.trim();
 
-    // Cari dokumen berdasarkan NISN
-    const foundData = (alumniDocs as any[]).find((doc: any) => doc.nisn === nisn);
+    // Fetch CSV langsung dari Google Sheets (cache 5 menit)
+    const res = await fetch(ALUMNI_CSV_URL, { next: { revalidate: 300 } });
+    if (!res.ok) {
+      console.error("[alumni] Gagal fetch CSV:", res.status);
+      return {
+        success: false,
+        message: "Terjadi kesalahan pada server. Silakan coba lagi.",
+      };
+    }
 
-    if (foundData) {
+    const csvText = await res.text();
+    // Hapus BOM jika ada, lalu split per baris
+    const rows = csvText
+      .replace(/^\uFEFF/, "")
+      .split(/\r?\n/)
+      .filter((r) => r.trim().length > 0);
+
+    // Lewati baris header (baris pertama)
+    const dataRows = rows.slice(1).map(parseCSVRow);
+
+    // Cari berdasarkan NISN (kolom 0)
+    const found = dataRows.find((row) => row[COL.nisn] === nisn);
+
+    if (found) {
       // NISN valid → simpan data tracer study ke Google Sheets (non-blocking)
       simpanKeSheet(payload);
 
       return {
         success: true,
         data: {
-          nama: foundData.nama,
-          // Konversi ke link download langsung di sisi server
-          linkIjazah:         toDownloadUrl(foundData.linkIjazah         ?? ""),
-          linkShtka:          toDownloadUrl(foundData.linkShtka          ?? ""),
-          linkTranskripNilai: toDownloadUrl(foundData.linkTranskripNilai ?? ""),
+          nama: found[COL.nama] ?? "",
+          linkIjazah: toDownloadUrl(found[COL.linkIjazah] ?? ""),
+          linkShtka: toDownloadUrl(found[COL.linkShtka] ?? ""),
+          linkTranskripNilai: toDownloadUrl(found[COL.linkTranskripNilai] ?? ""),
         },
       };
     }
