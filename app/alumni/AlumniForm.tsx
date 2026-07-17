@@ -51,7 +51,7 @@ export default function AlumniForm() {
 
     // ── Validasi sisi klien ──────────────────────────────────────
     if (!nisn) {
-      setErrorMsg("NISN wajib diisi. Masukkan 10 digit angka NISN Anda.");
+      setErrorMsg("NISN wajib diisi. Masukkan 10 digit angka NISN kamu.");
       return;
     }
     if (!/^\d+$/.test(nisn)) {
@@ -118,7 +118,7 @@ export default function AlumniForm() {
       }
     } catch (err: any) {
       if (err?.message === "timeout") {
-        setErrorMsg("Permintaan memakan waktu terlalu lama. Periksa koneksi internet Anda dan coba lagi.");
+        setErrorMsg("Permintaan memakan waktu terlalu lama. Periksa koneksi internet kamu dan coba lagi.");
       } else {
         setErrorMsg("Terjadi kesalahan. Silakan coba lagi.");
       }
@@ -128,9 +128,9 @@ export default function AlumniForm() {
 
   if (step === "loading") {
     return (
-      <div className={styles.loadingContainer} role="status" aria-live="polite" aria-label="Memproses data Anda">
+      <div className={styles.loadingContainer} role="status" aria-live="polite" aria-label="Memproses data kamu">
         <div className={styles.spinner} aria-hidden="true" />
-        <p>Memproses data Anda...</p>
+        <p>Memproses data kamu...</p>
       </div>
     );
   }
@@ -144,7 +144,7 @@ export default function AlumniForm() {
       <>
         {!hasIjazah && !hasShtka && !hasTranskripNilai && (
           <p className={styles.noDocNote}>
-            Dokumen Anda sedang disiapkan. Silakan hubungi sekolah untuk informasi lebih lanjut.
+            Dokumen kamu sedang disiapkan. Silakan hubungi sekolah untuk informasi lebih lanjut.
           </p>
         )}
         <div className={styles.docLinks}>
@@ -189,9 +189,9 @@ export default function AlumniForm() {
           </svg>
         </div>
         <h3>Terima Kasih, {docData.nama}!</h3>
-        <p>Data profil Anda telah berhasil diperbarui.</p>
+        <p>Data profil kamu telah berhasil diperbarui.</p>
         <p className={styles.successNote}>
-          Sebagai apresiasi, Anda sekarang dapat mengunduh dokumen kelulusan Anda di bawah ini:
+          Sebagai apresiasi, kamu sekarang dapat mengunduh dokumen kelulusan kamu di bawah ini:
         </p>
         {renderDocLinks(docData)}
         <button
@@ -219,14 +219,14 @@ export default function AlumniForm() {
             </div>
             <div className={styles.savedDocBannerText}>
               <strong>Halo, {savedDoc.nama}!</strong>
-              <span>Anda sudah pernah mendaftar. Unduh kembali dokumen Anda di sini.</span>
+              <span>Kamu sudah pernah mendaftar. Unduh kembali dokumen kamu di sini.</span>
             </div>
           </div>
           <div className={styles.savedDocBannerActions}>
             <button
               className={styles.savedDocBannerBtn}
               onClick={() => { setDocData(savedDoc); setStep("success"); setShowBanner(false); }}
-              aria-label="Lihat kembali dokumen kelulusan Anda"
+              aria-label="Lihat kembali dokumen kelulusan kamu"
             >
               Lihat Dokumen Saya
             </button>
@@ -250,7 +250,7 @@ export default function AlumniForm() {
           </svg>
         </div>
         <h3>Lengkapi Profil Alumni</h3>
-        <p>Isi data singkat Anda untuk mendapatkan akses ke dokumen kelulusan (Ijazah, SH TKA &amp; Transkrip Nilai).</p>
+        <p>Isi data singkat kamu untuk mendapatkan akses ke dokumen kelulusan (Ijazah, SH TKA &amp; Transkrip Nilai).</p>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.alumniForm}>
@@ -283,7 +283,7 @@ export default function AlumniForm() {
             aria-describedby={`${id}-nisn-help`}
           />
           <span className={styles.helperText} id={`${id}-nisn-help`}>
-            10 digit angka, tercetak pada halaman depan ijazah Anda
+            10 digit angka, tercetak pada halaman depan ijazah kamu
           </span>
         </div>
 
@@ -296,7 +296,7 @@ export default function AlumniForm() {
             id={`${id}-nama`}
             name="nama"
             required
-            placeholder="Masukkan nama lengkap Anda"
+            placeholder="Masukkan nama lengkap kamu"
             autoComplete="name"
           />
         </div>

@@ -130,7 +130,7 @@ export async function validateNisn(payload: FormPayload) {
     return {
       success: false,
       message:
-        "Data dengan NISN tersebut tidak ditemukan atau belum tersedia. Pastikan NISN yang Anda masukkan benar.",
+        "Data dengan NISN tersebut tidak ditemukan atau belum tersedia. Pastikan NISN yang kamu masukkan benar.",
     };
   } catch (error) {
     console.error("Error di Server Action validateNisn:", error);

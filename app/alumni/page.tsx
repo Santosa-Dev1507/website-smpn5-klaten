@@ -137,8 +137,8 @@ export default function AlumniPage() {
           </h1>
           <p>
             Jarak memisahkan, tapi ikatan almamater tidak pernah putus.
-            Lengkapi data Anda dan unduh dokumen kelulusan — kontribusi kecil
-            Anda sangat berarti untuk kemajuan SMPN 5 Klaten.
+            Lengkapi data kamu dan unduh dokumen kelulusan — kontribusi kecil
+            kamu sangat berarti untuk kemajuan SMPN 5 Klaten.
           </p>
           <div className={styles.heroActions}>
             <a href="#pendataan" className={styles.btnPrimary} aria-label="Ambil dokumen kelulusan saya">
@@ -202,17 +202,17 @@ export default function AlumniPage() {
           <div className={styles.formSectionLeft}>
             <div className={styles.badge}>Dokumen Kelulusan</div>
             <h2 id="pendataan-heading">
-              Unduh <span className={styles.highlight}>Ijazah, Transkrip Nilai<br />& SH TKA</span><br />Milik Anda
+              Unduh <span className={styles.highlight}>Ijazah, Transkrip Nilai<br />& SH TKA</span><br />Milik Kamu
             </h2>
             <p>
-              Masukkan NISN dan lengkapi profil singkat Anda. Data ini membantu
-              sekolah dalam program tracer study alumni. Sebagai apresiasi, Anda
-              akan langsung dapat mengakses dokumen kelulusan Anda.
+              Masukkan NISN dan lengkapi profil singkat kamu. Data ini membantu
+              sekolah dalam program tracer study alumni. Sebagai apresiasi, kamu
+              akan langsung dapat mengakses dokumen kelulusan kamu.
             </p>
             <ul className={styles.formBenefitList} aria-label="Keuntungan mengisi form">
               {[
                 "Akses langsung file PDF Ijazah, Transkrip Nilai & SH TKA",
-                "Data Anda membantu akreditasi sekolah",
+                "Data kamu membantu akreditasi sekolah",
                 "Bergabung otomatis ke komunitas alumni",
               ].map((b, i) => (
                 <li key={i}>
@@ -281,7 +281,7 @@ export default function AlumniPage() {
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#944535" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", marginRight: "6px", verticalAlign: "middle" }}>
             <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4z"/>
           </svg>
-          <strong>Punya cerita inspiratif?</strong> Kirimkan profil dan foto Anda ke{" "}
+          <strong>Punya cerita inspiratif?</strong> Kirimkan profil dan foto kamu ke{" "}
           <a href="mailto:smp5negeriklaten@gmail.com">smp5negeriklaten@gmail.com</a>{" "}
           dan kami akan tampilkan di sini.
         </p>
