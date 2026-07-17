@@ -1,7 +1,6 @@
 "use server";
 
-import fs from "fs";
-import path from "path";
+import alumniDocs from "../../data/alumniDocs.json";
 
 interface FormPayload {
   nisn: string;
@@ -62,15 +61,10 @@ async function simpanKeSheet(data: FormPayload): Promise<void> {
 /** Validasi NISN dan simpan data tracer study ke Google Sheets */
 export async function validateNisn(payload: FormPayload) {
   try {
-    // Baca data dokumen dari sisi server (tidak pernah dikirim ke browser)
-    const filePath = path.join(process.cwd(), "data", "alumniDocs.json");
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    const alumniDocs = JSON.parse(fileContents);
-
     const nisn = payload.nisn.trim();
 
     // Cari dokumen berdasarkan NISN
-    const foundData = alumniDocs.find((doc: any) => doc.nisn === nisn);
+    const foundData = (alumniDocs as any[]).find((doc: any) => doc.nisn === nisn);
 
     if (foundData) {
       // NISN valid → simpan data tracer study ke Google Sheets (non-blocking)
