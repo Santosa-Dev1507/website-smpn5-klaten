@@ -1,259 +1,70 @@
-/* ── Daftar Ekskul Page ── */
-.wrapper {
-  min-height: 100vh;
-  background: var(--background-alt);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 3rem 1rem 4rem;
-}
+/* ===== DAFTAR EKSKUL PAGE ===== */
+.loadingWrap { display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:1rem;color:#767683; }
+.spinner { width:40px;height:40px;border:4px solid #FAD6A6;border-top-color:#944535;border-radius:50%;animation:spin 0.8s linear infinite; }
+.spinnerSm { display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle; }
+@keyframes spin { to { transform:rotate(360deg); } }
 
-/* Step Bar */
-.stepBar {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  margin-bottom: 2.5rem;
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 50px;
-  padding: 0.5rem 1.5rem;
-  gap: 1.5rem;
-}
-.step {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  opacity: 0.4;
-  transition: opacity 0.3s;
-}
-.stepActive, .stepDone { opacity: 1; }
-.stepCircle {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  background: var(--border-color);
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.3s, color 0.3s;
-}
-.stepActive .stepCircle {
-  background: var(--primary);
-  color: #fff;
-}
-.stepDone .stepCircle {
-  background: #16a34a;
-  color: #fff;
-}
-.stepLabel {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-.stepActive .stepLabel { color: #944535; }
-.stepDone .stepLabel { color: #d97706; }
+/* ── Tutup ── */
+.tutupWrap { min-height:80vh;display:flex;align-items:center;justify-content:center;padding:2rem 5%;background:#fdf8f2; }
+.tutupCard { background:#fff;border-radius:16px;padding:2.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.08);width:100%;max-width:480px;text-align:center; }
+.tutupEmoji { font-size:4rem;margin-bottom:1rem; }
+.tutupTitle { font-size:1.5rem;font-weight:700;color:#944535;margin-bottom:0.75rem; }
+.tutupDesc { color:#454652;font-size:0.9rem;line-height:1.6;margin-bottom:1.5rem; }
+.tutupTips { background:#fdf8f2;border-radius:10px;padding:1rem;margin-bottom:1.5rem;display:flex;flex-direction:column;gap:0.5rem;text-align:left; }
+.tipItem { font-size:0.85rem;color:#767683; }
+.tutupActions { display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap; }
 
-/* Card */
-.card {
-  background: #fff;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  width: 100%;
-  max-width: 520px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-  animation: fadeUp 400ms var(--ease-enter) both;
-}
-.cardIcon {
-  font-size: 3rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-.cardTitle {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #944535;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-.cardDesc {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  text-align: center;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-}
-.cardSukses { text-align: center; }
+/* ── Wrapper & Card ── */
+.wrapper { min-height:80vh;padding:2rem 5%;background:#fdf8f2;display:flex;flex-direction:column;align-items:center; }
+.periodeBanner { background:#d1fae5;border:1px solid #6ee7b7;border-radius:10px;padding:0.875rem 1.25rem;width:100%;max-width:540px;display:flex;align-items:center;gap:0.875rem;margin-bottom:1.25rem; }
+.periodeIcon { font-size:1.25rem; }
+.periodeNama { font-size:0.9rem;font-weight:700;color:#065f46; }
+.periodeDate { font-size:0.78rem;color:#047857;margin-top:2px; }
+.card { background:#fff;border-radius:16px;padding:2rem;box-shadow:0 2px 16px rgba(0,0,0,0.07);width:100%;max-width:540px; }
+.cardIcon { font-size:2.5rem;text-align:center;margin-bottom:0.75rem; }
+.cardTitle { font-size:1.35rem;font-weight:700;color:#944535;margin-bottom:0.5rem;text-align:center; }
+.cardDesc { color:#454652;font-size:0.875rem;text-align:center;margin-bottom:1.25rem;line-height:1.5; }
+.cardSukses { text-align:center; }
+.suksesEmoji { font-size:4rem;margin-bottom:1rem; }
+.suksesActions { display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem; }
 
-/* Welcome Banner */
-.welcomeBanner {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(148,69,53,0.06);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-.welcomeAvatar {
-  width: 44px; height: 44px;
-  background: #944535;
-  color: #fff;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem;
-  font-weight: 800;
-  flex-shrink: 0;
-}
-.welcomeName { font-weight: 800; color: var(--dark); font-size: 1rem; }
-.welcomeSub  { font-size: 0.8rem; color: var(--text-muted); }
+/* ── Welcome ── */
+.welcomeBanner { display:flex;align-items:center;gap:0.75rem;background:#fdf8f2;border-radius:10px;padding:0.875rem 1rem;margin-bottom:1.25rem; }
+.welcomeAvatar { width:40px;height:40px;border-radius:50%;background:#FAD6A6;color:#944535;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.welcomeName { font-size:0.9rem;font-weight:700;color:#1a1c1d; }
+.welcomeSub { font-size:0.78rem;color:#767683; }
+.btnLogoutSm { margin-left:auto;background:transparent;color:#944535;border:1px solid #944535;padding:0.3rem 0.75rem;border-radius:6px;font-size:0.78rem;cursor:pointer;white-space:nowrap; }
 
-/* Form */
-.form { display: flex; flex-direction: column; gap: 1.25rem; }
-.formGroup { display: flex; flex-direction: column; gap: 0.4rem; }
-.label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--dark);
-}
-.input {
-  padding: 0.75rem 1rem;
-  border: 1.5px solid var(--border-color);
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: var(--dark);
-  background: #fff;
-  transition: border-color var(--dur-base) var(--ease-enter),
-              box-shadow var(--dur-base) var(--ease-enter);
-}
-.input:focus {
-  outline: none;
-  border-color: #944535;
-  box-shadow: 0 0 0 3px rgba(148,69,53,0.12);
-}
-.btnSubmit {
-  margin-top: 0.5rem;
-  background: #944535;
-  color: #fff;
-  padding: 0.85rem;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 1rem;
-  font-family: inherit;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--dur-base) var(--ease-enter),
-              transform var(--dur-fast) var(--ease-enter);
-}
-.btnSubmit:hover:not(:disabled) {
-  background: #7a3a2d;
-  transform: translateY(-2px);
-}
-.btnSubmit:disabled { opacity: 0.6; cursor: not-allowed; }
+/* ── Form ── */
+.form { display:flex;flex-direction:column;gap:1rem; }
+.formGroup { display:flex;flex-direction:column;gap:0.4rem; }
+.label { font-size:0.85rem;font-weight:600;color:#454652; }
+.input { padding:0.65rem 0.875rem;border:1.5px solid #e2e2e4;border-radius:8px;font-size:0.9rem;width:100%;outline:none;transition:border-color 0.2s; }
+.input:focus { border-color:#944535; }
+.alertError { background:#ffeaea;color:#ba1a1a;border:1px solid #f5c2c7;border-radius:8px;padding:0.75rem 1rem;font-size:0.875rem;margin-bottom:1rem; }
 
-/* Alert */
-.alertError {
-  background: #fef2f2;
-  border: 1px solid #fca5a5;
-  color: #b91c1c;
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  font-size: 0.88rem;
-  margin-bottom: 1rem;
-}
+/* ── Ekskul Grid ── */
+.ekskulGrid { display:flex;flex-direction:column;gap:0.625rem;margin-bottom:1rem; }
+.ekskulItem { display:flex;align-items:center;gap:0.875rem;padding:0.875rem 1rem;border:1.5px solid #e2e2e4;border-radius:10px;transition:all 0.15s;position:relative; }
+.ekskulItem:hover { border-color:#944535;background:rgba(148,69,53,0.03); }
+.ekskulItemSel { border-color:#944535;background:rgba(148,69,53,0.06); }
+.ekskulItemSudah { border-color:#6ee7b7;background:#f0fdf4;cursor:default !important; }
+.checkHidden { display:none; }
+.ekskulEmoji { font-size:1.75rem;flex-shrink:0; }
+.ekskulInfo { flex:1; }
+.ekskulNama { font-size:0.9rem;font-weight:600;color:#1a1c1d;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap; }
+.ekskulJadwal { font-size:0.78rem;color:#767683;margin-top:2px; }
+.ekskulKategori { font-size:0.72rem;color:#944535;font-weight:600;margin-top:2px; }
+.wajibBadge { background:#FAD6A6;color:#7a382a;font-size:0.65rem;padding:0.1rem 0.4rem;border-radius:4px;font-weight:700; }
+.sudahBadge { background:#d1fae5;color:#065f46;font-size:0.65rem;padding:0.1rem 0.4rem;border-radius:4px;font-weight:700; }
+.checkMark { background:#944535;color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0; }
 
-/* Hint */
-.hint {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-align: center;
-  margin-top: 1rem;
-}
-
-/* Ekskul Check Grid */
-.ekskulCheckGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
-}
-.ekskulCheck {
-  position: relative;
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-  padding: 0.85rem 0.75rem;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.2rem;
-  transition: border-color var(--dur-base) var(--ease-enter),
-              background var(--dur-base) var(--ease-enter),
-              transform var(--dur-fast) var(--ease-enter);
-}
-.ekskulCheck:hover {
-  border-color: #d97706;
-  transform: translateY(-1px);
-}
-.ekskulCheckSelected {
-  border-color: #944535;
-  background: rgba(148,69,53,0.05);
-}
-.checkboxHidden { display: none; }
-.checkEmoji { font-size: 1.5rem; }
-.checkName { font-weight: 700; font-size: 0.85rem; color: var(--dark); }
-.checkKategori { font-size: 0.72rem; color: var(--text-muted); }
-.checkMark {
-  position: absolute;
-  top: 0.5rem; right: 0.5rem;
-  background: #944535;
-  color: #fff;
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  font-size: 0.7rem;
-  font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
-}
-
-.selectedInfo {
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #944535;
-  margin-bottom: 0.75rem;
-}
-
-/* Sukses */
-.suksesIcon { font-size: 4rem; margin-bottom: 1rem; color: #d97706; }
-.suksesActions { margin-top: 2rem; }
-.btnBack {
-  color: #000666;
-  font-weight: 700;
-  font-size: 0.9rem;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-.btnBack:hover { opacity: 0.7; }
-
-/* Spinner */
-.spinner {
-  width: 20px; height: 20px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-@media (max-width: 480px) {
-  .stepBar { gap: 0.75rem; padding: 0.5rem 1rem; }
-  .stepLabel { display: none; }
-  .card { padding: 1.75rem 1.25rem; }
-  .ekskulCheckGrid { grid-template-columns: 1fr; }
-}
+/* ── Submit ── */
+.selectedInfo { text-align:center;font-size:0.85rem;color:#767683;margin-bottom:0.75rem;font-weight:600; }
+.btnSubmit { width:100%;background:#944535;color:#fff;padding:0.875rem;border-radius:8px;font-weight:600;font-size:0.95rem;cursor:pointer;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;gap:0.5rem; }
+.btnSubmit:disabled { opacity:0.5;cursor:not-allowed; }
+.btnSubmit:hover:not(:disabled) { opacity:0.88; }
+.btnPrimary { background:#944535;color:#fff;padding:0.75rem 1.5rem;border-radius:8px;font-weight:600;font-size:0.9rem;cursor:pointer;text-decoration:none;display:inline-block;transition:opacity 0.2s; }
+.btnPrimary:hover { opacity:0.88; }
+.btnSecondary { background:transparent;color:#944535;border:1.5px solid #944535;padding:0.75rem 1.5rem;border-radius:8px;font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-block;transition:background 0.2s; }
+.btnSecondary:hover { background:rgba(148,69,53,0.06); }

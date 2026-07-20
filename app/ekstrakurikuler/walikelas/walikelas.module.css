@@ -1,0 +1,86 @@
+/* ===== WALIKELAS DASHBOARD ===== */
+.loadingWrap { display:flex;align-items:center;justify-content:center;min-height:60vh; }
+.spinner { width:40px;height:40px;border:4px solid #FAD6A6;border-top-color:#944535;border-radius:50%;animation:spin 0.8s linear infinite; }
+.spinnerSm { display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.loginWrap { min-height:80vh;display:flex;align-items:center;justify-content:center;padding:2rem 5%;background:#fdf8f2; }
+.loginCard { background:#fff;border-radius:16px;padding:2.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.08);width:100%;max-width:420px; }
+.loginEmoji { font-size:3rem;text-align:center;margin-bottom:1rem; }
+.loginTitle { font-size:1.75rem;font-weight:700;color:#944535;text-align:center;margin-bottom:0.5rem; }
+.loginDesc { color:#767683;font-size:0.875rem;text-align:center;margin-bottom:1.5rem;line-height:1.5; }
+.loginForm { display:flex;flex-direction:column;gap:1rem; }
+.alertError { background:#ffeaea;color:#ba1a1a;border:1px solid #f5c2c7;border-radius:8px;padding:0.75rem 1rem;font-size:0.875rem;margin-bottom:1rem; }
+.formGroup { display:flex;flex-direction:column;gap:0.4rem; }
+.label { font-size:0.85rem;font-weight:600;color:#454652; }
+.input,.inputMonth { padding:0.65rem 0.875rem;border:1.5px solid #e2e2e4;border-radius:8px;font-size:0.9rem;width:100%;outline:none;transition:border-color 0.2s; }
+.input:focus,.inputMonth:focus { border-color:#944535; }
+.btnSubmit { width:100%;background:#944535;color:#fff;padding:0.75rem;border-radius:8px;font-weight:600;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:opacity 0.2s; }
+.btnSubmit:disabled { opacity:0.5;cursor:not-allowed; }
+.dashWrap { background:#fdf8f2;min-height:100vh;font-family:'Inter',sans-serif; }
+.topBar { background:#944535;color:#fff;padding:1rem 5%;display:flex;align-items:center;justify-content:space-between; }
+.topBarLeft { display:flex;align-items:center;gap:0.75rem; }
+.avatar { width:44px;height:44px;border-radius:50%;background:#FAD6A6;color:#944535;font-size:1.2rem;font-weight:700;display:flex;align-items:center;justify-content:center; }
+.userName { font-size:1rem;font-weight:700; }
+.userSub { font-size:0.75rem;color:rgba(255,255,255,0.75); }
+.btnLogout { background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:0.4rem 1rem;border-radius:8px;font-size:0.85rem;cursor:pointer;transition:background 0.2s; }
+.btnLogout:hover { background:rgba(255,255,255,0.25); }
+.statsBar { display:flex;gap:0;background:#fff;border-bottom:1px solid #e2e2e4; }
+.statCard { flex:1;padding:1.25rem 1rem;text-align:center;border-right:1px solid #e2e2e4;display:flex;flex-direction:column;align-items:center;gap:0.25rem; }
+.statCard:last-child { border-right:none; }
+.statCardDanger { background:#fff5f5; }
+.statIcon { font-size:1.25rem; }
+.statNum { font-size:1.4rem;font-weight:700;color:#944535; }
+.statNumDanger { color:#ba1a1a; }
+.statLabel { font-size:0.7rem;color:#767683;text-transform:uppercase;letter-spacing:0.05em;font-weight:600; }
+.tabBar { background:#fff;border-bottom:2px solid #e2e2e4;padding:0 5%;display:flex;overflow-x:auto;scrollbar-width:none; }
+.tabBar::-webkit-scrollbar { display:none; }
+.tabBtn { padding:0.875rem 1.25rem;font-size:0.875rem;font-weight:600;color:#767683;border-bottom:3px solid transparent;white-space:nowrap;cursor:pointer;background:none;transition:color 0.2s,border-color 0.2s;margin-bottom:-2px;display:flex;align-items:center;gap:0.4rem; }
+.tabBtn:hover { color:#944535; }
+.tabBtnActive { color:#944535;border-bottom-color:#944535; }
+.tabContent { padding:2rem 5%; }
+.sectionTitle { font-size:1.15rem;font-weight:700;color:#1a1c1d;margin-bottom:0; }
+.tabHeader { display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem; }
+.filterRow { display:flex;align-items:center;gap:0.5rem; }
+.filterSelect { padding:0.5rem 0.875rem;border:1.5px solid #e2e2e4;border-radius:8px;font-size:0.85rem;outline:none;cursor:pointer; }
+.btnRefresh { background:#944535;color:#fff;padding:0.5rem 1rem;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer; }
+.hint { font-size:0.8rem;color:#767683;margin-bottom:1rem; }
+.loadRow { color:#767683;font-size:0.875rem;padding:1rem 0; }
+.tableWrap { overflow-x:auto;border-radius:10px;border:1px solid #e2e2e4; }
+.table { width:100%;border-collapse:collapse;font-size:0.875rem; }
+.table th { background:#fdf8f2;color:#454652;font-weight:700;padding:0.75rem 1rem;text-align:left;border-bottom:2px solid #e2e2e4;white-space:nowrap; }
+.table td { padding:0.7rem 1rem;border-bottom:1px solid #f0f0f2;vertical-align:middle; }
+.table tr:last-child td { border-bottom:none; }
+.table tr:hover td { background:#fafafa; }
+.emptyRow { text-align:center;color:#767683;padding:2rem !important; }
+.rowDanger td { background:#fff8f8 !important; }
+.tdNama { font-weight:600;color:#1a1c1d; }
+.tdNis { color:#767683;font-size:0.8rem; }
+.tdHadir { color:#065f46;font-weight:700; }
+.tdIzin { color:#713f12;font-weight:700; }
+.tdAlpa { color:#991b1b;font-weight:700; }
+.ekskulTags { display:flex;flex-wrap:wrap;gap:0.35rem; }
+.ekskulTag { padding:0.15rem 0.5rem;border-radius:50px;font-size:0.72rem;font-weight:600; }
+.ekskulTagOk { background:#d1fae5;color:#065f46; }
+.ekskulTagPending { background:#fff3cd;color:#856404; }
+.noEkskul,.noData { color:#767683;font-size:0.8rem; }
+.pctCell { display:flex;align-items:center;gap:0.5rem; }
+.progressMini { width:60px;height:7px;background:#e2e2e4;border-radius:50px;overflow:hidden; }
+.progressMiniFill { height:100%;border-radius:50px;transition:width 0.3s; }
+.pctOk { font-weight:700;color:#065f46;font-size:0.85rem; }
+.pctDanger { font-weight:700;color:#991b1b;font-size:0.85rem; }
+.badge { display:inline-block;padding:0.2rem 0.65rem;border-radius:50px;font-size:0.72rem;font-weight:700; }
+.badgeOk { background:#d1fae5;color:#065f46; }
+.badgeDanger { background:#fee2e2;color:#991b1b; }
+.emptyState { background:#fdf8f2;border:1.5px dashed #FAD6A6;border-radius:10px;padding:2rem;text-align:center;color:#767683;font-size:0.875rem; }
+.prestasiList { display:flex;flex-direction:column;gap:0.875rem; }
+.prestasiCard { background:#fff;border:1px solid #e2e2e4;border-radius:12px;padding:1.25rem;border-left:4px solid #e2e2e4; }
+.prestasiCardJuara { border-left-color:#944535;background:linear-gradient(135deg,rgba(250,214,166,0.1),#fff); }
+.prestasiHasil { font-size:1rem;font-weight:700;margin-bottom:0.25rem; }
+.prestasiNama { font-size:0.95rem;font-weight:700;color:#1a1c1d; }
+.prestasiSiswa { font-size:0.85rem;color:#944535;font-weight:600;margin-top:0.25rem; }
+.prestasiMeta { font-size:0.78rem;color:#767683;margin-top:0.25rem; }
+@media (max-width:640px) {
+  .statsBar { flex-wrap:wrap; }
+  .statCard { min-width:50%; }
+  .tabContent { padding:1.25rem 4%; }
+}

@@ -2,351 +2,425 @@
 import { useState, useEffect, useCallback } from "react";
 import Header from "../../components/Header";
 import styles from "./siswa.module.css";
+import { supabase } from "@/lib/supabase";
+import { loginWithNisNip, logout } from "@/lib/auth-helpers";
+import type { UserProfile, Pendaftaran, Perlombaan } from "@/lib/supabase";
+import { GraduationCap, Home, Calendar, BarChart2, Trophy, Clock, MapPin, Check, Info, X, AlertTriangle, ArrowRight, ArrowLeft, Plus, Award } from "lucide-react";
 
-type Step = "login" | "dashboard";
-type Tab = "beranda" | "absen" | "keluar";
+type Tab = "beranda" | "jadwal" | "absensi" | "prestasi";
 
-interface UserData {
-  nama: string;
-  user_id: string;
-  token: string;
-  username: string;
-  ekskul?: string[];
-}
+const HARI_ORDER = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+const HARI_TODAY = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
 
-interface AbsensiData {
-  totalSesi: number;
-  hadir: number;
-  tidakHadir: number;
-  persentase: number;
-}
-
-const ekskulJadwal = [
-  { nama: 'Pramuka', jadwal: 'Sabtu', waktu: '07:00–09:00', lokasi: 'Lapangan Sekolah', emoji: '⚜️' },
-  { nama: 'PMR / UKS', jadwal: 'Kamis', waktu: '15:00–16:30', lokasi: 'Ruang PMR', emoji: '🏥' },
-  { nama: 'PBB / Tata Upacara', jadwal: 'Jumat', waktu: '15:00–16:30', lokasi: 'Lapangan Upacara', emoji: '🎖️' },
-  { nama: 'BTQ', jadwal: 'Rabu', waktu: '15:00–16:00', lokasi: 'Masjid Sekolah', emoji: '📖' },
-  { nama: 'OSN Matematika', jadwal: 'Selasa', waktu: '14:30–16:00', lokasi: 'Ruang Kelas', emoji: '📐' },
-  { nama: 'OSN IPS', jadwal: 'Senin', waktu: '14:30–16:00', lokasi: 'Ruang Kelas', emoji: '🌍' },
-  { nama: 'OSN IPA', jadwal: 'Kamis', waktu: '14:30–16:00', lokasi: 'Laboratorium IPA', emoji: '🔬' },
-  { nama: 'Seni Tari', jadwal: 'Rabu', waktu: '14:00–15:30', lokasi: 'Aula Sekolah', emoji: '💃' },
-  { nama: 'Paduan Suara', jadwal: 'Jumat', waktu: '14:00–15:30', lokasi: 'Aula Sekolah', emoji: '🎵' },
-  { nama: 'Futsal', jadwal: 'Selasa & Kamis', waktu: '15:30–17:00', lokasi: 'Lapangan Futsal', emoji: '⚽' },
-  { nama: 'Jiu Jitsu', jadwal: 'Sabtu', waktu: '08:00–10:00', lokasi: 'Lapangan Sekolah', emoji: '🥋' },
-];
-
-const hariOrder = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'] as const;
-const hariIcons: Record<string, string> = {
-  Senin: '📅', Selasa: '📅', Rabu: '📅', Kamis: '📅', Jumat: '📅', Sabtu: '📅',
+const HASIL_LABEL: Record<string, { label: string; Icon: any }> = {
+  juara_1: { label: "Juara 1", Icon: Trophy },
+  juara_2: { label: "Juara 2", Icon: Trophy },
+  juara_3: { label: "Juara 3", Icon: Trophy },
+  harapan_1: { label: "Harapan 1", Icon: Award },
+  harapan_2: { label: "Harapan 2", Icon: Award },
+  harapan_3: { label: "Harapan 3", Icon: Award },
+  peserta: { label: "Peserta", Icon: Award },
 };
 
-function groupByHari() {
-  const grouped: Record<string, typeof ekskulJadwal> = {};
-  for (const hari of hariOrder) {
-    grouped[hari] = [];
-  }
-  for (const item of ekskulJadwal) {
-    // Handle "Selasa & Kamis" etc.
-    for (const hari of hariOrder) {
-      if (item.jadwal.includes(hari)) {
-        grouped[hari].push(item);
-      }
-    }
-  }
-  return grouped;
+interface EkskulData {
+  pendaftaran_id: string;
+  ekskul_id: string;
+  nama: string;
+  emoji: string;
+  jadwal: string;
+  waktu: string;
+  lokasi: string;
+  kategori: string;
+  status: string;
 }
 
-const jadwalGrouped = groupByHari();
+interface AbsensiRekap {
+  ekskul_id: string;
+  ekskul_nama: string;
+  ekskul_emoji: string;
+  hadir: number;
+  izin: number;
+  alpa: number;
+  persen: number;
+}
 
-export default function SiswaDashboardPage() {
-  const [step, setStep]           = useState<Step>("login");
+interface PrestasiData {
+  lomba_id: string;
+  nama_lomba: string;
+  tingkat: string;
+  tanggal: string | null;
+  penyelenggara: string | null;
+  hasil: string;
+  ekskul_nama: string;
+  ekskul_emoji: string;
+}
+
+export default function SiswaPage() {
+  const [user, setUser]       = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [nis, setNis]         = useState("");
+  const [pass, setPass]       = useState("");
+  const [loginErr, setLoginErr] = useState("");
+  const [loginLoad, setLoginLoad] = useState(false);
+
   const [activeTab, setActiveTab] = useState<Tab>("beranda");
-  const [nis, setNis]             = useState("");
-  const [password, setPassword]   = useState("");
-  const [user, setUser]           = useState<UserData | null>(null);
-  const [loading, setLoading]     = useState(false);
-  const [error, setError]         = useState("");
+  const [ekskulList, setEkskulList] = useState<EkskulData[]>([]);
+  const [absensiRekap, setAbsensiRekap] = useState<AbsensiRekap[]>([]);
+  const [prestasi, setPrestasi] = useState<PrestasiData[]>([]);
+  const [dataLoading, setDataLoading] = useState(false);
 
-  // Absensi state
-  const [absensi, setAbsensi]         = useState<AbsensiData | null>(null);
-  const [absenLoading, setAbsenLoading] = useState(false);
-  const [absenError, setAbsenError]   = useState("");
-  const [showWarningModal, setShowWarningModal] = useState(false);
+  // ── Cek session saat load ──
+  useEffect(() => {
+    supabase.auth.getUser().then(async ({ data: { user: authUser } }) => {
+      if (!authUser) { setLoading(false); return; }
+      const { data: profile } = await supabase
+        .from("users")
+        .select("*, kelas(nama_kelas, tingkat)")
+        .eq("id", authUser.id)
+        .single();
+      // Ekskul hanya untuk kelas 7 dan 8
+      const tingkat = (profile as any)?.kelas?.tingkat;
+      if (profile?.role === "siswa" && tingkat <= 8) setUser(profile as UserProfile);
+      setLoading(false);
+    });
+  }, []);
 
   // ── Login ──
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    setLoginErr(""); setLoginLoad(true);
     try {
-      const res = await fetch("/api/ekstrakurikuler", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "login", username: nis, password, role: "siswa" }),
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message || "Login gagal.");
-      setUser({ nama: data.nama, user_id: data.user_id, token: data.token, username: data.username, ekskul: data.ekskul || ["Pramuka", "Futsal"] });
-      setStep("dashboard");
+      await loginWithNisNip(nis, pass);
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (!authUser) throw new Error("Login gagal.");
+      const { data: profile } = await supabase
+        .from("users")
+        .select("*, kelas(nama_kelas, tingkat)")
+        .eq("id", authUser.id).single();
+      if (!profile || profile.role !== "siswa") {
+        await logout();
+        throw new Error("Akun ini bukan siswa. Gunakan halaman yang sesuai.");
+      }
+      // Ekskul hanya untuk kelas 7 dan 8 — kelas 9 tidak bisa akses
+      const tingkat = (profile as any).kelas?.tingkat;
+      if (tingkat && tingkat > 8) {
+        await logout();
+        throw new Error("Kelas 9 tidak mengikuti kegiatan ekstrakurikuler.");
+      }
+      setUser(profile as UserProfile);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
-    } finally {
-      setLoading(false);
-    }
+      setLoginErr(err instanceof Error ? err.message : "Login gagal.");
+    } finally { setLoginLoad(false); }
   }
 
-  // ── Fetch Absensi ──
-  const fetchAbsensi = useCallback(async () => {
+  // ── Load ekskul yang diikuti ──
+  const loadEkskul = useCallback(async () => {
     if (!user) return;
-    setAbsenLoading(true);
-    setAbsenError("");
-    try {
-      const res = await fetch("/api/ekstrakurikuler", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "getAbsensiSiswa", token: user.token }),
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message || "Gagal memuat data absensi.");
-      const totalSesi = Number(data.totalSesi) || 0;
-      const hadir = Number(data.hadir) || 0;
-      const tidakHadir = totalSesi - hadir;
-      const persentase = totalSesi > 0 ? Math.round((hadir / totalSesi) * 100) : 0;
-      setAbsensi({ totalSesi, hadir, tidakHadir, persentase });
-      if (tidakHadir >= 2) {
-        setShowWarningModal(true);
-      }
-    } catch {
-      setAbsenError("Belum ada data absensi.");
-      setAbsensi(null);
-    } finally {
-      setAbsenLoading(false);
-    }
+    setDataLoading(true);
+    const { data } = await supabase
+      .from("pendaftaran")
+      .select("id, status, ekskul:ekskul_id(id, nama, emoji, jadwal, waktu, lokasi, kategori)")
+      .eq("siswa_id", user.id);
+    const list: EkskulData[] = (data ?? []).map((p: any) => ({
+      pendaftaran_id: p.id,
+      ekskul_id: p.ekskul.id,
+      nama: p.ekskul.nama,
+      emoji: p.ekskul.emoji,
+      jadwal: p.ekskul.jadwal,
+      waktu: p.ekskul.waktu,
+      lokasi: p.ekskul.lokasi,
+      kategori: p.ekskul.kategori,
+      status: p.status,
+    }));
+    setEkskulList(list);
+    setDataLoading(false);
   }, [user]);
 
-  useEffect(() => {
-    if (user && !absensi && !absenLoading && !absenError) {
-      fetchAbsensi();
+  // ── Load absensi rekap ──
+  const loadAbsensi = useCallback(async () => {
+    if (!user) return;
+    setDataLoading(true);
+    const { data } = await supabase
+      .from("absensi")
+      .select("status, ekskul:ekskul_id(id, nama, emoji)")
+      .eq("siswa_id", user.id);
+    const map = new Map<string, AbsensiRekap>();
+    for (const a of (data ?? [])) {
+      const ek = (a as any).ekskul;
+      if (!map.has(ek.id)) map.set(ek.id, { ekskul_id: ek.id, ekskul_nama: ek.nama, ekskul_emoji: ek.emoji, hadir: 0, izin: 0, alpa: 0, persen: 0 });
+      const rec = map.get(ek.id)!;
+      if (a.status === "hadir") rec.hadir++;
+      else if (a.status === "izin") rec.izin++;
+      else rec.alpa++;
     }
-  }, [user, absensi, absenLoading, absenError, fetchAbsensi]);
+    const result = Array.from(map.values()).map(r => {
+      const total = r.hadir + r.izin + r.alpa;
+      return { ...r, persen: total > 0 ? Math.round((r.hadir / total) * 100) : 0 };
+    });
+    setAbsensiRekap(result);
+    setDataLoading(false);
+  }, [user]);
 
-  // ── Logout ──
-  function handleLogout() {
-    setUser(null);
-    setStep("login");
-    setActiveTab("beranda");
-    setAbsensi(null);
-    setAbsenError("");
-    setNis("");
-    setPassword("");
-    setShowWarningModal(false);
-  }
+  // ── Load prestasi ──
+  const loadPrestasi = useCallback(async () => {
+    if (!user) return;
+    setDataLoading(true);
+    const { data } = await supabase
+      .from("peserta_lomba")
+      .select("hasil, lomba:lomba_id(id, nama_lomba, tingkat, tanggal_mulai, penyelenggara, ekskul:ekskul_id(nama, emoji))")
+      .eq("siswa_id", user.id);
+    const list: PrestasiData[] = (data ?? []).map((p: any) => ({
+      lomba_id: p.lomba.id,
+      nama_lomba: p.lomba.nama_lomba,
+      tingkat: p.lomba.tingkat,
+      tanggal: p.lomba.tanggal_mulai,
+      penyelenggara: p.lomba.penyelenggara,
+      hasil: p.hasil,
+      ekskul_nama: p.lomba.ekskul.nama,
+      ekskul_emoji: p.lomba.ekskul.emoji,
+    }));
+    setPrestasi(list);
+    setDataLoading(false);
+  }, [user]);
+
+  // ── Load data saat tab berubah ──
+  useEffect(() => {
+    if (!user) return;
+    if (activeTab === "beranda" || activeTab === "jadwal") loadEkskul();
+    if (activeTab === "absensi") loadAbsensi();
+    if (activeTab === "prestasi") loadPrestasi();
+  }, [activeTab, user, loadEkskul, loadAbsensi, loadPrestasi]);
+
+  // ── Jadwal minggu ini ──
+  const hariIni = HARI_TODAY[new Date().getDay()];
+  const ekskulDisetujui = ekskulList.filter(e => e.status === "disetujui");
+  const jadwalHariIni = ekskulDisetujui.filter(e => e.jadwal?.includes(hariIni));
+
+  if (loading) return (
+    <main><Header activePage="Ekskul" />
+      <div className={styles.loadingWrap}><div className={styles.spinner} /><p>Memuat...</p></div>
+    </main>
+  );
+
+  // ── LOGIN ──
+  if (!user) return (
+    <main>
+      <Header activePage="Ekskul" />
+      <div className={styles.loginWrap}>
+        <div className={styles.loginCard}>
+          <div className={styles.loginEmoji}><GraduationCap size={48} color="#944535" /></div>
+          <h1 className={styles.loginTitle}>Dashboard Siswa</h1>
+          <p className={styles.loginDesc}>Login dengan NIS dan password untuk melihat ekskul, jadwal, dan absensimu. <strong>Khusus siswa Kelas 7 &amp; 8.</strong></p>
+          {loginErr && <div className={styles.alertError}>{loginErr}</div>}
+          <form onSubmit={handleLogin} className={styles.loginForm}>
+            <div className={styles.formGroup}>
+              <label className={styles.label} htmlFor="nis-input">NIS</label>
+              <input id="nis-input" type="text" className={styles.input} placeholder="Nomor Induk Siswa" value={nis} onChange={e => setNis(e.target.value)} required autoFocus />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label} htmlFor="pass-input">Password</label>
+              <input id="pass-input" type="password" className={styles.input} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} required />
+            </div>
+            <button className={styles.btnSubmit} type="submit" disabled={loginLoad} id="btn-login-siswa">
+              {loginLoad ? <span className={styles.spinner} style={{width:18,height:18,borderWidth:3}} /> : <span style={{display:"inline-flex",alignItems:"center",gap:6}}>Masuk <ArrowRight size={16} /></span>}
+            </button>
+          </form>
+          <p className={styles.hint}>Lupa password? Hubungi wali kelas atau TU.</p>
+          <div className={styles.loginLinks}>
+            <a href="/ekstrakurikuler" className={styles.linkBack} style={{display:"inline-flex",alignItems:"center",gap:4}}><ArrowLeft size={16} /> Kembali ke Ekskul</a>
+            <a href="/ekstrakurikuler/daftar" className={styles.linkDaftar} style={{display:"inline-flex",alignItems:"center",gap:4}}>Daftar Ekskul <ArrowRight size={16} /></a>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+
+  // ── DASHBOARD ──
+  const kelas = (user as any).kelas?.nama_kelas ?? "-";
+  const jumlahEkskul = ekskulDisetujui.length;
+  const avgPersen = absensiRekap.length > 0 ? Math.round(absensiRekap.reduce((s, r) => s + r.persen, 0) / absensiRekap.length) : null;
 
   return (
-    <main className={`${styles.main} ${step === "dashboard" ? styles.mainDashboard : ""}`}>
-      {/* ── WARNING MODAL ── */}
-      {showWarningModal && (
-        <div className={styles.warningModalOverlay}>
-          <div className={styles.warningModalCard}>
-            <div className={styles.warningModalHeader}>
-              <span className={styles.warningModalIcon}>⚠️</span>
-              <h2 className={styles.warningModalTitle}>Peringatan Kehadiran!</h2>
+    <main>
+      <Header activePage="Ekskul" />
+      <div className={styles.dashWrap}>
+
+        {/* ── Hero User ── */}
+        <div className={styles.heroUser}>
+          <div className={styles.heroUserInner}>
+            <div className={styles.avatarLg}>{user.nama_lengkap.charAt(0)}</div>
+            <div>
+              <div className={styles.heroGreet}>Halo, {user.nama_lengkap.split(" ")[0]}!</div>
+              <div className={styles.heroMeta}>NIS: {user.nis_nip} · Kelas {kelas}</div>
             </div>
-            <div className={styles.warningModalBody}>
-              <p>Anda telah tidak hadir ekstrakurikuler sebanyak <strong>{absensi?.tidakHadir} kali</strong>.</p>
-              <p>Jika mencapai 3 kali tanpa keterangan, nilai ekskul Anda akan dikurangi dan surat pemanggilan otomatis akan diteruskan ke Wali Kelas.</p>
-              <button className={styles.btnUnderstand} onClick={() => setShowWarningModal(false)}>
-                Saya Mengerti
-              </button>
-            </div>
+            <button className={styles.btnLogout} onClick={async () => { await logout(); setUser(null); }}>Keluar</button>
+          </div>
+          {/* Stats strip */}
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}><span className={styles.heroStatNum}>{ekskulList.length}</span><span className={styles.heroStatLabel}>Ekskul Diikuti</span></div>
+            <div className={styles.heroStat}><span className={styles.heroStatNum}>{jumlahEkskul}</span><span className={styles.heroStatLabel}>Disetujui</span></div>
+            <div className={styles.heroStat}><span className={styles.heroStatNum}>{avgPersen !== null ? `${avgPersen}%` : "-"}</span><span className={styles.heroStatLabel}>Rata Hadir</span></div>
+            <div className={styles.heroStat}><span className={styles.heroStatNum}>{prestasi.length}</span><span className={styles.heroStatLabel}>Prestasi</span></div>
           </div>
         </div>
-      )}
 
-      {step === "login" && <Header activePage="Ekskul" />}
-
-      {/* ── LOGIN STEP ── */}
-      {step === "login" && (
-        <div className={styles.wrapper}>
-          <div className={styles.card}>
-            <div className={styles.cardIcon}>👤</div>
-            <h1 className={styles.cardTitle}>Login Dashboard Siswa</h1>
-            <p className={styles.cardDesc}>Masukkan NIS dan password untuk melihat jadwal ekskul &amp; prestasimu.</p>
-
-            {error && <div className={styles.alertError} role="alert">{error}</div>}
-
-            <form onSubmit={handleLogin} className={styles.form}>
-              <div className={styles.formGroup}>
-                <label htmlFor="input-nis" className={styles.label}>NIS (Nomor Induk Siswa)</label>
-                <input id="input-nis" type="text" className={styles.input} placeholder="Contoh: 12345" value={nis} onChange={(e) => setNis(e.target.value)} required autoFocus />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="input-password" className={styles.label}>Password</label>
-                <input id="input-password" type="password" className={styles.input} placeholder="Password akun siswa" value={password} onChange={(e) => setPassword(e.target.value)} required />
-              </div>
-              <button type="submit" className={styles.btnSubmit} disabled={loading} id="btn-login-siswa">
-                {loading ? <span className={styles.spinner} /> : "Masuk →"}
-              </button>
-            </form>
-            <p className={styles.hint}>Belum punya akun? Hubungi wali kelas atau TU.</p>
-          </div>
+        {/* ── Tabs ── */}
+        <div className={styles.tabBar}>
+          {[
+            { id: "beranda" as const, Icon: Home, label: "Beranda" },
+            { id: "jadwal" as const, Icon: Calendar, label: "Jadwal" },
+            { id: "absensi" as const, Icon: BarChart2, label: "Absensi" },
+            { id: "prestasi" as const, Icon: Trophy, label: "Prestasi" },
+          ].map(({ id, Icon, label }) => (
+            <button key={id} className={`${styles.tabBtn} ${activeTab === id ? styles.tabBtnActive : ""}`} onClick={() => setActiveTab(id)}>
+              <Icon size={16} /> {label}
+            </button>
+          ))}
         </div>
-      )}
 
-      {/* ── DASHBOARD STEP ── */}
-      {step === "dashboard" && user && (
-        <div className={styles.dashboardWrapper}>
+        <div className={styles.tabContent}>
 
-          {/* Header */}
-          <div className={styles.dashHeader}>
-            <div className={styles.dashHeaderInfo}>
-              <p className={styles.dashLabel}>Selamat Datang</p>
-              <h1 className={styles.dashName}>Halo, {user.nama}</h1>
-              <p className={styles.dashNis}>NIS: {user.username}</p>
-            </div>
-            <div className={styles.dashAvatar}>
-              {user.nama.charAt(0)}
-            </div>
-          </div>
+          {/* ─── BERANDA ─── */}
+          {activeTab === "beranda" && (
+            <div>
+              {jadwalHariIni.length > 0 && (
+                <div className={styles.todayBanner}>
+                  <div className={styles.todayTitle} style={{display:"flex",alignItems:"center",gap:6}}><Calendar size={18} /> Ekskul Hari Ini — {hariIni}</div>
+                  {jadwalHariIni.map(e => (
+                    <div key={e.ekskul_id} className={styles.todayItem}>
+                      <span className={styles.todayEmoji}>{e.emoji}</span>
+                      <div>
+                        <div className={styles.todayNama}>{e.nama}</div>
+                        <div className={styles.todayMeta} style={{display:"flex",alignItems:"center",gap:8}}><span style={{display:"inline-flex",alignItems:"center",gap:4}}><Clock size={14} /> {e.waktu}</span> · <span style={{display:"inline-flex",alignItems:"center",gap:4}}><MapPin size={14} /> {e.lokasi}</span></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-          {/* ── WARNING BANNER ── */}
-          {absensi && absensi.tidakHadir >= 2 && (
-            <div className={styles.warningBanner}>
-              <span className={styles.warningBannerIcon}>⚠️</span>
-              <div className={styles.warningBannerContent}>
-                <h4>PERINGATAN TINGKAT 1</h4>
-                <p>Anda telah absen {absensi.tidakHadir} kali. Hindari absen ke-3 agar tidak ada pemanggilan orang tua.</p>
-              </div>
+              <h2 className={styles.sectionTitle}>Ekskul yang Kamu Ikuti</h2>
+              {dataLoading ? <div className={styles.loadRow}>Memuat...</div> : (
+                ekskulList.length === 0
+                  ? <div className={styles.emptyState}>
+                      Belum ada ekskul yang didaftarkan.<br />
+                      <a href="/ekstrakurikuler/daftar" className={styles.linkCta} style={{display:"inline-flex",alignItems:"center",gap:4}}>Daftar Sekarang <ArrowRight size={16} /></a>
+                    </div>
+                  : <div className={styles.ekskulGrid}>
+                      {ekskulList.map(e => (
+                        <div key={e.ekskul_id} className={styles.ekskulCard}>
+                          <div className={styles.ekskulCardEmoji}>{e.emoji}</div>
+                          <div className={styles.ekskulCardBody}>
+                            <div className={styles.ekskulCardNama}>{e.nama}</div>
+                            <div className={styles.ekskulCardMeta} style={{display:"flex",alignItems:"center",gap:4}}><Calendar size={14} /> {e.jadwal} · <Clock size={14} /> {e.waktu}</div>
+                            <div className={styles.ekskulCardMeta} style={{display:"flex",alignItems:"center",gap:4}}><MapPin size={14} /> {e.lokasi}</div>
+                            <span className={`${styles.badge} ${styles["badge_"+e.status]}`}>{e.status}</span>
+                          </div>
+                        </div>
+                      ))}
+                      <a href="/ekstrakurikuler/daftar" className={`${styles.ekskulCard} ${styles.ekskulCardAdd}`}>
+                        <div className={styles.addIcon}><Plus size={24} /></div>
+                        <div className={styles.addLabel}>Tambah Ekskul</div>
+                      </a>
+                    </div>
+              )}
             </div>
           )}
 
-          {/* ─── TAB: BERANDA ─── */}
-          {activeTab === "beranda" && (
-            <div className={styles.berandaContent}>
-              {hariOrder.map((hari) => {
-                const myEkskul = user.ekskul || ["Pramuka", "Futsal"];
-                const items = jadwalGrouped[hari].filter(item => myEkskul.includes(item.nama));
-                if (items.length === 0) return null;
-                return (
-                  <div key={hari} className={styles.dayGroup}>
-                    <div className={styles.dayHeader}>
-                      <span className={styles.dayHeaderIcon}>{hariIcons[hari]}</span>
-                      {hari}
-                    </div>
-                    <div className={styles.dayItems}>
-                      {items.map((ekskul) => (
-                        <div key={`${hari}-${ekskul.nama}`} className={styles.scheduleItem}>
-                          <div className={styles.scheduleEmoji}>{ekskul.emoji}</div>
-                          <div className={styles.scheduleInfo}>
-                            <p className={styles.scheduleName}>{ekskul.nama}</p>
-                            <p className={styles.scheduleMeta}>
-                              <span>{ekskul.lokasi}</span>
-                            </p>
+          {/* ─── JADWAL ─── */}
+          {activeTab === "jadwal" && (
+            <div>
+              <h2 className={styles.sectionTitle}>Jadwal Ekskul Minggu Ini</h2>
+              {dataLoading ? <div className={styles.loadRow}>Memuat jadwal...</div> : (
+                ekskulDisetujui.length === 0
+                  ? <div className={styles.emptyState}>Belum ada ekskul yang disetujui.<br />Tunggu konfirmasi dari pembina.</div>
+                  : <div className={styles.jadwalList}>
+                      {HARI_ORDER.map(hari => {
+                        const items = ekskulDisetujui.filter(e => e.jadwal?.includes(hari));
+                        if (items.length === 0) return null;
+                        return (
+                          <div key={hari} className={`${styles.jadwalDay} ${hari === hariIni ? styles.jadwalDayToday : ""}`}>
+                            <div className={styles.jadwalDayHeader}>
+                              <span className={styles.jadwalDayName}>{hari}</span>
+                              {hari === hariIni && <span className={styles.todayChip}>Hari Ini</span>}
+                            </div>
+                            {items.map(e => (
+                              <div key={e.ekskul_id} className={styles.jadwalItem}>
+                                <span className={styles.jadwalEmoji}>{e.emoji}</span>
+                                <div>
+                                  <div className={styles.jadwalNama}>{e.nama}</div>
+                                  <div className={styles.jadwalMeta} style={{display:"flex",alignItems:"center",gap:8}}><span style={{display:"inline-flex",alignItems:"center",gap:4}}><Clock size={14} /> {e.waktu}</span> · <span style={{display:"inline-flex",alignItems:"center",gap:4}}><MapPin size={14} /> {e.lokasi}</span></div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                          <span className={styles.scheduleTime}>{ekskul.waktu}</span>
+                        );
+                      })}
+                    </div>
+              )}
+            </div>
+          )}
+
+          {/* ─── ABSENSI ─── */}
+          {activeTab === "absensi" && (
+            <div>
+              <h2 className={styles.sectionTitle}>Rekap Absensi</h2>
+              {dataLoading ? <div className={styles.loadRow}>Memuat absensi...</div> : (
+                absensiRekap.length === 0
+                  ? <div className={styles.emptyState}>Belum ada data absensi. Data akan muncul setelah pembina mengisi absensi.</div>
+                  : <div className={styles.absensiList}>
+                      {absensiRekap.map(r => (
+                        <div key={r.ekskul_id} className={`${styles.absensiCard} ${r.persen < 75 ? styles.absensiCardDanger : ""}`}>
+                          <div className={styles.absensiCardTop}>
+                            <div className={styles.absensiEmoji}>{r.ekskul_emoji}</div>
+                            <div className={styles.absensiNama}>{r.ekskul_nama}</div>
+                            <div className={`${styles.absensiPct} ${r.persen < 75 ? styles.absensiPctDanger : r.persen >= 85 ? styles.absensiPctOk : ""}`}>{r.persen}%</div>
+                          </div>
+                          <div className={styles.absensiBar}>
+                            <div className={styles.absensiBarFill} style={{ width: `${r.persen}%`, background: r.persen < 75 ? "#ba1a1a" : r.persen >= 85 ? "#006b5f" : "#944535" }} />
+                          </div>
+                          <div className={styles.absensiStats}>
+                            <span className={styles.statHadir} style={{display:"inline-flex",alignItems:"center",gap:4}}><Check size={14} /> {r.hadir} Hadir</span>
+                            <span className={styles.statIzin} style={{display:"inline-flex",alignItems:"center",gap:4}}><Info size={14} /> {r.izin} Izin</span>
+                            <span className={styles.statAlpa} style={{display:"inline-flex",alignItems:"center",gap:4}}><X size={14} /> {r.alpa} Alpa</span>
+                          </div>
+                          {r.persen < 75 && <div className={styles.warningMsg} style={{display:"flex",alignItems:"center",gap:6}}><AlertTriangle size={16} color="#ba1a1a" /> Kehadiran di bawah 75%, segera hubungi pembina.</div>}
                         </div>
                       ))}
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {/* ─── TAB: ABSEN ─── */}
-          {activeTab === "absen" && (
-            <div className={styles.absenContent}>
-              <div>
-                <h2 className={styles.absenTitle}>Rekap Absensi</h2>
-                <p className={styles.absenSubtitle}>Ringkasan kehadiran kegiatan ekskul kamu</p>
-              </div>
-
-              {absenLoading && (
-                <div className={styles.loadingState}>
-                  <div className={styles.loadingSpinner} />
-                  <p className={styles.loadingText}>Memuat data absensi...</p>
-                </div>
-              )}
-
-              {!absenLoading && absenError && (
-                <div className={styles.emptyState}>
-                  <span className={styles.emptyIcon}>📋</span>
-                  <p className={styles.emptyTitle}>Belum Ada Data</p>
-                  <p className={styles.emptyText}>{absenError}</p>
-                </div>
-              )}
-
-              {!absenLoading && !absenError && absensi && (
-                <div className={styles.statsGrid}>
-                  <div className={styles.statCard}>
-                    <div className={`${styles.statIcon} ${styles.statIconTotal}`}>📊</div>
-                    <span className={styles.statValue}>{absensi.totalSesi}</span>
-                    <span className={styles.statLabel}>Total Sesi</span>
-                  </div>
-                  <div className={styles.statCard}>
-                    <div className={`${styles.statIcon} ${styles.statIconHadir}`}>✅</div>
-                    <span className={styles.statValue}>{absensi.hadir}</span>
-                    <span className={styles.statLabel}>Hadir</span>
-                  </div>
-                  <div className={styles.statCard}>
-                    <div className={`${styles.statIcon} ${styles.statIconAbsen}`}>❌</div>
-                    <span className={styles.statValue}>{absensi.tidakHadir}</span>
-                    <span className={styles.statLabel}>Tidak Hadir</span>
-                  </div>
-                  <div className={`${styles.statCard} ${styles.percentCard}`}>
-                    <div className={`${styles.statIcon} ${styles.statIconPersen}`}>📈</div>
-                    <span className={styles.statValue}>{absensi.persentase}%</span>
-                    <span className={styles.statLabel}>Persentase Kehadiran</span>
-                    <span className={styles.percentDecor}>📊</span>
-                  </div>
-                </div>
               )}
             </div>
           )}
 
-          {/* ─── TAB: KELUAR ─── */}
-          {activeTab === "keluar" && (
-            <div className={styles.keluarContent}>
-              <div className={styles.keluarCard}>
-                <span className={styles.keluarIcon}>👋</span>
-                <h2 className={styles.keluarTitle}>Keluar dari Dashboard</h2>
-                <p className={styles.keluarDesc}>
-                  Kamu akan keluar dari sesi ini. Data tidak akan hilang, kamu bisa login kembali kapan saja.
-                </p>
-                <button className={styles.btnLogout} onClick={handleLogout}>
-                  Keluar Sekarang
-                </button>
-              </div>
+          {/* ─── PRESTASI ─── */}
+          {activeTab === "prestasi" && (
+            <div>
+              <h2 className={styles.sectionTitle}>Prestasi Lombaku</h2>
+              {dataLoading ? <div className={styles.loadRow}>Memuat prestasi...</div> : (
+                prestasi.length === 0
+                  ? <div className={styles.emptyState}>Belum ada data prestasi lomba. Data akan muncul setelah pembina menginput perlombaan.</div>
+                  : <div className={styles.prestasiList}>
+                      {prestasi.map(p => {
+                        const info = HASIL_LABEL[p.hasil] || { label: p.hasil, Icon: Award };
+                        const IconComp = info.Icon;
+                        return (
+                          <div key={p.lomba_id} className={`${styles.prestasiCard} ${p.hasil !== "peserta" ? styles.prestasiCardJuara : ""}`}>
+                            <div className={styles.prestasiHasil} style={{display:"inline-flex",alignItems:"center",gap:6}}><IconComp size={16} /> {info.label}</div>
+                            <div className={styles.prestasiNama}>{p.nama_lomba}</div>
+                            <div className={styles.prestasiMeta} style={{display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
+                              <span>{p.ekskul_emoji} {p.ekskul_nama}</span> · <span>Tingkat {p.tingkat}</span>
+                              {p.penyelenggara && <span>· {p.penyelenggara}</span>}
+                              {p.tanggal && <span>· {new Date(p.tanggal).toLocaleDateString("id-ID", { year:"numeric", month:"long" })}</span>}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+              )}
             </div>
           )}
-
-          {/* ── Bottom Navigation ── */}
-          <nav className={styles.bottomNav}>
-            <button
-              onClick={() => setActiveTab("beranda")}
-              className={`${styles.navBtn} ${activeTab === "beranda" ? styles.navBtnActive : ""}`}
-            >
-              <span className={`material-symbols-outlined ${styles.navIcon}`}>home</span>
-              <span className={`${styles.navLabel} ${activeTab === "beranda" ? styles.navLabelActive : ""}`}>Beranda</span>
-            </button>
-            <button
-              onClick={() => setActiveTab("absen")}
-              className={`${styles.navBtn} ${activeTab === "absen" ? styles.navBtnActive : ""}`}
-            >
-              <span className={`material-symbols-outlined ${styles.navIcon}`}>fact_check</span>
-              <span className={`${styles.navLabel} ${activeTab === "absen" ? styles.navLabelActive : ""}`}>Absen</span>
-            </button>
-            <button
-              onClick={() => setActiveTab("keluar")}
-              className={`${styles.navBtn} ${activeTab === "keluar" ? styles.navBtnActive : ""}`}
-            >
-              <span className={`material-symbols-outlined ${styles.navIcon}`}>logout</span>
-              <span className={`${styles.navLabel} ${activeTab === "keluar" ? styles.navLabelActive : ""}`}>Keluar</span>
-            </button>
-          </nav>
 
         </div>
-      )}
+      </div>
     </main>
   );
 }

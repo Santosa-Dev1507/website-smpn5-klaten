@@ -163,11 +163,17 @@ export default function EkstrakulikulerPage() {
           <a href="/ekstrakurikuler/daftar" className={styles.btnPrimary} id="btn-daftar-ekskul">
             ✏️ Daftar Ekskul
           </a>
-          <a href="/ekstrakurikuler/pembina" className={styles.btnSecondary} id="btn-area-pembina">
-            👤 Area Pembina
-          </a>
           <a href="/ekstrakurikuler/siswa" className={styles.btnSecondary} id="btn-dashboard-siswa">
             📊 Dashboard Siswa
+          </a>
+          <a href="/ekstrakurikuler/pembina" className={styles.btnSecondary} id="btn-area-pembina">
+            👤 Pembina
+          </a>
+          <a href="/ekstrakurikuler/walikelas" className={styles.btnSecondary} id="btn-area-walikelas">
+            🏠 Wali Kelas
+          </a>
+          <a href="/ekstrakurikuler/admin" className={styles.btnSecondary} id="btn-area-admin">
+            ⚙️ Admin
           </a>
         </div>
       </section>
@@ -249,11 +255,14 @@ export default function EkstrakulikulerPage() {
           <a href="/ekstrakurikuler/daftar" className={styles.ctaBtnPrimary} id="btn-daftar-ekskul-cta">
             ✏️ Daftar Sekarang
           </a>
+          <a href="/ekstrakurikuler/siswa" className={styles.ctaBtnSecondary} id="btn-dashboard-siswa-cta">
+            📊 Dashboard Siswa
+          </a>
           <a href="/ekstrakurikuler/pembina" className={styles.ctaBtnSecondary} id="btn-pembina-cta">
             👤 Login Pembina
           </a>
-          <a href="/ekstrakurikuler/siswa" className={styles.ctaBtnSecondary} id="btn-dashboard-siswa-cta">
-            📊 Dashboard Siswa
+          <a href="/ekstrakurikuler/walikelas" className={styles.ctaBtnSecondary} id="btn-walikelas-cta">
+            🏠 Wali Kelas
           </a>
         </div>
       </section>
