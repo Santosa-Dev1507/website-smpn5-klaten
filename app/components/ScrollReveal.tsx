@@ -15,8 +15,6 @@ import { useEffect } from 'react';
 export default function ScrollReveal() {
   useEffect(() => {
     // 1. Scroll-reveal: toggle `.visible` on `.reveal` elements
-    const revealEls = document.querySelectorAll<HTMLElement>('.reveal');
-
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -30,7 +28,19 @@ export default function ScrollReveal() {
       { threshold: 0.12 }
     );
 
-    revealEls.forEach((el) => revealObserver.observe(el));
+    const observeNewEls = () => {
+      document.querySelectorAll<HTMLElement>('.reveal:not(.visible)').forEach((el) => {
+        revealObserver.observe(el);
+      });
+    };
+
+    observeNewEls();
+
+    const mutObserver = new MutationObserver(() => {
+      observeNewEls();
+    });
+
+    mutObserver.observe(document.body, { childList: true, subtree: true });
 
     // 2. Pause looping animations off-screen (ui-animation performance rule)
     const loopingEls = document.querySelectorAll<HTMLElement>('[data-loop]');
@@ -46,6 +56,7 @@ export default function ScrollReveal() {
 
     return () => {
       revealObserver.disconnect();
+      mutObserver.disconnect();
       loopObserver.disconnect();
     };
   }, []);

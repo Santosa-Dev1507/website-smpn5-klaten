@@ -31,12 +31,7 @@
   --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Focus Visible (Accessibility) ── */
-*:focus-visible {
-  outline: 2.5px solid var(--ekskul-primary);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
+
 
 /* ── Hero ── */
 .hero {
@@ -68,21 +63,7 @@
 
 .heroText { flex: 1; }
 
-.heroBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--ekskul-gold-pale);
-  border: 1px solid rgba(232,184,109,0.5);
-  color: #7a4a1e;
-  font-weight: 600;
-  font-size: 0.75rem;
-  padding: 0.3rem 0.75rem;
-  border-radius: 50px;
-  margin-bottom: 1.25rem;
-  letter-spacing: 0.02em;
-  animation: badgeFadeIn 500ms var(--ease-out-expo) both;
-}
+
 
 .heroTitle {
   font-size: clamp(2rem, 4vw, 2.75rem);
@@ -242,11 +223,10 @@
 .filterBar {
   padding: 0.75rem 5%;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
-  overflow-x: auto;
-  scrollbar-width: none;
 }
-.filterBar::-webkit-scrollbar { display: none; }
 
 .filterChip {
   background: transparent;
@@ -257,6 +237,7 @@
   font-size: 0.82rem;
   font-weight: 600;
   white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.2s var(--ease-out-expo);
   display: inline-flex;
   align-items: center;
@@ -611,7 +592,6 @@
 
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .heroBadge,
   .heroTitle,
   .heroDesc,
   .heroActions,

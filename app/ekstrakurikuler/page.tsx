@@ -7,7 +7,7 @@ import styles from "./ekstrakurikuler.module.css";
 import {
   Trophy, Users, MapPin, Clock, ChevronRight,
   Dumbbell, Palette, FlaskConical, Heart, BookOpen,
-  Music, Swords, Target, Globe, Microscope, Calculator, Medal,
+  Music, Swords, Target, Globe, Microscope, Calculator,
 } from "lucide-react";
 
 const ekskulData = [
@@ -194,10 +194,6 @@ export default function EkstrakulikulerPage() {
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
-            <div className={styles.heroBadge} aria-label="Ekskul SMPN 5 Klaten">
-              <Medal size={13} aria-hidden />
-              SMPN 5 Klaten — Ekskul Unggulan
-            </div>
             <h1 className={styles.heroTitle}>
               Temukan Ekskul yang{" "}
               <span className={styles.heroTitleAccent}>Tepat Untukmu</span>
