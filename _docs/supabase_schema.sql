@@ -49,13 +49,22 @@ CREATE TABLE ekskul (
 -- ── 4. PERIODE PENDAFTARAN (dikendalikan Admin) ────────────
 CREATE TABLE periode_pendaftaran (
   id              uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  ekskul_id       uuid REFERENCES ekskul(id),  -- NULL = semua ekskul
+  -- Gunakan tabel periode_ekskul untuk menentukan ekskul yang dibuka
   nama_periode    text NOT NULL,               -- "Pendaftaran Semester 1 2025/2026"
   tanggal_buka    timestamptz NOT NULL,
   tanggal_tutup   timestamptz NOT NULL,
   dibuat_oleh     uuid REFERENCES users(id),
   aktif           boolean DEFAULT true,
   created_at      timestamptz DEFAULT now()
+);
+
+-- ── 4b. EKSKUL YANG DIBUKA PER PERIODE ────────────────────
+-- Kosong  = semua ekskul aktif bisa didaftarkan
+-- Berisi  = hanya ekskul terdaftar di sini yang bisa didaftarkan
+CREATE TABLE periode_ekskul (
+  periode_id  uuid NOT NULL REFERENCES periode_pendaftaran(id) ON DELETE CASCADE,
+  ekskul_id   uuid NOT NULL REFERENCES ekskul(id) ON DELETE CASCADE,
+  PRIMARY KEY (periode_id, ekskul_id)
 );
 
 -- ── 5. PENDAFTARAN EKSKUL ──────────────────────────────────

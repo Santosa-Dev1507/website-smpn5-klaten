@@ -57,8 +57,8 @@ export default function DaftarEkskulPage() {
           return;
         }
       }
-      // Load ekskul tanpa login
-      await loadEkskul();
+      // Load ekskul tanpa login (dengan filter periode)
+      await loadEkskul(per.id);
       setStep("login");
       setLoading(false);
     }
@@ -66,20 +66,41 @@ export default function DaftarEkskulPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function loadEkskul() {
-    const { data } = await supabase.from("ekskul").select("*").eq("aktif", true).order("nama");
-    setEkskulList((data ?? []) as Ekskul[]);
+  async function loadEkskul(periodeId?: string) {
+    let query = supabase.from("ekskul").select("*").eq("aktif", true).order("nama");
+    const { data } = await query;
+    let filtered = (data ?? []) as Ekskul[];
+
+    // Filter berdasarkan ekskul yang dibuka di periode ini
+    if (periodeId) {
+      const { data: pe } = await supabase
+        .from("periode_ekskul").select("ekskul_id").eq("periode_id", periodeId);
+      if (pe && pe.length > 0) {
+        const allowed = pe.map((r: any) => r.ekskul_id);
+        filtered = filtered.filter(e => allowed.includes(e.id));
+      }
+      // jika pe kosong = semua ekskul boleh (tidak perlu filter)
+    }
+
+    setEkskulList(filtered);
     // Auto-select yang wajib
-    const wajib = (data ?? []).filter((e: any) => e.jenis === "wajib").map((e: any) => e.id);
+    const wajib = filtered.filter((e: any) => e.jenis === "wajib").map((e: any) => e.id);
     setSelected(wajib);
   }
 
   async function loadEkskulAndDaftar(userId: string, periodeId: string) {
-    const [{ data: eks }, { data: pend }] = await Promise.all([
+    const [{ data: eksAll }, { data: pend }, { data: pe }] = await Promise.all([
       supabase.from("ekskul").select("*").eq("aktif", true).order("nama"),
       supabase.from("pendaftaran").select("ekskul_id").eq("siswa_id", userId).eq("periode_id", periodeId),
+      supabase.from("periode_ekskul").select("ekskul_id").eq("periode_id", periodeId),
     ]);
-    setEkskulList((eks ?? []) as Ekskul[]);
+    // Filter ekskul berdasarkan periode_ekskul (jika ada)
+    let eks = (eksAll ?? []) as Ekskul[];
+    if (pe && pe.length > 0) {
+      const allowed = pe.map((r: any) => r.ekskul_id);
+      eks = eks.filter(e => allowed.includes(e.id));
+    }
+    setEkskulList(eks);
     const sudah = (pend ?? []).map((p: any) => p.ekskul_id);
     setSudahDaftar(sudah);
     // Auto-select yang wajib (belum pernah daftar)

@@ -127,9 +127,41 @@
 .btnApprove { background:#065f46;color:#fff;padding:0.4rem 0.875rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity 0.2s; }
 .btnApprove:hover { opacity:0.88; }
 
+/* ── Periode Ekskul Tags ── */
+.periodeEkskulTags { display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.5rem; }
+.ekskulTag { background:#fdf8f2;border:1px solid #FAD6A6;color:#7a382a;padding:0.15rem 0.6rem;border-radius:20px;font-size:0.72rem;font-weight:600; }
+.ekskulTagAll { background:#d1fae5;border:1px solid #6ee7b7;color:#065f46;padding:0.15rem 0.6rem;border-radius:20px;font-size:0.72rem;font-weight:600; }
+
+/* ── Radio Group (untuk pilih semua/tertentu) ── */
+.radioGroup { display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.75rem;margin-top:0.25rem; }
+.radioLabel { display:inline-flex;align-items:center;gap:0.4rem;font-size:0.875rem;color:#454652;cursor:pointer;font-weight:500; }
+.radioLabel input[type="radio"] { accent-color:#944535;width:16px;height:16px; }
+
+/* ── Ekskul Checkbox Grid (dalam form periode) ── */
+.ekskulCheckGrid { display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.5rem;padding:0.75rem;background:#fafafa;border:1.5px solid #e2e2e4;border-radius:8px; }
+.ekskulCheckItem { display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.75rem;border-radius:8px;border:1.5px solid transparent;cursor:pointer;font-size:0.875rem;transition:all 0.15s;background:#fff; }
+.ekskulCheckItem:hover { border-color:#FAD6A6;background:#fdf8f2; }
+.ekskulCheckItem input[type="checkbox"] { accent-color:#944535;width:15px;height:15px;flex-shrink:0; }
+.ekskulCheckItemOn { background:#fdf8f2;border-color:#944535; }
+.wajibBadge { background:#dbeafe;color:#1e40af;font-size:0.65rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:4px;margin-left:auto;flex-shrink:0; }
+
+/* ── Import CSV ── */
+.importGuide { background:#fdf8f2;border:1.5px solid #FAD6A6;border-radius:8px;padding:1rem;font-size:0.85rem;display:flex;flex-direction:column;gap:0.5rem; }
+.csvExample { display:block;background:#fff;border:1px solid #e2e2e4;padding:0.6rem 0.875rem;border-radius:6px;font-family:monospace;font-size:0.8rem;line-height:1.7;color:#454652; }
+.importNote { color:#767683;font-size:0.8rem;line-height:1.8;margin:0; }
+.importSummaryBar { display:flex;align-items:center;gap:1rem;flex-wrap:wrap;font-size:0.875rem;padding:0.5rem 0; }
+.importOk { display:inline-flex;align-items:center;gap:0.3rem;color:#065f46;font-weight:600; }
+.importErr { display:inline-flex;align-items:center;gap:0.3rem;color:#ba1a1a;font-weight:600; }
+
+/* ── Progress Bar ── */
+.progressWrap { background:#e5e7eb;border-radius:50px;height:8px;position:relative;overflow:hidden;margin:0.5rem 0; }
+.progressBar { background:linear-gradient(90deg,#944535,#c8735e);height:100%;border-radius:50px;transition:width 0.3s ease; }
+.progressLabel { font-size:0.78rem;color:#767683;margin-top:4px;display:block; }
+
 @media (max-width:768px) {
   .statsGrid { grid-template-columns:repeat(2,1fr); }
   .formGrid { grid-template-columns:1fr; }
   .formGrid .formGroup[style*="gridColumn"] { grid-column:1; }
   .tabContent { padding:1.25rem 4%; }
+  .ekskulCheckGrid { grid-template-columns:1fr; }
 }
