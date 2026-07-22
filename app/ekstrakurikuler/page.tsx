@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import ScrollReveal from "../components/ScrollReveal";
 import styles from "./ekstrakurikuler.module.css";
 import {
-  Trophy, Users, Star, MapPin, Clock, ChevronRight,
+  Trophy, Users, MapPin, Clock, ChevronRight,
   Dumbbell, Palette, FlaskConical, Heart, BookOpen,
-  Music, Swords, Target, Globe, Microscope, Calculator,
+  Music, Swords, Target, Globe, Microscope, Calculator, Medal,
 } from "lucide-react";
 
 const ekskulData = [
@@ -146,6 +146,39 @@ const filters: { label: FilterKey; Icon: typeof Trophy; kategoriList: string[] |
 
 export default function EkstrakulikulerPage() {
   const [activeFilter, setActiveFilter] = useState<FilterKey>("Semua");
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  // ── Count-up animation for stat pills ──
+  useEffect(() => {
+    const targets = [11, 500, 25];
+    const el = statsRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        el.querySelectorAll<HTMLElement>("." + styles.heroStatNum).forEach((node, i) => {
+          const end = targets[i];
+          if (!end) return;
+          let start = 0;
+          const duration = 1200;
+          const step = (timestamp: number) => {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            const suffix = i > 0 ? "+" : "";
+            node.textContent = Math.round(ease * end) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        });
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
 
   const activeKategoriList = filters.find((f) => f.label === activeFilter)?.kategoriList;
   const filteredEkskul = activeKategoriList
@@ -161,17 +194,17 @@ export default function EkstrakulikulerPage() {
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
-            <div className={styles.heroBadge} aria-label="Jumlah ekskul tersedia">
-              <Trophy size={13} aria-hidden />
-              11 Ekstrakurikuler Aktif
+            <div className={styles.heroBadge} aria-label="Ekskul SMPN 5 Klaten">
+              <Medal size={13} aria-hidden />
+              SMPN 5 Klaten — Ekskul Unggulan
             </div>
             <h1 className={styles.heroTitle}>
-              Kembangkan Bakat &amp;{" "}
-              <span className={styles.heroTitleAccent}>Prestasi</span>mu
+              Temukan Ekskul yang{" "}
+              <span className={styles.heroTitleAccent}>Tepat Untukmu</span>
             </h1>
             <p className={styles.heroDesc}>
-              SMPN 5 Klaten menghadirkan kegiatan ekstrakurikuler unggulan untuk mengasah
-              potensi, membangun karakter, dan mencetak prestasi siswa di berbagai bidang.
+              11 kegiatan ekstrakurikuler pilihan — dari olahraga, seni, hingga olimpiade sains.
+              Pilih yang sesuai minatmu, daftar dalam hitungan menit.
             </p>
             <div className={styles.heroActions}>
               <a
@@ -179,7 +212,7 @@ export default function EkstrakulikulerPage() {
                 className={styles.btnPrimary}
                 id="btn-daftar-ekskul"
               >
-                Daftar Ekskul
+                Pilih Ekskul Saya
                 <ChevronRight size={18} aria-hidden />
               </a>
               <a
@@ -187,17 +220,17 @@ export default function EkstrakulikulerPage() {
                 className={styles.btnSecondary}
                 id="btn-dashboard-siswa"
               >
-                Dashboard Siswa
+                Cek Status Daftar
               </a>
             </div>
           </div>
           <div className={styles.heroVisual} aria-hidden>
             <div className={styles.heroOrb} />
-            <div className={styles.heroStats}>
+            <div className={styles.heroStats} ref={statsRef}>
               {[
-                { num: "11", label: "Ekskul" },
-                { num: "500+", label: "Siswa" },
-                { num: "25+", label: "Prestasi" },
+                { num: "11", label: "Ekskul Aktif" },
+                { num: "500+", label: "Siswa Bergabung" },
+                { num: "25+", label: "Prestasi Diraih" },
               ].map((s) => (
                 <div key={s.label} className={styles.heroStatPill}>
                   <span className={styles.heroStatNum}>{s.num}</span>
@@ -283,12 +316,12 @@ export default function EkstrakulikulerPage() {
       <section className={styles.ctaBanner} aria-labelledby="cta-heading">
         <div className={styles.ctaInner}>
           <Trophy size={40} className={styles.ctaIcon} aria-hidden />
-          <h2 id="cta-heading" className={styles.ctaTitle}>Siap Bergabung?</h2>
+          <h2 id="cta-heading" className={styles.ctaTitle}>Pendaftaran Dibuka</h2>
           <p className={styles.ctaDesc}>
-            Daftarkan diri sekarang dan mulai perjalananmu bersama ekskul SMPN 5 Klaten.
+            Jangan sampai kuota habis — pilih ekskul yang ingin kamu ikuti dan daftarkan dirimu sekarang.
           </p>
           <a href="/ekstrakurikuler/daftar" className={styles.ctaBtnPrimary} id="btn-daftar-ekskul-cta">
-            Daftar Sekarang
+            Pilih Ekskul Saya
             <ChevronRight size={18} aria-hidden />
           </a>
           <div className={styles.ctaLinks}>
