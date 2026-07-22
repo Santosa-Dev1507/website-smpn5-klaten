@@ -20,18 +20,47 @@ export async function getCurrentUser(): Promise<UserProfile | null> {
 
 // ── Login dengan NIS/NIP (dikonversi ke format email internal) ──
 export async function loginWithNisNip(nisNip: string, password: string) {
-  // Format email internal: [NIS/NIP]@sim.smpn5klaten
-  const email = `${nisNip.trim()}@sim.smpn5klaten`;
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) throw new Error(error.message);
-  return data;
+  try {
+    const email = `${nisNip.trim()}@sim.smpn5klaten`;
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      if (error.message.includes("Failed to fetch")) {
+        throw new Error("Gagal terhubung ke Supabase (Failed to fetch). Pastikan server dev (npm run dev) telah direstart setelah mengubah .env.local dan koneksi internet stabil.");
+      }
+      if (error.message.includes("Invalid login credentials")) {
+        throw new Error("NIS/NIP atau password salah.");
+      }
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (err: unknown) {
+    if (err instanceof Error && err.message.includes("Failed to fetch")) {
+      throw new Error("Gagal terhubung ke Supabase (Failed to fetch). Pastikan server dev (npm run dev) telah direstart setelah mengubah .env.local dan koneksi internet stabil.");
+    }
+    throw err;
+  }
 }
 
 // ── Login dengan email langsung (untuk admin) ──────────────
 export async function loginWithEmail(email: string, password: string) {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) throw new Error(error.message);
-  return data;
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      if (error.message.includes("Failed to fetch")) {
+        throw new Error("Gagal terhubung ke Supabase (Failed to fetch). Pastikan server dev (npm run dev) telah direstart setelah mengubah .env.local dan koneksi internet stabil.");
+      }
+      if (error.message.includes("Invalid login credentials")) {
+        throw new Error("Email admin atau password salah.");
+      }
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (err: unknown) {
+    if (err instanceof Error && err.message.includes("Failed to fetch")) {
+      throw new Error("Gagal terhubung ke Supabase (Failed to fetch). Pastikan server dev (npm run dev) telah direstart setelah mengubah .env.local dan koneksi internet stabil.");
+    }
+    throw err;
+  }
 }
 
 // ── Logout ─────────────────────────────────────────────────
