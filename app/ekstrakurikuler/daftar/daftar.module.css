@@ -4,6 +4,9 @@
 .spinnerSm { display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,0.4);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;vertical-align:middle; }
 @keyframes spin { to { transform:rotate(360deg); } }
 
+/* ── Focus Visible ── */
+*:focus-visible { outline: 2.5px solid #944535; outline-offset: 3px; border-radius: 4px; }
+
 /* ── Tutup ── */
 .tutupWrap { min-height:80vh;display:flex;align-items:center;justify-content:center;padding:2rem 5%;background:#fdf8f2; }
 .tutupCard { background:#fff;border-radius:16px;padding:2.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.08);width:100%;max-width:480px;text-align:center; }
@@ -11,13 +14,13 @@
 .tutupTitle { font-size:1.5rem;font-weight:700;color:#944535;margin-bottom:0.75rem; }
 .tutupDesc { color:#454652;font-size:0.9rem;line-height:1.6;margin-bottom:1.5rem; }
 .tutupTips { background:#fdf8f2;border-radius:10px;padding:1rem;margin-bottom:1.5rem;display:flex;flex-direction:column;gap:0.5rem;text-align:left; }
-.tipItem { font-size:0.85rem;color:#767683; }
+.tipItem { font-size:0.85rem;color:#767683;display:flex;align-items:center;gap:8px; }
 .tutupActions { display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap; }
 
 /* ── Wrapper & Card ── */
 .wrapper { min-height:80vh;padding:2rem 5%;background:#fdf8f2;display:flex;flex-direction:column;align-items:center; }
 .periodeBanner { background:#d1fae5;border:1px solid #6ee7b7;border-radius:10px;padding:0.875rem 1.25rem;width:100%;max-width:540px;display:flex;align-items:center;gap:0.875rem;margin-bottom:1.25rem; }
-.periodeIcon { font-size:1.25rem; }
+.periodeActiveDot { display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;flex-shrink:0;box-shadow:0 0 0 3px rgba(16,185,129,0.2); }
 .periodeNama { font-size:0.9rem;font-weight:700;color:#065f46; }
 .periodeDate { font-size:0.78rem;color:#047857;margin-top:2px; }
 .card { background:#fff;border-radius:16px;padding:2rem;box-shadow:0 2px 16px rgba(0,0,0,0.07);width:100%;max-width:540px; }
@@ -50,13 +53,15 @@
 .ekskulItemSel { border-color:#944535;background:rgba(148,69,53,0.06); }
 .ekskulItemSudah { border-color:#6ee7b7;background:#f0fdf4;cursor:default !important; }
 .checkHidden { display:none; }
-.ekskulEmoji { font-size:1.75rem;flex-shrink:0; }
+/* ekskulEmoji is used for the emoji field from DB — kept as font rendering */
+.ekskulEmoji { font-size:1.75rem;flex-shrink:0;line-height:1; }
 .ekskulInfo { flex:1; }
 .ekskulNama { font-size:0.9rem;font-weight:600;color:#1a1c1d;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap; }
-.ekskulJadwal { font-size:0.78rem;color:#767683;margin-top:2px; }
-.ekskulKategori { font-size:0.72rem;color:#944535;font-weight:600;margin-top:2px; }
+.ekskulJadwal { font-size:0.78rem;color:#767683;margin-top:4px;display:flex;align-items:center;gap:6px; }
+.ekskulJadwal svg { color:#944535;opacity:0.6;flex-shrink:0; }
+.ekskulKategori { font-size:0.72rem;color:#944535;font-weight:600;margin-top:3px; }
 .wajibBadge { background:#FAD6A6;color:#7a382a;font-size:0.65rem;padding:0.1rem 0.4rem;border-radius:4px;font-weight:700; }
-.sudahBadge { background:#d1fae5;color:#065f46;font-size:0.65rem;padding:0.1rem 0.4rem;border-radius:4px;font-weight:700; }
+.sudahBadge { background:#d1fae5;color:#065f46;font-size:0.65rem;padding:0.1rem 0.4rem;border-radius:4px;font-weight:700;display:inline-flex;align-items:center;gap:3px; }
 .checkMark { background:#944535;color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0; }
 
 /* ── Submit ── */

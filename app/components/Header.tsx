@@ -114,7 +114,7 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
         </div>
 
         <div className={styles.mobileFooter}>
-          <p>📍 Jalan Kendali Sodo, Jomboran, Klaten Tengah</p>
+          <p>Jl. Kendali Sodo, Jomboran, Klaten Tengah</p>
         </div>
       </nav>
     </>

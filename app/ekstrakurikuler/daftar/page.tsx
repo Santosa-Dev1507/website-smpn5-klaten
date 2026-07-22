@@ -7,7 +7,7 @@ import { loginWithNisNip, logout } from "@/lib/auth-helpers";
 import type { UserProfile, Ekskul, PeriodePendaftaran } from "@/lib/supabase";
 import {
   Calendar, CheckCircle2, ArrowLeft, BarChart2, Lightbulb, Volume2, Briefcase,
-  School, ArrowRight, Lock
+  School, ArrowRight, Lock, CheckCheck, CalendarDays, Timer, User as UserIcon
 } from "lucide-react";
 
 type Step = "cek" | "tutup" | "login" | "pilih" | "sukses";
@@ -224,17 +224,17 @@ export default function DaftarEkskulPage() {
       {step === "pilih" && user && (
         <div className={styles.wrapper}>
           <div className={styles.periodeBanner}>
-            <div className={styles.periodeIcon}>🟢</div>
+            <span className={styles.periodeActiveDot} aria-label="Pendaftaran aktif" />
             <div>
               <div className={styles.periodeNama}>{periode?.nama_periode}</div>
-              <div className={styles.periodeDate}>Pendaftaran aktif</div>
+              <div className={styles.periodeDate}>Pendaftaran sedang aktif</div>
             </div>
           </div>
           <div className={styles.card}>
             <div className={styles.welcomeBanner}>
               <div className={styles.welcomeAvatar}>{user.nama_lengkap.charAt(0)}</div>
               <div>
-                <div className={styles.welcomeName}>Halo, {user.nama_lengkap}! 👋</div>
+                <div className={styles.welcomeName}>Halo, {user.nama_lengkap}!</div>
                 <div className={styles.welcomeSub}>NIS: {user.nis_nip} · Kelas {(user as any).kelas?.nama_kelas ?? "-"}</div>
               </div>
               <button className={styles.btnLogoutSm} onClick={async () => { await logout(); setUser(null); setStep("login"); }}>Keluar</button>
@@ -262,9 +262,12 @@ export default function DaftarEkskulPage() {
                         <div className={styles.ekskulNama}>
                           {e.nama}
                           {isWajib && <span className={styles.wajibBadge}>WAJIB</span>}
-                          {isSudah && <span className={styles.sudahBadge}>✓ Terdaftar</span>}
+                          {isSudah && <span className={styles.sudahBadge}><CheckCheck size={10}/> Terdaftar</span>}
                         </div>
-                        <div className={styles.ekskulJadwal}>📅 {e.jadwal} · ⏰ {e.waktu}</div>
+                        <div className={styles.ekskulJadwal}>
+                          <CalendarDays size={11} aria-hidden /> {e.jadwal}
+                          <Timer size={11} aria-hidden /> {e.waktu}
+                        </div>
                         <div className={styles.ekskulKategori}>{e.kategori}</div>
                       </div>
                       {isSel && !isSudah && <span className={styles.checkMark}>✓</span>}
@@ -277,7 +280,12 @@ export default function DaftarEkskulPage() {
                 {selected.length > 0 ? `${selected.length} ekskul dipilih` : "Belum ada yang dipilih"}
               </div>
               <button type="submit" className={styles.btnSubmit} disabled={submitLoad || selected.length === 0} id="btn-submit-daftar">
-                {submitLoad ? <span className={styles.spinnerSm} /> : `✏️ Daftar Sekarang (${selected.length})`}
+                {submitLoad ? <span className={styles.spinnerSm} /> : (
+                  <span style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                    Daftar Sekarang ({selected.length})
+                    <ArrowRight size={16} aria-hidden />
+                  </span>
+                )}
               </button>
             </form>
           </div>
