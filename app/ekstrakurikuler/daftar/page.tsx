@@ -199,9 +199,11 @@ export default function DaftarEkskulPage() {
       {step === "login" && (
         <div className={styles.wrapper}>
           <div className={`${styles.card} ${styles.cardSm}`}>
-            <div className={styles.loginIcon}><School size={48} color="#944535" /></div>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "1rem" }}>
+              <School size={48} color="#944535" />
+            </div>
             <h2 className={styles.cardTitle}>Login Siswa</h2>
-            <p className={styles.cardDesc}>Masuk dengan NIS dan password untuk mendaftar ekskul. <strong>Khusus siswa Kelas 7 &amp; 8.</strong></p>
+            <p className={styles.cardDesc}>Masuk dengan NIS dan password untuk mendaftar ekskul.</p>
             {error && <div className={styles.alertError}>{error}</div>}
             <form onSubmit={handleLogin} className={styles.form}>
               <div className={styles.formGroup}>
