@@ -210,7 +210,7 @@ export default function SiswaPage() {
         <div className={styles.loginCard}>
           <div className={styles.loginEmoji}><GraduationCap size={48} color="#944535" /></div>
           <h1 className={styles.loginTitle}>Dashboard Siswa</h1>
-          <p className={styles.loginDesc}>Login dengan NIS dan password untuk melihat ekskul, jadwal, dan absensimu. <strong>Khusus siswa Kelas 7 &amp; 8.</strong></p>
+          <p className={styles.loginDesc}>Login dengan NIS dan password untuk melihat ekskul, jadwal, dan absensimu.</p>
           {loginErr && <div className={styles.alertError}>{loginErr}</div>}
           <form onSubmit={handleLogin} className={styles.loginForm}>
             <div className={styles.formGroup}>
