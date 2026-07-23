@@ -71,6 +71,9 @@ export default function AdminPage() {
   const [showFormUser, setShowFormUser] = useState(false);
   const [editUserId, setEditUserId] = useState<string|null>(null);
   const [formUser, setFormUser] = useState({ nis_nip:"", nama_lengkap:"", role:"siswa" as const, kelas_id:"", email_internal:"", password:"" });
+  const [filterQuery, setFilterQuery] = useState("");
+  const [filterRole, setFilterRole] = useState("semua");
+  const [filterKelas, setFilterKelas] = useState("semua");
 
   // Import CSV
   const [showImport, setShowImport] = useState(false);
@@ -778,31 +781,61 @@ export default function AdminPage() {
               )}
 
               {dataLoad ? <div className={styles.loadRow}>Memuat...</div> : (
-                <div className={styles.tableWrap}>
-                  <table className={styles.table}>
-                    <thead><tr><th>Nama</th><th>NIS/NIP</th><th>Role</th><th>Kelas</th><th>Terdaftar</th><th style={{textAlign:"right"}}>Aksi</th></tr></thead>
-                    <tbody>
-                      {userList.map(u => (
-                        <tr key={u.id}>
-                          <td className={styles.tdNama}>{u.nama_lengkap}</td>
-                          <td className={styles.subText}>{u.nis_nip??"- "}</td>
-                          <td><span className={`${styles.badge} ${styles["roleChip_"+u.role]}`}>{u.role}</span></td>
-                          <td className={styles.subText}>{(u as any).kelas?.nama_kelas??"- "}</td>
-                          <td className={styles.subText}>{new Date(u.created_at).toLocaleDateString("id-ID")}</td>
-                          <td style={{textAlign:"right"}}>
-                            <div style={{display:"flex",justifyContent:"flex-end",gap:4}}>
-                              <button className={styles.btnAction} onClick={() => {
-                                setEditUserId(u.id);
-                                setFormUser({ nis_nip: u.nis_nip||"", nama_lengkap: u.nama_lengkap, role: u.role as any, kelas_id: u.kelas_id||"", email_internal:"", password:"" });
-                                setShowFormUser(true);
-                              }} title="Edit"><Edit size={14} /></button>
-                              <button className={styles.btnAction} onClick={() => hapusUser(u.id)} title="Hapus"><Trash2 size={14} color="#ba1a1a" /></button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div style={{marginTop: 20}}>
+                  <div style={{display:"flex", gap:12, marginBottom:16, flexWrap:"wrap"}}>
+                    <input className={styles.input} style={{flex:1, minWidth:200}} placeholder="Cari nama atau NIS/NIP..." value={filterQuery} onChange={e=>setFilterQuery(e.target.value)} />
+                    <select className={styles.input} value={filterRole} onChange={e=>{setFilterRole(e.target.value); setFilterKelas("semua");}}>
+                      <option value="semua">Semua Role</option>
+                      <option value="siswa">Siswa</option>
+                      <option value="pembina">Pembina</option>
+                      <option value="walikelas">Wali Kelas</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                    {filterRole === "siswa" && (
+                      <select className={styles.input} value={filterKelas} onChange={e=>setFilterKelas(e.target.value)}>
+                        <option value="semua">Semua Kelas</option>
+                        {kelasList.map(k=><option key={k.id} value={k.id}>{k.nama_kelas}</option>)}
+                      </select>
+                    )}
+                  </div>
+                  <div className={styles.tableWrap}>
+                    <table className={styles.table}>
+                      <thead><tr><th>Nama</th><th>NIS/NIP</th><th>Role</th><th>Kelas</th><th>Terdaftar</th><th style={{textAlign:"right"}}>Aksi</th></tr></thead>
+                      <tbody>
+                        {(() => {
+                          const filteredUsers = userList.filter(u => {
+                            if (filterRole !== "semua" && u.role !== filterRole) return false;
+                            if (filterRole === "siswa" && filterKelas !== "semua" && u.kelas_id !== filterKelas) return false;
+                            if (filterQuery) {
+                              const q = filterQuery.toLowerCase();
+                              if (!u.nama_lengkap.toLowerCase().includes(q) && !(u.nis_nip || "").toLowerCase().includes(q)) return false;
+                            }
+                            return true;
+                          });
+                          if (filteredUsers.length === 0) return <tr><td colSpan={6} style={{textAlign:"center",padding:20}}>Tidak ada data yang cocok dengan filter.</td></tr>;
+                          return filteredUsers.map(u => (
+                            <tr key={u.id}>
+                              <td className={styles.tdNama}>{u.nama_lengkap}</td>
+                              <td className={styles.subText}>{u.nis_nip??"- "}</td>
+                              <td><span className={`${styles.badge} ${styles["roleChip_"+u.role]}`}>{u.role}</span></td>
+                              <td className={styles.subText}>{(u as any).kelas?.nama_kelas??"- "}</td>
+                              <td className={styles.subText}>{new Date(u.created_at).toLocaleDateString("id-ID")}</td>
+                              <td style={{textAlign:"right"}}>
+                                <div style={{display:"flex",justifyContent:"flex-end",gap:4}}>
+                                  <button className={styles.btnAction} onClick={() => {
+                                    setEditUserId(u.id);
+                                    setFormUser({ nis_nip: u.nis_nip||"", nama_lengkap: u.nama_lengkap, role: u.role as any, kelas_id: u.kelas_id||"", email_internal:"", password:"" });
+                                    setShowFormUser(true);
+                                  }} title="Edit"><Edit size={14} /></button>
+                                  <button className={styles.btnAction} onClick={() => hapusUser(u.id)} title="Hapus"><Trash2 size={14} color="#ba1a1a" /></button>
+                                </div>
+                              </td>
+                            </tr>
+                          ));
+                        })()}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               )}
             </div>
