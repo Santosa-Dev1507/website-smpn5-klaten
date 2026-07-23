@@ -120,12 +120,11 @@ export default function EkstrakulikulerPage() {
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
             <h1 className={styles.heroTitle}>
-              Temukan Ekskul yang{" "}
-              <span className={styles.heroTitleAccent}>Tepat Untukmu</span>
+              Temukan Bakatmu. Tunjukkan Caramu{" "}
+              <span className={styles.heroTitleAccent}>Menjadi JUARA.</span>
             </h1>
             <p className={styles.heroDesc}>
-              {ekskulList.length > 0 ? ekskulList.length : 11} kegiatan ekstrakurikuler pilihan — dari olahraga, seni, hingga olimpiade sains.
-              Pilih yang sesuai minatmu, daftar dalam hitungan menit.
+              Mulai dari akademik, olahraga, hingga seni — tersedia {ekskulList.length > 0 ? ekskulList.length : 11} pilihan ekstrakurikuler. Setiap siswa punya ruang untuk berkembang.
             </p>
             <div className={styles.heroActions}>
               <a
