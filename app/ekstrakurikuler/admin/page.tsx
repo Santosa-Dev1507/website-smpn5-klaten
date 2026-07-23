@@ -181,11 +181,17 @@ export default function AdminPage() {
 
   async function simpanEkskul() {
     if (!formEkskul.kode || !formEkskul.nama) { showMsg("Kode dan nama ekskul wajib diisi.", "err"); return; }
+    
+    // Hapus field relational (pembina) dan id agar tidak error "schema cache"
+    const payload = { ...formEkskul };
+    delete (payload as any).pembina;
+    delete payload.id;
+
     if (editEkskulId) {
-      const { error } = await supabase.from("ekskul").update(formEkskul).eq("id", editEkskulId);
+      const { error } = await supabase.from("ekskul").update(payload).eq("id", editEkskulId);
       if (error) { showMsg("❌ "+error.message, "err"); return; }
     } else {
-      const { error } = await supabase.from("ekskul").insert(formEkskul);
+      const { error } = await supabase.from("ekskul").insert(payload);
       if (error) { showMsg("❌ "+error.message, "err"); return; }
     }
     showMsg("✅ Ekskul berhasil disimpan!"); setShowFormEkskul(false); setEditEkskulId(null);
