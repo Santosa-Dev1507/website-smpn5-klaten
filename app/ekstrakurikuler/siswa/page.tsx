@@ -225,7 +225,7 @@ export default function SiswaPage() {
               {loginLoad ? <span className={styles.spinner} style={{width:18,height:18,borderWidth:3}} /> : <span style={{display:"inline-flex",alignItems:"center",gap:6}}>Masuk <ArrowRight size={16} /></span>}
             </button>
           </form>
-          <p className={styles.hint}>Lupa password? Hubungi wali kelas atau TU.</p>
+          <p className={styles.hint}>Lupa password? Hubungi wali kelas.</p>
           <div className={styles.loginLinks}>
             <a href="/ekstrakurikuler" className={styles.linkBack} style={{display:"inline-flex",alignItems:"center",gap:4}}><ArrowLeft size={16} /> Kembali ke Ekskul</a>
             <a href="/ekstrakurikuler/daftar" className={styles.linkDaftar} style={{display:"inline-flex",alignItems:"center",gap:4}}>Daftar Ekskul <ArrowRight size={16} /></a>
