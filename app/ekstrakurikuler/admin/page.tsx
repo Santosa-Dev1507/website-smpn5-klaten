@@ -275,17 +275,24 @@ export default function AdminPage() {
     for (let i = 0; i < updated.length; i++) {
       const row = updated[i];
       const kelasObj = kelasList.find(k => k.nama_kelas.toLowerCase() === row.kelas.toLowerCase());
-      const res = await fetch("/api/admin/create-user", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nis_nip: row.nis, nama_lengkap: row.nama, role: "siswa",
-          kelas_id: kelasObj?.id ?? null,
-          email: `${row.nis}@sim.smpn5klaten`,
-          password: row.nis,
-        }),
-      });
-      const data = await res.json();
-      updated[i] = { ...row, status: data.success ? "ok" : "err", msg: data.success ? undefined : data.message };
+      
+      try {
+        const res = await fetch("/api/admin/create-user", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nis_nip: row.nis, nama_lengkap: row.nama, role: "siswa",
+            kelas_id: kelasObj?.id ?? null,
+            email: `${row.nis}@sim.smpn5klaten`,
+            password: row.nis,
+          }),
+        });
+        
+        const data = await res.json();
+        updated[i] = { ...row, status: data.success ? "ok" : "err", msg: data.success ? undefined : data.message };
+      } catch (err: any) {
+        updated[i] = { ...row, status: "err", msg: err.message || "Gagal terhubung ke API (Server Error/Timeout)" };
+      }
+      
       setImportRows([...updated]);
       setImportProgress(i + 1);
     }
