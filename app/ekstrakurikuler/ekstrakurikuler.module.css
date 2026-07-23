@@ -266,6 +266,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  height: 100%;
   box-shadow: var(--shadow-sm);
   transition:
     transform 0.2s var(--ease-out-expo),
