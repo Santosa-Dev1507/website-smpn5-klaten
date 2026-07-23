@@ -141,7 +141,7 @@ export default function EkstrakulikulerPage() {
                 className={styles.btnSecondary}
                 id="btn-dashboard-siswa"
               >
-                Cek Status Daftar
+                Login Siswa
               </a>
             </div>
           </div>
