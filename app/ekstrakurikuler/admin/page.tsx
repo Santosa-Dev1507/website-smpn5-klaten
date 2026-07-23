@@ -8,7 +8,7 @@ import type { UserProfile, Ekskul, PeriodePendaftaran, LaporanKegiatan } from "@
 import {
   BarChart2, Trophy, Calendar, Users, FileText, Settings,
   Check, X, Clock, Plus, Edit, Power, ArrowRight, User,
-  Upload, Download, AlertCircle, CheckCircle2
+  Upload, Download, AlertCircle, CheckCircle2, Trash2
 } from "lucide-react";
 
 type Tab = "dashboard" | "ekskul" | "periode" | "users" | "laporan";
@@ -60,10 +60,12 @@ export default function AdminPage() {
 
   // Forms Periode
   const [showFormPeriode, setShowFormPeriode] = useState(false);
+  const [editPeriodeId, setEditPeriodeId] = useState<string|null>(null);
   const [formPeriode, setFormPeriode] = useState({ nama_periode:"", tanggal_buka:"", tanggal_tutup:"", aktif: true });
   const [periodeEkskulPilihan, setPeriodeEkskulPilihan] = useState<string[]>([]);
   const [semuaEkskul, setSemuaEkskul] = useState(true);
   const [periodeEkskulMap, setPeriodeEkskulMap] = useState<Record<string, string[]>>({});
+  const [periodeEkskulIdsMap, setPeriodeEkskulIdsMap] = useState<Record<string, string[]>>({});
 
   // Forms User
   const [showFormUser, setShowFormUser] = useState(false);
@@ -142,12 +144,16 @@ export default function AdminPage() {
         .from("periode_ekskul").select("periode_id, ekskul_id, ekskul:ekskul_id(nama,emoji)")
         .in("periode_id", ids);
       const map: Record<string, string[]> = {};
+      const mapIds: Record<string, string[]> = {};
       for (const row of (pe ?? [])) {
         if (!map[row.periode_id]) map[row.periode_id] = [];
+        if (!mapIds[row.periode_id]) mapIds[row.periode_id] = [];
         const eks = (row as any).ekskul;
         map[row.periode_id].push(`${eks?.emoji ?? ""} ${eks?.nama ?? ""}`);
+        mapIds[row.periode_id].push(row.ekskul_id);
       }
       setPeriodeEkskulMap(map);
+      setPeriodeEkskulIdsMap(mapIds);
     }
     setDataLoad(false);
   }, []);
@@ -209,19 +215,41 @@ export default function AdminPage() {
     if (!formPeriode.nama_periode || !formPeriode.tanggal_buka || !formPeriode.tanggal_tutup) {
       showMsg("Lengkapi semua field periode.", "err"); return;
     }
-    const { data: newPeriode, error } = await supabase
-      .from("periode_pendaftaran")
-      .insert({ ...formPeriode, dibuat_oleh: user!.id })
-      .select().single();
-    if (error || !newPeriode) { showMsg("❌ "+(error?.message ?? "Gagal"), "err"); return; }
-    if (!semuaEkskul && periodeEkskulPilihan.length > 0) {
-      const rows = periodeEkskulPilihan.map(eid => ({ periode_id: newPeriode.id, ekskul_id: eid }));
-      await supabase.from("periode_ekskul").insert(rows);
+    
+    if (editPeriodeId) {
+      const { error } = await supabase.from("periode_pendaftaran").update(formPeriode).eq("id", editPeriodeId);
+      if (error) { showMsg("❌ "+error.message, "err"); return; }
+      
+      await supabase.from("periode_ekskul").delete().eq("periode_id", editPeriodeId);
+      if (!semuaEkskul && periodeEkskulPilihan.length > 0) {
+        const rows = periodeEkskulPilihan.map(eid => ({ periode_id: editPeriodeId, ekskul_id: eid }));
+        await supabase.from("periode_ekskul").insert(rows);
+      }
+      showMsg(`✅ Periode "${formPeriode.nama_periode}" berhasil diupdate!`);
+    } else {
+      const { data: newPeriode, error } = await supabase
+        .from("periode_pendaftaran")
+        .insert({ ...formPeriode, dibuat_oleh: user!.id })
+        .select().single();
+      if (error || !newPeriode) { showMsg("❌ "+(error?.message ?? "Gagal"), "err"); return; }
+      if (!semuaEkskul && periodeEkskulPilihan.length > 0) {
+        const rows = periodeEkskulPilihan.map(eid => ({ periode_id: newPeriode.id, ekskul_id: eid }));
+        await supabase.from("periode_ekskul").insert(rows);
+      }
+      showMsg(`✅ Periode "${formPeriode.nama_periode}" berhasil disimpan!`);
     }
-    showMsg(`✅ Periode "${formPeriode.nama_periode}" berhasil disimpan!`);
-    setShowFormPeriode(false);
+    
+    setShowFormPeriode(false); setEditPeriodeId(null);
     setFormPeriode({ nama_periode:"", tanggal_buka:"", tanggal_tutup:"", aktif: true });
     setPeriodeEkskulPilihan([]); setSemuaEkskul(true);
+    loadPeriode();
+  }
+
+  async function hapusPeriode(id: string) {
+    if (!window.confirm("Yakin ingin menghapus periode ini? Tindakan ini tidak bisa dibatalkan.")) return;
+    const { error } = await supabase.from("periode_pendaftaran").delete().eq("id", id);
+    if (error) { showMsg("❌ "+error.message, "err"); return; }
+    showMsg("✅ Periode berhasil dihapus.");
     loadPeriode();
   }
 
@@ -472,7 +500,7 @@ export default function AdminPage() {
             <div>
               <div className={styles.tabHeader}>
                 <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}><Calendar size={22} /> Periode Pendaftaran</h2>
-                <button className={styles.btnPrimary} onClick={() => { setShowFormPeriode(true); setSemuaEkskul(true); setPeriodeEkskulPilihan([]); }} style={{display:"inline-flex",alignItems:"center",gap:6}}><Plus size={16} /> Buat Periode</button>
+                <button className={styles.btnPrimary} onClick={() => { setEditPeriodeId(null); setFormPeriode({ nama_periode:"", tanggal_buka:"", tanggal_tutup:"", aktif:true }); setShowFormPeriode(true); setSemuaEkskul(true); setPeriodeEkskulPilihan([]); }} style={{display:"inline-flex",alignItems:"center",gap:6}}><Plus size={16} /> Buat Periode</button>
               </div>
 
               {showFormPeriode && (
@@ -558,9 +586,19 @@ export default function AdminPage() {
                             <span className={`${styles.badge} ${isActive ? styles.badgeOk : p.aktif ? styles.badgeWarning : styles.badgeOff}`} style={{display:"inline-flex",alignItems:"center",gap:4}}>
                               {isActive ? <><Check size={14} /> Buka</> : p.aktif ? <><Clock size={14} /> Dijadwalkan</> : <><X size={14} /> Tutup</>}
                             </span>
-                            <button className={styles.btnAction} onClick={() => toggleAktifPeriode(p.id, p.aktif)} style={{display:"inline-flex",alignItems:"center",gap:4}}>
-                              {p.aktif ? <><Power size={14} /> Tutup</> : <><Check size={14} /> Buka</>}
-                            </button>
+                            <div style={{display:"flex",gap:4}}>
+                              <button className={styles.btnAction} onClick={() => {
+                                setEditPeriodeId(p.id);
+                                setFormPeriode({ nama_periode: p.nama_periode, tanggal_buka: p.tanggal_buka.slice(0, 16), tanggal_tutup: p.tanggal_tutup.slice(0, 16), aktif: p.aktif });
+                                const eks = periodeEkskulIdsMap[p.id];
+                                if (eks && eks.length > 0) { setSemuaEkskul(false); setPeriodeEkskulPilihan(eks); } else { setSemuaEkskul(true); setPeriodeEkskulPilihan([]); }
+                                setShowFormPeriode(true);
+                              }} title="Edit"><Edit size={14} /></button>
+                              <button className={styles.btnAction} onClick={() => hapusPeriode(p.id)} title="Hapus"><Trash2 size={14} color="#ba1a1a" /></button>
+                              <button className={styles.btnAction} onClick={() => toggleAktifPeriode(p.id, p.aktif)} title={p.aktif ? "Tutup Periode" : "Buka Periode"}>
+                                {p.aktif ? <Power size={14} /> : <Check size={14} />}
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
