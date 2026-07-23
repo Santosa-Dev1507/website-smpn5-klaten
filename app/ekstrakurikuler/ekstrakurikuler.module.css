@@ -324,7 +324,7 @@
   padding: 1.25rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex-grow: 1;
 }
 
 .ekskulName {
@@ -340,7 +340,6 @@
   color: var(--ekskul-on-surface-var);
   line-height: 1.65;
   margin-bottom: 1.25rem;
-  flex: 1;
 }
 
 .ekskulMeta {
@@ -348,6 +347,7 @@
   flex-direction: column;
   gap: 0.35rem;
   margin-bottom: 1.25rem;
+  margin-top: auto;
 }
 
 .ekskulMetaItem {
