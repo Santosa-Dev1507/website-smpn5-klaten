@@ -283,6 +283,21 @@ export default function PembinaPage() {
     loadPendaftaran();
   }
 
+  async function setujuiSemuaPendaftaran() {
+    const pendingIds = pendaftaran.filter(p => p.status === "menunggu").map(p => p.id);
+    if (pendingIds.length === 0) return;
+    if (!window.confirm(`Setujui ${pendingIds.length} pendaftaran sekaligus?`)) return;
+    
+    setPendMsg("");
+    const { error } = await supabase
+      .from("pendaftaran")
+      .update({ status: "disetujui", catatan_pembina: "Disetujui massal" })
+      .in("id", pendingIds);
+    if (error) { setPendMsg("Gagal update massal: " + error.message); return; }
+    setPendMsg(`✅ ${pendingIds.length} pendaftaran berhasil disetujui.`);
+    loadPendaftaran();
+  }
+
   // ────────────────────────────────────────────────────────────
   // ABSENSI
   // ────────────────────────────────────────────────────────────
@@ -746,7 +761,14 @@ export default function PembinaPage() {
             <div>
               <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}><ClipboardList size={22} /> Kelola Pendaftaran</h2>
               {pendMsg && <div className={styles.alertInfo}>{pendMsg}</div>}
-              <button className={styles.btnRefresh} onClick={loadPendaftaran} style={{display:"inline-flex",alignItems:"center",gap:6}}><RefreshCw size={14} /> Refresh</button>
+              <div style={{display:"flex", gap:10, marginBottom:16}}>
+                <button className={styles.btnRefresh} onClick={loadPendaftaran} style={{display:"inline-flex",alignItems:"center",gap:6}}><RefreshCw size={14} /> Refresh</button>
+                {pendaftaran.some(p => p.status === "menunggu") && (
+                  <button className={styles.btnSetujui} onClick={setujuiSemuaPendaftaran} style={{display:"inline-flex",alignItems:"center",gap:6,background:"#166534",color:"#fff"}}>
+                    <Check size={14} /> Setujui Semua yang Menunggu
+                  </button>
+                )}
+              </div>
               {pendLoad ? <div className={styles.loadRow}>Memuat...</div> : (
                 <div className={styles.tableWrap}>
                   <table className={styles.table}>
@@ -807,6 +829,12 @@ export default function PembinaPage() {
                 </div>
               </div>
               {absenMsg && <div className={`${styles.alertInfo} ${absenMsg.startsWith("Absensi") ? styles.alertSuccess : ""}`}>{absenMsg}</div>}
+              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:12}}>
+                <div style={{fontSize:14, color:"#666"}}>Secara *default* semua siswa otomatis ditandai <strong>Hadir</strong>.</div>
+                <button className={styles.btnSecondary} onClick={() => setSiswaDaftar(prev => prev.map(s => ({...s, status: "hadir"})))} style={{display:"inline-flex",alignItems:"center",gap:6,fontSize:12,padding:"4px 10px"}}>
+                  <CheckSquare size={14} /> Reset Semua ke Hadir
+                </button>
+              </div>
               {absenLoad ? <div className={styles.loadRow}>Memuat data siswa...</div> : (
                 <div className={styles.tableWrap}>
                   <table className={styles.table}>
