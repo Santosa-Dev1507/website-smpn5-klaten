@@ -228,7 +228,7 @@ export default function EkstrakulikulerPage() {
                       </div>
                       <div className={styles.ekskulMetaItem}>
                         <Users size={13} aria-hidden />
-                        <span>{ekskul.nama_pelatih || (ekskul.pembina?.nama_lengkap) || "-"}</span>
+                        <span>{(ekskul.pembina?.nama_lengkap) || ekskul.nama_pelatih || "-"}</span>
                       </div>
                     </div>
                     {isOpen ? (
@@ -238,7 +238,7 @@ export default function EkstrakulikulerPage() {
                       </a>
                     ) : (
                       <button className={styles.ekskulBtn} style={{background:"#f3f4f6",color:"#9ca3af",cursor:"not-allowed",border:"none"}} disabled>
-                        Pendaftaran Ditutup
+                        Pendaftaran belum dibuka
                       </button>
                     )}
                   </div>
