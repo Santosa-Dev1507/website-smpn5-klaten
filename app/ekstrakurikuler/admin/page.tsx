@@ -69,6 +69,7 @@ export default function AdminPage() {
 
   // Forms User
   const [showFormUser, setShowFormUser] = useState(false);
+  const [editUserId, setEditUserId] = useState<string|null>(null);
   const [formUser, setFormUser] = useState({ nis_nip:"", nama_lengkap:"", role:"siswa" as const, kelas_id:"", email_internal:"", password:"" });
 
   // Import CSV
@@ -266,20 +267,41 @@ export default function AdminPage() {
     loadPeriode();
   }
 
-  async function createUser() {
-    if (!formUser.nis_nip || !formUser.nama_lengkap || !formUser.password) {
+  async function simpanUser() {
+    if (!formUser.nis_nip || !formUser.nama_lengkap || (!editUserId && !formUser.password)) {
       showMsg("NIS/NIP, nama, dan password wajib diisi.", "err"); return;
     }
     const emailInt = `${formUser.nis_nip.trim()}@sim.smpn5klaten`;
-    const res = await fetch("/api/admin/create-user", {
-      method: "POST", headers: { "Content-Type":"application/json" },
-      body: JSON.stringify({ ...formUser, email: emailInt }),
-    });
+    
+    if (editUserId) {
+      const res = await fetch("/api/admin/manage-user", {
+        method: "PUT", headers: { "Content-Type":"application/json" },
+        body: JSON.stringify({ id: editUserId, ...formUser, email: emailInt }),
+      });
+      const data = await res.json();
+      if (!data.success) { showMsg("❌ "+data.message, "err"); return; }
+      showMsg(`✅ Pengguna ${formUser.nama_lengkap} berhasil diupdate!`);
+    } else {
+      const res = await fetch("/api/admin/create-user", {
+        method: "POST", headers: { "Content-Type":"application/json" },
+        body: JSON.stringify({ ...formUser, email: emailInt }),
+      });
+      const data = await res.json();
+      if (!data.success) { showMsg("❌ "+data.message, "err"); return; }
+      showMsg(`✅ Pengguna ${formUser.nama_lengkap} berhasil dibuat!`);
+    }
+    
+    setShowFormUser(false); setEditUserId(null);
+    setFormUser({ nis_nip:"",nama_lengkap:"",role:"siswa",kelas_id:"",email_internal:"",password:"" });
+    loadUsers();
+  }
+
+  async function hapusUser(id: string) {
+    if (!window.confirm("Yakin ingin menghapus pengguna ini? Tindakan ini tidak bisa dibatalkan.")) return;
+    const res = await fetch(`/api/admin/manage-user?id=${id}`, { method: "DELETE" });
     const data = await res.json();
     if (!data.success) { showMsg("❌ "+data.message, "err"); return; }
-    showMsg(`✅ Pengguna ${formUser.nama_lengkap} berhasil dibuat!`);
-    setShowFormUser(false);
-    setFormUser({ nis_nip:"",nama_lengkap:"",role:"siswa",kelas_id:"",email_internal:"",password:"" });
+    showMsg("✅ Pengguna berhasil dihapus.");
     loadUsers();
   }
 
@@ -653,7 +675,7 @@ export default function AdminPage() {
 
               {showFormUser && (
                 <div className={styles.formCard}>
-                  <h3 className={styles.formCardTitle}>Buat Pengguna Baru</h3>
+                  <h3 className={styles.formCardTitle}>{editUserId ? "Edit Pengguna" : "Buat Pengguna Baru"}</h3>
                   <p className={styles.formHint}>Email login otomatis: <code>{formUser.nis_nip||"[NIS/NIP]"}@sim.smpn5klaten</code></p>
                   <div className={styles.formGrid}>
                     <div className={styles.formGroup}><label className={styles.label}>NIS / NIP *</label><input className={styles.input} value={formUser.nis_nip} onChange={e=>setFormUser(p=>({...p,nis_nip:e.target.value}))} placeholder="12345" /></div>
@@ -672,11 +694,11 @@ export default function AdminPage() {
                         </select>
                       </div>
                     )}
-                    <div className={styles.formGroup}><label className={styles.label}>Password *</label><input type="password" className={styles.input} value={formUser.password} onChange={e=>setFormUser(p=>({...p,password:e.target.value}))} placeholder="Min. 8 karakter" /></div>
+                    <div className={styles.formGroup}><label className={styles.label}>{editUserId ? "Password Baru (Kosongkan jika tidak diganti)" : "Password *"}</label><input type="password" className={styles.input} value={formUser.password} onChange={e=>setFormUser(p=>({...p,password:e.target.value}))} placeholder="Min. 8 karakter" /></div>
                   </div>
                   <div className={styles.formActions}>
-                    <button className={styles.btnPrimary} onClick={createUser} id="btn-buat-user" style={{display:"inline-flex",alignItems:"center",gap:6}}><Check size={16} /> Buat Pengguna</button>
-                    <button className={styles.btnSecondary} onClick={() => setShowFormUser(false)}>Batal</button>
+                    <button className={styles.btnPrimary} onClick={simpanUser} id="btn-buat-user" style={{display:"inline-flex",alignItems:"center",gap:6}}><Check size={16} /> {editUserId ? "Simpan Perubahan" : "Buat Pengguna"}</button>
+                    <button className={styles.btnSecondary} onClick={() => { setShowFormUser(false); setEditUserId(null); }}>Batal</button>
                   </div>
                 </div>
               )}
@@ -758,7 +780,7 @@ export default function AdminPage() {
               {dataLoad ? <div className={styles.loadRow}>Memuat...</div> : (
                 <div className={styles.tableWrap}>
                   <table className={styles.table}>
-                    <thead><tr><th>Nama</th><th>NIS/NIP</th><th>Role</th><th>Kelas</th><th>Terdaftar</th></tr></thead>
+                    <thead><tr><th>Nama</th><th>NIS/NIP</th><th>Role</th><th>Kelas</th><th>Terdaftar</th><th style={{textAlign:"right"}}>Aksi</th></tr></thead>
                     <tbody>
                       {userList.map(u => (
                         <tr key={u.id}>
@@ -767,6 +789,16 @@ export default function AdminPage() {
                           <td><span className={`${styles.badge} ${styles["roleChip_"+u.role]}`}>{u.role}</span></td>
                           <td className={styles.subText}>{(u as any).kelas?.nama_kelas??"- "}</td>
                           <td className={styles.subText}>{new Date(u.created_at).toLocaleDateString("id-ID")}</td>
+                          <td style={{textAlign:"right"}}>
+                            <div style={{display:"flex",justifyContent:"flex-end",gap:4}}>
+                              <button className={styles.btnAction} onClick={() => {
+                                setEditUserId(u.id);
+                                setFormUser({ nis_nip: u.nis_nip||"", nama_lengkap: u.nama_lengkap, role: u.role as any, kelas_id: u.kelas_id||"", email_internal:"", password:"" });
+                                setShowFormUser(true);
+                              }} title="Edit"><Edit size={14} /></button>
+                              <button className={styles.btnAction} onClick={() => hapusUser(u.id)} title="Hapus"><Trash2 size={14} color="#ba1a1a" /></button>
+                            </div>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
