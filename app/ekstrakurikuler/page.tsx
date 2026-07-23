@@ -4,135 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import ScrollReveal from "../components/ScrollReveal";
 import styles from "./ekstrakurikuler.module.css";
+import { supabase } from "@/lib/supabase";
+import type { Ekskul } from "@/lib/supabase";
 import {
   Trophy, Users, MapPin, Clock, ChevronRight,
   Dumbbell, Palette, FlaskConical, Heart, BookOpen,
   Music, Swords, Target, Globe, Microscope, Calculator,
 } from "lucide-react";
-
-const ekskulData = [
-  {
-    nama: "Pramuka",
-    kategori: "Kepanduan",
-    icon: Target,
-    desc: "Membentuk karakter mandiri, tangguh, dan berjiwa kepemimpinan melalui kegiatan kepramukaan.",
-    jadwal: "Sabtu",
-    waktu: "07:00–09:00",
-    lokasi: "Lapangan Sekolah",
-    pembina: "Sindi Anggono, S.S.",
-    warna: "#2d6a4f",
-  },
-  {
-    nama: "PMR / UKS",
-    kategori: "Sosial",
-    icon: Heart,
-    desc: "Melatih keterampilan pertolongan pertama dan menumbuhkan kepedulian sosial (Palang Merah Remaja).",
-    jadwal: "Kamis",
-    waktu: "15:00–16:30",
-    lokasi: "Ruang PMR",
-    pembina: "Annisa Nabilla Awalim, S.Pd.",
-    warna: "#c0392b",
-  },
-  {
-    nama: "PBB / Tata Upacara",
-    kategori: "Kedisiplinan",
-    icon: Users,
-    desc: "Melatih kedisiplinan, ketertiban, dan jiwa korsa melalui baris-berbaris dan tata upacara.",
-    jadwal: "Jumat",
-    waktu: "15:00–16:30",
-    lokasi: "Lapangan Upacara",
-    pembina: "Muhammad Thoyibun Nomi, S.Or",
-    warna: "#1a237e",
-  },
-  {
-    nama: "BTQ",
-    kategori: "Keagamaan",
-    icon: BookOpen,
-    desc: "Membangun kemampuan membaca Al-Qur'an dengan tartil dan benar (Tuntas Baca Al-Qur'an).",
-    jadwal: "Rabu",
-    waktu: "15:00–16:00",
-    lokasi: "Masjid Sekolah",
-    pembina: "Budi Santosa, S.Pd.I",
-    warna: "#5c3317",
-  },
-  {
-    nama: "OSN Matematika",
-    kategori: "Akademik",
-    icon: Calculator,
-    desc: "Persiapan olimpiade sains nasional bidang matematika untuk siswa berprestasi.",
-    jadwal: "Selasa",
-    waktu: "14:30–16:00",
-    lokasi: "Ruang Kelas",
-    pembina: "Dewi Imawati, S.Pd.",
-    warna: "#00429c",
-  },
-  {
-    nama: "OSN IPS",
-    kategori: "Akademik",
-    icon: Globe,
-    desc: "Persiapan olimpiade sains nasional bidang Ilmu Pengetahuan Sosial.",
-    jadwal: "Senin",
-    waktu: "14:30–16:00",
-    lokasi: "Ruang Kelas",
-    pembina: "Rizka Fitri Prasetyaningsah, S.Pd.",
-    warna: "#00429c",
-  },
-  {
-    nama: "OSN IPA",
-    kategori: "Akademik",
-    icon: Microscope,
-    desc: "Persiapan olimpiade sains nasional bidang Ilmu Pengetahuan Alam.",
-    jadwal: "Kamis",
-    waktu: "14:30–16:00",
-    lokasi: "Laboratorium IPA",
-    pembina: "Nurma Kartikasari, S.Pd.",
-    warna: "#00429c",
-  },
-  {
-    nama: "Seni Tari",
-    kategori: "Seni",
-    icon: Music,
-    desc: "Mengembangkan bakat seni dan kecintaan terhadap budaya Indonesia melalui tari tradisional.",
-    jadwal: "Rabu",
-    waktu: "14:00–15:30",
-    lokasi: "Aula Sekolah",
-    pembina: "Dini Wahyu Susanti, S.Sn.",
-    warna: "#7b2d8b",
-  },
-  {
-    nama: "Paduan Suara",
-    kategori: "Seni",
-    icon: Music,
-    desc: "Mengembangkan teknik vokal harmonis untuk kompetisi dan penampilan sekolah.",
-    jadwal: "Jumat",
-    waktu: "14:00–15:30",
-    lokasi: "Aula Sekolah",
-    pembina: "Fatina Lestiyningsih, S.Pd.",
-    warna: "#7b2d8b",
-  },
-  {
-    nama: "Futsal",
-    kategori: "Olahraga",
-    icon: Dumbbell,
-    desc: "Melatih teknik dan strategi futsal serta mempersiapkan tim untuk kompetisi antar sekolah.",
-    jadwal: "Selasa & Kamis",
-    waktu: "15:30–17:00",
-    lokasi: "Lapangan Futsal",
-    pembina: "Taufik Dian Pramudita, S.Pd.",
-    warna: "#006b5f",
-  },
-  {
-    nama: "Jiu Jitsu",
-    kategori: "Olahraga",
-    icon: Swords,
-    desc: "Olahraga bela diri yang melatih disiplin, ketangkasan, kepercayaan diri, dan mental juara.",
-    jadwal: "Sabtu",
-    waktu: "08:00–10:00",
-    lokasi: "Lapangan Sekolah",
-    pembina: "Evi Julianah, S.Pd.",
-    warna: "#006b5f",
-  },
-];
 
 type FilterKey = "Semua" | "Olahraga" | "Seni" | "Akademik" | "Lainnya";
 
@@ -144,15 +22,63 @@ const filters: { label: FilterKey; Icon: typeof Trophy; kategoriList: string[] |
   { label: "Lainnya",  Icon: Heart,         kategoriList: ["Sosial", "Kepanduan", "Kedisiplinan", "Keagamaan"] },
 ];
 
+// Helper warna kategori
+const getColor = (kategori: string) => {
+  if (kategori === "Olahraga") return "#006b5f";
+  if (kategori === "Seni") return "#7b2d8b";
+  if (kategori === "Akademik") return "#00429c";
+  if (kategori === "Kepanduan") return "#2d6a4f";
+  if (kategori === "Sosial") return "#c0392b";
+  if (kategori === "Kedisiplinan") return "#1a237e";
+  if (kategori === "Keagamaan") return "#5c3317";
+  return "#444444";
+};
+
 export default function EkstrakulikulerPage() {
   const [activeFilter, setActiveFilter] = useState<FilterKey>("Semua");
+  const [ekskulList, setEkskulList] = useState<Ekskul[]>([]);
+  const [openEkskulIds, setOpenEkskulIds] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
   const statsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    async function loadData() {
+      // 1. Fetch active ekskul
+      const { data: eks } = await supabase.from("ekskul").select("*, pembina:pembina_id(nama_lengkap)").eq("aktif", true).order("nama");
+      const list = eks ?? [];
+      setEkskulList(list as any[]);
+
+      // 2. Cek periode
+      const now = new Date().toISOString();
+      const { data: per } = await supabase
+        .from("periode_pendaftaran")
+        .select("*")
+        .eq("aktif", true)
+        .lte("tanggal_buka", now)
+        .gte("tanggal_tutup", now)
+        .limit(1)
+        .maybeSingle();
+      
+      if (per) {
+        const { data: pe } = await supabase.from("periode_ekskul").select("ekskul_id").eq("periode_id", per.id);
+        if (pe && pe.length > 0) {
+          setOpenEkskulIds(pe.map((r: any) => r.ekskul_id));
+        } else {
+          setOpenEkskulIds(list.map(e => e.id));
+        }
+      } else {
+        setOpenEkskulIds([]);
+      }
+      setLoading(false);
+    }
+    loadData();
+  }, []);
 
   // ── Count-up animation for stat pills ──
   useEffect(() => {
-    const targets = [11, 500, 25];
+    const targets = [ekskulList.length || 11, 500, 25];
     const el = statsRef.current;
-    if (!el) return;
+    if (!el || loading) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
@@ -177,13 +103,12 @@ export default function EkstrakulikulerPage() {
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
-
+  }, [loading, ekskulList.length]);
 
   const activeKategoriList = filters.find((f) => f.label === activeFilter)?.kategoriList;
   const filteredEkskul = activeKategoriList
-    ? ekskulData.filter((e) => activeKategoriList.includes(e.kategori))
-    : ekskulData;
+    ? ekskulList.filter((e) => activeKategoriList.includes(e.kategori))
+    : ekskulList;
 
   return (
     <main>
@@ -199,7 +124,7 @@ export default function EkstrakulikulerPage() {
               <span className={styles.heroTitleAccent}>Tepat Untukmu</span>
             </h1>
             <p className={styles.heroDesc}>
-              11 kegiatan ekstrakurikuler pilihan — dari olahraga, seni, hingga olimpiade sains.
+              {ekskulList.length > 0 ? ekskulList.length : 11} kegiatan ekstrakurikuler pilihan — dari olahraga, seni, hingga olimpiade sains.
               Pilih yang sesuai minatmu, daftar dalam hitungan menit.
             </p>
             <div className={styles.heroActions}>
@@ -224,9 +149,9 @@ export default function EkstrakulikulerPage() {
             <div className={styles.heroOrb} />
             <div className={styles.heroStats} ref={statsRef}>
               {[
-                { num: "11", label: "Ekskul Aktif" },
-                { num: "500+", label: "Siswa Bergabung" },
-                { num: "25+", label: "Prestasi Diraih" },
+                { num: "0", label: "Ekskul Aktif" },
+                { num: "0", label: "Siswa Bergabung" },
+                { num: "0", label: "Prestasi Diraih" },
               ].map((s) => (
                 <div key={s.label} className={styles.heroStatPill}>
                   <span className={styles.heroStatNum}>{s.num}</span>
@@ -259,52 +184,68 @@ export default function EkstrakulikulerPage() {
       {/* ── Daftar Ekskul ── */}
       <section className={styles.section} aria-label="Daftar ekstrakurikuler">
         <div className={styles.ekskulGrid}>
-          {filteredEkskul.map((ekskul) => {
-            const IconComp = ekskul.icon;
-            return (
-              <article
-                key={ekskul.nama}
-                className={`${styles.ekskulCard} reveal`}
-                id={`ekskul-${ekskul.nama.toLowerCase().replace(/\s+/g, "-")}`}
-              >
-                <div
-                  className={styles.ekskulCardHeader}
-                  style={{ "--card-color": ekskul.warna } as React.CSSProperties}
+          {loading ? (
+            <div style={{gridColumn:"1/-1", textAlign:"center", padding:"40px", color:"#666"}}>Memuat data ekstrakurikuler...</div>
+          ) : filteredEkskul.length === 0 ? (
+            <div style={{gridColumn:"1/-1", textAlign:"center", padding:"40px", color:"#666"}}>Tidak ada ekskul di kategori ini.</div>
+          ) : (
+            filteredEkskul.map((ekskul: any) => {
+              const isOpen = openEkskulIds.includes(ekskul.id);
+              const color = getColor(ekskul.kategori);
+              return (
+                <article
+                  key={ekskul.id}
+                  className={`${styles.ekskulCard} reveal`}
+                  id={`ekskul-${ekskul.nama.toLowerCase().replace(/\s+/g, "-")}`}
                 >
-                  <div className={styles.ekskulIconWrap}>
-                    <IconComp size={28} aria-hidden />
-                  </div>
-                  <span className={styles.ekskulCategory}>{ekskul.kategori}</span>
-                </div>
-                <div className={styles.ekskulBody}>
-                  <h2 className={styles.ekskulName}>{ekskul.nama}</h2>
-                  <p className={styles.ekskulDesc}>{ekskul.desc}</p>
-                  <div className={styles.ekskulMeta}>
-                    <div className={styles.ekskulMetaItem}>
-                      <Clock size={13} aria-hidden />
-                      <span>{ekskul.jadwal}, {ekskul.waktu}</span>
-                    </div>
-                    <div className={styles.ekskulMetaItem}>
-                      <MapPin size={13} aria-hidden />
-                      <span>{ekskul.lokasi}</span>
-                    </div>
-                    <div className={styles.ekskulMetaItem}>
-                      <Users size={13} aria-hidden />
-                      <span>{ekskul.pembina}</span>
-                    </div>
-                  </div>
-                  <a
-                    href="/ekstrakurikuler/daftar"
-                    className={styles.ekskulBtn}
-                    aria-label={`Daftar ekskul ${ekskul.nama}`}
+                  <div
+                    className={styles.ekskulCardHeader}
+                    style={{ "--card-color": color } as React.CSSProperties}
                   >
-                    Daftar Sekarang
-                    <ChevronRight size={15} aria-hidden />
-                  </a>
-                </div>
-              </article>
-            );
-          })}
+                    <div className={styles.ekskulIconWrap} style={{fontSize:24}}>
+                      {ekskul.emoji || "⭐"}
+                    </div>
+                    <span className={styles.ekskulCategory}>{ekskul.kategori}</span>
+                  </div>
+                  <div className={styles.ekskulBody}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+                      <h2 className={styles.ekskulName}>{ekskul.nama}</h2>
+                      {isOpen ? (
+                        <span style={{fontSize:11,background:"#dcfce7",color:"#166534",padding:"2px 8px",borderRadius:12,fontWeight:600,whiteSpace:"nowrap",height:"fit-content"}}>Buka</span>
+                      ) : (
+                        <span style={{fontSize:11,background:"#f3f4f6",color:"#4b5563",padding:"2px 8px",borderRadius:12,fontWeight:600,whiteSpace:"nowrap",height:"fit-content"}}>Tutup</span>
+                      )}
+                    </div>
+                    <p className={styles.ekskulDesc}>{ekskul.deskripsi}</p>
+                    <div className={styles.ekskulMeta}>
+                      <div className={styles.ekskulMetaItem}>
+                        <Clock size={13} aria-hidden />
+                        <span>{ekskul.jadwal || "-"}, {ekskul.waktu || "-"}</span>
+                      </div>
+                      <div className={styles.ekskulMetaItem}>
+                        <MapPin size={13} aria-hidden />
+                        <span>{ekskul.lokasi || "-"}</span>
+                      </div>
+                      <div className={styles.ekskulMetaItem}>
+                        <Users size={13} aria-hidden />
+                        <span>{ekskul.nama_pelatih || (ekskul.pembina?.nama_lengkap) || "-"}</span>
+                      </div>
+                    </div>
+                    {isOpen ? (
+                      <a href="/ekstrakurikuler/daftar" className={styles.ekskulBtn} aria-label={`Daftar ekskul ${ekskul.nama}`}>
+                        Daftar Sekarang
+                        <ChevronRight size={15} aria-hidden />
+                      </a>
+                    ) : (
+                      <button className={styles.ekskulBtn} style={{background:"#f3f4f6",color:"#9ca3af",cursor:"not-allowed",border:"none"}} disabled>
+                        Pendaftaran Ditutup
+                      </button>
+                    )}
+                  </div>
+                </article>
+              );
+            })
+          )}
         </div>
       </section>
 
