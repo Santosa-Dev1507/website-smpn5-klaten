@@ -119,18 +119,6 @@
   animation: heroSlideUp 600ms var(--ease-out-expo) 320ms both;
 }
 
-.heroOrb {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--ekskul-gold) 0%, var(--ekskul-primary) 100%);
-  opacity: 0.15;
-  filter: blur(40px);
-  position: absolute;
-  top: 10%;
-  right: 3%;
-  pointer-events: none;
-}
 
 .heroStats {
   display: flex;
@@ -238,7 +226,7 @@
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: all 0.2s var(--ease-out-expo);
+  transition: background 0.2s var(--ease-out-expo), color 0.2s var(--ease-out-expo), border-color 0.2s var(--ease-out-expo), box-shadow 0.2s var(--ease-out-expo);
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -280,8 +268,8 @@
   flex-direction: column;
   box-shadow: var(--shadow-sm);
   transition:
-    transform 0.25s var(--ease-out-expo),
-    box-shadow 0.25s var(--ease-out-expo);
+    transform 0.2s var(--ease-out-expo),
+    border-color 0.2s var(--ease-out-expo);
   cursor: default;
   position: relative;
 }
@@ -304,8 +292,8 @@
 }
 
 .ekskulCard:hover {
-  transform: translateY(-6px) scale(1.005);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ekskul-border) 80%, var(--ekskul-primary) 20%);
 }
 
 .ekskulCard:hover::after {
@@ -315,28 +303,10 @@
 
 
 .ekskulCardHeader {
-  padding: 1.5rem 1.5rem 1.25rem;
-  background: linear-gradient(135deg,
-    color-mix(in srgb, var(--card-color, #944535) 10%, white) 0%,
-    color-mix(in srgb, var(--card-color, #944535) 5%, white) 100%
-  );
-  border-bottom: 1px solid var(--ekskul-border-subtle);
+  padding: 1rem 1.5rem 0.5rem;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
-}
-
-.ekskulIconWrap {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
-  background: var(--card-color, #944535);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--card-color, #944535) 40%, transparent);
+  justify-content: flex-start;
 }
 
 .ekskulCategory {
@@ -613,7 +583,6 @@
 @media (max-width: 900px) {
   .heroInner { grid-template-columns: 1fr; }
   .heroVisual { display: none; }
-  .heroOrb { display: none; }
 }
 
 @media (max-width: 640px) {

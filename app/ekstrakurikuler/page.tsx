@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
-import ScrollReveal from "../components/ScrollReveal";
 import styles from "./ekstrakurikuler.module.css";
 import { supabase } from "@/lib/supabase";
 import type { Ekskul } from "@/lib/supabase";
@@ -112,7 +111,6 @@ export default function EkstrakulikulerPage() {
 
   return (
     <main>
-      <ScrollReveal />
       <Header activePage="Ekskul" />
 
       {/* ── Hero ── */}
@@ -145,7 +143,6 @@ export default function EkstrakulikulerPage() {
             </div>
           </div>
           <div className={styles.heroVisual} aria-hidden>
-            <div className={styles.heroOrb} />
             <div className={styles.heroStats} ref={statsRef}>
               {[
                 { num: "0", label: "Ekskul Aktif" },
@@ -194,21 +191,21 @@ export default function EkstrakulikulerPage() {
               return (
                 <article
                   key={ekskul.id}
-                  className={`${styles.ekskulCard} reveal`}
+                  className={styles.ekskulCard}
                   id={`ekskul-${ekskul.nama.toLowerCase().replace(/\s+/g, "-")}`}
                 >
                   <div
                     className={styles.ekskulCardHeader}
                     style={{ "--card-color": color } as React.CSSProperties}
                   >
-                    <div className={styles.ekskulIconWrap} style={{fontSize:24}}>
-                      {ekskul.emoji || "⭐"}
-                    </div>
                     <span className={styles.ekskulCategory}>{ekskul.kategori}</span>
                   </div>
                   <div className={styles.ekskulBody}>
                     <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
-                      <h2 className={styles.ekskulName}>{ekskul.nama}</h2>
+                      <h2 className={styles.ekskulName}>
+                        <span style={{marginRight: '6px', fontSize: '1.2rem'}}>{ekskul.emoji || "⭐"}</span>
+                        {ekskul.nama}
+                      </h2>
                       {isOpen ? (
                         <span style={{fontSize:11,background:"#dcfce7",color:"#166534",padding:"2px 8px",borderRadius:12,fontWeight:600,whiteSpace:"nowrap",height:"fit-content"}}>Buka</span>
                       ) : (
