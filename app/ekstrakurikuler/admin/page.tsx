@@ -216,8 +216,15 @@ export default function AdminPage() {
       showMsg("Lengkapi semua field periode.", "err"); return;
     }
     
+    // Konversi string "YYYY-MM-DDThh:mm" (local) ke ISO 8601 (UTC)
+    const payloadPeriode = {
+      ...formPeriode,
+      tanggal_buka: new Date(formPeriode.tanggal_buka).toISOString(),
+      tanggal_tutup: new Date(formPeriode.tanggal_tutup).toISOString(),
+    };
+    
     if (editPeriodeId) {
-      const { error } = await supabase.from("periode_pendaftaran").update(formPeriode).eq("id", editPeriodeId);
+      const { error } = await supabase.from("periode_pendaftaran").update(payloadPeriode).eq("id", editPeriodeId);
       if (error) { showMsg("❌ "+error.message, "err"); return; }
       
       await supabase.from("periode_ekskul").delete().eq("periode_id", editPeriodeId);
@@ -229,7 +236,7 @@ export default function AdminPage() {
     } else {
       const { data: newPeriode, error } = await supabase
         .from("periode_pendaftaran")
-        .insert({ ...formPeriode, dibuat_oleh: user!.id })
+        .insert({ ...payloadPeriode, dibuat_oleh: user!.id })
         .select().single();
       if (error || !newPeriode) { showMsg("❌ "+(error?.message ?? "Gagal"), "err"); return; }
       if (!semuaEkskul && periodeEkskulPilihan.length > 0) {
@@ -340,7 +347,23 @@ export default function AdminPage() {
   const importOk  = importRows.filter(r => r.status === "ok").length;
   const importErr = importRows.filter(r => r.status === "err").length;
 
+  function getLocalDatetimeString(isoString: string) {
+    if (!isoString) return "";
+    const d = new Date(isoString);
+    const yyyy = d.getFullYear();
+    const MM = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const hh = String(d.getHours()).padStart(2, '0');
+    const mm = String(d.getMinutes()).padStart(2, '0');
+    return `${yyyy}-${MM}-${dd}T${hh}:${mm}`;
+  }
+
   if (loading) return (<main><Header activePage="Ekskul" /><div className={styles.loadingWrap}><div className={styles.spinner} /></div></main>);
+
+  // --- Render ---
+  if (dataLoad && activeTab !== "dashboard" && userList.length === 0 && ekskulList.length === 0 && periodeList.length === 0) {
+    return <div className={styles.loadingState}><div className={styles.spinner} /></div>;
+  }
 
   if (!user) return (
     <main>
@@ -589,7 +612,7 @@ export default function AdminPage() {
                             <div style={{display:"flex",gap:4}}>
                               <button className={styles.btnAction} onClick={() => {
                                 setEditPeriodeId(p.id);
-                                setFormPeriode({ nama_periode: p.nama_periode, tanggal_buka: p.tanggal_buka.slice(0, 16), tanggal_tutup: p.tanggal_tutup.slice(0, 16), aktif: p.aktif });
+                                setFormPeriode({ nama_periode: p.nama_periode, tanggal_buka: getLocalDatetimeString(p.tanggal_buka), tanggal_tutup: getLocalDatetimeString(p.tanggal_tutup), aktif: p.aktif });
                                 const eks = periodeEkskulIdsMap[p.id];
                                 if (eks && eks.length > 0) { setSemuaEkskul(false); setPeriodeEkskulPilihan(eks); } else { setSemuaEkskul(true); setPeriodeEkskulPilihan([]); }
                                 setShowFormPeriode(true);
