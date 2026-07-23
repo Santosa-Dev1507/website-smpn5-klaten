@@ -17,13 +17,14 @@ import type {
 } from "@/lib/supabase";
 import {
   ClipboardList, CheckSquare, BarChart2, Trophy, FileText, Camera,
-  Award, BookOpen, UserCheck, Calendar, School, Clock, MapPin, User,
-  Check, X, AlertCircle, Save, Send, RefreshCw, Printer, Upload, Plus, ArrowRight
+  Award, BookOpen, UserCheck, Calendar, School, Clock, MapPin, User, Users,
+  Check, X, AlertCircle, Save, Send, RefreshCw, Printer, Upload, Plus, ArrowRight, Trash2, Search
 } from "lucide-react";
 
-type Tab = "pendaftaran" | "absensi" | "rekap" | "lomba" | "laporan" | "foto";
+type Tab = "anggota" | "pendaftaran" | "absensi" | "rekap" | "lomba" | "laporan" | "foto";
 
 const TABS: { id: Tab; label: string; Icon: any }[] = [
+  { id: "anggota",     label: "Anggota",     Icon: Users },
   { id: "pendaftaran", label: "Pendaftaran", Icon: ClipboardList },
   { id: "absensi",     label: "Absensi",     Icon: CheckSquare },
   { id: "rekap",       label: "Rekap",        Icon: BarChart2 },
@@ -61,6 +62,16 @@ export default function PembinaPage() {
   const [activeTab, setActiveTab]   = useState<Tab>("absensi");
   const [myEkskul, setMyEkskul]     = useState<Ekskul[]>([]);
   const [selEkskulId, setSelEkskulId] = useState("");
+
+  // ── Anggota state ──
+  const [anggotaList, setAnggotaList]   = useState<any[]>([]);
+  const [anggotaLoad, setAnggotaLoad]   = useState(false);
+  const [anggotaMsg, setAnggotaMsg]     = useState("");
+  const [showTambahAnggota, setShowTambahAnggota] = useState(false);
+  const [searchSiswa, setSearchSiswa]   = useState("");
+  const [searchSiswaResult, setSearchSiswaResult] = useState<any[]>([]);
+  const [kelasList, setKelasList]       = useState<any[]>([]);
+  const [selKelasId, setSelKelasId]     = useState("");
 
   // ── Pendaftaran state ──
   const [pendaftaran, setPendaftaran]   = useState<Pendaftaran[]>([]);
@@ -164,6 +175,86 @@ export default function PembinaPage() {
     } finally {
       setLoginLoad(false);
     }
+  }
+
+  // ────────────────────────────────────────────────────────────
+  // ANGGOTA
+  // ────────────────────────────────────────────────────────────
+  const loadAnggota = useCallback(async () => {
+    if (!selEkskulId) return;
+    setAnggotaLoad(true);
+    const { data } = await supabase
+      .from("pendaftaran")
+      .select("id, tanggal_daftar, siswa:siswa_id(id,nama_lengkap,nis_nip,kelas:kelas_id(nama_kelas))")
+      .eq("ekskul_id", selEkskulId)
+      .eq("status", "disetujui")
+      .order("tanggal_daftar", { ascending: false });
+    setAnggotaList(data ?? []);
+    
+    // Load kelas untuk auto-enroll
+    const { data: kls } = await supabase.from("kelas").select("*").order("tingkat");
+    setKelasList(kls ?? []);
+    setAnggotaLoad(false);
+  }, [selEkskulId]);
+
+  async function handleSearchSiswa() {
+    if (!searchSiswa.trim()) return;
+    const { data } = await supabase
+      .from("users")
+      .select("id, nama_lengkap, nis_nip, kelas:kelas_id(nama_kelas)")
+      .eq("role", "siswa")
+      .ilike("nama_lengkap", `%${searchSiswa}%`)
+      .limit(10);
+    
+    // Filter out existing members
+    const existingIds = new Set(anggotaList.map(a => a.siswa.id));
+    setSearchSiswaResult((data ?? []).filter(u => !existingIds.has(u.id)));
+  }
+
+  async function tambahSiswaManual(siswaId: string) {
+    if (!selEkskulId) return;
+    setAnggotaMsg("");
+    const { data: per } = await supabase.from("periode_pendaftaran").select("id").eq("aktif", true).limit(1).single();
+    if (!per) { setAnggotaMsg("❌ Tidak ada Periode aktif."); return; }
+    
+    const { error } = await supabase.from("pendaftaran").insert({
+      siswa_id: siswaId, ekskul_id: selEkskulId, periode_id: per.id,
+      status: "disetujui", catatan_pembina: "Ditambahkan manual oleh Pembina",
+    });
+    if (error) { setAnggotaMsg("❌ " + error.message); return; }
+    setAnggotaMsg("✅ Siswa berhasil ditambahkan!");
+    setSearchSiswaResult(prev => prev.filter(p => p.id !== siswaId));
+    loadAnggota();
+  }
+
+  async function autoEnrollKelas() {
+    if (!selEkskulId || !selKelasId) return;
+    setAnggotaMsg("");
+    const { data: per } = await supabase.from("periode_pendaftaran").select("id").eq("aktif", true).limit(1).single();
+    if (!per) { setAnggotaMsg("❌ Tidak ada Periode aktif."); return; }
+    
+    const { data: siswaKelas } = await supabase.from("users").select("id").eq("role", "siswa").eq("kelas_id", selKelasId);
+    if (!siswaKelas || siswaKelas.length === 0) { setAnggotaMsg("❌ Kelas ini belum memiliki siswa."); return; }
+    
+    const existingIds = new Set(anggotaList.map(a => a.siswa.id));
+    const toInsert = siswaKelas.filter((s:any) => !existingIds.has(s.id)).map((s:any) => ({
+      siswa_id: s.id, ekskul_id: selEkskulId, periode_id: per.id,
+      status: "disetujui", catatan_pembina: "Auto-enroll kelas Wajib",
+    }));
+
+    if (toInsert.length === 0) { setAnggotaMsg("✅ Semua siswa di kelas ini sudah menjadi anggota."); return; }
+    const { error } = await supabase.from("pendaftaran").insert(toInsert);
+    if (error) { setAnggotaMsg("❌ " + error.message); return; }
+    setAnggotaMsg(`✅ Berhasil memasukkan ${toInsert.length} siswa baru dari kelas tersebut.`);
+    loadAnggota();
+  }
+
+  async function keluarkanAnggota(id: string) {
+    if (!window.confirm("Keluarkan siswa ini dari ekstrakurikuler?")) return;
+    const { error } = await supabase.from("pendaftaran").delete().eq("id", id);
+    if (error) { setAnggotaMsg("❌ " + error.message); return; }
+    setAnggotaMsg("✅ Siswa dikeluarkan.");
+    loadAnggota();
   }
 
   // ────────────────────────────────────────────────────────────
@@ -465,13 +556,14 @@ export default function PembinaPage() {
   // ── Load data saat tab/ekskul berubah ──
   useEffect(() => {
     if (!user || !selEkskulId) return;
+    if (activeTab === "anggota") loadAnggota();
     if (activeTab === "pendaftaran") loadPendaftaran();
     if (activeTab === "absensi") loadSiswaUntukAbsensi();
     if (activeTab === "rekap") loadRekap();
     if (activeTab === "lomba") loadLomba();
     if (activeTab === "laporan") loadLaporan();
     if (activeTab === "foto") loadFoto();
-  }, [activeTab, selEkskulId, user, loadPendaftaran, loadSiswaUntukAbsensi, loadRekap, loadLomba, loadLaporan, loadFoto]);
+  }, [activeTab, selEkskulId, user, loadAnggota, loadPendaftaran, loadSiswaUntukAbsensi, loadRekap, loadLomba, loadLaporan, loadFoto]);
 
   // ────────────────────────────────────────────────────────────
   // RENDER
@@ -562,6 +654,92 @@ export default function PembinaPage() {
         </div>
 
         <div className={styles.tabContent}>
+
+          {/* ─────────── TAB: ANGGOTA ─────────── */}
+          {activeTab === "anggota" && (
+            <div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
+                <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}><Users size={22} /> Kelola Anggota</h2>
+                <button className={styles.btnPrimary} onClick={() => setShowTambahAnggota(true)} style={{display:"flex",alignItems:"center",gap:6}}>
+                  <Plus size={16} /> Tambah Anggota
+                </button>
+              </div>
+
+              {anggotaMsg && <div className={anggotaMsg.includes("❌") ? styles.alertError : styles.alertSuccess}>{anggotaMsg}</div>}
+
+              {showTambahAnggota && (
+                <div className={styles.formCard}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <h3 className={styles.formCardTitle}>Tambah Anggota (Siswa)</h3>
+                    <button className={styles.btnAction} onClick={() => { setShowTambahAnggota(false); setSearchSiswaResult([]); setSearchSiswa(""); }}><X size={16} /></button>
+                  </div>
+                  
+                  <div style={{display:"flex", gap:12, marginBottom:16}}>
+                    <input className={styles.input} style={{flex:1}} placeholder="Ketik nama siswa lalu tekan Enter..." value={searchSiswa} onChange={e => setSearchSiswa(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSearchSiswa()} />
+                    <button className={styles.btnSecondary} onClick={handleSearchSiswa}><Search size={16} /> Cari</button>
+                  </div>
+                  
+                  {searchSiswaResult.length > 0 && (
+                    <div style={{background:"#fff", border:"1px solid #ddd", borderRadius:8, padding:8, marginBottom:16}}>
+                      {searchSiswaResult.map(s => (
+                        <div key={s.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px",borderBottom:"1px solid #f0f0f0"}}>
+                          <div>
+                            <strong>{s.nama_lengkap}</strong>
+                            <div className={styles.subText}>{s.nis_nip} • Kelas {s.kelas?.nama_kelas || "-"}</div>
+                          </div>
+                          <button className={styles.btnPrimary} style={{padding:"4px 12px", fontSize:12}} onClick={() => tambahSiswaManual(s.id)}>Tambahkan</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {ekskulAktif?.jenis === "wajib" && (
+                    <div style={{borderTop:"1px solid #ddd", paddingTop:16, marginTop:16}}>
+                      <h4 style={{marginBottom:10, fontSize:14, color:"#333"}}>Atau Masukkan 1 Kelas Sekaligus (Karena Ekskul Wajib)</h4>
+                      <div style={{display:"flex", gap:12}}>
+                        <select className={styles.input} style={{flex:1}} value={selKelasId} onChange={e => setSelKelasId(e.target.value)}>
+                          <option value="">-- Pilih Kelas --</option>
+                          {kelasList.map(k => <option key={k.id} value={k.id}>{k.nama_kelas}</option>)}
+                        </select>
+                        <button className={styles.btnPrimary} style={{background:"#166534",borderColor:"#166534",color:"#fff"}} onClick={autoEnrollKelas}>
+                          Auto-Enroll Kelas Ini
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {anggotaLoad ? <div className={styles.loadRow}>Memuat data...</div> : (
+                <div className={styles.tableWrap}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr><th>Nama Siswa</th><th>NIS</th><th>Kelas</th><th>Tgl Terdaftar</th><th style={{textAlign:"right"}}>Aksi</th></tr>
+                    </thead>
+                    <tbody>
+                      {anggotaList.length === 0 ? (
+                        <tr><td colSpan={5} style={{textAlign:"center",padding:20,color:"#666"}}>Belum ada anggota.</td></tr>
+                      ) : (
+                        anggotaList.map(a => (
+                          <tr key={a.id}>
+                            <td><strong>{a.siswa?.nama_lengkap}</strong></td>
+                            <td>{a.siswa?.nis_nip}</td>
+                            <td>{a.siswa?.kelas?.nama_kelas || "-"}</td>
+                            <td className={styles.subText}>{new Date(a.tanggal_daftar).toLocaleDateString("id-ID")}</td>
+                            <td style={{textAlign:"right"}}>
+                              <button className={styles.btnAction} onClick={() => keluarkanAnggota(a.id)} title="Keluarkan dari ekskul">
+                                <Trash2 size={14} color="#ba1a1a" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* ─────────── TAB: PENDAFTARAN ─────────── */}
           {activeTab === "pendaftaran" && (
