@@ -285,9 +285,14 @@ export default function AdminPage() {
 
   function parseCSV(text: string): ImportRow[] {
     const lines = text.replace(/\r/g, "").split("\n").filter(l => l.trim());
-    const start = /^\d/.test(lines[0]) ? 0 : 1;
+    if (lines.length === 0) return [];
+    
+    const isDataFirstRow = /^"?\d/.test(lines[0]);
+    const start = isDataFirstRow ? 0 : 1;
+    
     return lines.slice(start).map(line => {
-      const cols = line.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
+      const separator = line.includes("\t") ? "\t" : line.includes(";") ? ";" : ",";
+      const cols = line.split(separator).map(c => c.trim().replace(/^"|"$/g, ""));
       return { nis: cols[0] ?? "", nama: cols[1] ?? "", kelas: cols[2] ?? "", status: "pending" as const };
     }).filter(r => r.nis && r.nama);
   }
