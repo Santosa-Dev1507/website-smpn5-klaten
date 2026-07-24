@@ -316,5 +316,52 @@ export function printHtml(html: string) {
   setTimeout(() => win.print(), 500);
 }
 
+// ── Util: Download HTML sebagai MS Word (.doc) ─────────────
+export function downloadWord(html: string, filename: string) {
+  const content = `
+    <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+    <head>
+      <meta charset='utf-8'>
+      <title>${filename}</title>
+      <style>
+        body { font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.3; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; margin-bottom: 10px; }
+        th, td { border: 1px solid #000; padding: 4px 8px; font-size: 10pt; }
+        th { background-color: #f2f2f2; text-align: center; }
+      </style>
+    </head>
+    <body>${html}</body>
+    </html>
+  `;
+  const blob = new Blob(["\uFEFF" + content], { type: "application/msword;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename.endsWith(".doc") ? filename : `${filename}.doc`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ── Util: Download data sebagai MS Excel (.csv) ────────────
+export function exportToExcel(filename: string, headers: string[], rows: (string | number | null | undefined)[][]) {
+  const csvLines = [
+    headers.map(h => `"${String(h ?? "").replace(/"/g, '""')}"`).join(","),
+    ...rows.map(row => row.map(cell => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(","))
+  ];
+  const csvContent = csvLines.join("\r\n");
+
+  const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename.endsWith(".csv") ? filename : `${filename}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 const tdStyle = "border:1px solid #000;padding:4px 8px;";
-void tdStyle; // suppress unused warning — used inside template literals
+void tdStyle;

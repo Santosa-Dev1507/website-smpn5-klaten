@@ -10,6 +10,8 @@ import {
   generateDaftarHadirPelatih,
   generateLaporanKegiatanPdf,
   printHtml,
+  downloadWord,
+  exportToExcel,
 } from "@/lib/pdf-laporan";
 import type {
   UserProfile, Ekskul, Pendaftaran, SesiAbsensi,
@@ -18,7 +20,7 @@ import type {
 import {
   ClipboardList, CheckSquare, BarChart2, Trophy, FileText, Camera,
   Award, BookOpen, UserCheck, Calendar, School, Clock, MapPin, User, Users,
-  Check, X, AlertCircle, Save, Send, RefreshCw, Printer, Upload, Plus, ArrowRight, Trash2, Search
+  Check, X, AlertCircle, Save, Send, RefreshCw, Printer, Upload, Plus, ArrowRight, Trash2, Search, Download, FileSpreadsheet
 } from "lucide-react";
 
 type Tab = "anggota" | "pendaftaran" | "absensi" | "rekap" | "lomba" | "laporan" | "foto" | "bumbung";
@@ -562,6 +564,124 @@ export default function PembinaPage() {
     printHtml(generateLaporanKegiatanPdf({ ekskul, laporan: l, namaPembina, nipPembina }));
   }
 
+  // ── EXPORT EXCEL & WORD ──
+  function exportAnggotaExcel() {
+    const ekskul = myEkskul.find(e => e.id === selEkskulId);
+    const headers = ["No", "Nama Siswa", "NIS", "Kelas", "Tanggal Terdaftar"];
+    const rows = anggotaList.map((a, i) => [
+      i + 1,
+      a.siswa?.nama_lengkap ?? "-",
+      a.siswa?.nis_nip ?? "-",
+      a.siswa?.kelas?.nama_kelas ?? "-",
+      new Date(a.tanggal_daftar).toLocaleDateString("id-ID")
+    ]);
+    exportToExcel(`Daftar_Anggota_${ekskul?.nama ?? "Ekskul"}.csv`, headers, rows);
+  }
+
+  function exportRekapExcel() {
+    const ekskul = myEkskul.find(e => e.id === selEkskulId);
+    const headers = ["No", "Nama Siswa", "Kelas", "Hadir", "Izin", "Alpa", "Total Sesi", "Persentase Kehadiran"];
+    const rows = rekapData.map((r, i) => {
+      const total = r.hadir + r.izin + r.alpa;
+      return [
+        i + 1,
+        r.siswa?.nama_lengkap ?? "-",
+        (r.siswa as any)?.kelas?.nama_kelas ?? "-",
+        r.hadir,
+        r.izin,
+        r.alpa,
+        total,
+        `${r.persen}%`
+      ];
+    });
+    exportToExcel(`Rekap_Absensi_${ekskul?.nama ?? "Ekskul"}_${rekapBulan}.csv`, headers, rows);
+  }
+
+  function exportBumbungExcel() {
+    const ekskul = myEkskul.find(e => e.id === selEkskulId);
+    const headers = ["No", "Kelas", "Nominal Setor (Rp)", "Status Setor", "Keterangan"];
+    const rows = bumbungRows.map((r, i) => [
+      i + 1,
+      r.kelas,
+      r.jumlah,
+      r.sudah_setor ? "Sudah Setor" : "Belum Setor",
+      r.ket || "-"
+    ]);
+    exportToExcel(`Bumbung_${ekskul?.nama ?? "Pramuka"}_${bumbungSesi}.csv`, headers, rows);
+  }
+
+  function exportLombaExcel() {
+    const ekskul = myEkskul.find(e => e.id === selEkskulId);
+    const headers = ["No", "Nama Lomba", "Tingkat", "Penyelenggara", "Tanggal", "Nama Siswa Peserta", "Hasil / Juara"];
+    const rows: (string | number)[][] = [];
+    let no = 1;
+    for (const l of lombaList) {
+      const pes = (l as any).peserta_lomba ?? [];
+      if (pes.length === 0) {
+        rows.push([no++, l.nama_lomba, l.tingkat, l.penyelenggara || "-", l.tanggal_mulai || "-", "-", "-"]);
+      } else {
+        for (const p of pes) {
+          rows.push([no++, l.nama_lomba, l.tingkat, l.penyelenggara || "-", l.tanggal_mulai || "-", p.siswa?.nama_lengkap ?? "-", p.hasil]);
+        }
+      }
+    }
+    exportToExcel(`Perlombaan_${ekskul?.nama ?? "Ekskul"}.csv`, headers, rows);
+  }
+
+  async function wordLaporan(jenis: JenisLaporan) {
+    if (!selEkskulId) return;
+    const ekskul = myEkskul.find(e => e.id === selEkskulId);
+    if (!ekskul) return;
+    const mulai = `${rekapBulanLap}-01`;
+    const akhir = `${rekapBulanLap}-31`;
+    const [bln, thn] = rekapBulanLap.split("-");
+    const bulanNames = ["","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+    const bulanStr = `${bulanNames[parseInt(bln)]} ${thn}`;
+
+    const { data: sesiData } = await supabase
+      .from("sesi_absensi")
+      .select("*")
+      .eq("ekskul_id", selEkskulId)
+      .gte("tanggal", mulai).lte("tanggal", akhir)
+      .order("tanggal");
+    const sesi = (sesiData ?? []) as SesiAbsensi[];
+    const namaPembina = user?.nama_lengkap ?? "Pembina";
+    const nipPembina = "NIP. " + (user?.nis_nip ?? "-");
+    const semester = parseInt(bln) <= 6 ? "Semester Genap" : "Semester Ganjil";
+    const namaPelatih = formLap.nama_pelatih || ekskul.nama_pelatih || undefined;
+
+    let html = "";
+    let fn = "";
+    if (jenis === "daftar_hadir_siswa") {
+      const sesiIds = sesi.map(s => s.id);
+      const { data: siswaPend } = await supabase
+        .from("pendaftaran")
+        .select("siswa:siswa_id(id,nama_lengkap,kelas:kelas_id(nama_kelas))")
+        .eq("ekskul_id", selEkskulId).eq("status", "disetujui");
+      const siswaList = (siswaPend ?? []).map((p: any) => p.siswa) as UserProfile[];
+      const { data: absenData } = await supabase.from("absensi").select("*").in("sesi_id", sesiIds);
+      html = generateDaftarHadirSiswa({ ekskul, bulan: bulanStr, tahunAjaran: "2025/2026", siswa: siswaList, sesi, absensi: absenData ?? [], namaPembina, nipPembina, namaPelatih });
+      fn = `Daftar_Hadir_Siswa_${ekskul.nama}_${bulanStr}.doc`;
+    } else if (jenis === "jurnal_kegiatan") {
+      html = generateJurnalKegiatan({ ekskul, bulan: bulanStr, semester, tahunAjaran: "2025/2026", sesi, namaPembina, nipPembina, namaPelatih });
+      fn = `Jurnal_Kegiatan_${ekskul.nama}_${bulanStr}.doc`;
+    } else if (jenis === "daftar_hadir_pelatih") {
+      html = generateDaftarHadirPelatih({ ekskul, bulan: bulanStr, semester, tahunAjaran: "2025/2026", sesi, namaPembina, nipPembina, namaPelatih });
+      fn = `Daftar_Hadir_Pelatih_${ekskul.nama}_${bulanStr}.doc`;
+    }
+    if (html) downloadWord(html, fn);
+  }
+
+  function wordLaporanKegiatan(l: LaporanKegiatan) {
+    if (!selEkskulId) return;
+    const ekskul = myEkskul.find(e => e.id === selEkskulId);
+    if (!ekskul) return;
+    const namaPembina = user?.nama_lengkap ?? "Pembina";
+    const nipPembina = "NIP. " + (user?.nis_nip ?? "-");
+    const html = generateLaporanKegiatanPdf({ ekskul, laporan: l, namaPembina, nipPembina });
+    downloadWord(html, `Laporan_${l.judul.replace(/\s+/g, "_")}.doc`);
+  }
+
   // ────────────────────────────────────────────────────────────
   // FOTO
   // ────────────────────────────────────────────────────────────
@@ -761,9 +881,14 @@ export default function PembinaPage() {
             <div>
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}>
                 <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}><Users size={22} /> Kelola Anggota</h2>
-                <button className={styles.btnPrimary} onClick={() => setShowTambahAnggota(true)} style={{display:"flex",alignItems:"center",gap:6}}>
-                  <Plus size={16} /> Tambah Anggota
-                </button>
+                <div style={{display:"flex",gap:8}}>
+                  <button className={styles.btnSecondary} onClick={exportAnggotaExcel} style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                    <FileSpreadsheet size={16} /> Export Excel
+                  </button>
+                  <button className={styles.btnPrimary} onClick={() => setShowTambahAnggota(true)} style={{display:"flex",alignItems:"center",gap:6}}>
+                    <Plus size={16} /> Tambah Anggota
+                  </button>
+                </div>
               </div>
 
               {anggotaMsg && <div className={anggotaMsg.includes("❌") ? styles.alertError : styles.alertSuccess}>{anggotaMsg}</div>}
@@ -990,6 +1115,9 @@ export default function PembinaPage() {
                   <input type="month" className={styles.input} value={rekapBulan} onChange={e => setRekapBulan(e.target.value)} />
                 </div>
                 <button className={styles.btnSecondary} onClick={loadRekap}>Tampilkan</button>
+                <button className={styles.btnSecondary} onClick={exportRekapExcel} style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                  <FileSpreadsheet size={16} /> Export Excel
+                </button>
               </div>
               {rekapLoad ? <div className={styles.loadRow}>Memuat rekap...</div> : (
                 <div className={styles.tableWrap}>
@@ -1091,9 +1219,14 @@ export default function PembinaPage() {
                       </tbody>
                     </table>
                   </div>
-                  <button className={styles.btnPrimary} onClick={simpanBumbung} disabled={bumbungLoad || bumbungRows.length === 0} id="btn-simpan-bumbung" style={{display:"inline-flex",alignItems:"center",gap:6}}>
-                    <Save size={16} /> Simpan Bumbung
-                  </button>
+                  <div style={{display:"flex",gap:8,marginTop:12}}>
+                    <button className={styles.btnPrimary} onClick={simpanBumbung} disabled={bumbungLoad || bumbungRows.length === 0} id="btn-simpan-bumbung" style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                      <Save size={16} /> Simpan Bumbung
+                    </button>
+                    <button className={styles.btnSecondary} onClick={exportBumbungExcel} disabled={bumbungRows.length === 0} style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                      <FileSpreadsheet size={16} /> Export Excel
+                    </button>
+                  </div>
                 </>
               )}
             </div>
@@ -1104,9 +1237,14 @@ export default function PembinaPage() {
             <div>
               <div className={styles.tabHeader}>
                 <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}><Trophy size={22} /> Perlombaan</h2>
-                <button className={styles.btnPrimary} onClick={() => { setShowFormLomba(true); setNewLombaId(null); setFormLomba({ nama_lomba:"",tingkat:"kota",penyelenggara:"",tanggal_mulai:"",tanggal_selesai:"",lokasi:"",nama_pelatih_lomba:"" }); }} style={{display:"inline-flex",alignItems:"center",gap:6}}>
-                  <Plus size={16} /> Tambah Lomba
-                </button>
+                <div style={{display:"flex",gap:8}}>
+                  <button className={styles.btnSecondary} onClick={exportLombaExcel} style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                    <FileSpreadsheet size={16} /> Export Excel
+                  </button>
+                  <button className={styles.btnPrimary} onClick={() => { setShowFormLomba(true); setNewLombaId(null); setFormLomba({ nama_lomba:"",tingkat:"kota",penyelenggara:"",tanggal_mulai:"",tanggal_selesai:"",lokasi:"",nama_pelatih_lomba:"" }); }} style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                    <Plus size={16} /> Tambah Lomba
+                  </button>
+                </div>
               </div>
               {lombaMsg && <div className={styles.alertInfo}>{lombaMsg}</div>}
               {showFormLomba && !newLombaId && (
@@ -1205,10 +1343,13 @@ export default function PembinaPage() {
                     <input type="month" className={styles.input} value={rekapBulanLap} onChange={e => setRekapBulanLap(e.target.value)} />
                   </div>
                 </div>
-                <div className={styles.printBtns}>
-                  <button className={styles.btnPrint} onClick={() => printLaporan("daftar_hadir_siswa")} id="btn-print-hadir-siswa" style={{display:"inline-flex",alignItems:"center",gap:6}}><ClipboardList size={16} /> Daftar Hadir Siswa</button>
-                  <button className={styles.btnPrint} onClick={() => printLaporan("jurnal_kegiatan")} id="btn-print-jurnal" style={{display:"inline-flex",alignItems:"center",gap:6}}><BookOpen size={16} /> Jurnal Kegiatan</button>
-                  <button className={styles.btnPrint} onClick={() => printLaporan("daftar_hadir_pelatih")} id="btn-print-hadir-pelatih" style={{display:"inline-flex",alignItems:"center",gap:6}}><UserCheck size={16} /> Daftar Hadir Pelatih</button>
+                <div className={styles.printBtns} style={{flexWrap:"wrap"}}>
+                  <button className={styles.btnPrint} onClick={() => printLaporan("daftar_hadir_siswa")} id="btn-print-hadir-siswa" style={{display:"inline-flex",alignItems:"center",gap:6}}><Printer size={16} /> Cetak Hadir Siswa</button>
+                  <button className={styles.btnSecondary} onClick={() => wordLaporan("daftar_hadir_siswa")} style={{display:"inline-flex",alignItems:"center",gap:6}}><FileText size={16} /> Word Hadir Siswa</button>
+                  <button className={styles.btnPrint} onClick={() => printLaporan("jurnal_kegiatan")} id="btn-print-jurnal" style={{display:"inline-flex",alignItems:"center",gap:6}}><BookOpen size={16} /> Cetak Jurnal</button>
+                  <button className={styles.btnSecondary} onClick={() => wordLaporan("jurnal_kegiatan")} style={{display:"inline-flex",alignItems:"center",gap:6}}><FileText size={16} /> Word Jurnal</button>
+                  <button className={styles.btnPrint} onClick={() => printLaporan("daftar_hadir_pelatih")} id="btn-print-hadir-pelatih" style={{display:"inline-flex",alignItems:"center",gap:6}}><UserCheck size={16} /> Cetak Hadir Pelatih</button>
+                  <button className={styles.btnSecondary} onClick={() => wordLaporan("daftar_hadir_pelatih")} style={{display:"inline-flex",alignItems:"center",gap:6}}><FileText size={16} /> Word Hadir Pelatih</button>
                 </div>
               </div>
 
@@ -1269,6 +1410,9 @@ export default function PembinaPage() {
                           {l.nama_pelatih && <div className={styles.laporanMeta} style={{display:"inline-flex",alignItems:"center",gap:4}}><User size={14} /> {l.nama_pelatih}</div>}
                         </div>
                         <div style={{display:"flex",alignItems:"center",gap:8}}>
+                          <button type="button" className={styles.btnSecondary} onClick={() => wordLaporanKegiatan(l)} title="Download MS Word (.doc)" style={{display:"inline-flex",alignItems:"center",gap:4,padding:"4px 10px",fontSize:"0.8rem"}}>
+                            <FileText size={14} /> Word
+                          </button>
                           <button type="button" className={styles.btnSecondary} onClick={() => printLaporanKegiatan(l)} title="Cetak Resmi ke PDF" style={{display:"inline-flex",alignItems:"center",gap:4,padding:"4px 10px",fontSize:"0.8rem"}}>
                             <Printer size={14} /> Cetak
                           </button>
