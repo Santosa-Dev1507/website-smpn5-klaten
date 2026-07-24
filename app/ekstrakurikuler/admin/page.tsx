@@ -165,7 +165,7 @@ export default function AdminPage() {
   const loadUsers = useCallback(async () => {
     setDataLoad(true);
     const { data } = await supabase
-      .from("users").select("*, kelas(nama_kelas)").order("nama_lengkap").limit(200);
+      .from("users").select("*, kelas(nama_kelas)").order("nama_lengkap").limit(3000);
     setUserList((data ?? []) as unknown as UserProfile[]);
     setDataLoad(false);
   }, []);
@@ -175,7 +175,7 @@ export default function AdminPage() {
     const { data } = await supabase
       .from("laporan_kegiatan")
       .select("*, ekskul:ekskul_id(nama,emoji), pembina:pembina_id(nama_lengkap)")
-      .order("created_at", { ascending: false }).limit(50);
+      .order("created_at", { ascending: false }).limit(1000);
     setLaporanList((data ?? []) as unknown as LaporanKegiatan[]);
     setDataLoad(false);
   }, []);
