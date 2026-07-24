@@ -141,7 +141,7 @@ export default function Home() {
           )}
 
           <div className={styles.heroActions}>
-            <a href="/mpls" className={styles.btnPrimary}>Info Panduan MPLS</a>
+            <a href="/ekstrakurikuler" className={styles.btnPrimary}>Pendaftaran Ekskul</a>
             <a href="#prestasi" className={styles.btnSecondary}>Lihat Prestasi Siswa</a>
           </div>
 
