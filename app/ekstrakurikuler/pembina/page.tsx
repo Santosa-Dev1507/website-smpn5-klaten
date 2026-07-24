@@ -217,11 +217,16 @@ export default function PembinaPage() {
     const { data: per } = await supabase.from("periode_pendaftaran").select("id").eq("aktif", true).limit(1).single();
     if (!per) { setAnggotaMsg("❌ Tidak ada Periode aktif."); return; }
     
-    const { error } = await supabase.from("pendaftaran").insert({
+    const payload = {
       siswa_id: siswaId, ekskul_id: selEkskulId, periode_id: per.id,
       status: "disetujui", catatan_pembina: "Ditambahkan manual oleh Pembina",
+    };
+    const res = await fetch("/api/pembina/pendaftaran", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
     });
-    if (error) { setAnggotaMsg("❌ " + error.message); return; }
+    const data = await res.json();
+    if (!data.success) { setAnggotaMsg("❌ " + data.message); return; }
     setAnggotaMsg("✅ Siswa berhasil ditambahkan!");
     setSearchSiswaResult(prev => prev.filter(p => p.id !== siswaId));
     loadAnggota();
@@ -243,16 +248,21 @@ export default function PembinaPage() {
     }));
 
     if (toInsert.length === 0) { setAnggotaMsg("✅ Semua siswa di kelas ini sudah menjadi anggota."); return; }
-    const { error } = await supabase.from("pendaftaran").insert(toInsert);
-    if (error) { setAnggotaMsg("❌ " + error.message); return; }
+    const res = await fetch("/api/pembina/pendaftaran", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(toInsert)
+    });
+    const data = await res.json();
+    if (!data.success) { setAnggotaMsg("❌ " + data.message); return; }
     setAnggotaMsg(`✅ Berhasil memasukkan ${toInsert.length} siswa baru dari kelas tersebut.`);
     loadAnggota();
   }
 
   async function keluarkanAnggota(id: string) {
     if (!window.confirm("Keluarkan siswa ini dari ekstrakurikuler?")) return;
-    const { error } = await supabase.from("pendaftaran").delete().eq("id", id);
-    if (error) { setAnggotaMsg("❌ " + error.message); return; }
+    const res = await fetch(`/api/pembina/pendaftaran?id=${id}`, { method: "DELETE" });
+    const data = await res.json();
+    if (!data.success) { setAnggotaMsg("❌ " + data.message); return; }
     setAnggotaMsg("✅ Siswa dikeluarkan.");
     loadAnggota();
   }
@@ -274,11 +284,12 @@ export default function PembinaPage() {
 
   async function updateStatusPendaftaran(id: string, status: "disetujui"|"ditolak", catatan: string) {
     setPendMsg("");
-    const { error } = await supabase
-      .from("pendaftaran")
-      .update({ status, catatan_pembina: catatan })
-      .eq("id", id);
-    if (error) { setPendMsg("Gagal update: " + error.message); return; }
+    const res = await fetch("/api/pembina/pendaftaran", {
+      method: "PUT", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "update_status", ids: [id], status, catatan })
+    });
+    const data = await res.json();
+    if (!data.success) { setPendMsg("Gagal update: " + data.message); return; }
     setPendMsg(`Pendaftaran ${status === "disetujui" ? "disetujui" : "ditolak"}.`);
     loadPendaftaran();
   }
@@ -289,11 +300,12 @@ export default function PembinaPage() {
     if (!window.confirm(`Setujui ${pendingIds.length} pendaftaran sekaligus?`)) return;
     
     setPendMsg("");
-    const { error } = await supabase
-      .from("pendaftaran")
-      .update({ status: "disetujui", catatan_pembina: "Disetujui massal" })
-      .in("id", pendingIds);
-    if (error) { setPendMsg("Gagal update massal: " + error.message); return; }
+    const res = await fetch("/api/pembina/pendaftaran", {
+      method: "PUT", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "update_status", ids: pendingIds, status: "disetujui", catatan: "Disetujui massal" })
+    });
+    const data = await res.json();
+    if (!data.success) { setPendMsg("Gagal update massal: " + data.message); return; }
     setPendMsg(`✅ ${pendingIds.length} pendaftaran berhasil disetujui.`);
     loadPendaftaran();
   }
