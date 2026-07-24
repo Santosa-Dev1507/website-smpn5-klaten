@@ -744,12 +744,14 @@ export default function PembinaPage() {
 
         {/* ── Tabs ── */}
         <div className={styles.tabBar}>
-          {TABS.map(({ id, label, Icon }) => (
-            <button key={id} className={`${styles.tabBtn} ${activeTab === id ? styles.tabBtnActive : ""}`}
-              onClick={() => setActiveTab(id)}>
-              <Icon size={16} /> {label}
-            </button>
-          ))}
+          {TABS
+            .filter(t => t.id !== "bumbung" || (myEkskul.find(e => e.id === selEkskulId) as any)?.jenis === "wajib")
+            .map(({ id, label, Icon }) => (
+              <button key={id} className={`${styles.tabBtn} ${activeTab === id ? styles.tabBtnActive : ""}`}
+                onClick={() => setActiveTab(id)}>
+                <Icon size={16} /> {label}
+              </button>
+            ))}
         </div>
 
         <div className={styles.tabContent}>
