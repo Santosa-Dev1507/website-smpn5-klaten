@@ -206,7 +206,9 @@ export default function EkstrakulikulerPage() {
                         <span style={{marginRight: '6px', fontSize: '1.2rem'}}>{ekskul.emoji || "⭐"}</span>
                         {ekskul.nama}
                       </h2>
-                      {isOpen ? (
+                      {ekskul.jenis === "wajib" ? (
+                        <span style={{fontSize:11,background:"#e0e7ff",color:"#3730a3",padding:"2px 8px",borderRadius:12,fontWeight:600,whiteSpace:"nowrap",height:"fit-content"}}>Wajib</span>
+                      ) : isOpen ? (
                         <span style={{fontSize:11,background:"#dcfce7",color:"#166534",padding:"2px 8px",borderRadius:12,fontWeight:600,whiteSpace:"nowrap",height:"fit-content"}}>Buka</span>
                       ) : (
                         <span style={{fontSize:11,background:"#f3f4f6",color:"#4b5563",padding:"2px 8px",borderRadius:12,fontWeight:600,whiteSpace:"nowrap",height:"fit-content"}}>Tutup</span>
@@ -227,7 +229,11 @@ export default function EkstrakulikulerPage() {
                         <span>{(ekskul.pembina?.nama_lengkap) || ekskul.nama_pelatih || "-"}</span>
                       </div>
                     </div>
-                    {isOpen ? (
+                    {ekskul.jenis === "wajib" ? (
+                      <button className={styles.ekskulBtn} style={{background:"#f8fafc",color:"#475569",cursor:"default",border:"1px solid #cbd5e1"}}>
+                        Ekskul Wajib — Otomatis Terdaftar
+                      </button>
+                    ) : isOpen ? (
                       <a href="/ekstrakurikuler/daftar" className={styles.ekskulBtn} aria-label={`Daftar ekskul ${ekskul.nama}`}>
                         Daftar Sekarang
                         <ChevronRight size={15} aria-hidden />

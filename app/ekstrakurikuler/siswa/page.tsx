@@ -117,11 +117,19 @@ export default function SiswaPage() {
   const loadEkskul = useCallback(async () => {
     if (!user) return;
     setDataLoading(true);
-    const { data } = await supabase
-      .from("pendaftaran")
-      .select("id, status, ekskul:ekskul_id(id, nama, emoji, jadwal, waktu, lokasi, kategori)")
-      .eq("siswa_id", user.id);
-    const list: EkskulData[] = (data ?? []).map((p: any) => ({
+    const [pendaftaranRes, wajibRes] = await Promise.all([
+      supabase
+        .from("pendaftaran")
+        .select("id, status, ekskul:ekskul_id(id, nama, emoji, jadwal, waktu, lokasi, kategori)")
+        .eq("siswa_id", user.id),
+      supabase
+        .from("ekskul")
+        .select("id, nama, emoji, jadwal, waktu, lokasi, kategori")
+        .eq("aktif", true)
+        .eq("jenis", "wajib")
+    ]);
+    
+    const list: EkskulData[] = (pendaftaranRes.data ?? []).map((p: any) => ({
       pendaftaran_id: p.id,
       ekskul_id: p.ekskul.id,
       nama: p.ekskul.nama,
@@ -132,6 +140,23 @@ export default function SiswaPage() {
       kategori: p.ekskul.kategori,
       status: p.status,
     }));
+
+    for (const w of (wajibRes.data ?? [])) {
+      if (!list.find(e => e.ekskul_id === w.id)) {
+        list.push({
+          pendaftaran_id: "wajib-" + w.id,
+          ekskul_id: w.id,
+          nama: w.nama,
+          emoji: w.emoji,
+          jadwal: w.jadwal,
+          waktu: w.waktu,
+          lokasi: w.lokasi,
+          kategori: w.kategori,
+          status: "wajib",
+        });
+      }
+    }
+
     setEkskulList(list);
     setDataLoading(false);
   }, [user]);
@@ -193,7 +218,7 @@ export default function SiswaPage() {
 
   // ── Jadwal minggu ini ──
   const hariIni = HARI_TODAY[new Date().getDay()];
-  const ekskulDisetujui = ekskulList.filter(e => e.status === "disetujui");
+  const ekskulDisetujui = ekskulList.filter(e => e.status === "disetujui" || e.status === "wajib");
   const jadwalHariIni = ekskulDisetujui.filter(e => e.jadwal?.includes(hariIni));
 
   if (loading) return (
