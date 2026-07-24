@@ -21,13 +21,14 @@ import {
   Check, X, AlertCircle, Save, Send, RefreshCw, Printer, Upload, Plus, ArrowRight, Trash2, Search
 } from "lucide-react";
 
-type Tab = "anggota" | "pendaftaran" | "absensi" | "rekap" | "lomba" | "laporan" | "foto";
+type Tab = "anggota" | "pendaftaran" | "absensi" | "rekap" | "lomba" | "laporan" | "foto" | "bumbung";
 
 const TABS: { id: Tab; label: string; Icon: any }[] = [
   { id: "anggota",     label: "Anggota",     Icon: Users },
   { id: "pendaftaran", label: "Pendaftaran", Icon: ClipboardList },
   { id: "absensi",     label: "Absensi",     Icon: CheckSquare },
   { id: "rekap",       label: "Rekap",        Icon: BarChart2 },
+  { id: "bumbung",     label: "Bumbung",      Icon: Award },
   { id: "lomba",       label: "Perlombaan",   Icon: Trophy },
   { id: "laporan",     label: "Laporan",      Icon: FileText },
   { id: "foto",        label: "Foto",         Icon: Camera },
@@ -127,6 +128,14 @@ export default function PembinaPage() {
   const [fotoMsg, setFotoMsg]           = useState("");
   const [uploading, setUploading]       = useState(false);
   const [fotoKet, setFotoKet]           = useState("");
+
+  // ── Bumbung state ──
+  const [bumbungSesi, setBumbungSesi]   = useState(new Date().toISOString().split("T")[0]);
+  const [bumbungMateri, setBumbungMateri] = useState("");
+  const [bumbungRows, setBumbungRows]   = useState<{ kelas_id: string; kelas: string; jumlah: number; sudah_setor: boolean; ket: string }[]>([]);
+  const [bumbungLoad, setBumbungLoad]   = useState(false);
+  const [bumbungMsg, setBumbungMsg]     = useState("");
+  const [bumbungSesiId, setBumbungSesiId] = useState<string | null>(null);
 
   // ────────────────────────────────────────────────────────────
   // INIT: Cek session
@@ -591,6 +600,57 @@ export default function PembinaPage() {
     setUploading(false);
   }
 
+  // ── Bumbung: load kelas dari anggota ekskul ──
+  const loadBumbungKelas = useCallback(async () => {
+    if (!selEkskulId) return;
+    setBumbungLoad(true);
+    // Ambil kelas unik dari anggota yang disetujui
+    const { data } = await supabase
+      .from("pendaftaran")
+      .select("siswa:siswa_id(kelas:kelas_id(id, nama_kelas))")
+      .eq("ekskul_id", selEkskulId)
+      .eq("status", "disetujui");
+    const kelasMap = new Map<string, string>();
+    for (const row of (data ?? [])) {
+      const k = (row as any).siswa?.kelas;
+      if (k?.id && !kelasMap.has(k.id)) kelasMap.set(k.id, k.nama_kelas);
+    }
+    const sorted = Array.from(kelasMap.entries()).sort((a, b) => a[1].localeCompare(b[1]));
+    setBumbungRows(sorted.map(([id, nama]) => ({ kelas_id: id, kelas: nama, jumlah: 0, sudah_setor: false, ket: "" })));
+    setBumbungLoad(false);
+  }, [selEkskulId]);
+
+  async function simpanBumbung() {
+    if (!selEkskulId || bumbungRows.length === 0) return;
+    setBumbungLoad(true); setBumbungMsg("");
+    // Buat sesi_absensi jika belum ada untuk hari ini
+    let sesiId = bumbungSesiId;
+    if (!sesiId) {
+      const { data: sesi, error: sesiErr } = await supabase
+        .from("sesi_absensi")
+        .insert({ ekskul_id: selEkskulId, pembina_id: user!.id, tanggal: bumbungSesi, materi: bumbungMateri || "Bumbung", pembina_hadir: true })
+        .select().single();
+      if (sesiErr) { setBumbungMsg("❌ Gagal buat sesi: " + sesiErr.message); setBumbungLoad(false); return; }
+      sesiId = sesi.id;
+      setBumbungSesiId(sesiId);
+    }
+    // Upsert bumbung per kelas
+    const rows = bumbungRows.map(r => ({
+      sesi_id: sesiId,
+      ekskul_id: selEkskulId,
+      kelas_id: r.kelas_id,
+      jumlah: r.jumlah,
+      sudah_setor: r.sudah_setor,
+      keterangan: r.ket || null,
+      dicatat_oleh: user!.id,
+    }));
+    const { error } = await supabase.from("bumbung").upsert(rows, { onConflict: "sesi_id,kelas_id" });
+    if (error) { setBumbungMsg("❌ Gagal simpan: " + error.message); setBumbungLoad(false); return; }
+    const totalSetor = bumbungRows.filter(r => r.sudah_setor).reduce((a, b) => a + b.jumlah, 0);
+    setBumbungMsg(`✅ Bumbung ${bumbungSesi} tersimpan! Total terkumpul: Rp ${totalSetor.toLocaleString("id-ID")}`);
+    setBumbungLoad(false);
+  }
+
   // ── Load data saat tab/ekskul berubah ──
   useEffect(() => {
     if (!user || !selEkskulId) return;
@@ -601,7 +661,8 @@ export default function PembinaPage() {
     if (activeTab === "lomba") loadLomba();
     if (activeTab === "laporan") loadLaporan();
     if (activeTab === "foto") loadFoto();
-  }, [activeTab, selEkskulId, user, loadAnggota, loadPendaftaran, loadSiswaUntukAbsensi, loadRekap, loadLomba, loadLaporan, loadFoto]);
+    if (activeTab === "bumbung") { setBumbungSesiId(null); loadBumbungKelas(); }
+  }, [activeTab, selEkskulId, user, loadAnggota, loadPendaftaran, loadSiswaUntukAbsensi, loadRekap, loadLomba, loadLaporan, loadFoto, loadBumbungKelas]);
 
   // ────────────────────────────────────────────────────────────
   // RENDER
@@ -954,6 +1015,84 @@ export default function PembinaPage() {
                     </tbody>
                   </table>
                 </div>
+              )}
+            </div>
+          )}
+
+          {/* ─────────── TAB: BUMBUNG ─────────── */}
+          {activeTab === "bumbung" && (
+            <div>
+              <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}><Award size={22} /> Bumbung (Kas/Iuran Per Kelas)</h2>
+              <div className={styles.absenForm}>
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>Tanggal Pertemuan</label>
+                    <input type="date" className={styles.input} value={bumbungSesi} onChange={e => { setBumbungSesi(e.target.value); setBumbungSesiId(null); }} />
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label className={styles.label}>Keterangan Sesi (opsional)</label>
+                    <input type="text" className={styles.input} placeholder="Latihan rutin, persiapan lomba, dll" value={bumbungMateri} onChange={e => setBumbungMateri(e.target.value)} />
+                  </div>
+                </div>
+              </div>
+              {bumbungMsg && <div className={`${styles.msgOk}`}>{bumbungMsg}</div>}
+              {bumbungLoad ? <div className={styles.loadRow}>Memuat daftar kelas...</div> : (
+                <>
+                  <div className={styles.bumbungSummary}>
+                    <span>Sudah setor: <strong>{bumbungRows.filter(r=>r.sudah_setor).length}</strong> / {bumbungRows.length} kelas</span>
+                    <span style={{color:"#944535",fontWeight:700}}>
+                      Total: Rp {bumbungRows.filter(r=>r.sudah_setor).reduce((a,b)=>a+b.jumlah,0).toLocaleString("id-ID")}
+                    </span>
+                  </div>
+                  <div className={styles.tableWrap}>
+                    <table className={styles.table}>
+                      <thead>
+                        <tr>
+                          <th>Kelas</th>
+                          <th>Nominal (Rp)</th>
+                          <th>Sudah Setor?</th>
+                          <th>Keterangan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {bumbungRows.length === 0
+                          ? <tr><td colSpan={4} className={styles.emptyRow}>Belum ada kelas terdaftar. Pastikan ada anggota yang disetujui.</td></tr>
+                          : bumbungRows.map((r, i) => (
+                            <tr key={r.kelas_id} className={r.sudah_setor ? styles.bumbungRowSetor : ""}>
+                              <td style={{fontWeight:700}}>{r.kelas}</td>
+                              <td>
+                                <input
+                                  type="number" min={0} className={styles.inputSm}
+                                  value={r.jumlah === 0 ? "" : r.jumlah}
+                                  placeholder="0"
+                                  onChange={e => setBumbungRows(prev => prev.map((x,j) => j===i ? {...x, jumlah: parseInt(e.target.value)||0} : x))}
+                                  style={{width:110}}
+                                />
+                              </td>
+                              <td>
+                                <label className={styles.bumbungToggle}>
+                                  <input type="checkbox" checked={r.sudah_setor}
+                                    onChange={e => setBumbungRows(prev => prev.map((x,j) => j===i ? {...x, sudah_setor: e.target.checked} : x))} />
+                                  <span className={r.sudah_setor ? styles.bumbungBadgeSetor : styles.bumbungBadgeBelum}>
+                                    {r.sudah_setor ? "✅ Sudah" : "⏳ Belum"}
+                                  </span>
+                                </label>
+                              </td>
+                              <td>
+                                <input type="text" className={styles.inputSm} placeholder="Kurang, titip, dll" value={r.ket}
+                                  onChange={e => setBumbungRows(prev => prev.map((x,j) => j===i ? {...x, ket:e.target.value} : x))}
+                                  style={{width:140}} />
+                              </td>
+                            </tr>
+                          ))
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                  <button className={styles.btnPrimary} onClick={simpanBumbung} disabled={bumbungLoad || bumbungRows.length === 0} id="btn-simpan-bumbung" style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                    <Save size={16} /> Simpan Bumbung
+                  </button>
+                </>
               )}
             </div>
           )}

@@ -202,3 +202,20 @@
 .absenKetInput { width: 100%; border: 1px solid #e2e2e4; padding: 0.4rem 0.5rem; border-radius: 6px; font-size: 0.75rem; background: #fafafa; outline: none; transition: border-color 0.2s; }
 .absenKetInput:focus { border-color: #944535; background: #fff; }
 
+/* ── Bumbung ── */
+.bumbungSummary { display: flex; justify-content: space-between; align-items: center; background: #fdf8f2; border: 1px solid #FAD6A6; border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 1rem; font-size: 0.875rem; color: #454652; }
+.bumbungRowSetor td { background: #f0fdf4 !important; }
+.bumbungToggle { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.bumbungToggle input[type="checkbox"] { width: 16px; height: 16px; accent-color: #944535; cursor: pointer; }
+.bumbungBadgeSetor { background: #d1fae5; color: #065f46; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+.bumbungBadgeBelum { background: #fef3c7; color: #92400e; padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; }
+.inputSm { padding: 0.3rem 0.5rem; border: 1.5px solid #e2e2e4; border-radius: 6px; font-size: 0.82rem; outline: none; transition: border-color 0.2s; }
+.inputSm:focus { border-color: #944535; }
+
+/* ── Belum Ekskul (Walikelas) ── */
+.belumEkskulWrap { display: flex; flex-direction: column; gap: 1rem; }
+.belumEkskulCard { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: #fff; border: 1px solid #e2e2e4; border-radius: 10px; padding: 0.875rem 1rem; }
+.belumEkskulName { font-weight: 700; color: #1a1c1d; font-size: 0.9rem; }
+.belumEkskulNis { font-size: 0.75rem; color: #767683; font-family: monospace; margin-top: 2px; }
+.belumEkskulAlert { background: #fff3cd; color: #856404; border: 1px solid #fcd34d; border-radius: 10px; padding: 0.75rem 1rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+

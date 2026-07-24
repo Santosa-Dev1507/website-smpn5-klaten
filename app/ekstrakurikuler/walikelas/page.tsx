@@ -5,9 +5,9 @@ import styles from "./walikelas.module.css";
 import { supabase } from "@/lib/supabase";
 import { loginWithEmail, logout } from "@/lib/auth-helpers";
 import type { UserProfile } from "@/lib/supabase";
-import { Home, Users, Target, BarChart2, AlertTriangle, Check, Trophy, Award, User, ArrowRight } from "lucide-react";
+import { Home, Users, Target, BarChart2, AlertTriangle, Check, Trophy, Award, User, ArrowRight, AlertCircle } from "lucide-react";
 
-type Tab = "siswa" | "absensi" | "prestasi";
+type Tab = "siswa" | "absensi" | "prestasi" | "belum_ekskul";
 
 interface SiswaRekap {
   id: string;
@@ -51,6 +51,7 @@ export default function WalikelasPage() {
   const [activeTab, setActiveTab] = useState<Tab>("siswa");
   const [siswaRekap, setSiswaRekap] = useState<SiswaRekap[]>([]);
   const [prestasiList, setPrestasiList] = useState<PrestasiItem[]>([]);
+  const [belumEkskulList, setBelumEkskulList] = useState<{ id: string; nama: string; nis: string }[]>([]);
   const [dataLoad, setDataLoad] = useState(false);
   const [filterEkskul, setFilterEkskul] = useState("");
   const [rekapBulan, setRekapBulan] = useState(new Date().toISOString().slice(0, 7));
@@ -158,11 +159,46 @@ export default function WalikelasPage() {
     setDataLoad(false);
   }, [user]);
 
+  const loadBelumEkskul = useCallback(async () => {
+    if (!user?.kelas_id) return;
+    setDataLoad(true);
+    // Cari periode aktif
+    const { data: periodeData } = await supabase
+      .from("periode_pendaftaran").select("id").eq("aktif", true).limit(1).single();
+    const periodeId = periodeData?.id;
+    // Ambil semua siswa di kelas ini
+    const { data: siswaData } = await supabase
+      .from("users").select("id, nama_lengkap, nis_nip")
+      .eq("kelas_id", user.kelas_id).eq("role", "siswa").order("nama_lengkap");
+    const allSiswa = (siswaData ?? []) as { id: string; nama_lengkap: string; nis_nip: string | null }[];
+    if (allSiswa.length === 0) { setBelumEkskulList([]); setDataLoad(false); return; }
+    // Ambil siswa yg sudah punya pendaftaran disetujui di ekskul PILIHAN dan periode aktif
+    let sudahDaftar = new Set<string>();
+    if (periodeId) {
+      const { data: pend } = await supabase
+        .from("pendaftaran")
+        .select("siswa_id, ekskul:ekskul_id(jenis)")
+        .eq("status", "disetujui")
+        .eq("periode_id", periodeId)
+        .in("siswa_id", allSiswa.map(s => s.id));
+      for (const p of (pend ?? [])) {
+        if ((p as any).ekskul?.jenis === "pilihan") sudahDaftar.add((p as any).siswa_id);
+      }
+    }
+    setBelumEkskulList(
+      allSiswa
+        .filter(s => !sudahDaftar.has(s.id))
+        .map(s => ({ id: s.id, nama: s.nama_lengkap, nis: s.nis_nip ?? "-" }))
+    );
+    setDataLoad(false);
+  }, [user]);
+
   useEffect(() => {
     if (!user) return;
     if (activeTab === "siswa" || activeTab === "absensi") loadSiswaRekap();
     if (activeTab === "prestasi") loadPrestasi();
-  }, [activeTab, user, loadSiswaRekap, loadPrestasi]);
+    if (activeTab === "belum_ekskul") loadBelumEkskul();
+  }, [activeTab, user, loadSiswaRekap, loadPrestasi, loadBelumEkskul]);
 
   if (loading) return (
     <main><Header activePage="Ekskul" />
@@ -242,8 +278,9 @@ export default function WalikelasPage() {
             { id: "siswa" as const, Icon: Users, label: "Daftar Siswa" },
             { id: "absensi" as const, Icon: BarChart2, label: "Rekap Absensi" },
             { id: "prestasi" as const, Icon: Trophy, label: "Prestasi Kelas" },
-          ].map(({ id, Icon, label }) => (
-            <button key={id} className={`${styles.tabBtn} ${activeTab === id ? styles.tabBtnActive : ""}`} onClick={() => setActiveTab(id)}>
+            { id: "belum_ekskul" as const, Icon: AlertCircle, label: `Belum Ekskul${belumEkskulList.length > 0 ? ` (${belumEkskulList.length})` : ""}`, badge: belumEkskulList.length > 0 },
+          ].map(({ id, Icon, label, badge }) => (
+            <button key={id} className={`${styles.tabBtn} ${activeTab === id ? styles.tabBtnActive : ""}`} onClick={() => setActiveTab(id)} style={badge ? {color: activeTab === id ? undefined : "#b45309"} : {}}>
               <Icon size={16} /> {label}
             </button>
           ))}
@@ -374,6 +411,37 @@ export default function WalikelasPage() {
                           </div>
                         );
                       })}
+                    </div>
+              )}
+            </div>
+          )}
+
+          {/* ── Tab Belum Ekskul ── */}
+          {activeTab === "belum_ekskul" && (
+            <div>
+              <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}>
+                <AlertCircle size={22} color="#b45309" /> Siswa Belum Ikut Ekskul Pilihan
+              </h2>
+              {belumEkskulList.length > 0 && (
+                <div className={styles.belumEkskulAlert}>
+                  ⚠️ <strong>{belumEkskulList.length} siswa</strong> di kelas {kelas} belum mendaftar ekskul pilihan apapun pada periode aktif.
+                </div>
+              )}
+              {dataLoad ? <div className={styles.loadRow}>Memuat...</div> : (
+                belumEkskulList.length === 0
+                  ? <div className={styles.emptyState}>🎉 Semua siswa di kelas {kelas} sudah ikut minimal 1 ekskul pilihan!</div>
+                  : <div className={styles.belumEkskulWrap}>
+                      {belumEkskulList.map((s, i) => (
+                        <div key={s.id} className={styles.belumEkskulCard}>
+                          <div>
+                            <div className={styles.belumEkskulName}>{i + 1}. {s.nama}</div>
+                            <div className={styles.belumEkskulNis}>NIS: {s.nis}</div>
+                          </div>
+                          <span className={styles.badgeDanger} style={{display:"inline-flex",alignItems:"center",gap:4,padding:"4px 10px",borderRadius:20,fontSize:"0.75rem",fontWeight:700}}>
+                            <AlertCircle size={13} /> Belum Daftar
+                          </span>
+                        </div>
+                      ))}
                     </div>
               )}
             </div>
