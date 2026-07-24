@@ -11,19 +11,21 @@ import {
   Upload, Download, AlertCircle, CheckCircle2, Trash2
 } from "lucide-react";
 
-type Tab = "dashboard" | "ekskul" | "periode" | "users" | "laporan";
+type Tab = "dashboard" | "ekskul" | "periode" | "users" | "belum_ekskul" | "laporan";
 
 const TABS_DATA: { id: Tab; label: string; Icon: any; getBadge?: (stats: Stats | null) => number | undefined }[] = [
   { id: "dashboard", label: "Dashboard", Icon: BarChart2 },
   { id: "ekskul",    label: "Ekskul",    Icon: Trophy },
   { id: "periode",   label: "Periode",   Icon: Calendar, getBadge: s => s?.pendaftaranMenunggu },
   { id: "users",     label: "Pengguna",  Icon: Users },
+  { id: "belum_ekskul", label: "Belum Ekskul", Icon: AlertCircle, getBadge: s => s?.siswaBelumEkskul },
   { id: "laporan",   label: "Laporan",   Icon: FileText, getBadge: s => s?.laporanMenunggu },
 ];
 
 interface Stats {
   totalSiswa: number; totalPembina: number; totalEkskul: number;
   pendaftaranMenunggu: number; laporanMenunggu: number;
+  siswaBelumEkskul?: number;
 }
 
 interface ImportRow {
@@ -47,6 +49,8 @@ export default function AdminPage() {
   const [laporanList, setLaporanList] = useState<LaporanKegiatan[]>([]);
   const [pembinas, setPembinas]     = useState<UserProfile[]>([]);
   const [kelasList, setKelasList]   = useState<{ id: string; nama_kelas: string; tingkat: number }[]>([]);
+  const [belumEkskulAdminList, setBelumEkskulAdminList] = useState<{ id: string; nama: string; nis: string; kelas: string }[]>([]);
+  const [filterKelasBelumAdmin, setFilterKelasBelumAdmin] = useState<string>("");
   const [dataLoad, setDataLoad]     = useState(false);
   const [msg, setMsg]               = useState("");
   const [msgType, setMsgType]       = useState<"ok"|"err">("ok");
@@ -113,15 +117,41 @@ export default function AdminPage() {
   const loadStats = useCallback(async () => {
     const [
       { count: totalSiswa }, { count: totalPembina }, { count: totalEkskul },
-      { count: pendaftaranMenunggu }, { count: laporanMenunggu }
+      { count: pendaftaranMenunggu }, { count: laporanMenunggu },
+      { data: activePeriode }
     ] = await Promise.all([
       supabase.from("users").select("id", { count: "exact" }).eq("role","siswa"),
       supabase.from("users").select("id", { count: "exact" }).eq("role","pembina"),
       supabase.from("ekskul").select("id", { count: "exact" }).eq("aktif", true),
       supabase.from("pendaftaran").select("id", { count: "exact" }).eq("status","menunggu"),
       supabase.from("laporan_kegiatan").select("id", { count: "exact" }).eq("status","terkirim"),
+      supabase.from("periode_pendaftaran").select("id").eq("aktif", true).limit(1).maybeSingle(),
     ]);
-    setStats({ totalSiswa:totalSiswa??0, totalPembina:totalPembina??0, totalEkskul:totalEkskul??0, pendaftaranMenunggu:pendaftaranMenunggu??0, laporanMenunggu:laporanMenunggu??0 });
+
+    let belumCount = 0;
+    if (activePeriode?.id) {
+      const { data: allSiswa } = await supabase.from("users").select("id, kelas:kelas_id(tingkat)").eq("role","siswa");
+      const validSiswa = (allSiswa ?? []).filter((s: any) => s.kelas?.tingkat <= 8);
+      const { data: pendData } = await supabase
+        .from("pendaftaran")
+        .select("siswa_id, ekskul:ekskul_id(jenis)")
+        .eq("status", "disetujui")
+        .eq("periode_id", activePeriode.id);
+      const enrolled = new Set<string>();
+      for (const p of (pendData ?? [])) {
+        if ((p as any).ekskul?.jenis === "pilihan") enrolled.add((p as any).siswa_id);
+      }
+      belumCount = validSiswa.filter((s: any) => !enrolled.has(s.id)).length;
+    }
+
+    setStats({
+      totalSiswa: totalSiswa ?? 0,
+      totalPembina: totalPembina ?? 0,
+      totalEkskul: totalEkskul ?? 0,
+      pendaftaranMenunggu: pendaftaranMenunggu ?? 0,
+      laporanMenunggu: laporanMenunggu ?? 0,
+      siswaBelumEkskul: belumCount
+    });
   }, []);
 
   const loadEkskul = useCallback(async () => {
@@ -180,14 +210,57 @@ export default function AdminPage() {
     setDataLoad(false);
   }, []);
 
+  const loadBelumEkskulAdmin = useCallback(async () => {
+    setDataLoad(true);
+    const { data: activePeriode } = await supabase.from("periode_pendaftaran").select("id").eq("aktif", true).limit(1).maybeSingle();
+    const { data: siswaData } = await supabase
+      .from("users")
+      .select("id, nama_lengkap, nis_nip, kelas:kelas_id(id, nama_kelas, tingkat)")
+      .eq("role", "siswa")
+      .order("nama_lengkap");
+
+    const validSiswa = (siswaData ?? []).filter((s: any) => s.kelas?.tingkat <= 8);
+    if (validSiswa.length === 0 || !activePeriode) {
+      setBelumEkskulAdminList([]);
+      setDataLoad(false);
+      return;
+    }
+
+    const { data: pendData } = await supabase
+      .from("pendaftaran")
+      .select("siswa_id, ekskul:ekskul_id(jenis)")
+      .eq("status", "disetujui")
+      .eq("periode_id", activePeriode.id);
+
+    const sudahDaftarIds = new Set<string>();
+    for (const p of (pendData ?? [])) {
+      if ((p as any).ekskul?.jenis === "pilihan") {
+        sudahDaftarIds.add((p as any).siswa_id);
+      }
+    }
+
+    const res = validSiswa
+      .filter((s: any) => !sudahDaftarIds.has(s.id))
+      .map((s: any) => ({
+        id: s.id,
+        nama: s.nama_lengkap,
+        nis: s.nis_nip ?? "-",
+        kelas: s.kelas?.nama_kelas ?? "-"
+      }));
+
+    setBelumEkskulAdminList(res);
+    setDataLoad(false);
+  }, []);
+
   useEffect(() => {
     if (!user) return;
     if (activeTab === "dashboard") loadStats();
     if (activeTab === "ekskul") loadEkskul();
     if (activeTab === "periode") { loadEkskul(); loadPeriode(); }
     if (activeTab === "users") { loadUsers(); loadEkskul(); }
+    if (activeTab === "belum_ekskul") { loadEkskul(); loadBelumEkskulAdmin(); }
     if (activeTab === "laporan") loadLaporan();
-  }, [activeTab, user, loadStats, loadEkskul, loadPeriode, loadUsers, loadLaporan]);
+  }, [activeTab, user, loadStats, loadEkskul, loadPeriode, loadUsers, loadBelumEkskulAdmin, loadLaporan]);
 
   async function simpanEkskul() {
     if (!formEkskul.kode || !formEkskul.nama) { showMsg("Kode dan nama ekskul wajib diisi.", "err"); return; }
@@ -836,6 +909,63 @@ export default function AdminPage() {
                       </tbody>
                     </table>
                   </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {activeTab === "belum_ekskul" && (
+            <div>
+              <div className={styles.tabHeader}>
+                <h2 className={styles.sectionTitle} style={{display:"flex",alignItems:"center",gap:8}}>
+                  <AlertCircle size={22} color="#b45309" /> Siswa Belum Mendaftar Ekskul Pilihan
+                </h2>
+                <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                  <select className={styles.input} value={filterKelasBelumAdmin} onChange={e => setFilterKelasBelumAdmin(e.target.value)} style={{width:160}}>
+                    <option value="">Semua Kelas</option>
+                    {kelasList.map(k => <option key={k.id} value={k.nama_kelas}>{k.nama_kelas}</option>)}
+                  </select>
+                </div>
+              </div>
+              <p className={styles.formHint} style={{marginBottom:16}}>
+                Daftar siswa kelas 7 & 8 yang belum memiliki pendaftaran ekskul <strong>pilihan</strong> disetujui pada periode aktif saat ini.
+              </p>
+              {dataLoad ? <div className={styles.loadRow}>Memuat...</div> : (
+                <div className={styles.tableWrap}>
+                  <table className={styles.table}>
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Nama Siswa</th>
+                        <th>NIS</th>
+                        <th>Kelas</th>
+                        <th>Status Pilihan</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(() => {
+                        const list = filterKelasBelumAdmin
+                          ? belumEkskulAdminList.filter(s => s.kelas === filterKelasBelumAdmin)
+                          : belumEkskulAdminList;
+                        if (list.length === 0) {
+                          return <tr><td colSpan={5} style={{textAlign:"center",padding:20}}>🎉 Tidak ada siswa yang belum mendaftar ekskul pilihan.</td></tr>;
+                        }
+                        return list.map((s, i) => (
+                          <tr key={s.id}>
+                            <td>{i + 1}</td>
+                            <td className={styles.tdNama}>{s.nama}</td>
+                            <td className={styles.subText}>{s.nis}</td>
+                            <td><strong>{s.kelas}</strong></td>
+                            <td>
+                              <span className={styles.badgeOff} style={{display:"inline-flex",alignItems:"center",gap:4,padding:"3px 8px",borderRadius:20,fontSize:12}}>
+                                <AlertCircle size={13} /> Belum Daftar Pilihan
+                              </span>
+                            </td>
+                          </tr>
+                        ));
+                      })()}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>

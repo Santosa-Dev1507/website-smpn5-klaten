@@ -165,23 +165,45 @@ export default function SiswaPage() {
   const loadAbsensi = useCallback(async () => {
     if (!user) return;
     setDataLoading(true);
-    const { data } = await supabase
-      .from("absensi")
-      .select("status, ekskul:ekskul_id(id, nama, emoji)")
-      .eq("siswa_id", user.id);
-    const map = new Map<string, AbsensiRekap>();
-    for (const a of (data ?? [])) {
-      const ek = (a as any).ekskul;
-      if (!map.has(ek.id)) map.set(ek.id, { ekskul_id: ek.id, ekskul_nama: ek.nama, ekskul_emoji: ek.emoji, hadir: 0, izin: 0, alpa: 0, persen: 0 });
-      const rec = map.get(ek.id)!;
-      if (a.status === "hadir") rec.hadir++;
-      else if (a.status === "izin") rec.izin++;
-      else rec.alpa++;
+
+    const [pendRes, wajibRes, absenRes] = await Promise.all([
+      supabase.from("pendaftaran").select("ekskul:ekskul_id(id, nama, emoji)").eq("siswa_id", user.id).eq("status", "disetujui"),
+      supabase.from("ekskul").select("id, nama, emoji").eq("aktif", true).eq("jenis", "wajib"),
+      supabase.from("absensi").select("status, ekskul_id").eq("siswa_id", user.id)
+    ]);
+
+    const ekskulMap = new Map<string, { id: string; nama: string; emoji: string }>();
+    for (const p of (pendRes.data ?? [])) {
+      const ek = (p as any).ekskul;
+      if (ek?.id) ekskulMap.set(ek.id, ek);
     }
-    const result = Array.from(map.values()).map(r => {
-      const total = r.hadir + r.izin + r.alpa;
-      return { ...r, persen: total > 0 ? Math.round((r.hadir / total) * 100) : 0 };
+    for (const w of (wajibRes.data ?? [])) {
+      if (w?.id) ekskulMap.set(w.id, w);
+    }
+
+    const statsMap = new Map<string, { hadir: number; izin: number; alpa: number }>();
+    for (const a of (absenRes.data ?? [])) {
+      if (!statsMap.has(a.ekskul_id)) statsMap.set(a.ekskul_id, { hadir: 0, izin: 0, alpa: 0 });
+      const st = statsMap.get(a.ekskul_id)!;
+      if (a.status === "hadir") st.hadir++;
+      else if (a.status === "izin") st.izin++;
+      else if (a.status === "alpa") st.alpa++;
+    }
+
+    const result: AbsensiRekap[] = Array.from(ekskulMap.values()).map(ek => {
+      const st = statsMap.get(ek.id) ?? { hadir: 0, izin: 0, alpa: 0 };
+      const total = st.hadir + st.izin + st.alpa;
+      return {
+        ekskul_id: ek.id,
+        ekskul_nama: ek.nama,
+        ekskul_emoji: ek.emoji,
+        hadir: st.hadir,
+        izin: st.izin,
+        alpa: st.alpa,
+        persen: total > 0 ? Math.round((st.hadir / total) * 100) : 0,
+      };
     });
+
     setAbsensiRekap(result);
     setDataLoading(false);
   }, [user]);
@@ -263,7 +285,8 @@ export default function SiswaPage() {
   // ── DASHBOARD ──
   const kelas = (user as any).kelas?.nama_kelas ?? "-";
   const jumlahEkskul = ekskulDisetujui.length;
-  const avgPersen = absensiRekap.length > 0 ? Math.round(absensiRekap.reduce((s, r) => s + r.persen, 0) / absensiRekap.length) : null;
+  const rekapDenganSesi = absensiRekap.filter(r => (r.hadir + r.izin + r.alpa) > 0);
+  const avgPersen = rekapDenganSesi.length > 0 ? Math.round(rekapDenganSesi.reduce((s, r) => s + r.persen, 0) / rekapDenganSesi.length) : null;
 
   return (
     <main>
@@ -393,24 +416,34 @@ export default function SiswaPage() {
                 absensiRekap.length === 0
                   ? <div className={styles.emptyState}>Belum ada data absensi. Data akan muncul setelah pembina mengisi absensi.</div>
                   : <div className={styles.absensiList}>
-                      {absensiRekap.map(r => (
-                        <div key={r.ekskul_id} className={`${styles.absensiCard} ${r.persen < 75 ? styles.absensiCardDanger : ""}`}>
-                          <div className={styles.absensiCardTop}>
-                            <div className={styles.absensiEmoji}>{r.ekskul_emoji}</div>
-                            <div className={styles.absensiNama}>{r.ekskul_nama}</div>
-                            <div className={`${styles.absensiPct} ${r.persen < 75 ? styles.absensiPctDanger : r.persen >= 85 ? styles.absensiPctOk : ""}`}>{r.persen}%</div>
+                      {absensiRekap.map(r => {
+                        const totalSesi = r.hadir + r.izin + r.alpa;
+                        const adaSesi = totalSesi > 0;
+                        return (
+                          <div key={r.ekskul_id} className={`${styles.absensiCard} ${adaSesi && r.persen < 75 ? styles.absensiCardDanger : ""}`}>
+                            <div className={styles.absensiCardTop}>
+                              <div className={styles.absensiEmoji}>{r.ekskul_emoji}</div>
+                              <div className={styles.absensiNama}>{r.ekskul_nama}</div>
+                              <div className={`${styles.absensiPct} ${!adaSesi ? "" : r.persen < 75 ? styles.absensiPctDanger : r.persen >= 85 ? styles.absensiPctOk : ""}`}>
+                                {adaSesi ? `${r.persen}%` : "-"}
+                              </div>
+                            </div>
+                            <div className={styles.absensiBar}>
+                              <div className={styles.absensiBarFill} style={{ width: adaSesi ? `${r.persen}%` : "0%", background: !adaSesi ? "#ccc" : r.persen < 75 ? "#ba1a1a" : r.persen >= 85 ? "#006b5f" : "#944535" }} />
+                            </div>
+                            <div className={styles.absensiStats}>
+                              <span className={styles.statHadir} style={{display:"inline-flex",alignItems:"center",gap:4}}><Check size={14} /> {r.hadir} Hadir</span>
+                              <span className={styles.statIzin} style={{display:"inline-flex",alignItems:"center",gap:4}}><Info size={14} /> {r.izin} Izin</span>
+                              <span className={styles.statAlpa} style={{display:"inline-flex",alignItems:"center",gap:4}}><X size={14} /> {r.alpa} Alpa</span>
+                            </div>
+                            {!adaSesi ? (
+                              <div style={{fontSize:"0.78rem",color:"#767683",marginTop:6}}>Pertemuan/absensi belum dimulai oleh pembina.</div>
+                            ) : r.persen < 75 ? (
+                              <div className={styles.warningMsg} style={{display:"flex",alignItems:"center",gap:6}}><AlertTriangle size={16} color="#ba1a1a" /> Kehadiran di bawah 75%, segera hubungi pembina.</div>
+                            ) : null}
                           </div>
-                          <div className={styles.absensiBar}>
-                            <div className={styles.absensiBarFill} style={{ width: `${r.persen}%`, background: r.persen < 75 ? "#ba1a1a" : r.persen >= 85 ? "#006b5f" : "#944535" }} />
-                          </div>
-                          <div className={styles.absensiStats}>
-                            <span className={styles.statHadir} style={{display:"inline-flex",alignItems:"center",gap:4}}><Check size={14} /> {r.hadir} Hadir</span>
-                            <span className={styles.statIzin} style={{display:"inline-flex",alignItems:"center",gap:4}}><Info size={14} /> {r.izin} Izin</span>
-                            <span className={styles.statAlpa} style={{display:"inline-flex",alignItems:"center",gap:4}}><X size={14} /> {r.alpa} Alpa</span>
-                          </div>
-                          {r.persen < 75 && <div className={styles.warningMsg} style={{display:"flex",alignItems:"center",gap:6}}><AlertTriangle size={16} color="#ba1a1a" /> Kehadiran di bawah 75%, segera hubungi pembina.</div>}
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
               )}
             </div>
