@@ -70,7 +70,7 @@ CREATE TABLE periode_ekskul (
 -- ── 5. PENDAFTARAN EKSKUL ──────────────────────────────────
 CREATE TABLE pendaftaran (
   id               uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-  siswa_id         uuid NOT NULL REFERENCES users(id),
+  siswa_id         uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   ekskul_id        uuid NOT NULL REFERENCES ekskul(id),
   periode_id       uuid REFERENCES periode_pendaftaran(id),
   status           text NOT NULL DEFAULT 'menunggu'
@@ -97,7 +97,7 @@ CREATE TABLE sesi_absensi (
 CREATE TABLE absensi (
   id          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   sesi_id     uuid NOT NULL REFERENCES sesi_absensi(id) ON DELETE CASCADE,
-  siswa_id    uuid NOT NULL REFERENCES users(id),
+  siswa_id    uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   ekskul_id   uuid NOT NULL REFERENCES ekskul(id),
   status      text NOT NULL CHECK (status IN ('hadir','izin','alpa')),
   keterangan  text,
@@ -124,7 +124,7 @@ CREATE TABLE perlombaan (
 CREATE TABLE peserta_lomba (
   id          uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
   lomba_id    uuid NOT NULL REFERENCES perlombaan(id) ON DELETE CASCADE,
-  siswa_id    uuid NOT NULL REFERENCES users(id),
+  siswa_id    uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   hasil       text NOT NULL CHECK (hasil IN ('juara_1','juara_2','juara_3','harapan_1','harapan_2','harapan_3','peserta')),
   keterangan  text,
   UNIQUE (lomba_id, siswa_id)
