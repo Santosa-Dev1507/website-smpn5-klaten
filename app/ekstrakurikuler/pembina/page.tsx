@@ -86,6 +86,8 @@ export default function PembinaPage() {
   const [siswaDaftar, setSiswaDaftar]   = useState<{ id: string; nama: string; kelas: string; status: "hadir"|"izin"|"alpa"; ket: string }[]>([]);
   const [absenLoad, setAbsenLoad]       = useState(false);
   const [absenMsg, setAbsenMsg]         = useState("");
+  const [activeKelasAbsen, setActiveKelasAbsen] = useState<string>("semua");
+  const [searchAbsen, setSearchAbsen]   = useState("");
 
   // ── Rekap state ──
   const [rekapBulan, setRekapBulan]     = useState(new Date().toISOString().slice(0, 7));
@@ -328,7 +330,16 @@ export default function PembinaPage() {
       status: "hadir" as const,
       ket: "",
     }));
+    list.sort((a, b) => {
+      if (a.kelas !== b.kelas) return a.kelas.localeCompare(b.kelas);
+      return a.nama.localeCompare(b.nama);
+    });
     setSiswaDaftar(list);
+    
+    const unikKelas = Array.from(new Set(list.map(s => s.kelas))).sort();
+    if (unikKelas.length > 0) setActiveKelasAbsen(unikKelas[0]);
+    else setActiveKelasAbsen("semua");
+    
     setAbsenLoad(false);
     if (list.length === 0) setAbsenMsg("Belum ada siswa yang disetujui di ekskul ini.");
   }, [selEkskulId]);
@@ -848,41 +859,61 @@ export default function PembinaPage() {
                 </button>
               </div>
               {absenLoad ? <div className={styles.loadRow}>Memuat data siswa...</div> : (
-                <div className={styles.tableWrap}>
-                  <table className={styles.table}>
-                    <thead><tr><th>No</th><th>Nama Siswa</th><th>Kelas</th><th>Status</th><th>Keterangan</th></tr></thead>
-                    <tbody>
-                      {siswaDaftar.length === 0
-                        ? <tr><td colSpan={5} className={styles.emptyRow}>Tidak ada siswa. Pastikan pendaftaran sudah disetujui.</td></tr>
-                        : siswaDaftar.map((s, i) => (
-                          <tr key={s.id}>
-                            <td>{i + 1}</td>
-                            <td>{s.nama}</td>
-                            <td>{s.kelas}</td>
-                            <td>
-                              <div className={styles.radioGroup}>
-                                {(["hadir","izin","alpa"] as const).map(st => (
-                                  <label key={st} className={`${styles.radioLabel} ${s.status === st ? styles["radio_"+st] : ""}`}>
-                                    <input type="radio" name={`status-${s.id}`} value={st} checked={s.status === st}
-                                      onChange={() => setSiswaDaftar(prev => prev.map((x,j) => j===i ? {...x,status:st} : x))} />
-                                    {st}
-                                  </label>
-                                ))}
+                <>
+                  <div className={styles.absenSearchWrap}>
+                    <Search size={16} color="#767683" />
+                    <input className={styles.absenSearchInput} placeholder="Cari nama siswa..." value={searchAbsen} onChange={e => setSearchAbsen(e.target.value)} />
+                    {searchAbsen && <button className={styles.btnIcon} onClick={() => setSearchAbsen("")}><X size={14} /></button>}
+                  </div>
+                  {!searchAbsen && (
+                    <div className={styles.absenTabsWrapper}>
+                      {Array.from(new Set(siswaDaftar.map(s => s.kelas))).sort().map(kls => (
+                        <button key={kls} className={`${styles.absenTabBtn} ${activeKelasAbsen === kls ? styles.absenTabBtnActive : ""}`} onClick={() => setActiveKelasAbsen(kls)}>
+                          {kls}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  <div className={styles.absenGrid}>
+                    {siswaDaftar.length === 0 ? (
+                      <div className={styles.emptyState} style={{gridColumn:"1/-1"}}>Tidak ada siswa. Pastikan pendaftaran sudah disetujui.</div>
+                    ) : (
+                      siswaDaftar.map((s, idx) => {
+                        if (searchAbsen) {
+                          if (!s.nama.toLowerCase().includes(searchAbsen.toLowerCase())) return null;
+                        } else {
+                          if (s.kelas !== activeKelasAbsen) return null;
+                        }
+                        
+                        return (
+                          <div key={s.id} className={styles.absenCard}>
+                            <div className={styles.absenCardHeader}>
+                              <div>
+                                <div className={styles.absenName}>{s.nama}</div>
+                                <div className={styles.absenClass}>Kelas {s.kelas}</div>
                               </div>
-                            </td>
-                            <td>
-                              <input type="text" className={styles.inputSm} placeholder="Keterangan" value={s.ket}
-                                onChange={e => setSiswaDaftar(prev => prev.map((x,j) => j===i ? {...x,ket:e.target.value} : x))} />
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                </div>
+                            </div>
+                            <div className={styles.absenStatusGroup}>
+                              <button className={`${styles.absenStatusBtn} ${s.status === "hadir" ? styles.absenStatusBtnHadir : ""}`} onClick={() => setSiswaDaftar(prev => prev.map(x => x.id === s.id ? {...x,status:"hadir"} : x))}>H</button>
+                              <button className={`${styles.absenStatusBtn} ${s.status === "izin" ? styles.absenStatusBtnIzin : ""}`} onClick={() => setSiswaDaftar(prev => prev.map(x => x.id === s.id ? {...x,status:"izin"} : x))}>I/S</button>
+                              <button className={`${styles.absenStatusBtn} ${s.status === "alpa" ? styles.absenStatusBtnAlpa : ""}`} onClick={() => setSiswaDaftar(prev => prev.map(x => x.id === s.id ? {...x,status:"alpa"} : x))}>A</button>
+                            </div>
+                            {(s.status === "izin" || s.status === "alpa") && (
+                              <input type="text" className={styles.absenKetInput} placeholder="Keterangan (opsional)" value={s.ket} onChange={e => setSiswaDaftar(prev => prev.map(x => x.id === s.id ? {...x,ket:e.target.value} : x))} />
+                            )}
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </>
               )}
-              <button className={styles.btnPrimary} onClick={simpanAbsensi} disabled={absenLoad || siswaDaftar.length === 0} id="btn-simpan-absensi" style={{display:"inline-flex",alignItems:"center",gap:6}}>
-                <Save size={16} /> Simpan Absensi
-              </button>
+              <div style={{borderTop:"1px solid #e2e2e4", paddingTop:16, marginTop:8, display:"flex", justifyContent:"flex-end", alignItems:"center", gap:16}}>
+                <div style={{fontSize:13, color:"#767683"}}>Total: <strong>{siswaDaftar.filter(s=>s.status==="hadir").length} Hadir</strong> / {siswaDaftar.length} Siswa</div>
+                <button className={styles.btnPrimary} onClick={simpanAbsensi} disabled={absenLoad || siswaDaftar.length === 0} id="btn-simpan-absensi" style={{display:"inline-flex",alignItems:"center",gap:6}}>
+                  <Save size={16} /> Simpan Absensi
+                </button>
+              </div>
             </div>
           )}
 

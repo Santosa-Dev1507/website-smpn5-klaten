@@ -19,6 +19,12 @@
       "skillPath": "skills/css-animations/SKILL.md",
       "computedHash": "df468749b06a8ec7369cfea69bf71bf65e46cfc376e837e439e26f4230852c6b"
     },
+    "hallmark": {
+      "source": "nutlope/hallmark",
+      "sourceType": "github",
+      "skillPath": "skills/hallmark/SKILL.md",
+      "computedHash": "d3a20aae61e43793d74932c92b63bcad5882e73ec1c8545b858910fd95b25136"
+    },
     "ui-animation": {
       "source": "mblode/agent-skills",
       "sourceType": "github",
