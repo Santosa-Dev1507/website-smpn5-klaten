@@ -154,9 +154,25 @@ const tataKelola = [
     title: "Kebijakan & Maklumat",
     content: [
       { label: "Visi Pelayanan", value: "Mewujudkan SIPP sebagai portal pelayanan pendidikan yang transparan, akuntabel, dan prima bagi seluruh masyarakat." },
-      { label: "Maklumat", value: "Kami berkomitmen memberikan pelayanan melalui SIPP sesuai standar yang ditetapkan, dan siap menerima sanksi apabila tidak menepati janji ini." },
+      { label: "Maklumat", value: "Dokumen maklumat resmi dengan tanda tangan Kepala Sekolah tersedia di bawah (No. 800.1/042 Tahun 2026)." },
       { label: "Standar Waktu", value: "Setiap permohonan layanan melalui SIPP diselesaikan sesuai SOP dengan rentang waktu 1–5 hari kerja, tergantung jenis layanan." },
       { label: "Biaya Layanan", value: "Seluruh layanan administratif melalui SIPP tidak dipungut biaya (GRATIS / Rp 0)." },
+    ],
+    dokumen: [
+      {
+        id: "maklumat",
+        judul: "Maklumat Pelayanan",
+        keterangan: "No. 800.1/042 Tahun 2026 · TTD Kepala Sekolah",
+        src: "/dokumen/maklumat-pelayanan.jpg",
+        alt: "Maklumat Pelayanan SMPN 5 Klaten — Keputusan Kepala Sekolah No. 800.1/042 Tahun 2026 dengan tanda tangan Kamidi, S.Pd",
+      },
+      {
+        id: "ikm",
+        judul: "Indeks Kepuasan Masyarakat",
+        keterangan: "Nilai 89,8 · Periode Jan–Mar 2026",
+        src: "/dokumen/ikm-2026.jpg",
+        alt: "Indeks Kepuasan Masyarakat SMPN 5 Klaten nilai 89,8 periode Januari hingga Maret 2026",
+      },
     ],
   },
   {
@@ -215,6 +231,7 @@ const tataKelola = [
 export default function LayananPublikPage() {
   const [activeModal, setActiveModal] = useState<string | null>(null);
   const [activeAccordion, setActiveAccordion] = useState<string>("kebijakan");
+  const [activeDoc, setActiveDoc] = useState<{ src: string; alt: string; judul: string } | null>(null);
   const heroBgRef = useRef<HTMLDivElement>(null);
 
   // Parallax — direct DOM write, zero React re-renders
@@ -238,18 +255,23 @@ export default function LayananPublikPage() {
     return () => observer.disconnect();
   }, []);
 
-  // Close modal on Escape
+  // Close modal or doc lightbox on Escape
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setActiveModal(null); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (activeDoc) setActiveDoc(null);
+        else setActiveModal(null);
+      }
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [activeDoc]);
 
-  // Lock scroll when modal open
+  // Lock scroll when modal or doc open
   useEffect(() => {
-    document.body.style.overflow = activeModal ? "hidden" : "";
+    document.body.style.overflow = (activeModal || activeDoc) ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
-  }, [activeModal]);
+  }, [activeModal, activeDoc]);
 
   const activeLayanan = layanan.find((l) => l.id === activeModal);
 
@@ -422,6 +444,51 @@ export default function LayananPublikPage() {
                       </div>
                     ))}
                   </div>
+
+                  {/* Dokumen resmi — hanya pada tab yang memiliki properti dokumen */}
+                  {"dokumen" in item && Array.isArray((item as typeof item & { dokumen?: unknown[] }).dokumen) && (
+                    <div className={styles.dokumenSection}>
+                      <div className={styles.dokumenSectionLabel}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width={14} height={14} aria-hidden="true">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                          <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                        Dokumen Resmi
+                      </div>
+                      <div className={styles.dokumenGrid}>
+                        {((item as typeof item & { dokumen: { id: string; judul: string; keterangan: string; src: string; alt: string }[] }).dokumen).map((doc) => (
+                          <button
+                            key={doc.id}
+                            className={styles.dokumenCard}
+                            onClick={() => setActiveDoc({ src: doc.src, alt: doc.alt, judul: doc.judul })}
+                            aria-label={`Lihat dokumen ${doc.judul} dalam tampilan penuh`}
+                          >
+                            <div className={styles.dokumenThumbWrap}>
+                              <Image
+                                src={doc.src}
+                                alt={doc.alt}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 260px"
+                                className={styles.dokumenThumb}
+                              />
+                              <div className={styles.dokumenOverlay} aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" width={22} height={22} aria-hidden="true">
+                                  <circle cx="11" cy="11" r="8" />
+                                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                                  <line x1="11" y1="8" x2="11" y2="14" />
+                                  <line x1="8" y1="11" x2="14" y2="11" />
+                                </svg>
+                              </div>
+                            </div>
+                            <div className={styles.dokumenInfo}>
+                              <span className={styles.dokumenJudul}>{doc.judul}</span>
+                              <span className={styles.dokumenKet}>{doc.keterangan}</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -754,6 +821,41 @@ export default function LayananPublikPage() {
               <button className={styles.modalBtnPrimary} onClick={() => setActiveModal(null)}>
                 Mengerti
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* DOCUMENT LIGHTBOX */}
+      {activeDoc && (
+        <div
+          className={styles.docLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeDoc.judul}
+          onClick={() => setActiveDoc(null)}
+        >
+          <div className={styles.docLightboxInner} onClick={(e) => e.stopPropagation()}>
+            <button
+              className={styles.docLightboxClose}
+              onClick={() => setActiveDoc(null)}
+              aria-label="Tutup tampilan dokumen"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" width={20} height={20} aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+            <p className={styles.docLightboxCaption}>{activeDoc.judul}</p>
+            <div className={styles.docLightboxImgWrap}>
+              <Image
+                src={activeDoc.src}
+                alt={activeDoc.alt}
+                fill
+                sizes="(max-width: 768px) 95vw, 800px"
+                className={styles.docLightboxImg}
+                priority
+              />
             </div>
           </div>
         </div>
