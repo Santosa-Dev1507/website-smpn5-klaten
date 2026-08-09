@@ -253,6 +253,70 @@
 .achievementInfo span { font-size: 0.85rem; color: var(--text-muted); }
 .achievementBadge { font-size: 1.4rem; }
 
+.yearTabNav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.yearTabBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 1rem;
+  border-radius: 100px;
+  background: #ffffff;
+  border: 1px solid var(--border-color, #e2e8f0);
+  color: var(--text-muted, #64748b);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.yearTabBtn:hover {
+  border-color: var(--primary, #944535);
+  color: var(--primary, #944535);
+}
+
+.yearTabActive {
+  background: var(--primary, #944535) !important;
+  color: #ffffff !important;
+  border-color: var(--primary, #944535) !important;
+  box-shadow: 0 4px 12px rgba(148, 69, 53, 0.25);
+}
+
+.yearTabCount {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
+}
+
+.yearTabActive .yearTabCount {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.achievementListWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.achievementCategoryBadge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary, #944535);
+  background: rgba(148, 69, 53, 0.08);
+  padding: 0.25rem 0.65rem;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
 /* ===== TESTIMONIAL ===== */
 .testimonials { padding: 6rem 5%; background: var(--background-alt); }
 .testimonialsGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }

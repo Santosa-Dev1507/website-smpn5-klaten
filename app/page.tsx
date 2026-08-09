@@ -6,6 +6,7 @@ import ScrollReveal from "./components/ScrollReveal";
 import Script from "next/script";
 import InstagramFeed from "./components/InstagramFeed";
 import SpmbCountdown from "./components/SpmbCountdown";
+import AchievementsTab from "./components/AchievementsTab";
 
 // Menggunakan waktu target: 28 Juni 2026 23:59:00 WIB (UTC+7)
 const isSpmbOpen = new Date() >= new Date("2026-06-28T23:59:00+07:00");
@@ -250,17 +251,7 @@ export default function Home() {
               <span>Sekolah Adiwiyata Nasional 2025 — penghargaan tertinggi bidang lingkungan hidup dari Kementerian LHK RI</span>
             </div>
           </div>
-          <div className={styles.achievementsRight}>
-            {achievements.map((a, i) => (
-              <div key={i} className={`${styles.achievementItem} reveal`}>
-                <div className={styles.achievementYear}>{a.year}</div>
-                <div className={styles.achievementInfo}>
-                  <strong>{a.title}</strong>
-                  <span>{a.level}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+          <AchievementsTab achievements={achievements} />
         </div>
       </section>
 
