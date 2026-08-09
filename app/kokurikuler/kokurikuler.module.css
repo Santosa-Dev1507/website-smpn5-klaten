@@ -684,27 +684,21 @@
 .fasilitasSubHeader {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: linear-gradient(135deg, #1c1514 0%, #3d1c16 50%, #944535 100%);
+  background: var(--primary, #944535);
   color: #ffffff;
-  padding: 14px 20px;
+  padding: 14px 18px;
   border-radius: var(--kok-radius, 16px);
   margin-bottom: 18px;
-  box-shadow: 0 4px 16px rgba(148, 69, 53, 0.25);
-  border: 1px solid rgba(250, 214, 166, 0.3);
-}
-
-.fasilitasSubHeaderIcon {
-  color: #FAD6A6;
-  flex-shrink: 0;
+  box-shadow: var(--kok-shadow);
 }
 
 .fasilitasSubHeaderTitle {
-  font-size: 1.08rem;
-  font-weight: 800;
+  font-size: 0.82rem;
+  font-weight: 700;
   color: #ffffff;
   margin: 0;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .fasilitasList {

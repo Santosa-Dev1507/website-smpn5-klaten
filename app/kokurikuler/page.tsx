@@ -7,7 +7,7 @@ import Link from "next/link";
 import {
   MapPin, Calendar, Phone, BookOpen, Bus, Users,
   Clock, CheckCircle, MessageCircle, ShieldCheck, ArrowRight,
-  AlertTriangle, FileText, Send, Sparkles
+  AlertTriangle, FileText, Send
 } from "lucide-react";
 import styles from "./kokurikuler.module.css";
 import Header from "../components/Header";
@@ -405,7 +405,6 @@ export default async function KokurikulerPage() {
             {/* Fasilitas */}
             <div className="reveal">
               <div className={styles.fasilitasSubHeader}>
-                <Sparkles size={20} className={styles.fasilitasSubHeaderIcon} aria-hidden="true" />
                 <h3 className={styles.fasilitasSubHeaderTitle}>Fasilitas</h3>
               </div>
               <ul className={styles.fasilitasList} aria-label="Daftar fasilitas yang disediakan">
