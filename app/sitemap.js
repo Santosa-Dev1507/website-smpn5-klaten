@@ -42,5 +42,11 @@ export default function sitemap() {
       changeFrequency: 'monthly',
       priority: 0.85,
     },
+    {
+      url: 'https://www.smpn5klaten.sch.id/kokurikuler',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
   ]
 }

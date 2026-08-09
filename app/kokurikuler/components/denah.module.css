@@ -1,0 +1,349 @@
+/* app/kokurikuler/components/denah.module.css
+   Brand System: SMPN 5 Klaten (#944535 Terracotta & #FAD6A6 Gold)
+   ═══════════════════════════════════════════════════════════════ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Search ───────────────────────────────────────────────────────── */
+.searchBar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.searchInput {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted, #555);
+  pointer-events: none;
+}
+
+.searchField {
+  width: 100%;
+  padding: 12px 40px 12px 42px;
+  border: 1.5px solid var(--border-color, #eaeaea);
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-main);
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.searchField:focus {
+  border-color: var(--primary, #944535);
+  box-shadow: 0 0 0 3px rgba(148, 69, 53, 0.12);
+}
+.searchField::placeholder {
+  color: #aaa;
+}
+
+.searchClear {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+.searchClear:hover { color: var(--text-main); }
+
+.searchBtn {
+  padding: 12px 24px;
+  background: var(--primary, #944535);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(148, 69, 53, 0.2);
+}
+.searchBtn:hover {
+  background: var(--primary-hover, #7a382a);
+  transform: translateY(-1px);
+}
+
+/* ── Result ───────────────────────────────────────────────────────── */
+.resultCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: rgba(148, 69, 53, 0.07);
+  border: 1.5px solid var(--primary, #944535);
+  border-radius: 12px;
+  animation: fadeUp 0.3s var(--ease-enter, ease) both;
+}
+
+.resultIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--primary, #944535);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.resultNama {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--primary, #944535);
+  margin-bottom: 4px;
+}
+
+.resultMeta {
+  font-size: 0.85rem;
+  color: var(--text-main, #0D0C13);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.notFound {
+  font-size: 0.88rem;
+  color: var(--primary, #944535);
+  padding: 12px 16px;
+  background: rgba(148, 69, 53, 0.07);
+  border-radius: 10px;
+}
+
+/* ── Bus tabs ─────────────────────────────────────────────────────── */
+.busTabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.busTab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--border-color, #eaeaea);
+  border-radius: 100px;
+  background: #fff;
+  font-size: 0.87rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.busTab:hover {
+  border-color: var(--primary, #944535);
+  color: var(--primary, #944535);
+}
+.busTabActive {
+  background: var(--primary, #944535);
+  color: #fff;
+  border-color: var(--primary, #944535);
+}
+
+/* ── Bus diagram ─────────────────────────────────────────────────── */
+.busContainer {
+  background: #fff;
+  border: 1.5px solid var(--border-color, #eaeaea);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.busHeader {
+  background: var(--primary, #944535);
+  padding: 10px 20px;
+  text-align: center;
+}
+.busHeaderLabel {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+}
+
+.busBody {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+/* Grid: A B | C D per row */
+.seatGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 32px 1fr 1fr;
+  gap: 6px;
+  min-width: 280px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.aisle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.aisleLabel {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: #bbb;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.seat {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  cursor: default;
+  transition: transform 0.18s, box-shadow 0.18s;
+  padding: 4px;
+  min-width: 0;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+}
+
+.seatNumber {
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.seatName {
+  font-size: 0.58rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  display: block;
+  text-align: center;
+}
+
+.seatEmpty {
+  background: #f8f8f8;
+  border-color: #e5e5e5;
+  color: #bbb;
+}
+
+.seatOccupied {
+  background: rgba(148, 69, 53, 0.08);
+  border-color: rgba(148, 69, 53, 0.3);
+  color: var(--primary, #944535);
+  font-weight: 600;
+}
+.seatOccupied:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(148, 69, 53, 0.2);
+  z-index: 2;
+}
+
+.seatHighlighted {
+  background: #d97706 !important;
+  border-color: #b45309 !important;
+  color: #fff !important;
+  transform: scale(1.12);
+  box-shadow: 0 4px 16px rgba(217, 119, 6, 0.4) !important;
+  animation: seatPulse 1.2s ease-in-out 2;
+  z-index: 3;
+}
+
+@keyframes seatPulse {
+  0%, 100% { box-shadow: 0 4px 16px rgba(217, 119, 6, 0.4); }
+  50% { box-shadow: 0 4px 28px rgba(217, 119, 6, 0.7); }
+}
+
+/* ── Legend ───────────────────────────────────────────────────────── */
+.legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color, #eaeaea);
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.legendDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid transparent;
+}
+.legendDotOccupied    { background: rgba(148, 69, 53, 0.08); border-color: rgba(148, 69, 53, 0.3); }
+.legendDotEmpty       { background: #f8f8f8; border-color: #e5e5e5; }
+.legendDotHighlighted { background: #d97706; border-color: #b45309; }
+
+/* ── Loading / Empty ──────────────────────────────────────────────── */
+.loadingState,
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 56px 24px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border-color, #eaeaea);
+  border-top-color: var(--primary, #944535);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .searchBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchBtn {
+    text-align: center;
+  }
+}

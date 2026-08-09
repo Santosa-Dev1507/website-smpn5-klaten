@@ -8,6 +8,7 @@ const navLinks = [
   { label: "Profil", href: "/profil" },
   { label: "Layanan", href: "/layanan-publik" },
   { label: "Ekskul", href: "/ekstrakurikuler" },
+  { label: "Kokurikuler", href: "/kokurikuler" },
   { label: "Alumni", href: "/alumni" },
   { label: "Prestasi", href: "/#prestasi" },
 ];

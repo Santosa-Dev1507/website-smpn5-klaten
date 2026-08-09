@@ -1,0 +1,69 @@
+/* app/kokurikuler/components/faq.module.css */
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 800px;
+}
+
+.faqItem {
+  background: #fff;
+  border: 1.5px solid var(--border-color, #eaeaea);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.faqItemOpen {
+  border-color: var(--primary, #944535);
+  box-shadow: 0 2px 16px rgba(148, 69, 53, 0.08);
+}
+
+.faqQuestion {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.97rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-main, #0D0C13);
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.faqItemOpen .faqQuestion {
+  color: var(--primary, #944535);
+}
+
+.faqChevron {
+  flex-shrink: 0;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  color: var(--text-muted, #555);
+}
+
+.faqItemOpen .faqChevron {
+  transform: rotate(180deg);
+  color: var(--primary, #944535);
+}
+
+.faqAnswer {
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faqAnswerInner {
+  padding: 4px 20px 20px;
+  font-size: 0.9rem;
+  color: var(--text-muted, #555);
+  line-height: 1.75;
+  border-top: 1px solid var(--border-color, #eaeaea);
+  padding-top: 16px;
+  margin-top: 4px;
+}

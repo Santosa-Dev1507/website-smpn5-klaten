@@ -1,0 +1,1075 @@
+/* app/kokurikuler/kokurikuler.module.css
+   Design System: SMPN 5 Klaten Brand Guidelines (Hallmark & UI/UX Pro Max)
+   Primary: Terracotta #944535 (hover: #7a382a)
+   Secondary: Gold #FAD6A6 (badge/accent: #e8b86d, #fdf0d8)
+   Surface: #FFFFFF & Warm Surface #fdf8f2 / #fff7ed
+   Text: #0D0C13 & #555555
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tokens lokal ─────────────────────────────────────────────────── */
+.page {
+  --kok-primary:       var(--primary, #944535);
+  --kok-primary-hover: var(--primary-hover, #7a382a);
+  --kok-primary-soft:  rgba(148, 69, 53, 0.08);
+  --kok-primary-border:rgba(148, 69, 53, 0.2);
+  --kok-gold:          #d97706;
+  --kok-gold-pale:     #fef3c7;
+  --kok-gold-accent:   #f59e0b;
+  --kok-surface:       #fdf8f2;
+  --kok-surface-card:  #ffffff;
+  --kok-radius:        12px;
+  --kok-radius-lg:     20px;
+  --kok-shadow:        0 4px 20px rgba(0,0,0,0.06);
+  --kok-shadow-hover:  0 10px 30px rgba(148, 69, 53, 0.12);
+  font-family: inherit;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 82dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffffff 50%, #fdf8f2 100%);
+  text-align: center;
+  padding: 120px 24px 80px;
+  border-bottom: 1px solid rgba(148, 69, 53, 0.08);
+}
+
+.heroBgPattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 70% 60% at 85% 20%, rgba(250, 214, 166, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(148, 69, 53, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.heroBgGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 69, 53, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 69, 53, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(148, 69, 53, 0.08);
+  border: 1px solid rgba(148, 69, 53, 0.18);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary, #944535);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s var(--ease-enter) both;
+}
+
+.heroBadgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary, #944535);
+  animation: pulseRing 2s ease-in-out infinite;
+}
+
+.heroTitle {
+  font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+  font-weight: 800;
+  color: var(--text-main, #0D0C13);
+  line-height: 1.18;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  animation: softBlurIn 900ms cubic-bezier(0.22, 1, 0.36, 1) 100ms both;
+}
+
+.heroTitleAccent {
+  color: var(--primary, #944535);
+}
+
+.heroTheme {
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--text-muted, #555555);
+  margin-bottom: 8px;
+  animation: fadeUp 0.8s var(--ease-enter) 250ms both;
+}
+
+.heroMeta {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted, #777);
+  margin-bottom: 40px;
+  animation: fadeUp 0.8s var(--ease-enter) 350ms both;
+}
+
+.heroActions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 36px;
+  animation: fadeUp 0.8s var(--ease-enter) 450ms both;
+}
+
+.heroBtnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary, #944535);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-enter), box-shadow 0.2s, background-color 0.2s;
+  box-shadow: 0 6px 20px rgba(148,69,53,0.25);
+}
+.heroBtnPrimary:hover {
+  background: var(--primary-hover, #7a382a);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(148,69,53,0.35);
+}
+
+.heroBtnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--primary, #944535);
+  padding: 14px 28px;
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: 2px solid var(--primary, #944535);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+.heroBtnSecondary:hover {
+  background: rgba(148, 69, 53, 0.08);
+  transform: translateY(-2px);
+}
+
+/* ── Hero-10 Image Fan ────────────────────────────────────────────── */
+.heroFanWrap {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeUp 0.9s var(--ease-enter) 550ms both;
+}
+
+.heroFan {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.fanCard {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14), 0 4px 16px rgba(148, 69, 53, 0.18);
+  border: 3.5px solid #ffffff;
+  outline: 1.5px solid rgba(148, 69, 53, 0.22);
+  transition: transform 0.4s var(--ease-enter), box-shadow 0.4s;
+  background: #fff;
+  aspect-ratio: 4 / 5;
+}
+
+.fanCard:hover {
+  transform: translateY(-10px) scale(1.05) !important;
+  box-shadow: 0 24px 50px rgba(148, 69, 53, 0.28), 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 30 !important;
+}
+
+.fanCardLeft {
+  width: 36%;
+  margin-right: -10%;
+  z-index: 10;
+  transform: rotate(-6deg) translateY(18px);
+}
+
+.fanCardCenter {
+  width: 42%;
+  z-index: 20;
+  transform: rotate(0deg) translateY(-8px);
+}
+
+.fanCardRight {
+  width: 36%;
+  margin-left: -10%;
+  z-index: 10;
+  transform: rotate(6deg) translateY(18px);
+}
+
+.fanImageWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.fanImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s var(--ease-enter);
+}
+
+.fanCard:hover .fanImage {
+  transform: scale(1.08);
+}
+
+.fanCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(13, 12, 19, 0.8) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px 16px;
+  pointer-events: none;
+}
+
+.fanCardLabel {
+  color: #ffffff;
+  font-size: clamp(0.75rem, 1.4vw, 0.92rem);
+  font-weight: 700;
+  text-align: left;
+  line-height: 1.25;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.heroScroll {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted, #888);
+  font-size: 0.75rem;
+  font-weight: 600;
+  animation: floatY 2.5s ease-in-out infinite;
+}
+
+/* ── Section wrapper ──────────────────────────────────────────────── */
+.section {
+  padding: 80px 24px;
+}
+.sectionAlt {
+  background: var(--background-alt, #fdf8f2);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  margin-bottom: 48px;
+}
+
+.sectionEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary, #944535);
+  margin-bottom: 10px;
+}
+.sectionEyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--primary, #944535);
+  border-radius: 2px;
+}
+
+.sectionTitle {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: var(--text-main, #0D0C13);
+  line-height: 1.2;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+
+.sectionLead {
+  font-size: 1.05rem;
+  color: var(--text-muted, #555555);
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+/* ── Info Kegiatan — Destinasi Cards ──────────────────────────────── */
+.narasiPembuka {
+  background: #fff;
+  border-left: 4px solid var(--primary, #944535);
+  border-radius: 0 var(--kok-radius) var(--kok-radius) 0;
+  padding: 22px 26px;
+  font-size: 0.96rem;
+  line-height: 1.75;
+  color: var(--text-main, #0D0C13);
+  margin-bottom: 32px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+.biayaHighlight {
+  color: var(--primary, #944535);
+  font-weight: 800;
+  background: rgba(148, 69, 53, 0.08);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* ── Notice & Timeline Angket Kesediaan ───────────────────────────── */
+.angketNoticeWrap {
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.angketTimelineGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.angketTimelineCard {
+  background: #ffffff;
+  border: 1.5px solid rgba(148, 69, 53, 0.18);
+  border-radius: var(--kok-radius-lg, 20px);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.angketTimelineCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(148, 69, 53, 0.12);
+}
+
+.angketIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary, #944535) 0%, #7a382a 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(148, 69, 53, 0.25);
+}
+
+.angketTimelineContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.angketTimelineTag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary, #944535);
+}
+
+.angketTimelineVal {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main, #0D0C13);
+}
+
+.angketAlertCard {
+  background: #fff7ed;
+  border: 2px solid #fdba74;
+  border-radius: var(--kok-radius-lg, 20px);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 4px 20px rgba(234, 88, 12, 0.08);
+}
+
+.angketAlertHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.angketAlertBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #944535;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 4px 14px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.angketAlertBody {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+.angketAlertHighlight {
+  font-weight: 800;
+  color: #944535;
+  background: rgba(148, 69, 53, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .angketTimelineGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.destinasiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.destinasiCard {
+  background: #fff;
+  border: 1px solid var(--border-color, #eaeaea);
+  border-radius: var(--kok-radius-lg);
+  padding: 28px;
+  box-shadow: var(--kok-shadow);
+  transition: transform 0.25s var(--ease-enter), box-shadow 0.25s, border-color 0.25s;
+}
+.destinasiCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--kok-shadow-hover);
+  border-color: var(--kok-primary-border);
+}
+
+.destinasiCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.destinasiCardIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(148, 69, 53, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary, #944535);
+  flex-shrink: 0;
+}
+
+.destinasiCardNama {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.destinasiCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.destinasiItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.destinasiItemLabel {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary, #944535);
+}
+
+.destinasiItemValue {
+  font-size: 0.92rem;
+  color: var(--text-muted, #555);
+  line-height: 1.55;
+}
+
+/* ── Rundown & Fasilitas ──────────────────────────────────────────── */
+.rundownStepperWrap {
+  margin-bottom: 40px;
+}
+
+.rundownStepperTitle {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary, #944535);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rundownStepperGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.stepperCard {
+  background: #ffffff;
+  border: 1.5px solid rgba(148, 69, 53, 0.16);
+  border-radius: var(--kok-radius-lg, 20px);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.stepperCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(148, 69, 53, 0.14);
+  border-color: var(--primary, #944535);
+}
+
+.stepperHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stepperStepBadge {
+  background: rgba(148, 69, 53, 0.1);
+  color: var(--primary, #944535);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 100px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stepperDate {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--text-main, #0D0C13);
+}
+
+.stepperLabel {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-muted, #555);
+}
+
+.stepperLabelBold {
+  font-weight: 700;
+  color: var(--primary, #944535);
+}
+
+@media (max-width: 900px) {
+  .rundownStepperGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rundownFasilitasGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+.rundownTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: var(--kok-radius);
+  overflow: hidden;
+  box-shadow: var(--kok-shadow);
+  background: #fff;
+  border: 1px solid var(--border-color, #eaeaea);
+}
+
+.rundownTable thead {
+  background: var(--primary, #944535);
+  color: #fff;
+}
+
+.rundownTable th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.rundownTable td {
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-color, #eaeaea);
+  font-size: 0.9rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  vertical-align: top;
+}
+
+.rundownTable tr:last-child td {
+  border-bottom: none;
+}
+
+.rundownTable tr:nth-child(even) td {
+  background: var(--background-alt, #fdf8f2);
+}
+
+.rundownTime {
+  font-weight: 700;
+  color: var(--primary, #944535);
+  white-space: nowrap;
+  width: 90px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fasilitasSubHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #1c1514 0%, #3d1c16 50%, #944535 100%);
+  color: #ffffff;
+  padding: 14px 20px;
+  border-radius: var(--kok-radius, 16px);
+  margin-bottom: 18px;
+  box-shadow: 0 4px 16px rgba(148, 69, 53, 0.25);
+  border: 1px solid rgba(250, 214, 166, 0.3);
+}
+
+.fasilitasSubHeaderIcon {
+  color: #FAD6A6;
+  flex-shrink: 0;
+}
+
+.fasilitasSubHeaderTitle {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.fasilitasList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fasilitasItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--border-color, #eaeaea);
+  border-radius: var(--kok-radius);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-main);
+  box-shadow: var(--kok-shadow);
+  transition: border-color 0.2s;
+}
+.fasilitasItem:hover {
+  border-color: var(--kok-primary-border);
+}
+
+.fasilitasCategoryBadge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary, #944535) 0%, #7a382a 100%);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 100px;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 8px rgba(148, 69, 53, 0.2);
+}
+
+.fasilitasItemIcon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(148, 69, 53, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary, #944535);
+}
+
+/* ── Biaya & Pembayaran ───────────────────────────────────────────── */
+.biayaCard {
+  background: linear-gradient(135deg, #944535 0%, #7a382a 100%);
+  border-radius: var(--kok-radius-lg);
+  padding: 48px;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: center;
+  box-shadow: 0 12px 40px rgba(148, 69, 53, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.biayaCard::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(250, 214, 166, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.biayaNominal {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 8px;
+  color: #FAD6A6;
+  letter-spacing: -0.02em;
+}
+
+.biayaLabel {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 24px;
+}
+
+.biayaInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.biayaInfoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.9);
+  line-height: 1.55;
+}
+
+.biayaInfoIcon {
+  flex-shrink: 0;
+  color: #FAD6A6;
+  margin-top: 2px;
+}
+
+.biayaWarning {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(250, 214, 166, 0.3);
+  border-radius: var(--kok-radius);
+  padding: 16px 20px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #fff;
+  font-style: italic;
+}
+
+.biayaCardVisual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 28px;
+  background: rgba(255,255,255,0.1);
+  border-radius: var(--kok-radius-lg);
+  border: 1px solid rgba(255,255,255,0.18);
+  text-align: center;
+  min-width: 170px;
+  backdrop-filter: blur(8px);
+}
+
+.biayaCardVisualIcon {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.biayaCardVisualLabel {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+/* ── Tata Tertib ─────────────────────────────────────────────────── */
+.tataTertibList {
+  counter-reset: tataTertib;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tataTertibItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 18px 20px;
+  background: #fff;
+  border-radius: var(--kok-radius);
+  border: 1px solid var(--border-color, #eaeaea);
+  box-shadow: var(--kok-shadow);
+  transition: border-color 0.2s;
+}
+
+.tataTertibItem:hover {
+  border-color: var(--primary, #944535);
+}
+
+.tataTertibNumber {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--primary, #944535);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.tataTertibText {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.6;
+  padding-top: 4px;
+}
+
+/* ── Kontak ─────────────────────────────────────────────────────── */
+.kontakCard {
+  background: var(--background-alt, #fdf8f2);
+  border: 1px solid var(--border-color, #eaeaea);
+  border-radius: var(--kok-radius-lg);
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  max-width: 640px;
+}
+
+.kontakAvatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary, #944535) 0%, #7a382a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(148,69,53,0.3);
+}
+
+.kontakInfo {
+  flex: 1;
+}
+
+.kontakNama {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.kontakJabatan {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.kontakWa {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(37,211,102,0.3);
+}
+.kontakWa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+}
+
+/* ── Portal Guru Link ────────────────────────────────────────────── */
+.portalBanner {
+  background: linear-gradient(135deg, #944535 0%, #7a382a 100%);
+  border-radius: var(--kok-radius-lg);
+  padding: 40px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: #fff;
+  box-shadow: 0 10px 36px rgba(148,69,53,0.22);
+}
+
+.portalBannerTitle {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: #FAD6A6;
+}
+
+.portalBannerDesc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+}
+
+.portalBannerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--primary, #944535);
+  padding: 14px 28px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+.portalBannerBtn:hover {
+  background: #fff9f4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 20px;
+  }
+
+  .rundownFasilitasGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .biayaCard {
+    grid-template-columns: 1fr;
+    padding: 32px 24px;
+  }
+
+  .biayaCardVisual {
+    display: none;
+  }
+
+  .kontakCard {
+    flex-direction: column;
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  .portalBanner {
+    flex-direction: column;
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  .destinasiGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 1.9rem;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .heroBtnPrimary,
+  .heroBtnSecondary {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+
+  .biayaCard {
+    padding: 24px 20px;
+  }
+}
