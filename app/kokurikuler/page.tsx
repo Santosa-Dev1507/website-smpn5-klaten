@@ -385,7 +385,7 @@ export default async function KokurikulerPage() {
                     <>
                       <tr><td className={styles.rundownTime}>06.30</td><td>Peserta berkumpul di sekolah, koordinasi dan pengecekan peserta.</td></tr>
                       <tr><td className={styles.rundownTime}>07.30</td><td>Rombongan berangkat menuju Semarang, pembagian snack.</td></tr>
-                      <tr><td className={styles.rundownTime}>09.00</td><td>Tiba di Semarang, kegiatan pembelajaran lapangan di Saloka Theme Park.</td></tr>
+                      <tr><td className={styles.rundownTime}>09.00</td><td>Tiba di Tuntang, kegiatan pembelajaran lapangan di Saloka Theme Park.</td></tr>
                       <tr><td className={styles.rundownTime}>13.00</td><td>Istirahat, sholat, makan siang.</td></tr>
                       <tr><td className={styles.rundownTime}>14.30</td><td>Kunjungan pembelajaran ke Benteng Pendem Fort Willem I, Ambarawa.</td></tr>
                       <tr><td className={styles.rundownTime}>16.30</td><td>Kunjungan pembelajaran ke Museum Lawang Sewu.</td></tr>
