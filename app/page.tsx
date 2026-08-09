@@ -31,16 +31,21 @@ const ekskulList = [
 ];
 
 const achievements = [
+  // Prestasi 2026
+  { year: "2026", title: "Juara 1 Lomba Gebyar Inovasi Pendidikan kategori guru SMP", level: "Bapak Budi Santosa, S.Pd.I (Aplikasi RihlahQu) — Tingkat Kabupaten Klaten (6 Agt 2026)", cat: "Guru" },
+  { year: "2026", title: "Juara 3 Lomba Yel-Yel Anti Korupsi", level: "Tim Yel-Yel Blue & She — Klaten Integrity Challenge di Graha Bung Karno Klaten", cat: "Siswa" },
+  { year: "2026", title: "Juara 3 Kejurkab Tinju Kelompok Umur Tahun 2026", level: "Vania Regina Putri (Kelas VIII A) — di GOR GELARSENA Klaten", cat: "Siswa" },
+  { year: "2026", title: "Juara 3 POPDA Tenis Lapangan", level: "Muhammad Ghazi Amzar (Kelas IX E) — Tingkat Kabupaten Klaten", cat: "Siswa" },
   // Prestasi Sekolah
-  { year: "2025", title: "Sekolah Adiwiyata Nasional", level: "Penghargaan Nasional — Kementerian LHK RI", cat: "🌿 Sekolah" },
+  { year: "2025", title: "Sekolah Adiwiyata Nasional", level: "Penghargaan Nasional — Kementerian LHK RI", cat: "Sekolah" },
   // Prestasi Guru
-  { year: "2025", title: "Juara 2 Festival Paduan Suara HGN", level: "Tingkat Kabupaten Klaten — Tim Guru SMPN 5", cat: "🎤 Guru" },
-  { year: "2025", title: "Narasumber Pembelajaran Mendalam Guru IPS", level: "Santi Nurrohmawati, SE — Tingkat Kabupaten", cat: "📚 Guru" },
+  { year: "2025", title: "Juara 2 Festival Paduan Suara HGN", level: "Tingkat Kabupaten Klaten — Tim Guru SMPN 5", cat: "Guru" },
+  { year: "2025", title: "Narasumber Pembelajaran Mendalam Guru IPS", level: "Santi Nurrohmawati, SE — Tingkat Kabupaten", cat: "Guru" },
   // Prestasi Siswa
-  { year: "2025", title: "Juara 1 Senam Anak Indonesia Hebat", level: "Fahira, Aryana, Triska — Tingkat Kabupaten Klaten", cat: "🤸 Siswa" },
-  { year: "2024", title: "Juara 1 Jumbara PMR Kabupaten Klaten", level: "Adinda Putri & Aisyah Sarifa — Kelas 9H", cat: "🏥 Siswa" },
-  { year: "2024", title: "Juara 3 Open Kata Karate Inkai Cup", level: "Khanza Shaulika — Tingkat Kabupaten Klaten", cat: "🥋 Siswa" },
-  { year: "2024", title: "Juara 2 & 3 Nulis Cerkak Bahasa Jawa", level: "Briliant Ardie & Ismy Ayu — Tingkat Kabupaten", cat: "✍️ Siswa" },
+  { year: "2025", title: "Juara 1 Senam Anak Indonesia Hebat", level: "Fahira, Aryana, Triska — Tingkat Kabupaten Klaten", cat: "Siswa" },
+  { year: "2024", title: "Juara 1 Jumbara PMR Kabupaten Klaten", level: "Adinda Putri & Aisyah Sarifa — Kelas 9H", cat: "Siswa" },
+  { year: "2024", title: "Juara 3 Open Kata Karate Inkai Cup", level: "Khanza Shaulika — Tingkat Kabupaten Klaten", cat: "Siswa" },
+  { year: "2024", title: "Juara 2 & 3 Nulis Cerkak Bahasa Jawa", level: "Briliant Ardie & Ismy Ayu — Tingkat Kabupaten", cat: "Siswa" },
 ];
 
 const testimonials = [
