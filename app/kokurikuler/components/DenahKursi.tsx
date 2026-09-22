@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Search, Bus, MapPin, X, User } from "lucide-react";
@@ -133,24 +133,29 @@ export default function DenahKursi({ initialData = [] }: Props) {
         key={seatId}
         className={cls}
         title={siswa ? `${siswa.nama_siswa} (${siswa.kelas})` : isCompanion ? 'Kursi Pendamping' : `Kursi ${seatId}`}
-        onClick={() => {
-          if (siswa) {
-            setModalSeat(siswa);
-          }
-        }}
+        onClick={() => { if (siswa) setModalSeat(siswa); }}
         style={siswa ? { cursor: 'pointer' } : undefined}
       >
-        <span className={styles.seatId}>{seatId}</span>
-        {siswa && (
-          <span className={styles.seatName}>
-            {siswa.nama_siswa.split(' ').slice(0, 2).join(' ')}
-          </span>
-        )}
-        {siswa?.gender && (
-          <span className={`${styles.genderBadge} ${styles[`gender${siswa.gender}`] ?? ''}`}>
-            {siswa.gender}
-          </span>
-        )}
+        {/* Baris atas: kelas pill (kiri) + gender badge (kanan) */}
+        <div className={styles.seatTop}>
+          {siswa?.kelas
+            ? <span className={styles.kelasPill}>{siswa.kelas}</span>
+            : <span />
+          }
+          {siswa?.gender && (
+            <span className={`${styles.genderBadge} ${siswa.gender === 'P' ? styles.genderP : styles.genderL}`}>
+              {siswa.gender}
+            </span>
+          )}
+        </div>
+
+        {/* Nama siswa */}
+        <div className={styles.seatName}>
+          {siswa ? siswa.nama_siswa : ''}
+        </div>
+
+        {/* Nomor kursi di bawah */}
+        <div className={styles.seatNumberTag}>{seatId}</div>
       </div>
     );
   };
