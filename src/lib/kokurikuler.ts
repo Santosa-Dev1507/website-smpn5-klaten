@@ -36,9 +36,11 @@ export interface FasilitasItem {
 
 export interface KursiSiswa {
   bus_id: string;
-  nomor_kursi: string | number;
+  nomor_kursi: string; // format alfanumerik dari GAS: "1A", "3C", "14F", dll.
   nama_siswa: string;
   kelas: string;
+  nis?: string;        // No. Induk Siswa
+  gender?: string;     // "L" | "P"
 }
 
 export interface KelompokKerja {
@@ -147,6 +149,68 @@ export async function fetchFasilitas(): Promise<FasilitasItem[]> {
 
 export async function fetchKursi(): Promise<KursiSiswa[]> {
   return fetchTab<KursiSiswa>('kursi', 60);
+}
+
+/** Fetch data kursi langsung dari Google Sheets Gviz API (server-side, build time). */
+export async function fetchKursiGviz(): Promise<KursiSiswa[]> {
+  const gvizUrl = process.env.GAS_KURSI_GVIZ_URL ?? '';
+  if (!gvizUrl) {
+    console.warn('[kokurikuler] GAS_KURSI_GVIZ_URL belum diisi.');
+    return [];
+  }
+
+  try {
+    const res = await fetch(gvizUrl, { next: { revalidate: 60 } });
+    if (!res.ok) return [];
+
+    const text = await res.text();
+    const firstBrace = text.indexOf('{');
+    const lastBrace  = text.lastIndexOf('}');
+    if (firstBrace === -1 || lastBrace === -1) return [];
+
+    const json = JSON.parse(text.substring(firstBrace, lastBrace + 1)) as {
+      table?: { cols: { label: string }[]; rows: { c: ({ v: string | number | null } | null)[] }[] };
+    };
+
+    const rows = json.table?.rows ?? [];
+    const cols = json.table?.cols ?? [];
+
+    function cellVal(cell: { v: string | number | null } | null | undefined): string {
+      if (!cell || cell.v === null || cell.v === undefined) return '';
+      return String(cell.v).trim();
+    }
+
+    // Deteksi kolom dari label header
+    let busCol = 1, kursiCol = 2, kelasCol = 3, nisCol = 4, namaCol = 5, genderCol = 6;
+    cols.forEach((col, idx) => {
+      const label = col.label.toLowerCase().replace(/[\s.]+/g, '');
+      if (label === 'bus' || label === 'armadabus') busCol = idx;
+      else if (label === 'nokursi' || label === 'kursi') kursiCol = idx;
+      else if (label.includes('nama')) namaCol = idx;
+      else if (label.includes('kelas')) kelasCol = idx;
+      else if (label.includes('induk') || label === 'nis') nisCol = idx;
+      else if (label === 'l/p' || label.includes('gender')) genderCol = idx;
+    });
+
+    const result: KursiSiswa[] = [];
+    for (const row of rows) {
+      const c = row.c ?? [];
+      const kursi = cellVal(c[kursiCol]);
+      if (!kursi) continue;
+      result.push({
+        bus_id:      cellVal(c[busCol]) || 'Bus 1',
+        nomor_kursi: kursi.replace(/[\s()]/g, '').toUpperCase(),
+        nama_siswa:  cellVal(c[namaCol]),
+        kelas:       cellVal(c[kelasCol]),
+        nis:         cellVal(c[nisCol]),
+        gender:      cellVal(c[genderCol]),
+      });
+    }
+    return result;
+  } catch (e) {
+    console.error('[kokurikuler] fetchKursiGviz error:', e);
+    return [];
+  }
 }
 
 export async function fetchKelompok(): Promise<KelompokKerja[]> {

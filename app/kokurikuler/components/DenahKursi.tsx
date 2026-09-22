@@ -1,41 +1,58 @@
-"use client";
+﻿"use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Search, Bus, MapPin, User, X, ChevronDown } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Search, Bus, MapPin, X, User } from "lucide-react";
 import styles from "./denah.module.css";
 import type { KursiSiswa } from "@/lib/kokurikuler";
 
 interface Props {
-  /** Pre-loaded dari server jika tersedia, kosong jika GAS belum dikonfigurasi */
+  /** Pre-loaded dari server jika tersedia */
   initialData?: KursiSiswa[];
 }
 
-// Default bus layout: 40 kursi per bus, layout 2-2 (baris A-B | C-D)
-const SEATS_PER_BUS = 40;
-const ROWS = 10; // 10 baris × 4 kursi = 40
+/**
+ * Layout bus 50 kursi — sesuai GAS "Pembagian Kursi Bus"
+ * Format: baris standard 2-2, baris pendamping, pintu belakang, bangku belakang 6 kursi
+ */
+type RowStandard = { type: 'standard'; left: [string, string]; right: [string, string]; isCompanion?: boolean };
+type RowDoor     = { type: 'door_back'; right: [string, string] };
+type RowBench    = { type: 'rear_bench'; seats: [string, string, string, string, string, string] };
+type BusRow      = RowStandard | RowDoor | RowBench;
 
-/** Posisi kursi pada grid 2-2: 1-10 = kiri, 11-20 = kanan blok A, dst. */
-function getSeatPosition(nomor: number): { row: number; col: 'A' | 'B' | 'C' | 'D' } {
-  const idx = (Number(nomor) - 1) % SEATS_PER_BUS;
-  const row = Math.floor(idx / 4) + 1;
-  const colIdx = idx % 4;
-  const cols: Array<'A' | 'B' | 'C' | 'D'> = ['A', 'B', 'C', 'D'];
-  return { row, col: cols[colIdx] };
+const BUS_LAYOUT: BusRow[] = [
+  { type: 'standard', left: ['1A', '1B'], right: ['2A', '2B'], isCompanion: true },
+  { type: 'standard', left: ['3A', '3B'], right: ['3C', '3D'] },
+  { type: 'standard', left: ['4A', '4B'], right: ['4C', '4D'] },
+  { type: 'standard', left: ['5A', '5B'], right: ['5C', '5D'] },
+  { type: 'standard', left: ['6A', '6B'], right: ['6C', '6D'] },
+  { type: 'standard', left: ['7A', '7B'], right: ['7C', '7D'] },
+  { type: 'standard', left: ['8A', '8B'], right: ['8C', '8D'] },
+  { type: 'standard', left: ['9A', '9B'], right: ['9C', '9D'] },
+  { type: 'standard', left: ['10A', '10B'], right: ['10C', '10D'] },
+  { type: 'standard', left: ['11A', '11B'], right: ['11C', '11D'] },
+  { type: 'standard', left: ['12A', '12B'], right: ['12C', '12D'] },
+  { type: 'door_back', right: ['13C', '13D'] },
+  { type: 'rear_bench', seats: ['14A', '14B', '14C', '14D', '14E', '14F'] },
+];
+
+interface SeatInfo extends KursiSiswa {
+  isCompanion: boolean;
 }
 
 export default function DenahKursi({ initialData = [] }: Props) {
-  const [allData, setAllData]           = useState<KursiSiswa[]>(initialData);
-  const [loading, setLoading]           = useState(initialData.length === 0);
-  const [query, setQuery]               = useState("");
-  const [activeBus, setActiveBus]       = useState<string>("");
-  const [highlightNomor, setHighlight]  = useState<string | null>(null);
-  const [foundSiswa, setFoundSiswa]     = useState<KursiSiswa | null>(null);
+  const [allData, setAllData]         = useState<KursiSiswa[]>(initialData);
+  const [loading, setLoading]         = useState(initialData.length === 0);
+  const [query, setQuery]             = useState("");
+  const [activeBus, setActiveBus]     = useState<string>("");
+  const [highlightIds, setHighlight]  = useState<Set<string>>(new Set());
+  const [foundSiswa, setFoundSiswa]   = useState<KursiSiswa[]>([]);
+  const [modalSeat, setModalSeat]     = useState<SeatInfo | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch jika data belum ada
   useEffect(() => {
     if (initialData.length > 0) { setLoading(false); return; }
-    fetch("/api/kokurikuler/data?tab=kursi")
+    fetch("/api/kokurikuler/kursi")
       .then(r => r.json())
       .then(json => {
         setAllData(json.data ?? []);
@@ -44,40 +61,98 @@ export default function DenahKursi({ initialData = [] }: Props) {
       .catch(() => setLoading(false));
   }, [initialData.length]);
 
-  // Daftar bus unik
-  const buses = Array.from(new Set(allData.map(k => k.bus_id))).sort();
+  // Daftar bus unik, diurutkan secara natural
+  const buses = Array.from(new Set(allData.map(k => k.bus_id))).sort((a, b) => {
+    const na = parseInt(a.replace(/\D+/g, '')) || 0;
+    const nb = parseInt(b.replace(/\D+/g, '')) || 0;
+    return na - nb;
+  });
 
   useEffect(() => {
     if (buses.length > 0 && !activeBus) setActiveBus(buses[0]);
   }, [buses, activeBus]);
 
-  // Data kursi per bus aktif
-  const busSiswa = allData.filter(k => k.bus_id === activeBus);
+  // Map kursi → siswa untuk bus aktif
+  const seatMap = new Map<string, SeatInfo>();
+  allData
+    .filter(k => k.bus_id === activeBus)
+    .forEach(k => {
+      const isCompanion = ['1A','1B','2A','2B'].includes(k.nomor_kursi.toUpperCase());
+      seatMap.set(k.nomor_kursi.toUpperCase(), { ...k, isCompanion });
+    });
 
-  const seatMap = new Map<string, KursiSiswa>();
-  busSiswa.forEach(k => seatMap.set(String(k.nomor_kursi), k));
-
-  // Cari siswa
-  const handleSearch = () => {
+  // Cari siswa (real-time)
+  const handleSearch = useCallback(() => {
     const q = query.trim().toLowerCase();
-    if (!q) { setHighlight(null); setFoundSiswa(null); return; }
+    if (!q) { setHighlight(new Set()); setFoundSiswa([]); return; }
 
-    const found = allData.find(k => k.nama_siswa.toLowerCase().includes(q));
-    if (found) {
-      setFoundSiswa(found);
-      setActiveBus(found.bus_id);
-      setHighlight(String(found.nomor_kursi));
+    const found = allData.filter(k =>
+      k.nama_siswa.toLowerCase().includes(q) ||
+      k.kelas.toLowerCase().includes(q) ||
+      (k.nis && k.nis.toLowerCase().includes(q)) ||
+      k.nomor_kursi.toLowerCase().includes(q)
+    );
+
+    setFoundSiswa(found);
+    if (found.length > 0) {
+      setHighlight(new Set(found.map(f => f.nomor_kursi.toUpperCase())));
+      // Otomatis pindah ke bus yang ditemukan pertama
+      setActiveBus(found[0].bus_id);
     } else {
-      setFoundSiswa(null);
-      setHighlight(null);
+      setHighlight(new Set());
     }
-  };
+  }, [query, allData]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [handleSearch]);
 
   const handleClear = () => {
     setQuery("");
-    setHighlight(null);
-    setFoundSiswa(null);
+    setHighlight(new Set());
+    setFoundSiswa([]);
     inputRef.current?.focus();
+  };
+
+  // Render satu kursi
+  const renderSeat = (seatId: string, forceCompanion?: boolean) => {
+    const siswa = seatMap.get(seatId);
+    const isHighlighted = highlightIds.has(seatId);
+    const isCompanion = forceCompanion || siswa?.isCompanion || false;
+
+    const cls = [
+      styles.seat,
+      siswa
+        ? (isCompanion ? styles.seatCompanion : styles.seatOccupied)
+        : (isCompanion ? styles.seatCompanionEmpty : styles.seatEmpty),
+      isHighlighted ? styles.seatHighlighted : '',
+    ].filter(Boolean).join(' ');
+
+    return (
+      <div
+        key={seatId}
+        className={cls}
+        title={siswa ? `${siswa.nama_siswa} (${siswa.kelas})` : isCompanion ? 'Kursi Pendamping' : `Kursi ${seatId}`}
+        onClick={() => {
+          if (siswa) {
+            setModalSeat(siswa);
+          }
+        }}
+        style={siswa ? { cursor: 'pointer' } : undefined}
+      >
+        <span className={styles.seatId}>{seatId}</span>
+        {siswa && (
+          <span className={styles.seatName}>
+            {siswa.nama_siswa.split(' ').slice(0, 2).join(' ')}
+          </span>
+        )}
+        {siswa?.gender && (
+          <span className={`${styles.genderBadge} ${styles[`gender${siswa.gender}`] ?? ''}`}>
+            {siswa.gender}
+          </span>
+        )}
+      </div>
+    );
   };
 
   if (loading) {
@@ -109,8 +184,7 @@ export default function DenahKursi({ initialData = [] }: Props) {
             type="text"
             value={query}
             onChange={e => setQuery(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && handleSearch()}
-            placeholder="Cari nama siswa…"
+            placeholder="Ketik nama untuk menemukan posisi dudukmu di bus…"
             className={styles.searchField}
             aria-label="Cari nama siswa untuk menemukan nomor kursi"
           />
@@ -120,29 +194,31 @@ export default function DenahKursi({ initialData = [] }: Props) {
             </button>
           )}
         </div>
-        <button className={styles.searchBtn} onClick={handleSearch}>
-          Cari Kursi
-        </button>
       </div>
 
       {/* Hasil pencarian */}
-      {foundSiswa && (
-        <div className={styles.resultCard} role="status" aria-live="polite">
-          <div className={styles.resultIcon}><Bus size={20} /></div>
-          <div className={styles.resultInfo}>
-            <p className={styles.resultNama}>{foundSiswa.nama_siswa}</p>
-            <p className={styles.resultMeta}>
-              <MapPin size={13} /> {foundSiswa.kelas} &nbsp;·&nbsp;
-              <Bus size={13} /> Bus {foundSiswa.bus_id} &nbsp;·&nbsp;
-              Kursi <strong>{foundSiswa.nomor_kursi}</strong>
-            </p>
-          </div>
+      {foundSiswa.length > 0 && (
+        <div className={styles.resultList} role="status" aria-live="polite">
+          {foundSiswa.map((s, i) => (
+            <div key={i} className={styles.resultCard}>
+              <div className={styles.resultIcon}><User size={18} /></div>
+              <div className={styles.resultInfo}>
+                <p className={styles.resultNama}>{s.nama_siswa}</p>
+                <p className={styles.resultMeta}>
+                  <MapPin size={13} />&nbsp;{s.kelas}&nbsp;·&nbsp;
+                  <Bus size={13} />&nbsp;{s.bus_id}&nbsp;·&nbsp;
+                  Kursi&nbsp;<strong>{s.nomor_kursi}</strong>
+                  {s.gender && <>&nbsp;·&nbsp;<span className={styles.genderText}>{s.gender === 'P' ? 'Perempuan' : 'Laki-laki'}</span></>}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
-      {foundSiswa === null && query && (
+      {foundSiswa.length === 0 && query.trim() && (
         <p className={styles.notFound} role="alert">
-          Nama "<strong>{query}</strong>" tidak ditemukan dalam data kursi.
+          Nama &quot;<strong>{query}</strong>&quot; tidak ditemukan dalam data kursi.
         </p>
       )}
 
@@ -154,10 +230,10 @@ export default function DenahKursi({ initialData = [] }: Props) {
               key={bus}
               role="tab"
               aria-selected={activeBus === bus}
-              className={`${styles.busTab} ${activeBus === bus ? styles.busTabActive : ""}`}
-              onClick={() => { setActiveBus(bus); setHighlight(null); }}
+              className={`${styles.busTab} ${activeBus === bus ? styles.busTabActive : ''}`}
+              onClick={() => { setActiveBus(bus); setHighlight(new Set()); }}
             >
-              <Bus size={15} aria-hidden="true" /> Bus {bus}
+              <Bus size={15} aria-hidden="true" /> {bus}
             </button>
           ))}
         </div>
@@ -165,57 +241,63 @@ export default function DenahKursi({ initialData = [] }: Props) {
 
       {/* Denah bus */}
       <div className={styles.busContainer} role="tabpanel">
+        {/* Depan bus */}
         <div className={styles.busHeader}>
           <span className={styles.busHeaderLabel}>DEPAN / PENGEMUDI</span>
         </div>
-        <div className={styles.busBody}>
-          {/* Aisle label */}
-          <div className={styles.seatGrid}>
-            {Array.from({ length: ROWS }, (_, rowIdx) => {
-              const rowNum = rowIdx + 1;
-              const cols: Array<'A' | 'B' | 'C' | 'D'> = ['A', 'B', 'C', 'D'];
-              return cols.map((col, colIdx) => {
-                const seatNum = rowIdx * 4 + colIdx + 1;
-                const siswa = seatMap.get(String(seatNum));
-                const isHighlighted = highlightNomor === String(seatNum);
-                const isAisle = colIdx === 1; // after B, before C = aisle
 
+        <div className={styles.busBody}>
+          <div className={styles.busFrame}>
+            {BUS_LAYOUT.map((row, rowIdx) => {
+              if (row.type === 'standard') {
                 return (
-                  <>
-                    <div
-                      key={`${rowNum}-${col}`}
-                      className={`${styles.seat}
-                        ${siswa ? styles.seatOccupied : styles.seatEmpty}
-                        ${isHighlighted ? styles.seatHighlighted : ""}
-                      `}
-                      title={siswa ? `${siswa.nama_siswa} (${siswa.kelas})` : `Kursi ${seatNum}`}
-                      aria-label={siswa
-                        ? `Kursi ${seatNum}: ${siswa.nama_siswa}, ${siswa.kelas}`
-                        : `Kursi ${seatNum} kosong`
-                      }
-                    >
-                      <span className={styles.seatNumber}>{seatNum}</span>
-                      {siswa && (
-                        <span className={styles.seatName}>
-                          {siswa.nama_siswa.split(" ")[0]}
-                        </span>
-                      )}
+                  <div key={rowIdx} className={styles.busRow}>
+                    <div className={styles.sideGroup}>
+                      {row.left.map(id => renderSeat(id, row.isCompanion))}
                     </div>
-                    {/* Aisle spacer setelah kolom B (index 1) */}
-                    {colIdx === 1 && (
-                      <div key={`aisle-${rowNum}`} className={styles.aisle} aria-hidden="true">
-                        {rowNum === 1 && <span className={styles.aisleLabel}>LORONG</span>}
-                      </div>
-                    )}
-                  </>
+                    <div className={styles.aisle} aria-hidden="true">
+                      {rowIdx === 0 && <span className={styles.aisleLabel}>LORONG</span>}
+                    </div>
+                    <div className={styles.sideGroup}>
+                      {row.right.map(id => renderSeat(id, row.isCompanion))}
+                    </div>
+                  </div>
                 );
-              });
+              }
+
+              if (row.type === 'door_back') {
+                return (
+                  <div key={rowIdx} className={styles.busRow}>
+                    <div className={styles.doorPlaceholder}>
+                      <span>PINTU<br />BELAKANG</span>
+                    </div>
+                    <div className={styles.aisle} aria-hidden="true" />
+                    <div className={styles.sideGroup}>
+                      {row.right.map(id => renderSeat(id, false))}
+                    </div>
+                  </div>
+                );
+              }
+
+              if (row.type === 'rear_bench') {
+                return (
+                  <div key={rowIdx} className={styles.rearBenchRow}>
+                    {row.seats.map(id => renderSeat(id, false))}
+                  </div>
+                );
+              }
+
+              return null;
             })}
           </div>
         </div>
 
         {/* Legend */}
         <div className={styles.legend}>
+          <div className={styles.legendItem}>
+            <div className={`${styles.legendDot} ${styles.legendDotCompanion}`} />
+            <span>Pendamping</span>
+          </div>
           <div className={styles.legendItem}>
             <div className={`${styles.legendDot} ${styles.legendDotOccupied}`} />
             <span>Terisi</span>
@@ -230,6 +312,59 @@ export default function DenahKursi({ initialData = [] }: Props) {
           </div>
         </div>
       </div>
+
+      {/* Modal detail kursi */}
+      {modalSeat && (
+        <div
+          className={styles.modalBackdrop}
+          onClick={() => setModalSeat(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Detail kursi ${modalSeat.nomor_kursi}`}
+        >
+          <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.modalTitle}>Detail Kursi {modalSeat.nomor_kursi}</h3>
+              <button className={styles.modalClose} onClick={() => setModalSeat(null)} aria-label="Tutup">
+                <X size={18} />
+              </button>
+            </div>
+            <div className={styles.modalBody}>
+              <div className={styles.modalRow}>
+                <span className={styles.modalLabel}>Nomor Kursi</span>
+                <span className={styles.modalVal}>{modalSeat.nomor_kursi}</span>
+              </div>
+              <div className={styles.modalRow}>
+                <span className={styles.modalLabel}>Nama</span>
+                <span className={styles.modalVal}>{modalSeat.nama_siswa || '—'}</span>
+              </div>
+              <div className={styles.modalRow}>
+                <span className={styles.modalLabel}>Kelas</span>
+                <span className={styles.modalVal}>{modalSeat.kelas || '—'}</span>
+              </div>
+              {modalSeat.nis && (
+                <div className={styles.modalRow}>
+                  <span className={styles.modalLabel}>NIS</span>
+                  <span className={styles.modalVal}>{modalSeat.nis}</span>
+                </div>
+              )}
+              <div className={styles.modalRow}>
+                <span className={styles.modalLabel}>Gender</span>
+                <span className={styles.modalVal}>
+                  {modalSeat.gender === 'P' ? 'Perempuan' : modalSeat.gender === 'L' ? 'Laki-laki' : '—'}
+                </span>
+              </div>
+              <div className={styles.modalRow}>
+                <span className={styles.modalLabel}>Armada Bus</span>
+                <span className={styles.modalVal}>{modalSeat.bus_id}</span>
+              </div>
+            </div>
+            <button className={styles.modalCloseBtn} onClick={() => setModalSeat(null)}>
+              Tutup
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

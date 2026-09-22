@@ -18,7 +18,7 @@ import PanduanRangkaianTugas from "./components/PanduanRangkaianTugas";
 import ScrollReveal from "../components/ScrollReveal";
 import {
   fetchAllKokurikulerData,
-  fetchKursi,
+  fetchKursiGviz,
   fetchKelompok,
   fetchTugasSiswa,
 } from "@/lib/kokurikuler";
@@ -61,7 +61,7 @@ export default async function KokurikulerPage() {
     tugasData,
   ] = await Promise.all([
     fetchAllKokurikulerData(),
-    fetchKursi(),
+    fetchKursiGviz(),
     fetchKelompok(),
     fetchTugasSiswa(),
   ]);
