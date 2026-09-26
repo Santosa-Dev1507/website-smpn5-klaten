@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Users, PlusCircle, Trash2, CheckCircle, AlertCircle, Loader2, Info, ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -40,6 +40,12 @@ const emptyAnggota = (peran: string): AnggotaForm => ({ nama: "", nis: "", peran
 const defaultAnggota = (): AnggotaForm[] =>
   PERAN_SLOTS.map(p => emptyAnggota(p));
 
+interface Student {
+  kelas: string;
+  nis: string;
+  nama: string;
+}
+
 // ── Component ──────────────────────────────────────────────────────────
 export default function DaftarKelompokPage() {
   const router = useRouter();
@@ -55,6 +61,22 @@ export default function DaftarKelompokPage() {
   const [anggota, setAnggota]           = useState<AnggotaForm[]>(defaultAnggota());
   const [submitting, setSubmitting]     = useState(false);
   const [error, setError]               = useState<string | null>(null);
+
+  // Data Siswa
+  const [students, setStudents] = useState<Student[]>([]);
+  const [loadingStudents, setLoadingStudents] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/kokurikuler/siswa")
+      .then(res => res.json())
+      .then(json => {
+        if (json.data) setStudents(json.data);
+        setLoadingStudents(false);
+      })
+      .catch(() => setLoadingStudents(false));
+  }, []);
+
+  const classStudents = students.filter(s => s.kelas === kelas);
 
   // Tambah anggota ke-6 (slot Anggota tambahan)
   const canAddMore = anggota.length < 6;
@@ -197,7 +219,10 @@ export default function DaftarKelompokPage() {
                   required
                   className={styles.select}
                   value={kelas}
-                  onChange={e => setKelas(e.target.value)}
+                  onChange={e => {
+                    setKelas(e.target.value);
+                    setAnggota(defaultAnggota()); // reset anggota jika kelas berubah
+                  }}
                 >
                   <option value="">— Pilih Kelas —</option>
                   {KELAS_LIST.map(k => (
@@ -252,7 +277,7 @@ export default function DaftarKelompokPage() {
             </div>
 
             <p className={styles.sectionNote}>
-              Peran sudah ditentukan per urutan sesuai LKPD. Isi nama lengkap dan NIS masing-masing anggota.
+              Pilih kelas terlebih dahulu. Setelah itu, pilih nama siswa dari daftar yang tersedia. NIS akan terisi otomatis.
             </p>
 
             <div className={styles.anggotaTable}>
@@ -274,25 +299,46 @@ export default function DaftarKelompokPage() {
                     </span>
                   </span>
                   <div className={styles.colNama}>
-                    <input
-                      type="text"
+                    <select
                       required
-                      className={styles.inputInline}
-                      placeholder="Nama lengkap siswa"
+                      className={styles.select}
                       value={a.nama}
-                      onChange={e => updateAnggota(idx, "nama", e.target.value)}
-                      maxLength={60}
+                      onChange={e => {
+                        const selectedName = e.target.value;
+                        const student = classStudents.find(s => s.nama === selectedName);
+                        if (student) {
+                          updateAnggota(idx, "nama", student.nama);
+                          updateAnggota(idx, "nis", student.nis);
+                        } else {
+                          updateAnggota(idx, "nama", "");
+                          updateAnggota(idx, "nis", "");
+                        }
+                      }}
+                      disabled={!kelas || loadingStudents}
                       aria-label={`Nama anggota ${idx + 1} — ${a.peran}`}
-                    />
+                    >
+                      <option value="">
+                        {!kelas ? "— Pilih Kelas Dulu —" : loadingStudents ? "Memuat Data..." : "— Pilih Siswa —"}
+                      </option>
+                      {classStudents.map(s => {
+                        // disable if already selected in another slot
+                        const isSelected = anggota.some((ang, i) => i !== idx && ang.nama === s.nama);
+                        return (
+                          <option key={s.nis} value={s.nama} disabled={isSelected}>
+                            {s.nama}
+                          </option>
+                        );
+                      })}
+                    </select>
                   </div>
                   <div className={styles.colNis}>
                     <input
                       type="text"
                       className={styles.inputInline}
-                      placeholder="NIS"
+                      placeholder="Auto-fill"
                       value={a.nis}
-                      onChange={e => updateAnggota(idx, "nis", e.target.value)}
-                      maxLength={20}
+                      readOnly
+                      style={{ background: "#f1f5f9", cursor: "not-allowed", color: "#64748b" }}
                       aria-label={`NIS anggota ${idx + 1}`}
                     />
                   </div>

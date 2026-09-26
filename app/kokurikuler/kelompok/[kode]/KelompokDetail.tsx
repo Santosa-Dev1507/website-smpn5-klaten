@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   Users, Copy, Check, Edit2, X, Loader2, ArrowLeft,
   AlertCircle, CheckCircle, Printer, Info
@@ -58,7 +58,28 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
   const [editGuru, setEditGuru]           = useState(kelompok.guru_pembimbing ?? "");
   const [editAnggota, setEditAnggota]     = useState<AnggotaRow[]>([...kelompok.anggota_kelompok]);
 
+  const [students, setStudents] = useState<{kelas: string, nis: string, nama: string}[]>([]);
+  const [loadingStudents, setLoadingStudents] = useState(false);
+  const [studentsLoaded, setStudentsLoaded] = useState(false);
+
   const KELAS_LIST = ["VIII A","VIII B","VIII C","VIII D","VIII E","VIII F","VIII G","VIII H"];
+
+  // Fetch data siswa hanya jika tombol Edit diklik pertama kali
+  useEffect(() => {
+    if (editMode && !studentsLoaded && !loadingStudents) {
+      setLoadingStudents(true);
+      fetch("/api/kokurikuler/siswa")
+        .then(res => res.json())
+        .then(json => {
+          if (json.data) setStudents(json.data);
+          setStudentsLoaded(true);
+          setLoadingStudents(false);
+        })
+        .catch(() => setLoadingStudents(false));
+    }
+  }, [editMode, studentsLoaded, loadingStudents]);
+
+  const classStudents = students.filter(s => s.kelas === editKelas);
 
   // ── Copy kode ──────────────────────────────────────────────────────
   const handleCopy = async () => {
@@ -288,13 +309,38 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
                 <td className={styles.tdNo}>{a.urutan ?? idx + 1}</td>
                 <td className={styles.tdNama}>
                   {editMode ? (
-                    <input
+                    <select
                       className={styles.cellInput}
                       value={a.nama}
-                      onChange={e => updateEditAnggota(idx, "nama", e.target.value)}
-                      placeholder="Nama siswa"
-                      maxLength={60}
-                    />
+                      onChange={e => {
+                        const selectedName = e.target.value;
+                        const student = classStudents.find(s => s.nama === selectedName);
+                        if (student) {
+                          updateEditAnggota(idx, "nama", student.nama);
+                          updateEditAnggota(idx, "nis", student.nis);
+                        } else {
+                          updateEditAnggota(idx, "nama", "");
+                          updateEditAnggota(idx, "nis", "");
+                        }
+                      }}
+                      disabled={loadingStudents}
+                    >
+                      <option value="">
+                        {loadingStudents ? "Memuat Data..." : "— Pilih Siswa —"}
+                      </option>
+                      {/* Pastikan nama yang sudah tersimpan sebelumnya tetap ada di option meskipun beda kelas (jika data lama belum sinkron) */}
+                      {!classStudents.some(s => s.nama === a.nama) && a.nama && (
+                        <option value={a.nama}>{a.nama}</option>
+                      )}
+                      {classStudents.map(s => {
+                        const isSelected = editAnggota.some((ang, i) => i !== idx && ang.nama === s.nama);
+                        return (
+                          <option key={s.nis} value={s.nama} disabled={isSelected}>
+                            {s.nama}
+                          </option>
+                        );
+                      })}
+                    </select>
                   ) : (
                     a.nama
                   )}
@@ -304,9 +350,9 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
                     <input
                       className={styles.cellInput}
                       value={a.nis ?? ""}
-                      onChange={e => updateEditAnggota(idx, "nis", e.target.value)}
-                      placeholder="NIS"
-                      maxLength={20}
+                      readOnly
+                      placeholder="Auto-fill"
+                      style={{ background: "#f1f5f9", cursor: "not-allowed", color: "#64748b" }}
                     />
                   ) : (
                     a.nis || <span style={{ color: "#94a3b8" }}>—</span>
