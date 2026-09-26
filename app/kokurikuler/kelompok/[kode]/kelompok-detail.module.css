@@ -1,0 +1,427 @@
+/* app/kokurikuler/kelompok/[kode]/kelompok-detail.module.css */
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #944535;
+  text-decoration: none;
+  font-weight: 600;
+}
+.backLink:hover { text-decoration: underline; }
+
+/* ── Toast ── */
+.toastSuccess {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ecfdf5;
+  border: 1.5px solid #6ee7b7;
+  color: #065f46;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+/* ── Kode card ── */
+.kodeCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  color: white;
+  border-radius: 18px;
+  padding: 24px 28px;
+  flex-wrap: wrap;
+}
+
+.kodeCardLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kodeLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+.kodeValue {
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  font-family: monospace;
+}
+
+.kodeHint {
+  font-size: 0.78rem;
+  opacity: 0.7;
+  max-width: 340px;
+  line-height: 1.4;
+}
+
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.copyBtn:hover { background: rgba(255,255,255,0.25); }
+
+/* ── Banners ── */
+.bannerEditable,
+.bannerLocked {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.bannerEditable {
+  background: #ecfdf5;
+  border: 1.5px solid #6ee7b7;
+  color: #065f46;
+}
+
+.bannerLocked {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  color: #64748b;
+}
+
+/* ── Card ── */
+.card {
+  background: white;
+  border: 1.5px solid rgba(148, 69, 53, 0.12);
+  border-radius: 18px;
+  padding: 24px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cardHeaderLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+}
+
+.cardIcon {
+  width: 44px;
+  height: 44px;
+  background: rgba(148, 69, 53, 0.1);
+  color: #944535;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kelompokNama {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 4px;
+}
+
+.kelompokMeta {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.editTitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  border: 1.5px solid #944535;
+  border-radius: 8px;
+  padding: 6px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}
+
+.editSelect {
+  font-size: 0.88rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  background: #fafafa;
+}
+
+/* ── Info grid ── */
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 560px) {
+  .infoGrid { grid-template-columns: 1fr; }
+}
+
+.infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.infoLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.infoValue {
+  font-size: 0.9rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.editInput {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 0.88rem;
+  background: #fafafa;
+  width: 100%;
+  box-sizing: border-box;
+}
+.editInput:focus {
+  outline: none;
+  border-color: #944535;
+  background: #fff;
+}
+
+/* ── Edit / Cancel buttons ── */
+.editBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(148, 69, 53, 0.1);
+  color: #944535;
+  border: 1.5px solid rgba(148, 69, 53, 0.25);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.editBtn:hover { background: rgba(148, 69, 53, 0.18); }
+
+.cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ── Tabel anggota ── */
+.anggotaHeader {
+  background: #1e1b4b;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 14px 20px;
+}
+
+.anggotaTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.anggotaTable thead tr {
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.anggotaTable th {
+  padding: 10px 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.anggotaTable tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.1s;
+}
+.anggotaTable tbody tr:last-child { border-bottom: none; }
+.anggotaTable tbody tr:hover { background: #fdf8f2; }
+
+.anggotaTable td {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.tdNo {
+  font-weight: 800;
+  color: #94a3b8 !important;
+  width: 40px;
+  text-align: center;
+}
+
+.tdNama { font-weight: 600; }
+.tdNis  { color: #64748b !important; font-size: 0.83rem !important; }
+
+.peranChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(148, 69, 53, 0.08);
+  color: #7c3a2e;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.cellInput {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+.cellInput:focus {
+  outline: none;
+  border-color: #944535;
+  background: #fff;
+}
+
+/* ── Error box ── */
+.errorBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #fff1f2;
+  border: 1.5px solid #fda4af;
+  color: #be123c;
+  font-size: 0.87rem;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.saveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #944535;
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.saveBtn:hover:not(:disabled) { background: #7c3a2e; }
+.saveBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.printBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  color: #374151;
+  border: 1.5px solid #e2e8f0;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.printBtn:hover { background: #f1f5f9; }
+
+.newBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1.5px solid #6ee7b7;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.newBtn:hover { background: #d1fae5; }
+
+/* ── Spin ── */
+.spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Print ── */
+@media print {
+  .backLink, .copyBtn, .editBtn, .cancelBtn,
+  .saveBtn, .printBtn, .newBtn,
+  .bannerEditable, .bannerLocked { display: none !important; }
+  .page { padding: 0; }
+  .kodeCard { background: #1e1b4b !important; -webkit-print-color-adjust: exact; }
+}

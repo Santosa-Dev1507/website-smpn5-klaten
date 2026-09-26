@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Search, Users, BookOpen, User, X, ChevronRight, Check, Calendar, Lock, AlertCircle, MapPin } from "lucide-react";
+import { Search, Users, BookOpen, User, X, ChevronRight, Check, Calendar, Lock, MapPin } from "lucide-react";
 import styles from "./kelompok.module.css";
 import type { KelompokKerja, TugasSiswa } from "@/lib/kokurikuler";
 
@@ -121,12 +121,18 @@ export default function KelompokKerja({
 
   const handleSearch = () => {
     setSearched(true);
-    const q = query.trim().toLowerCase();
+    const q = query.trim().toUpperCase();
     if (!q) { setFound(null); return; }
 
+    // Jika input berformat kode kelompok → redirect ke halaman detail
+    if (/^KOK-[A-Z0-9]{6}$/.test(q)) {
+      window.location.href = `/kokurikuler/kelompok/${q}`;
+      return;
+    }
+
     const found = kelompokList.find(k =>
-      k.anggota.toLowerCase().includes(q) ||
-      k.nama_kelompok.toLowerCase().includes(q)
+      k.anggota.toLowerCase().includes(q.toLowerCase()) ||
+      k.nama_kelompok.toLowerCase().includes(q.toLowerCase())
     );
     setFound(found ?? null);
   };
@@ -165,45 +171,60 @@ export default function KelompokKerja({
 
   return (
     <div className={styles.wrapper}>
-      {/* Alert Keterangan Belum Tersedia */}
+      {/* CTA Kelompok Siswa */}
       <div style={{
         display: "flex",
-        alignItems: "center",
-        gap: "10px",
-        background: "#fff7ed",
-        border: "1.5px solid #fdba74",
-        color: "#c2410c",
-        padding: "12px 18px",
-        borderRadius: "14px",
-        fontSize: "0.88rem",
-        fontWeight: 600,
-        marginBottom: "16px"
+        gap: "12px",
+        flexWrap: "wrap",
+        marginBottom: "16px",
       }}>
-        <AlertCircle size={18} style={{ flexShrink: 0 }} />
-        <span><strong>Pemberitahuan:</strong> Data pembagian kelompok kerja belum tersedia (dalam proses pembentukan oleh guru pendamping).</span>
-      </div>
-
-      {/* Search (Disabled) */}
-      <div className={styles.searchBar} style={{ opacity: 0.7 }}>
-        <div className={styles.searchInputWrap}>
-          <Search size={18} className={styles.searchIcon} aria-hidden="true" />
-          <input
-            type="text"
-            disabled={true}
-            value={query}
-            placeholder="Cari kelompok belum tersedia..."
-            className={styles.searchField}
-            style={{ cursor: "not-allowed", background: "#f8fafc" }}
-            aria-label="Cari kelompok (Belum tersedia)"
-          />
-        </div>
-        <button
-          className={styles.searchBtn}
-          disabled={true}
-          style={{ cursor: "not-allowed", opacity: 0.7 }}
+        <a
+          href="/kokurikuler/kelompok/daftar"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            background: "#944535",
+            color: "white",
+            padding: "11px 22px",
+            borderRadius: "12px",
+            fontWeight: 800,
+            fontSize: "0.9rem",
+            textDecoration: "none",
+          }}
         >
-          Belum Tersedia
-        </button>
+          <Users size={17} />
+          Daftarkan Kelompok
+        </a>
+
+        {/* Cari dengan kode */}
+        <div style={{ display: "flex", gap: "8px", flex: 1, minWidth: "220px" }}>
+          <div className={styles.searchInputWrap} style={{ flex: 1 }}>
+            <Search size={17} className={styles.searchIcon} aria-hidden="true" />
+            <input
+              type="text"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleSearch()}
+              placeholder="Masukkan kode kelompok (KOK-XXXXXX)…"
+              className={styles.searchField}
+              aria-label="Cari kelompok dengan kode"
+            />
+            {query && (
+              <button
+                className={styles.clearBtn}
+                onClick={handleClear}
+                aria-label="Hapus pencarian"
+                style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#94a3b8" }}
+              >
+                <X size={15} />
+              </button>
+            )}
+          </div>
+          <button className={styles.searchBtn} onClick={handleSearch}>
+            Cari
+          </button>
+        </div>
       </div>
 
       {/* Hasil kelompok */}
