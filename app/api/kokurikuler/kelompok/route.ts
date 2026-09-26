@@ -14,7 +14,7 @@ const supabaseAdmin = createClient(
 
 // ── Konstanta ────────────────────────────────────────────────────────
 const TAHUN_KEGIATAN = '2026/2027';
-const REGISTRATION_OPEN  = new Date('2026-09-28T00:00:00+07:00');
+const REGISTRATION_OPEN  = new Date('2026-09-27T00:00:00+07:00');
 const REGISTRATION_CLOSE = new Date('2026-09-30T23:59:59+07:00');
 
 const PERAN_LIST = [
@@ -91,7 +91,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   if (!isRegistrationOpen()) {
     return NextResponse.json(
-      { error: 'Pendaftaran kelompok sudah ditutup. Periode pendaftaran: 28–30 September 2026.' },
+      { error: 'Pendaftaran kelompok sudah ditutup. Periode pendaftaran: 27–30 September 2026.' },
       { status: 403 }
     );
   }
@@ -185,7 +185,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   if (!isRegistrationOpen()) {
     return NextResponse.json(
-      { error: 'Periode edit sudah ditutup (28–30 September 2026).' },
+      { error: 'Periode edit sudah ditutup (27–30 September 2026).' },
       { status: 403 }
     );
   }

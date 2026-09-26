@@ -26,7 +26,7 @@ const PERAN_EMOJI: Record<string, string> = {
   "Anggota": "👤",
 };
 
-const REGISTRATION_OPEN  = new Date("2026-09-28T00:00:00+07:00");
+const REGISTRATION_OPEN  = new Date("2026-09-27T00:00:00+07:00");
 const REGISTRATION_CLOSE = new Date("2026-09-30T23:59:59+07:00");
 
 interface AnggotaForm {
@@ -152,7 +152,7 @@ export default function DaftarKelompokPage() {
           </span>
         ) : (
           <span>
-            <strong>Pendaftaran kelompok ditutup.</strong> Periode pendaftaran: Senin–Rabu, 28–30 September 2026.
+            <strong>Pendaftaran kelompok ditutup.</strong> Periode pendaftaran: Ahad–Rabu, 27–30 September 2026.
           </span>
         )}
       </div>
