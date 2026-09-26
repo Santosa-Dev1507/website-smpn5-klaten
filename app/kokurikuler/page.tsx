@@ -383,16 +383,17 @@ export default async function KokurikulerPage() {
                     ))
                   ) : (
                     <>
-                      <tr><td className={styles.rundownTime}>06.30</td><td>Peserta berkumpul di sekolah, koordinasi dan pengecekan peserta.</td></tr>
-                      <tr><td className={styles.rundownTime}>07.30</td><td>Rombongan berangkat menuju Semarang, pembagian snack.</td></tr>
-                      <tr><td className={styles.rundownTime}>09.00</td><td>Tiba di Tuntang, kegiatan pembelajaran lapangan di Saloka Theme Park.</td></tr>
-                      <tr><td className={styles.rundownTime}>13.00</td><td>Istirahat, sholat, makan siang.</td></tr>
-                      <tr><td className={styles.rundownTime}>14.30</td><td>Kunjungan pembelajaran ke Benteng Pendem Fort Willem I, Ambarawa.</td></tr>
-                      <tr><td className={styles.rundownTime}>16.30</td><td>Kunjungan pembelajaran ke Museum Lawang Sewu.</td></tr>
+                      <tr><td className={styles.rundownTime}>06.00</td><td>Peserta berkumpul di sekolah, koordinasi &amp; cek peserta.</td></tr>
+                      <tr><td className={styles.rundownTime}>06.30</td><td>Rombongan diberangkatkan ke Semarang, dibagikan snack.</td></tr>
+                      <tr><td className={styles.rundownTime}>08.30</td><td>Diharapkan sudah tiba di Kota Semarang. Kunjungan pembelajaran ke Museum Lawang Sewu.</td></tr>
+                      <tr><td className={styles.rundownTime}>10.30</td><td>Kunjungan pembelajaran ke Benteng Pendem Fort Willem I, Ambarawa.</td></tr>
+                      <tr><td className={styles.rundownTime}>12.00</td><td>Istirahat, sholat, makan siang di RM. Cikal Gading.</td></tr>
+                      <tr><td className={styles.rundownTime}>13.00</td><td>Tiba di Tuntang, kegiatan pembelajaran lapangan di Saloka Theme Park.</td></tr>
                       <tr><td className={styles.rundownTime}>17.30</td><td>Belanja oleh-oleh khas Semarang.</td></tr>
-                      <tr><td className={styles.rundownTime}>18.30</td><td>Rombongan menuju rumah makan untuk istirahat, sholat, dan makan malam.</td></tr>
-                      <tr><td className={styles.rundownTime}>21.00</td><td>Rombongan bertolak kembali menuju Klaten.</td></tr>
-                      <tr><td className={styles.rundownTime}>22.00</td><td>Rombongan diperkirakan tiba kembali di sekolah.</td></tr>
+                      <tr><td className={styles.rundownTime}>18.30</td><td>Meninggalkan obyek terakhir, menuju rumah makan.</td></tr>
+                      <tr><td className={styles.rundownTime}>19.00</td><td>Istirahat, sholat, makan malam.</td></tr>
+                      <tr><td className={styles.rundownTime}>20.00</td><td>Rombongan bertolak kembali menuju Klaten.</td></tr>
+                      <tr><td className={styles.rundownTime}>22.00</td><td>Rombongan diperkirakan tiba di SMP Negeri 5 Klaten.</td></tr>
                     </>
                   )}
                 </tbody>
