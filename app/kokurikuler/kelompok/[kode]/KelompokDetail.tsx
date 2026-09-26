@@ -52,9 +52,7 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
   const [data, setData]         = useState<KelompokData>(kelompok);
 
   // Edit state — hanya dipakai saat editMode
-  const [editNama, setEditNama]           = useState(kelompok.nama_kelompok);
   const [editKelas, setEditKelas]         = useState(kelompok.kelas);
-  const [editSubTema, setEditSubTema]     = useState(kelompok.sub_tema ?? "");
   const [editGuru, setEditGuru]           = useState(kelompok.guru_pembimbing ?? "");
   const [editAnggota, setEditAnggota]     = useState<AnggotaRow[]>([...kelompok.anggota_kelompok]);
 
@@ -63,6 +61,17 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
   const [studentsLoaded, setStudentsLoaded] = useState(false);
 
   const KELAS_LIST = ["VIII A","VIII B","VIII C","VIII D","VIII E","VIII F","VIII G","VIII H"];
+  
+  const GURU_MAP: Record<string, string> = {
+    "VIII A": "Dyah Ayu Kartikasari, S.Pd.",
+    "VIII B": "Rizka Fitri Prasetyaningsih, S.Pd.",
+    "VIII C": "Ria Ayudia Maulita Nugraheni, S.Pd.",
+    "VIII D": "Jumilah, S.Pd.",
+    "VIII E": "Evi Julianah, S.Pd.",
+    "VIII F": "Santi Nurrohmawati, S.E.",
+    "VIII G": "Fytroh Sulistyowati, S.Pd.",
+    "VIII H": "Muhammad Thoyibun Nomi, S.Or."
+  };
 
   // Fetch data siswa hanya jika tombol Edit diklik pertama kali
   useEffect(() => {
@@ -105,9 +114,7 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
   );
 
   const handleCancelEdit = () => {
-    setEditNama(data.nama_kelompok);
     setEditKelas(data.kelas);
-    setEditSubTema(data.sub_tema ?? "");
     setEditGuru(data.guru_pembimbing ?? "");
     setEditAnggota([...data.anggota_kelompok]);
     setSaveError(null);
@@ -117,7 +124,6 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
   // ── Simpan edit ────────────────────────────────────────────────────
   const handleSave = async () => {
     setSaveError(null);
-    if (!editNama.trim()) { setSaveError("Nama kelompok wajib diisi."); return; }
     for (let i = 0; i < editAnggota.length; i++) {
       if (!editAnggota[i].nama.trim()) {
         setSaveError(`Nama anggota ke-${i + 1} (${editAnggota[i].peran}) wajib diisi.`);
@@ -132,9 +138,7 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           kode_kelompok:  data.kode_kelompok,
-          nama_kelompok:  editNama,
           kelas:          editKelas,
-          sub_tema:       editSubTema || null,
           guru_pembimbing: editGuru || null,
           anggota: editAnggota.map(a => ({
             nama: a.nama,
@@ -153,9 +157,7 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
       // Update tampilan
       setData(prev => ({
         ...prev,
-        nama_kelompok:   editNama,
         kelas:           editKelas,
-        sub_tema:        editSubTema || null,
         guru_pembimbing: editGuru || null,
         anggota_kelompok: editAnggota,
       }));
@@ -218,23 +220,18 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
           <div className={styles.cardHeaderLeft}>
             <div className={styles.cardIcon}><Users size={22} /></div>
             <div>
-              {editMode ? (
-                <input
-                  className={styles.editTitle}
-                  value={editNama}
-                  onChange={e => setEditNama(e.target.value)}
-                  placeholder="Nama kelompok"
-                  maxLength={80}
-                />
-              ) : (
-                <h1 className={styles.kelompokNama}>{data.nama_kelompok}</h1>
-              )}
+              <h1 className={styles.kelompokNama}>Kelompok {data.kode_kelompok}</h1>
               <p className={styles.kelompokMeta}>
                 {editMode ? (
                   <select
                     className={styles.editSelect}
                     value={editKelas}
-                    onChange={e => setEditKelas(e.target.value)}
+                    onChange={e => {
+                      const newKelas = e.target.value;
+                      setEditKelas(newKelas);
+                      setEditGuru(GURU_MAP[newKelas] || "");
+                      // Bisa tambahkan reset anggota di sini kalau perlu, tapi untuk edit biarkan saja biar gak hilang tanpa sengaja
+                    }}
                   >
                     {KELAS_LIST.map(k => <option key={k} value={k}>{k}</option>)}
                   </select>
@@ -259,28 +256,14 @@ export default function KelompokDetail({ kelompok, isEditable }: Props) {
         {/* Info tambahan */}
         <div className={styles.infoGrid}>
           <div className={styles.infoItem}>
-            <span className={styles.infoLabel}>Sub-Tema / Objek Fokus</span>
-            {editMode ? (
-              <input
-                className={styles.editInput}
-                value={editSubTema}
-                onChange={e => setEditSubTema(e.target.value)}
-                placeholder="Sub-tema (opsional)"
-                maxLength={120}
-              />
-            ) : (
-              <span className={styles.infoValue}>{data.sub_tema || <em style={{ color: "#94a3b8" }}>—</em>}</span>
-            )}
-          </div>
-          <div className={styles.infoItem}>
             <span className={styles.infoLabel}>Guru Pembimbing</span>
             {editMode ? (
               <input
                 className={styles.editInput}
                 value={editGuru}
-                onChange={e => setEditGuru(e.target.value)}
-                placeholder="Nama guru pembimbing (opsional)"
-                maxLength={80}
+                readOnly
+                placeholder="Auto-fill"
+                style={{ background: "#f1f5f9", cursor: "not-allowed", color: "#64748b" }}
               />
             ) : (
               <span className={styles.infoValue}>{data.guru_pembimbing || <em style={{ color: "#94a3b8" }}>—</em>}</span>

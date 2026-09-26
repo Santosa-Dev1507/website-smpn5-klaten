@@ -26,7 +26,7 @@ const PERAN_EMOJI: Record<string, string> = {
   "Anggota": "👤",
 };
 
-const REGISTRATION_OPEN  = new Date("2026-09-27T00:00:00+07:00");
+const REGISTRATION_OPEN  = new Date("2026-09-26T00:00:00+07:00");
 const REGISTRATION_CLOSE = new Date("2026-09-30T23:59:59+07:00");
 
 interface AnggotaForm {
@@ -54,13 +54,22 @@ export default function DaftarKelompokPage() {
   const now = new Date();
   const isOpen = now >= REGISTRATION_OPEN && now <= REGISTRATION_CLOSE;
 
-  const [namaKelompok, setNamaKelompok] = useState("");
   const [kelas, setKelas]               = useState("");
-  const [subTema, setSubTema]           = useState("");
   const [guruPembimbing, setGuruPembimbing] = useState("");
   const [anggota, setAnggota]           = useState<AnggotaForm[]>(defaultAnggota());
   const [submitting, setSubmitting]     = useState(false);
   const [error, setError]               = useState<string | null>(null);
+
+  const GURU_MAP: Record<string, string> = {
+    "VIII A": "Dyah Ayu Kartikasari, S.Pd.",
+    "VIII B": "Rizka Fitri Prasetyaningsih, S.Pd.",
+    "VIII C": "Ria Ayudia Maulita Nugraheni, S.Pd.",
+    "VIII D": "Jumilah, S.Pd.",
+    "VIII E": "Evi Julianah, S.Pd.",
+    "VIII F": "Santi Nurrohmawati, S.E.",
+    "VIII G": "Fytroh Sulistyowati, S.Pd.",
+    "VIII H": "Muhammad Thoyibun Nomi, S.Or."
+  };
 
   // Data Siswa
   const [students, setStudents] = useState<Student[]>([]);
@@ -108,7 +117,6 @@ export default function DaftarKelompokPage() {
     setError(null);
 
     // Client-side validasi awal
-    if (!namaKelompok.trim()) { setError("Nama kelompok wajib diisi."); return; }
     if (!kelas) { setError("Pilih kelas terlebih dahulu."); return; }
     for (let i = 0; i < anggota.length; i++) {
       if (!anggota[i].nama.trim()) {
@@ -123,9 +131,7 @@ export default function DaftarKelompokPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nama_kelompok: namaKelompok,
           kelas,
-          sub_tema: subTema || null,
           guru_pembimbing: guruPembimbing || null,
           anggota,
         }),
@@ -195,22 +201,6 @@ export default function DaftarKelompokPage() {
             <h2 className={styles.sectionTitle}>Informasi Kelompok</h2>
             <div className={styles.fieldGrid}>
               <div className={styles.fieldGroup}>
-                <label className={styles.label} htmlFor="nama-kelompok">
-                  Nama Kelompok <span className={styles.req}>*</span>
-                </label>
-                <input
-                  id="nama-kelompok"
-                  type="text"
-                  required
-                  className={styles.input}
-                  placeholder="Contoh: Kelompok Sejarah 1"
-                  value={namaKelompok}
-                  onChange={e => setNamaKelompok(e.target.value)}
-                  maxLength={80}
-                />
-              </div>
-
-              <div className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor="kelas">
                   Kelas <span className={styles.req}>*</span>
                 </label>
@@ -220,7 +210,9 @@ export default function DaftarKelompokPage() {
                   className={styles.select}
                   value={kelas}
                   onChange={e => {
-                    setKelas(e.target.value);
+                    const newKelas = e.target.value;
+                    setKelas(newKelas);
+                    setGuruPembimbing(GURU_MAP[newKelas] || "");
                     setAnggota(defaultAnggota()); // reset anggota jika kelas berubah
                   }}
                 >
@@ -231,35 +223,18 @@ export default function DaftarKelompokPage() {
                 </select>
               </div>
 
-              <div className={styles.fieldGroup} style={{ gridColumn: "1 / -1" }}>
-                <label className={styles.label} htmlFor="sub-tema">
-                  Sub-Tema / Objek Fokus{" "}
-                  <span className={styles.optional}>(opsional)</span>
-                </label>
-                <input
-                  id="sub-tema"
-                  type="text"
-                  className={styles.input}
-                  placeholder="Contoh: Arsitektur kolonial & nilai perjuangan di Benteng Pendem"
-                  value={subTema}
-                  onChange={e => setSubTema(e.target.value)}
-                  maxLength={120}
-                />
-              </div>
-
-              <div className={styles.fieldGroup} style={{ gridColumn: "1 / -1" }}>
+              <div className={styles.fieldGroup}>
                 <label className={styles.label} htmlFor="guru-pembimbing">
-                  Guru Pembimbing Kelompok{" "}
-                  <span className={styles.optional}>(opsional)</span>
+                  Guru Pembimbing Kelompok
                 </label>
                 <input
                   id="guru-pembimbing"
                   type="text"
                   className={styles.input}
-                  placeholder="Nama guru pendamping kelompok ini"
+                  placeholder="Auto-fill"
                   value={guruPembimbing}
-                  onChange={e => setGuruPembimbing(e.target.value)}
-                  maxLength={80}
+                  readOnly
+                  style={{ background: "#f1f5f9", cursor: "not-allowed", color: "#64748b" }}
                 />
               </div>
             </div>
