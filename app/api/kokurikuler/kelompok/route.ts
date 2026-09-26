@@ -33,16 +33,6 @@ function isRegistrationOpen(): boolean {
   return now >= REGISTRATION_OPEN && now <= REGISTRATION_CLOSE;
 }
 
-// ── Helper: generate kode unik 6 karakter ───────────────────────────
-function generateKode(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // tanpa 0/O/I/1 yg mirip
-  let code = 'KOK-';
-  for (let i = 0; i < 6; i++) {
-    code += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return code;
-}
-
 // ── Helper: validasi payload ─────────────────────────────────────────
 function validatePayload(body: Record<string, unknown>): string | null {
   if (!body.nama_kelompok || typeof body.nama_kelompok !== 'string' || !body.nama_kelompok.trim()) {
@@ -118,36 +108,54 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: validationError }, { status: 400 });
   }
 
-  // Generate kode unik — retry jika konflik
-  let kode = generateKode();
-  let attempts = 0;
-  while (attempts < 5) {
-    const { data: existing } = await supabaseAdmin
+  // Generate kode berurut berdasarkan kelas (misal: "VIII A" -> "VIIIA-01")
+  const classCode = (body.kelas as string).replace(/\s+/g, '').toUpperCase();
+  
+  // Cari tebakan awal nomor (hitung jumlah kelompok di kelas ini)
+  const { count } = await supabaseAdmin
+    .from('kelompok_kokurikuler')
+    .select('*', { count: 'exact', head: true })
+    .eq('kelas', body.kelas as string);
+    
+  let groupNum = (count || 0) + 1;
+  let kode = "";
+  let kelompok = null;
+  let errKelompok = null;
+
+  // Coba insert dengan retry hingga 10 kali untuk menghindari duplikat (race condition)
+  for (let attempt = 0; attempt < 10; attempt++) {
+    kode = `${classCode}-${groupNum.toString().padStart(2, '0')}`;
+    
+    const { data, error } = await supabaseAdmin
       .from('kelompok_kokurikuler')
-      .select('id')
-      .eq('kode_kelompok', kode)
-      .maybeSingle();
-    if (!existing) break;
-    kode = generateKode();
-    attempts++;
+      .insert({
+        kode_kelompok:  kode,
+        nama_kelompok:  (body.nama_kelompok as string).trim(),
+        kelas:          body.kelas,
+        sub_tema:       body.sub_tema ? (body.sub_tema as string).trim() : null,
+        guru_pembimbing: body.guru_pembimbing ? (body.guru_pembimbing as string).trim() : null,
+        tahun_kegiatan: TAHUN_KEGIATAN,
+      })
+      .select()
+      .single();
+      
+    if (error) {
+      if (error.code === '23505') { // 23505: Unique Violation di PostgreSQL
+        groupNum++;
+        continue;
+      } else {
+        errKelompok = error;
+        break; // Error lain, hentikan
+      }
+    } else {
+      kelompok = data;
+      errKelompok = null;
+      break; // Sukses
+    }
   }
 
-  // Insert kelompok
-  const { data: kelompok, error: errKelompok } = await supabaseAdmin
-    .from('kelompok_kokurikuler')
-    .insert({
-      kode_kelompok:  kode,
-      nama_kelompok:  (body.nama_kelompok as string).trim(),
-      kelas:          body.kelas,
-      sub_tema:       body.sub_tema ? (body.sub_tema as string).trim() : null,
-      guru_pembimbing: body.guru_pembimbing ? (body.guru_pembimbing as string).trim() : null,
-      tahun_kegiatan: TAHUN_KEGIATAN,
-    })
-    .select()
-    .single();
-
   if (errKelompok || !kelompok) {
-    return NextResponse.json({ error: errKelompok?.message ?? 'Gagal menyimpan kelompok.' }, { status: 500 });
+    return NextResponse.json({ error: errKelompok?.message ?? 'Gagal menyimpan kelompok. Coba lagi.' }, { status: 500 });
   }
 
   // Insert anggota

@@ -121,18 +121,20 @@ export default function KelompokKerja({
 
   const handleSearch = () => {
     setSearched(true);
-    const q = query.trim().toUpperCase();
-    if (!q) { setFound(null); return; }
+    // Hapus spasi dan jadikan uppercase (misal "VIII A-01" -> "VIIIA-01")
+    const qNormalized = query.trim().replace(/\s+/g, '').toUpperCase();
+    if (!qNormalized) { setFound(null); return; }
 
-    // Jika input berformat kode kelompok → redirect ke halaman detail
-    if (/^KOK-[A-Z0-9]{6}$/.test(q)) {
-      window.location.href = `/kokurikuler/kelompok/${q}`;
+    // Jika input berformat kode kelompok (misal VIIIA-01 sampai VIIIH-99)
+    if (/^VIII[A-H]-\d{2}$/.test(qNormalized)) {
+      window.location.href = `/kokurikuler/kelompok/${qNormalized}`;
       return;
     }
 
+    const q = query.trim().toLowerCase();
     const found = kelompokList.find(k =>
-      k.anggota.toLowerCase().includes(q.toLowerCase()) ||
-      k.nama_kelompok.toLowerCase().includes(q.toLowerCase())
+      k.anggota.toLowerCase().includes(q) ||
+      k.nama_kelompok.toLowerCase().includes(q)
     );
     setFound(found ?? null);
   };
@@ -206,7 +208,7 @@ export default function KelompokKerja({
               value={query}
               onChange={e => setQuery(e.target.value)}
               onKeyDown={e => e.key === "Enter" && handleSearch()}
-              placeholder="Masukkan kode kelompok (KOK-XXXXXX)…"
+              placeholder="Masukkan kode kelompok (misal: VIIIA-01)…"
               className={styles.searchField}
               aria-label="Cari kelompok dengan kode"
             />
