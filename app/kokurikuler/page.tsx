@@ -21,6 +21,7 @@ import {
   fetchKursiGviz,
   fetchKelompok,
   fetchTugasSiswa,
+  DIMENSI_FALLBACK,
 } from "@/lib/kokurikuler";
 
 export const metadata: Metadata = {
@@ -55,7 +56,7 @@ function formatWaLink(hp: string): string {
 export default async function KokurikulerPage() {
   // Fetch semua data secara paralel
   const [
-    { config, destinasi, rundown, fasilitas, tata_tertib, faq },
+    { config, destinasi, rundown, fasilitas, tata_tertib, faq, dimensiList },
     kursiData,
     kelompokData,
     tugasData,
@@ -254,7 +255,7 @@ export default async function KokurikulerPage() {
                 <div className={styles.destinasiCardBody}>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Profil Lulusan</span>
-                    <span className={styles.destinasiItemValue}>Kolaborasi &amp; Komunikasi/Kreativitas</span>
+                    <span className={styles.destinasiItemValue}>Kolaborasi &amp; Kreativitas</span>
                   </div>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Fokus Pembelajaran</span>
@@ -275,11 +276,11 @@ export default async function KokurikulerPage() {
                 <div className={styles.destinasiCardBody}>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Profil Lulusan</span>
-                    <span className={styles.destinasiItemValue}>Penalaran Kritis &amp; Kebinekaan Global</span>
+                    <span className={styles.destinasiItemValue}>Penalaran Kritis &amp; Kewargaan</span>
                   </div>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Mata Pelajaran</span>
-                    <span className={styles.destinasiItemValue}>IPS (Sejarah), Bahasa Indonesia</span>
+                    <span className={styles.destinasiItemValue}>IPS, Bahasa Indonesia</span>
                   </div>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Objek Kunjungan</span>
@@ -296,11 +297,11 @@ export default async function KokurikulerPage() {
                 <div className={styles.destinasiCardBody}>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Profil Lulusan</span>
-                    <span className={styles.destinasiItemValue}>Penalaran Kritis &amp; Komunikasi/Kreativitas</span>
+                    <span className={styles.destinasiItemValue}>Kreativitas &amp; Komunikasi</span>
                   </div>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Mata Pelajaran</span>
-                    <span className={styles.destinasiItemValue}>IPS (Sejarah), Seni Budaya</span>
+                    <span className={styles.destinasiItemValue}>IPS, Seni Tari, Bahasa Indonesia</span>
                   </div>
                   <div className={styles.destinasiItem}>
                     <span className={styles.destinasiItemLabel}>Objek Kunjungan</span>

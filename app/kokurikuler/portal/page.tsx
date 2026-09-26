@@ -21,7 +21,8 @@ interface ClassStudentRow {
   kelompok: string;
   penalaran_kritis: 'SB' | 'B' | 'C' | 'K';
   kolaborasi: 'SB' | 'B' | 'C' | 'K';
-  komunikasi_kreativitas: 'SB' | 'B' | 'C' | 'K';
+  kreativitas: 'SB' | 'B' | 'C' | 'K';
+  komunikasi: 'SB' | 'B' | 'C' | 'K';
   catatan: string;
 }
 
@@ -128,7 +129,8 @@ export default function PortalDashboard() {
       kelompok: s.kelompok ?? "-",
       penalaran_kritis: "B",
       kolaborasi: "B",
-      komunikasi_kreativitas: "B",
+      kreativitas: "B",
+      komunikasi: "B",
       catatan: "",
     }));
 
@@ -171,7 +173,8 @@ export default function PortalDashboard() {
       ...r,
       penalaran_kritis: predikat,
       kolaborasi: predikat,
-      komunikasi_kreativitas: predikat,
+      kreativitas: predikat,
+      komunikasi: predikat,
     })));
   };
 
@@ -207,8 +210,9 @@ export default function PortalDashboard() {
     matrixRows.forEach((r, idx) => {
       const dimensiArr = [
         { dimensi: "Penalaran Kritis" as const, predikat: r.penalaran_kritis },
-        { dimensi: "Kolaborasi" as const, predikat: r.kolaborasi },
-        { dimensi: "Komunikasi/Kreativitas" as const, predikat: r.komunikasi_kreativitas },
+        { dimensi: "Kolaborasi" as const,        predikat: r.kolaborasi },
+        { dimensi: "Kreativitas" as const,       predikat: r.kreativitas },
+        { dimensi: "Komunikasi" as const,        predikat: r.komunikasi },
       ];
 
       dimensiArr.forEach(d => {
@@ -283,7 +287,8 @@ export default function PortalDashboard() {
           "Kelompok": item.kelompok ?? "-",
           "Penalaran Kritis": "-",
           "Kolaborasi": "-",
-          "Komunikasi/Kreativitas": "-",
+          "Kreativitas": "-",
+          "Komunikasi": "-",
           "Catatan Deskripsi Capaian": item.catatan ?? "-",
           "Guru Penilai": item.dinilai_oleh,
           "Jenis Asesmen": item.jenis_asesmen,
@@ -302,10 +307,10 @@ export default function PortalDashboard() {
     const wb = utils.book_new();
     utils.book_append_sheet(wb, ws, targetKelas ? `Kelas ${targetKelas}` : "Rekap Nilai E-Rapor");
 
-    // Set lebar kolom yang rapi
+    // Set lebar kolom yang rapi (3 kolom data + 4 dimensi + catatan + guru + asesmen + tahun)
     ws["!cols"] = [
       { wch: 30 }, { wch: 10 }, { wch: 25 },
-      { wch: 22 }, { wch: 22 }, { wch: 26 },
+      { wch: 22 }, { wch: 22 }, { wch: 22 }, { wch: 22 },
       { wch: 45 }, { wch: 24 }, { wch: 14 }, { wch: 16 }
     ];
 
@@ -322,8 +327,9 @@ export default function PortalDashboard() {
     matrixRows.forEach((r, idx) => {
       list.push(
         { id: `exp-1-${idx}`, nama_siswa: r.nama_siswa, kelas: r.kelas, kelompok: r.kelompok, dimensi: "Penalaran Kritis", predikat: r.penalaran_kritis, catatan: r.catatan, dinilai_oleh: dinilaiOleh, jenis_asesmen: jenisAsesmen as any, tahun_kegiatan: tahunKegiatan },
-        { id: `exp-2-${idx}`, nama_siswa: r.nama_siswa, kelas: r.kelas, kelompok: r.kelompok, dimensi: "Kolaborasi", predikat: r.kolaborasi, catatan: r.catatan, dinilai_oleh: dinilaiOleh, jenis_asesmen: jenisAsesmen as any, tahun_kegiatan: tahunKegiatan },
-        { id: `exp-3-${idx}`, nama_siswa: r.nama_siswa, kelas: r.kelas, kelompok: r.kelompok, dimensi: "Komunikasi/Kreativitas", predikat: r.komunikasi_kreativitas, catatan: r.catatan, dinilai_oleh: dinilaiOleh, jenis_asesmen: jenisAsesmen as any, tahun_kegiatan: tahunKegiatan }
+        { id: `exp-2-${idx}`, nama_siswa: r.nama_siswa, kelas: r.kelas, kelompok: r.kelompok, dimensi: "Kolaborasi",       predikat: r.kolaborasi,       catatan: r.catatan, dinilai_oleh: dinilaiOleh, jenis_asesmen: jenisAsesmen as any, tahun_kegiatan: tahunKegiatan },
+        { id: `exp-3-${idx}`, nama_siswa: r.nama_siswa, kelas: r.kelas, kelompok: r.kelompok, dimensi: "Kreativitas",      predikat: r.kreativitas,      catatan: r.catatan, dinilai_oleh: dinilaiOleh, jenis_asesmen: jenisAsesmen as any, tahun_kegiatan: tahunKegiatan },
+        { id: `exp-4-${idx}`, nama_siswa: r.nama_siswa, kelas: r.kelas, kelompok: r.kelompok, dimensi: "Komunikasi",       predikat: r.komunikasi,       catatan: r.catatan, dinilai_oleh: dinilaiOleh, jenis_asesmen: jenisAsesmen as any, tahun_kegiatan: tahunKegiatan }
       );
     });
     return list;
@@ -478,9 +484,10 @@ export default function PortalDashboard() {
                     <th style={{ width: "40px" }}>No</th>
                     <th style={{ minWidth: "180px" }}>Nama Siswa</th>
                     <th style={{ minWidth: "140px" }}>Kelompok</th>
-                    <th style={{ width: "160px" }}>Penalaran Kritis</th>
-                    <th style={{ width: "160px" }}>Kolaborasi</th>
-                    <th style={{ width: "160px" }}>Komunikasi/Kreativitas</th>
+                    <th style={{ width: "150px" }}>Penalaran Kritis</th>
+                    <th style={{ width: "150px" }}>Kolaborasi</th>
+                    <th style={{ width: "150px" }}>Kreativitas</th>
+                    <th style={{ width: "150px" }}>Komunikasi</th>
                     <th style={{ minWidth: "200px" }}>Catatan Capaian</th>
                   </tr>
                 </thead>
@@ -519,12 +526,26 @@ export default function PortalDashboard() {
                         </select>
                       </td>
 
-                      {/* Dropdown Dimensi 3 */}
+                      {/* Dropdown Dimensi 3 — Kreativitas */}
                       <td>
                         <select
-                          className={`${styles.cellSelect} ${styles[`badge${row.komunikasi_kreativitas}`]}`}
-                          value={row.komunikasi_kreativitas}
-                          onChange={e => updateRowField(idx, "komunikasi_kreativitas", e.target.value)}
+                          className={`${styles.cellSelect} ${styles[`badge${row.kreativitas}`]}`}
+                          value={row.kreativitas}
+                          onChange={e => updateRowField(idx, "kreativitas", e.target.value)}
+                        >
+                          <option value="SB">SB — Sangat Baik</option>
+                          <option value="B">B — Baik</option>
+                          <option value="C">C — Cukup</option>
+                          <option value="K">K — Kurang</option>
+                        </select>
+                      </td>
+
+                      {/* Dropdown Dimensi 4 — Komunikasi */}
+                      <td>
+                        <select
+                          className={`${styles.cellSelect} ${styles[`badge${row.komunikasi}`]}`}
+                          value={row.komunikasi}
+                          onChange={e => updateRowField(idx, "komunikasi", e.target.value)}
                         >
                           <option value="SB">SB — Sangat Baik</option>
                           <option value="B">B — Baik</option>
@@ -690,7 +711,7 @@ export default function PortalDashboard() {
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10, fontSize: "0.88rem", color: "#334155" }}>
                 <li style={{ display: "flex", gap: 10 }}>
                   <input type="checkbox" id="g-pra-1" style={{ marginTop: 3, accentColor: "#944535" }} />
-                  <label htmlFor="g-pra-1"><strong>Materi Pembekalan:</strong> Menyampaikan pengantar sejarah &amp; nilai perjuangan (Guru IPS/PPKn).</label>
+                  <label htmlFor="g-pra-1"><strong>Materi Pembekalan:</strong> Menyampaikan pengantar sejarah &amp; nilai perjuangan (Guru IPS/Pendidikan Pancasila).</label>
                 </li>
                 <li style={{ display: "flex", gap: 10 }}>
                   <input type="checkbox" id="g-pra-2" style={{ marginTop: 3, accentColor: "#944535" }} />
@@ -752,7 +773,7 @@ export default function PortalDashboard() {
                 </li>
                 <li style={{ display: "flex", gap: 10 }}>
                   <input type="checkbox" id="g-pasca-3" style={{ marginTop: 3, accentColor: "#944535" }} />
-                  <label htmlFor="g-pasca-3"><strong>Asesmen Sumatif Rubrik:</strong> Menilai karya 3 Dimensi (Penalaran Kritis, Kolaborasi, Komunikasi/Kreativitas).</label>
+                  <label htmlFor="g-pasca-3"><strong>Asesmen Sumatif Rubrik:</strong> Menilai karya 4 Dimensi (Penalaran Kritis, Kolaborasi, Kreativitas, Komunikasi).</label>
                 </li>
                 <li style={{ display: "flex", gap: 10 }}>
                   <input type="checkbox" id="g-pasca-4" style={{ marginTop: 3, accentColor: "#944535" }} />

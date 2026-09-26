@@ -68,12 +68,17 @@ export interface FaqItem {
   jawaban: string;
 }
 
+export interface DimensiProfilLulusan {
+  nama_dimensi: string;
+  definisi: string;
+}
+
 export interface Penilaian {
   id?: string;
   nama_siswa: string;
   kelas: string;
   kelompok: string | null;
-  dimensi: 'Penalaran Kritis' | 'Kolaborasi' | 'Komunikasi/Kreativitas';
+  dimensi: 'Penalaran Kritis' | 'Kolaborasi' | 'Kreativitas' | 'Komunikasi';
   predikat: 'SB' | 'B' | 'C' | 'K';
   catatan?: string;
   dinilai_oleh: string;
@@ -229,6 +234,10 @@ export async function fetchFaq(): Promise<FaqItem[]> {
   return fetchTab<FaqItem>('faq', 3600);
 }
 
+export async function fetchDimensiProfilLulusan(): Promise<DimensiProfilLulusan[]> {
+  return fetchTab<DimensiProfilLulusan>('dimensi_profil_lulusan', 3600);
+}
+
 /** Fetch semua data publik sekaligus (untuk halaman utama). */
 export async function fetchAllKokurikulerData(): Promise<{
   config: KokurikulerConfig | null;
@@ -237,17 +246,19 @@ export async function fetchAllKokurikulerData(): Promise<{
   fasilitas: FasilitasItem[];
   tata_tertib: TataTertibItem[];
   faq: FaqItem[];
+  dimensiList: DimensiProfilLulusan[];
 }> {
-  const [config, destinasi, rundown, fasilitas, tata_tertib, faq] = await Promise.all([
+  const [config, destinasi, rundown, fasilitas, tata_tertib, faq, dimensiList] = await Promise.all([
     fetchKokurikulerConfig(),
     fetchDestinasi(),
     fetchRundown(),
     fetchFasilitas(),
     fetchTataTertib(),
     fetchFaq(),
+    fetchDimensiProfilLulusan(),
   ]);
 
-  return { config, destinasi, rundown, fasilitas, tata_tertib, faq };
+  return { config, destinasi, rundown, fasilitas, tata_tertib, faq, dimensiList };
 }
 
 // ── Label helpers ───────────────────────────────────────────────────
@@ -262,8 +273,18 @@ export const PREDIKAT_LABELS: Record<string, string> = {
 export const DIMENSI_LIST = [
   'Penalaran Kritis',
   'Kolaborasi',
-  'Komunikasi/Kreativitas',
+  'Kreativitas',
+  'Komunikasi',
 ] as const;
+
+/** Fallback definisi dimensi — dipakai bila tab dimensi_profil_lulusan di GAS belum diisi */
+export const DIMENSI_FALLBACK: DimensiProfilLulusan[] = [
+  { nama_dimensi: 'Penalaran Kritis', definisi: 'Kemampuan menganalisis, mengevaluasi, dan menyimpulkan informasi secara logis dan reflektif.' },
+  { nama_dimensi: 'Kolaborasi',       definisi: 'Kemampuan bekerja sama secara produktif dalam tim yang beragam menuju tujuan bersama.' },
+  { nama_dimensi: 'Kreativitas',      definisi: 'Kemampuan menghasilkan gagasan orisinal dan karya inovatif dalam berbagai konteks.' },
+  { nama_dimensi: 'Komunikasi',       definisi: 'Kemampuan menyampaikan ide secara efektif dalam berbagai moda dan konteks.' },
+  { nama_dimensi: 'Kewargaan',        definisi: 'Pemahaman hak dan kewajiban sebagai warga negara serta partisipasi aktif dalam kehidupan demokratis.' },
+];
 
 export const RUBRIK: Record<string, Record<string, string>> = {
   'Penalaran Kritis': {
@@ -278,10 +299,17 @@ export const RUBRIK: Record<string, Record<string, string>> = {
     C:  'Terlibat namun perlu dorongan',
     K:  'Kurang terlibat dalam kelompok',
   },
-  'Komunikasi/Kreativitas': {
-    SB: 'Laporan/karya runtut, kreatif, mudah dipahami',
-    B:  'Laporan/karya cukup runtut dan jelas',
-    C:  'Laporan/karya mulai tersusun namun kurang jelas',
-    K:  'Belum menyusun laporan/karya dengan baik',
+  'Kreativitas': {
+    SB: 'Karya/gagasan orisinal, inovatif, dan menarik',
+    B:  'Karya/gagasan menunjukkan kebaruan yang cukup',
+    C:  'Karya/gagasan mulai menunjukkan kreasi sendiri',
+    K:  'Belum menunjukkan kreasi atau gagasan orisinal',
+  },
+  'Komunikasi': {
+    SB: 'Laporan/presentasi runtut, jelas, dan mudah dipahami',
+    B:  'Laporan/presentasi cukup runtut dan jelas',
+    C:  'Laporan/presentasi mulai tersusun namun kurang jelas',
+    K:  'Belum mampu menyusun laporan/presentasi dengan baik',
   },
 };
+
