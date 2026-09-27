@@ -6,7 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-const GAS_URL = process.env.NEXT_PUBLIC_GAS_KELOMPOK_URL || "ISI_DENGAN_URL_WEB_APP_GAS_BAPAK";
+const GAS_URL = process.env.NEXT_PUBLIC_GAS_KELOMPOK_URL || "https://script.google.com/macros/s/AKfycbyzwoslzbeNA2-8-x1mng1HBo9S5sE54PjUCpNtyIaF8cdG2-iC-mdLTMvgDors0OQ/exec";
 
 // ── Konstanta ────────────────────────────────────────────────────────
 const REGISTRATION_OPEN  = new Date('2026-09-26T00:00:00+07:00');
