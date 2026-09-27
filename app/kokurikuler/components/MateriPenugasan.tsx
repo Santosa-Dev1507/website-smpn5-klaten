@@ -76,6 +76,6 @@ export default function MateriPenugasan() {
           </a>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
