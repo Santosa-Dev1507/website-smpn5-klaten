@@ -15,7 +15,6 @@ import DenahKursi from "./components/DenahKursi";
 import KelompokKerja from "./components/KelompokKerja";
 import FaqAccordion from "./components/FaqAccordion";
 import PanduanRangkaianTugas from "./components/PanduanRangkaianTugas";
-import MateriPenugasan from "./components/MateriPenugasan";
 import ScrollReveal from "../components/ScrollReveal";
 import {
   fetchAllKokurikulerData,
@@ -460,15 +459,6 @@ export default async function KokurikulerPage() {
               initialTugas={tugasData}
               tanggalKegiatan={tanggal_kegiatan}
             />
-          </div>
-        </div>
-      </section>
-
-      {/* ══ MATERI & PENUGASAN ════════════════════════════════════════ */}
-      <section className={styles.section} id="materi">
-        <div className={styles.container}>
-          <div className="reveal">
-            <MateriPenugasan />
           </div>
         </div>
       </section>

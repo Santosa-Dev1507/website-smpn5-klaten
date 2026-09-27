@@ -9,7 +9,7 @@ export default function MateriPenugasan() {
   const DIRECT_LINK = `https://drive.google.com/drive/folders/${DRIVE_FOLDER_ID}?usp=sharing`;
 
   return (
-    <section className={styles.section} id="materi-penugasan">
+    <div id="materi-penugasan" style={{ marginTop: "32px", marginBottom: "32px" }}>
       <div className={styles.sectionHeader}>
         <div className={styles.iconBox}>
           <FolderOpen size={24} />

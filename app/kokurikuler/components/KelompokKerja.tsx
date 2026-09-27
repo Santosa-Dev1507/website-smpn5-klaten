@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Search, Users, BookOpen, User, X, ChevronRight, Check, Calendar, Lock, MapPin } from "lucide-react";
+import MateriPenugasan from "./MateriPenugasan";
 import styles from "./kelompok.module.css";
 import type { KelompokKerja, TugasSiswa } from "@/lib/kokurikuler";
 
@@ -271,6 +272,9 @@ export default function KelompokKerja({
           </div>
         </div>
       )}
+
+      {/* Materi Penugasan ditempatkan di sini (di atas daftar tugas Pra Kegiatan) */}
+      <MateriPenugasan />
 
       {/* Daftar Tugas Siswa per Tahap */}
       <div className={styles.tugasSection}>
