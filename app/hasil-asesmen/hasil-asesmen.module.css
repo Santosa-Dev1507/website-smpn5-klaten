@@ -1,0 +1,324 @@
+/* app/hasil-asesmen/hasil-asesmen.module.css */
+/* Tema mengikuti globals.css: --primary #944535, --secondary #FAD6A6 */
+/* Font: Plus Jakarta Sans via root layout */
+
+/* ── Layout ─────────────────────────────────────────────── */
+.main {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-alt);
+  overflow-x: clip;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.header {
+  text-align: center;
+  padding: 3.5rem 1rem 3rem;
+  background: var(--primary);
+  color: #fff;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  margin-bottom: -2rem;
+  position: relative;
+  z-index: 10;
+  /* Soft blur-in dari globals.css */
+  animation: fadeUp var(--dur-slow) var(--ease-enter) both;
+}
+
+.logo {
+  height: 80px;
+  width: 80px;
+  margin-bottom: 1rem;
+  object-fit: contain;
+}
+
+.headerSub {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 0.5rem;
+}
+
+.headerTitle {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  line-height: 1.15;
+}
+
+.headerTagline {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 380px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.taBadgeHeader {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.85rem;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 0.4rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(6px);
+}
+
+.taBadgeHeader svg {
+  color: var(--secondary);
+}
+
+.selectTA {
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  outline: none;
+  background: #fff;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-enter);
+  width: 100%;
+}
+
+.selectTA:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(148, 69, 53, 0.12);
+}
+
+/* ── Content ─────────────────────────────────────────────── */
+.content {
+  flex: 1;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 4rem 1rem 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(148, 69, 53, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+  width: 100%;
+  position: relative;
+  z-index: 11;
+  /* Entry animation */
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity var(--dur-slow) var(--ease-enter),
+    transform var(--dur-slow) var(--ease-enter);
+  transition-delay: 120ms;
+}
+
+.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.cardDesc {
+  color: var(--text-muted);
+  text-align: center;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* ── Form ────────────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.2px;
+}
+
+.input {
+  padding: 1rem 1.25rem;
+  font-size: 1.1rem;
+  font-family: inherit;
+  font-weight: 600;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  outline: none;
+  width: 100%;
+  color: var(--text-main);
+  background: var(--background);
+  transition:
+    border-color var(--dur-fast) var(--ease-enter),
+    box-shadow var(--dur-fast) var(--ease-enter);
+  /* tabular nums untuk angka NIS */
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(148, 69, 53, 0.12);
+}
+
+.input::placeholder {
+  font-weight: 400;
+  color: #bbb;
+  letter-spacing: 0;
+}
+
+.inputError {
+  border-color: #d32f2f;
+  box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1);
+}
+
+.errorText {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d32f2f;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: rgba(211, 47, 47, 0.07);
+  padding: 0.6rem 0.875rem;
+  border-radius: 8px;
+  animation: fadeUp 200ms var(--ease-enter) both;
+}
+
+/* ── Button ──────────────────────────────────────────────── */
+.btnSubmit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--primary);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  min-height: 52px;
+  touch-action: manipulation;
+  transition:
+    background var(--dur-fast) var(--ease-enter),
+    transform var(--dur-fast) var(--ease-enter),
+    box-shadow var(--dur-fast) var(--ease-enter);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btnSubmit:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(148, 69, 53, 0.3);
+  }
+}
+
+.btnSubmit:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btnSubmit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Spinner ─────────────────────────────────────────────── */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Mapel note ──────────────────────────────────────────── */
+.mapelNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(250, 214, 166, 0.25);
+  border-left: 3px solid var(--secondary);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.mapelNote svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--primary);
+}
+
+.mapelNote strong {
+  color: var(--text-main);
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 1.75rem 1rem;
+  background: var(--dark);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.875rem;
+}
+
+.footer p { margin-bottom: 0.4rem; }
+
+.footer a {
+  color: var(--secondary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity var(--dur-fast);
+}
+
+.footer a:hover { opacity: 0.75; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .header { padding: 3rem 1rem 2.5rem; }
+  .card { padding: 2rem 1.25rem; }
+  .headerTitle { font-size: 1.9rem; }
+}

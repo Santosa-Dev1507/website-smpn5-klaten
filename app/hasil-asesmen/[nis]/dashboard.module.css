@@ -1,0 +1,747 @@
+/* app/hasil-asesmen/[nis]/dashboard.module.css */
+/* Menggunakan token dari globals.css */
+
+.main {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-alt);
+  overflow-x: clip;
+}
+
+/* ── Loading & Error states ─────────────────────────────── */
+.loadingWrap, .errorWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(148, 69, 53, 0.15);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loadingText { color: var(--text-muted); font-size: 0.95rem; }
+
+.errorIcon { color: var(--primary); margin-bottom: 0.5rem; }
+.errorTitle { font-size: 1.4rem; font-weight: 800; }
+.errorDesc { color: var(--text-muted); max-width: 320px; line-height: 1.6; }
+.btnKembali {
+  background: var(--primary);
+  color: #fff;
+  padding: 0.875rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background var(--dur-fast) var(--ease-enter);
+}
+.btnKembali:hover { background: var(--primary-hover); }
+
+/* ── Header ─────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1rem 1.25rem;
+  background: var(--primary);
+  color: #fff;
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
+  animation: fadeIn var(--dur-base) var(--ease-enter) both;
+}
+
+.btnBack {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--dur-fast);
+  touch-action: manipulation;
+}
+.btnBack:hover { background: rgba(255,255,255,0.25); }
+
+.headerInfo { flex: 1; min-width: 0; }
+.headerGreet { font-size: 1rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.headerGreet strong { color: var(--secondary); }
+.headerMeta { font-size: 0.78rem; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+.taBadge {
+  background: rgba(255,255,255,0.18);
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Body ────────────────────────────────────────────────── */
+.body {
+  flex: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── TA Switcher (Multi-TA) ──────────────────────────────── */
+.taSwitcherBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0.85rem;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.taSwitcherLabel {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.taSwitcherPills {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+}
+
+.taPillBtn {
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1.5px solid var(--border-color);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--dur-fast);
+}
+
+.taPillBtnActive {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* ── Mapel chips ─────────────────────────────────────────── */
+.mapelSection { margin-bottom: 1.25rem; }
+.chipScroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.chipScroll::-webkit-scrollbar { display: none; }
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  border: 2px solid var(--border-color);
+  background: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-enter),
+    background var(--dur-fast) var(--ease-enter),
+    color var(--dur-fast) var(--ease-enter);
+  touch-action: manipulation;
+  min-height: 40px;
+}
+.chipActive {
+  border-color: var(--primary);
+  background: rgba(148, 69, 53, 0.07);
+  color: var(--primary);
+}
+
+.chipDisabled {
+  opacity: 0.6;
+  background: #fbfbfb;
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.chipBadgeSoon {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--border-color);
+  color: var(--text-muted);
+  padding: 2px 6px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+
+/* ── Tab asesmen ─────────────────────────────────────────── */
+.tabSection { margin-bottom: 1.5rem; }
+.tabList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 4px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.tab {
+  position: relative;
+  padding: 0.6rem 0.25rem;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-enter),
+    color var(--dur-fast) var(--ease-enter);
+  touch-action: manipulation;
+  min-height: 44px;
+  text-align: center;
+}
+.tabActive {
+  background: var(--primary);
+  color: #fff;
+}
+.tabEmpty { opacity: 0.5; }
+.tabDot {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ── Belum tersedia ──────────────────────────────────────── */
+.belumTersedia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+  background: #fff;
+  border-radius: 20px;
+  animation: fadeUp var(--dur-base) var(--ease-enter) both;
+}
+.belumTersedia svg { opacity: 0.35; }
+.belumTersedia p { font-weight: 600; color: var(--text-main); }
+.belumSub { font-size: 0.9rem; font-weight: 400; }
+
+/* ── Layers ──────────────────────────────────────────────── */
+.layersWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.layer {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+
+.layerHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 1.25rem;
+  padding-left: 0.75rem;
+  border-left: 3.5px solid var(--primary);
+}
+
+.layerTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+/* ── L1: Nilai Hero (Flattened, no nested card) ──────────── */
+.nilaiHero {
+  border-radius: 20px;
+  padding: 2rem 1.5rem 1.75rem;
+  text-align: center;
+  border: 2px solid;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all var(--dur-base) var(--ease-enter);
+}
+
+.nilaiHeroHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.nilaiHeroMapel {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: 0.2px;
+}
+
+.nilaiHeroPeriod {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.nilaiGreen {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border-color: #86efac;
+}
+.nilaiAmber {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border-color: #fcd34d;
+}
+.nilaiAngka {
+  font-size: clamp(3.75rem, 13vw, 5.25rem);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+  animation: badgePop 500ms var(--ease-enter) 200ms both;
+}
+.nilaiPredikat {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+.nilaiStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-top: 0.85rem;
+}
+.statusTuntas { background: #dcfce7; color: #15803d; }
+.statusBelum  { background: #fef3c7; color: #92400e; }
+
+.nilaiMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.15rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
+}
+
+.nilaiMetaItem {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+.nilaiMetaItem strong {
+  color: var(--text-main);
+}
+
+/* ── L2: Posisi ──────────────────────────────────────────── */
+.posisiWrap { display: flex; flex-direction: column; gap: 1rem; }
+.posisiBar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--background-alt);
+  padding: 1.25rem 1.25rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.posisiStatRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.posisiStatPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  font-size: 0.82rem;
+}
+
+.posisiStatLabel {
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.posisiStatVal {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.posisiStatNilai {
+  background: rgba(148, 69, 53, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(148, 69, 53, 0.2);
+}
+
+.posisiStatRata {
+  background: #fff;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+}
+
+.posisiTrack {
+  position: relative;
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 50px;
+  overflow: visible;
+  margin: 2.4rem 0 2.4rem;
+}
+
+.posisiFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--secondary-hover), var(--primary));
+  border-radius: 50px;
+  transition: width 800ms var(--ease-enter);
+}
+
+/* ── Nilai Siswa (Ditempatkan di ATAS Bar) ── */
+.markerNilai {
+  position: absolute;
+  top: -34px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.markerLabelNilai {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  background: var(--primary);
+  padding: 3px 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(148, 69, 53, 0.28);
+  letter-spacing: 0.2px;
+}
+
+.markerNilai::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--primary);
+}
+
+/* ── Rata-rata Kelas (Ditempatkan di BAWAH Bar) ── */
+.markerRata {
+  position: absolute;
+  top: 12px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.markerRata::before {
+  content: '';
+  width: 2px;
+  height: 18px;
+  background: #64748b;
+  position: absolute;
+  top: -15px; /* melewati track */
+  border-radius: 1px;
+}
+
+.markerLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #334155;
+  white-space: nowrap;
+  background: #fff;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  margin-top: 6px;
+}
+
+.posisiKet {
+  font-size: 0.875rem;
+  color: var(--text-main);
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+.trendChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  animation: badgePop 400ms var(--ease-enter) 400ms both;
+}
+.trendNaik    { background: #dcfce7; color: #15803d; }
+.trendTurun   { background: #fee2e2; color: #b91c1c; }
+.trendStabil  { background: #f0f9ff; color: #0369a1; }
+.trendPertama { background: rgba(148, 69, 53, 0.08); color: var(--primary); }
+
+/* ── Progress Semester ───────────────────────────────────── */
+.progressWrap { border-top: 1px dashed var(--border-color); padding-top: 1.25rem; margin-top: 0.5rem; }
+.progressTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.progressList { display: flex; flex-direction: column; gap: 0.625rem; }
+.progressRow {
+  display: grid;
+  grid-template-columns: 110px 1fr 36px;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  transition: background var(--dur-fast);
+}
+.progressRowActive { background: rgba(148, 69, 53, 0.05); }
+.progressLabel { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+.progressTrack {
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 50px;
+  overflow: hidden;
+}
+.progressFill {
+  height: 100%;
+  border-radius: 50px;
+  transition: width 600ms var(--ease-enter);
+}
+.progressGreen { background: #4ade80; }
+.progressAmber { background: #fbbf24; }
+.progressEmpty { background: transparent; }
+.progressNilai { font-size: 0.8rem; font-weight: 700; color: var(--text-main); text-align: right; font-variant-numeric: tabular-nums; }
+.progressDash { opacity: 0.35; }
+
+/* ── L3: Refleksi ────────────────────────────────────────── */
+.refleksiQuote {
+  position: relative;
+  background: rgba(250, 214, 166, 0.2);
+  border-left: 4px solid var(--secondary);
+  border-radius: 0 12px 12px 0;
+  padding: 1.25rem 1.5rem 1.25rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-main);
+  font-style: normal;
+}
+.quoteMarkOpen, .quoteMarkClose {
+  font-size: 2.5rem;
+  color: var(--secondary);
+  line-height: 0;
+  font-family: Georgia, serif;
+  vertical-align: -0.4em;
+  margin-right: 2px;
+}
+.quoteMarkClose { margin-left: 2px; margin-right: 0; }
+
+/* ── L4: Tindakan ────────────────────────────────────────── */
+.tindakanList { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.tindakanItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  background: var(--background-alt);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-main);
+  animation: fadeUp var(--dur-base) var(--ease-enter) both;
+}
+.tindakanItem:nth-child(2) { animation-delay: 60ms; }
+.tindakanNum {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+/* ── L5: Motivasi ────────────────────────────────────────── */
+.layerMotivasi {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  padding: 2.25rem 1.5rem;
+}
+.motivasiBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--secondary);
+  margin-bottom: 0.85rem;
+}
+.motivasiHeading {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.35rem;
+}
+.motivasiSubheading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 0.75rem;
+}
+.motivasiPesan {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0.5rem auto 0;
+  max-width: 520px;
+}
+.motivasiCallout {
+  display: inline-block;
+  margin-top: 1.25rem;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.65rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ── Pesan Penutup Bersama ──────────────────────────────── */
+.layerPenutup {
+  background: #fff;
+  border-radius: 20px;
+  padding: 1.75rem 1.5rem;
+  border: 2px solid rgba(148, 69, 53, 0.12);
+  box-shadow: 0 4px 20px rgba(148, 69, 53, 0.04);
+  text-align: center;
+}
+.penutupHeaderRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 0.65rem;
+}
+.penutupIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+}
+.penutupJudul {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0;
+}
+.penutupPesan {
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.65;
+  margin-bottom: 0;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 1.75rem 1rem;
+  background: var(--dark);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.875rem;
+}
+.footer p { margin-bottom: 0.4rem; }
+.footer a { color: var(--secondary); font-weight: 600; text-decoration: none; }
+.footer a:hover { opacity: 0.75; }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .tabList { grid-template-columns: repeat(2, 1fr); }
+  .progressRow { grid-template-columns: 90px 1fr 30px; }
+  .layer { padding: 1.25rem 1rem; }
+  .posisiStatRow { flex-direction: column; align-items: stretch; }
+}
