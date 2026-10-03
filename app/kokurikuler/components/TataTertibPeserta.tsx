@@ -10,7 +10,7 @@ const PERBEKALAN = [
   "Peralatan komunikasi/HP, dan perlengkapannya",
   "Membawa alat tulis dan papan ujian (perkelompok) untuk mengerjakan tugas",
   "Jaket, topi, kacamata, apabila diperlukan.",
-  "Alas kaki (sepatu atau sandal) yang nyaman.",
+  "Alas kaki (wajib bersepatu ) yang nyaman.",
   "Makanan kecil/snack secukupnya.",
   "Kartu identitas diri (Kartu Pelajar, KTA Pramuka, dll).",
   "Uang Saku secukupnya.",
