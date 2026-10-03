@@ -46,7 +46,7 @@ export default function TataTertibPeserta() {
             <PackageCheck size={22} aria-hidden="true" />
           </div>
           <div>
-            <div className={styles.ttCardLabel}>A</div>
+
             <h3 className={styles.ttCardTitle}>PERBEKALAN PRIBADI YANG HARUS DIBAWA :</h3>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function TataTertibPeserta() {
             <ListChecks size={22} aria-hidden="true" />
           </div>
           <div>
-            <div className={styles.ttCardLabel}>B</div>
+
             <h3 className={styles.ttCardTitle}>KEWAJIBAN PESERTA :</h3>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function TataTertibPeserta() {
             <ShieldAlert size={22} aria-hidden="true" />
           </div>
           <div>
-            <div className={styles.ttCardLabel}>C</div>
+
             <h3 className={styles.ttCardTitle}>LARANGAN PESERTA :</h3>
           </div>
         </div>
