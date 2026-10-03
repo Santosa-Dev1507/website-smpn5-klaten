@@ -8,6 +8,7 @@ const PERBEKALAN = [
   "Perlengkapan dan bekal pribadi secukupnya..",
   "Obat-obatan pribadi, terutama bagi peserta yang diharuskan mengkonsumsi obat secara terus menerus, obat HARUS DIBAWA.",
   "Peralatan komunikasi/HP, dan perlengkapannya",
+  "Membawa alat tulis dan papan ujian (perkelompok) untuk mengerjakan tugas",
   "Jaket, topi, kacamata, apabila diperlukan.",
   "Alas kaki (sepatu atau sandal) yang nyaman.",
   "Makanan kecil/snack secukupnya.",
