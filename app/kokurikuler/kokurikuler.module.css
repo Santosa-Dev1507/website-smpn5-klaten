@@ -854,6 +854,180 @@
   font-weight: 600;
 }
 
+/* ── Tata Tertib — TataTertibPeserta (3-kartu) ───────────────────── */
+.ttWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ttCard {
+  background: var(--kok-surface-card, #ffffff);
+  border: 1px solid var(--border-color, #eaeaea);
+  border-radius: var(--kok-radius-lg, 20px);
+  box-shadow: var(--kok-shadow);
+  overflow: hidden;
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+
+.ttCard:hover {
+  box-shadow: var(--kok-shadow-hover);
+}
+
+.ttCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Perbekalan: warm amber */
+.ttHeaderPerbekalan {
+  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+  border-bottom-color: rgba(217, 119, 6, 0.12);
+}
+.ttHeaderPerbekalan .ttHeaderIcon {
+  background: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+}
+.ttHeaderPerbekalan .ttCardLabel {
+  color: #b45309;
+}
+.ttHeaderPerbekalan .ttCardTitle {
+  color: #92400e;
+}
+
+/* Kewajiban: brand terracotta */
+.ttHeaderKewajiban {
+  background: linear-gradient(135deg, #fff7ed 0%, rgba(148, 69, 53, 0.06) 100%);
+  border-bottom-color: var(--kok-primary-border);
+}
+.ttHeaderKewajiban .ttHeaderIcon {
+  background: rgba(148, 69, 53, 0.1);
+  color: var(--kok-primary, #944535);
+}
+.ttHeaderKewajiban .ttCardLabel {
+  color: var(--kok-primary, #944535);
+}
+.ttHeaderKewajiban .ttCardTitle {
+  color: var(--kok-primary-hover, #7a382a);
+}
+
+/* Larangan: danger merah */
+.ttCardLarangan {
+  border-color: rgba(185, 28, 28, 0.18);
+}
+.ttCardLarangan:hover {
+  border-color: rgba(185, 28, 28, 0.3);
+  box-shadow: 0 10px 30px rgba(185, 28, 28, 0.1);
+}
+.ttHeaderLarangan {
+  background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
+  border-bottom-color: rgba(185, 28, 28, 0.1);
+}
+.ttHeaderLarangan .ttHeaderIcon {
+  background: rgba(185, 28, 28, 0.1);
+  color: #b91c1c;
+}
+.ttHeaderLarangan .ttCardLabel {
+  color: #b91c1c;
+}
+.ttHeaderLarangan .ttCardTitle {
+  color: #991b1b;
+}
+
+.ttHeaderIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ttCardLabel {
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.ttCardTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.ttList {
+  list-style: none;
+  margin: 0;
+  padding: 20px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ttListItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.ttBullet {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+  margin-top: 1px;
+}
+
+.ttBulletPerbekalan {
+  background: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+}
+
+.ttBulletKewajiban {
+  background: rgba(148, 69, 53, 0.1);
+  color: var(--kok-primary, #944535);
+}
+
+.ttBulletLarangan {
+  background: rgba(185, 28, 28, 0.1);
+  color: #b91c1c;
+}
+
+.ttListText {
+  font-size: 0.94rem;
+  color: var(--text-main, #0D0C13);
+  line-height: 1.65;
+  padding-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .ttCardHeader {
+    padding: 16px 18px 14px;
+  }
+  .ttList {
+    padding: 16px 18px 18px;
+  }
+  .ttCardTitle {
+    font-size: 0.9rem;
+  }
+  .ttListText {
+    font-size: 0.88rem;
+  }
+}
+
 /* ── Tata Tertib ─────────────────────────────────────────────────── */
 .tataTertibList {
   counter-reset: tataTertib;

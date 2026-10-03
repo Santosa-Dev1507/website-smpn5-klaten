@@ -15,6 +15,7 @@ import DenahKursi from "./components/DenahKursi";
 import KelompokKerja from "./components/KelompokKerja";
 import FaqAccordion from "./components/FaqAccordion";
 import PanduanRangkaianTugas from "./components/PanduanRangkaianTugas";
+import TataTertibPeserta from "./components/TataTertibPeserta";
 import ScrollReveal from "../components/ScrollReveal";
 import {
   fetchAllKokurikulerData,
@@ -314,6 +315,22 @@ export default async function KokurikulerPage() {
         </div>
       </section>
 
+      {/* ══ TATA TERTIB PESERTA KOKURIKULER ════════════════════════════ */}
+      <section className={`${styles.section} ${styles.sectionAlt}`} id="tata-tertib">
+        <div className={styles.container}>
+          <header className={`${styles.sectionHeader} reveal`}>
+            <div className={styles.sectionEyebrow}>Tata Tertib</div>
+            <h2 className={styles.sectionTitle}>Tata Tertib Peserta Kokurikuler</h2>
+            <p className={styles.sectionLead}>
+              Seluruh peserta wajib membaca dan mematuhi ketentuan berikut selama kegiatan berlangsung.
+            </p>
+          </header>
+          <div className="reveal">
+            <TataTertibPeserta />
+          </div>
+        </div>
+      </section>
+
       {/* ══ RUNDOWN & FASILITAS ════════════════════════════════════════ */}
       <section className={styles.section} id="rundown">
         <div className={styles.container}>
@@ -460,24 +477,6 @@ export default async function KokurikulerPage() {
               tanggalKegiatan={tanggal_kegiatan}
             />
           </div>
-        </div>
-      </section>
-
-      {/* ══ TATA TERTIB ══════════════════════════════════════════════ */}
-      <section className={styles.section} id="tata-tertib">
-        <div className={styles.container}>
-          <header className={`${styles.sectionHeader} reveal`}>
-            <div className={styles.sectionEyebrow}>Tata Tertib</div>
-            <h2 className={styles.sectionTitle}>Ketentuan Peserta</h2>
-          </header>
-          <ul className={styles.tataTertibList} aria-label="Daftar tata tertib kokurikuler">
-            {tataTertibList.map((item, i) => (
-              <li key={i} className={`${styles.tataTertibItem} reveal`}>
-                <div className={styles.tataTertibNumber}>{item.no}</div>
-                <p className={styles.tataTertibText}>{item.isi_tata_tertib}</p>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
