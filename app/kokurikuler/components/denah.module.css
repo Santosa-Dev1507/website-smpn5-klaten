@@ -159,7 +159,6 @@
   background: #fff;
   border: 1.5px solid var(--border-color, #eaeaea);
   border-radius: 16px;
-  overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
 
@@ -167,6 +166,7 @@
   background: var(--primary, #944535);
   padding: 10px 20px;
   text-align: center;
+  border-radius: 14px 14px 0 0;
 }
 .busHeaderLabel {
   font-size: 0.72rem;
@@ -179,6 +179,8 @@
 .busBody {
   padding: 16px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0 0 14px 14px;
 }
 
 /* Frame bus dengan border */
@@ -187,6 +189,7 @@
   flex-direction: column;
   gap: 6px;
   width: 100%;
+  min-width: 340px;
   max-width: 780px;
   margin: 0 auto;
   padding: 16px 12px;
@@ -206,6 +209,7 @@
   display: flex;
   flex: 1;
   gap: 5px;
+  min-width: 0;
 }
 
 .aisle {
@@ -550,9 +554,11 @@
 /* ── Responsive ───────────────────────────────────────────────────── */
 @media (max-width: 520px) {
   .searchBar { flex-direction: column; align-items: stretch; }
-  .seat      { min-height: 68px; }
+  .seat      { min-height: 62px; min-width: 62px; }
   .seatName  { font-size: 0.58rem; }
   .kelasPill { font-size: 0.55rem; padding: 1px 3px; }
-  .aisle     { width: 22px; }
-  .doorPlaceholder { font-size: 0.58rem; min-height: 68px; }
+  .aisle     { width: 20px; }
+  .doorPlaceholder { font-size: 0.58rem; min-height: 62px; }
+  .busFrame  { min-width: 300px; }
 }
+

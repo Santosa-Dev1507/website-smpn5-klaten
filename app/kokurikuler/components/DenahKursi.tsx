@@ -61,8 +61,10 @@ export default function DenahKursi({ initialData = [] }: Props) {
       .catch(() => setLoading(false));
   }, [initialData.length]);
 
-  // Daftar bus unik, diurutkan secara natural
-  const buses = Array.from(new Set(allData.map(k => k.bus_id))).sort((a, b) => {
+  // Daftar bus unik — trim whitespace & filter kosong, lalu urutkan natural
+  const buses = Array.from(
+    new Set(allData.map(k => k.bus_id?.trim()).filter(Boolean) as string[])
+  ).sort((a, b) => {
     const na = parseInt(a.replace(/\D+/g, '')) || 0;
     const nb = parseInt(b.replace(/\D+/g, '')) || 0;
     return na - nb;
@@ -72,10 +74,10 @@ export default function DenahKursi({ initialData = [] }: Props) {
     if (buses.length > 0 && !activeBus) setActiveBus(buses[0]);
   }, [buses, activeBus]);
 
-  // Map kursi → siswa untuk bus aktif
+  // Map kursi → siswa untuk bus aktif (bus_id di-trim agar matching konsisten)
   const seatMap = new Map<string, SeatInfo>();
   allData
-    .filter(k => k.bus_id === activeBus)
+    .filter(k => k.bus_id?.trim() === activeBus)
     .forEach(k => {
       const isCompanion = ['1A','1B','2A','2B'].includes(k.nomor_kursi.toUpperCase());
       seatMap.set(k.nomor_kursi.toUpperCase(), { ...k, isCompanion });
@@ -97,7 +99,7 @@ export default function DenahKursi({ initialData = [] }: Props) {
     if (found.length > 0) {
       setHighlight(new Set(found.map(f => f.nomor_kursi.toUpperCase())));
       // Otomatis pindah ke bus yang ditemukan pertama
-      setActiveBus(found[0].bus_id);
+      setActiveBus(found[0].bus_id?.trim() ?? found[0].bus_id);
     } else {
       setHighlight(new Set());
     }
