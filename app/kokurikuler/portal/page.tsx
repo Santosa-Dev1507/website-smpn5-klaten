@@ -2,12 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
-import type { Penilaian, KursiSiswa, KelompokKerja } from "@/lib/kokurikuler";
-import { DIMENSI_LIST, PREDIKAT_LABELS, RUBRIK } from "@/lib/kokurikuler";
+import type { Penilaian } from "@/lib/kokurikuler";
+import { PREDIKAT_LABELS } from "@/lib/kokurikuler";
 import {
-  LogOut, Download, PlusCircle, Trash2, Users,
-  CheckCircle, AlertCircle, Loader2, Search, Eye, Sparkles, CheckCheck, RefreshCw, FileSpreadsheet
+  Download, PlusCircle, Trash2, Users,
+  CheckCircle, AlertCircle, Loader2, Search, Sparkles, CheckCheck, RefreshCw, FileSpreadsheet
 } from "lucide-react";
 import styles from "./portal.module.css";
 import Link from "next/link";
@@ -62,10 +61,6 @@ const DEFAULT_ROSTERS: Record<string, { nama: string; kelompok?: string }[]> = {
 export default function PortalDashboard() {
   const router = useRouter();
 
-  // ── Auth & User State ──
-  const [userName, setUserName]   = useState("Guru Pendamping (Mode Pratinjau)");
-  const [authToken, setAuthToken] = useState<string | null>("preview-mode");
-
   // ── Header Form Sekali Isi (Per Kelas) ──
   const [selectedKelas, setSelectedKelas] = useState<string>("VIII A");
   const [dinilaiOleh, setDinilaiOleh]     = useState<string>("Budi Santoso, S.Pd");
@@ -74,7 +69,7 @@ export default function PortalDashboard() {
 
   // ── Roster & Matriks Penilaian 1 Kelas ──
   const [matrixRows, setMatrixRows]       = useState<ClassStudentRow[]>([]);
-  const [allSiswaData, setAllSiswaData]   = useState<{ nama_siswa: string; kelas: string; kelompok?: string }[]>([]);
+  const [loadingRoster, setLoadingRoster] = useState(false);
 
   // ── Data Rekap Tersimpan ──
   const [rekapList, setRekapList]         = useState<PenilaianRow[]>([]);
@@ -87,81 +82,79 @@ export default function PortalDashboard() {
   const [filterKelasRekap, setFilterKelasRekap] = useState<string>("");
   const [searchNamaRekap, setSearchNamaRekap]   = useState<string>("");
 
-  // 1. Ambil data siswa dari GAS (kursi/kelompok) jika tersedia
-  useEffect(() => {
-    fetch("/api/kokurikuler/data?tab=kursi")
+  // 1. Fetch roster dari GAS kelompok untuk kelas tertentu
+  const loadClassRoster = useCallback((kelas: string) => {
+    setLoadingRoster(true);
+    setMatrixRows([]); // kosongkan tabel saat ganti kelas
+
+    fetch(`/api/kokurikuler/kelompok-roster?kelas=${encodeURIComponent(kelas)}`)
       .then(r => r.json())
       .then(json => {
         if (json.data && json.data.length > 0) {
-          const mapped = json.data.map((k: KursiSiswa) => ({
-            nama_siswa: k.nama_siswa,
-            kelas: k.kelas,
-            kelompok: `Bus ${k.bus_id} · Kursi ${k.nomor_kursi}`,
+          const rows: ClassStudentRow[] = json.data.map((s: {
+            nama_siswa: string; kelas: string; kode_kelompok: string;
+          }) => ({
+            nama_siswa:       s.nama_siswa,
+            kelas:            kelas,
+            kelompok:         s.kode_kelompok,
+            penalaran_kritis: "B",
+            kolaborasi:       "B",
+            kreativitas:      "B",
+            komunikasi:       "B",
+            catatan:          "",
           }));
-          setAllSiswaData(mapped);
+          setMatrixRows(rows);
+        } else {
+          // Fallback ke data dummy jika kelompok belum ada
+          const fallback = (DEFAULT_ROSTERS[kelas] ?? []).map(s => ({
+            nama_siswa:       s.nama,
+            kelas:            kelas,
+            kelompok:         s.kelompok ?? "-",
+            penalaran_kritis: "B" as const,
+            kolaborasi:       "B" as const,
+            kreativitas:      "B" as const,
+            komunikasi:       "B" as const,
+            catatan:          "",
+          }));
+          setMatrixRows(fallback);
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        // Error: gunakan DEFAULT_ROSTERS
+        const fallback = (DEFAULT_ROSTERS[kelas] ?? []).map(s => ({
+          nama_siswa:       s.nama,
+          kelas:            kelas,
+          kelompok:         s.kelompok ?? "-",
+          penalaran_kritis: "B" as const,
+          kolaborasi:       "B" as const,
+          kreativitas:      "B" as const,
+          komunikasi:       "B" as const,
+          catatan:          "",
+        }));
+        setMatrixRows(fallback);
+      })
+      .finally(() => setLoadingRoster(false));
   }, []);
-
-  // 2. Load daftar siswa saat kelas berubah
-  const loadClassRoster = useCallback((kelas: string) => {
-    let siswaInClass: { nama: string; kelompok?: string }[] = [];
-
-    // Cari dari data GAS jika ada
-    const fromGas = allSiswaData.filter(s => s.kelas === kelas);
-    if (fromGas.length > 0) {
-      siswaInClass = fromGas.map(s => ({ nama: s.nama_siswa, kelompok: s.kelompok }));
-    } else if (DEFAULT_ROSTERS[kelas]) {
-      siswaInClass = DEFAULT_ROSTERS[kelas];
-    } else {
-      // Dummy 5 siswa untuk kelas lain
-      siswaInClass = Array.from({ length: 5 }, (_, i) => ({
-        nama: `Siswa ${i + 1} (${kelas})`,
-        kelompok: `Kelompok ${i + 1}`,
-      }));
-    }
-
-    // Bangun matriks baris
-    const rows: ClassStudentRow[] = siswaInClass.map(s => ({
-      nama_siswa: s.nama,
-      kelas,
-      kelompok: s.kelompok ?? "-",
-      penalaran_kritis: "B",
-      kolaborasi: "B",
-      kreativitas: "B",
-      komunikasi: "B",
-      catatan: "",
-    }));
-
-    setMatrixRows(rows);
-  }, [allSiswaData]);
 
   useEffect(() => {
     loadClassRoster(selectedKelas);
   }, [selectedKelas, loadClassRoster]);
 
-  // Cek session Supabase jika ada
+  // 2. Load rekap nilai dari Sheets saat pertama kali buka portal
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setAuthToken(session.access_token);
-        setUserName(session.user.email ?? "Guru");
-        fetchRekapFromDatabase(session.access_token);
-      }
-    });
+    fetchRekapFromSheets();
   }, []);
 
-  const fetchRekapFromDatabase = async (token: string) => {
+
+
+  const fetchRekapFromSheets = async () => {
     setLoadingData(true);
     try {
-      const res = await fetch("/api/kokurikuler/penilaian", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch("/api/kokurikuler/penilaian");
       const json = await res.json();
       if (json.data) setRekapList(json.data);
     } catch {
-      // silent
+      // silent — tampilkan rekap kosong
     } finally {
       setLoadingData(false);
     }
@@ -232,34 +225,33 @@ export default function PortalDashboard() {
       });
     });
 
-    // Jika terautentikasi ke Supabase, kirim POST batch
-    if (authToken && authToken !== "preview-mode") {
-      try {
-        const res = await fetch("/api/kokurikuler/penilaian", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`,
-          },
-          body: JSON.stringify(recordsToInsert),
-        });
-        const json = await res.json();
-        if (res.ok) {
-          fetchRekapFromDatabase(authToken);
-        } else {
-          setRekapList(prev => [...recordsToInsert, ...prev]);
-        }
-      } catch {
+    // Simpan langsung ke Google Sheets via GAS (tanpa login)
+    try {
+      const res = await fetch("/api/kokurikuler/penilaian", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(recordsToInsert),
+      });
+      const json = await res.json();
+      if (res.ok && json.success) {
+        // Refresh rekap dari Sheets setelah berhasil simpan
+        await fetchRekapFromSheets();
+        setFormSuccess(
+          `✓ Tersimpan ke Google Sheets! ${json.inserted ?? 0} baru, ${json.updated ?? 0} diperbarui — total ${recordsToInsert.length / 4} siswa ${selectedKelas}.`
+        );
+      } else {
+        // Jika GAS gagal, tampilkan di local state agar bisa diexport
         setRekapList(prev => [...recordsToInsert, ...prev]);
+        setFormError(`Gagal simpan ke Sheets: ${json.error ?? 'unknown error'}. Data ditampilkan sementara untuk di-export.`);
       }
-    } else {
-      // Simpan langsung di local state untuk peninjauan
+    } catch {
+      // Network error — tampilkan di local state
       setRekapList(prev => [...recordsToInsert, ...prev]);
+      setFormError("Koneksi ke Google Sheets gagal. Data ditampilkan sementara, silakan export ke Excel.");
     }
 
     setSubmitting(false);
-    setFormSuccess(`Berhasil menyimpan ${recordsToInsert.length} data penilaian untuk seluruh siswa ${selectedKelas}!`);
-    setTimeout(() => setFormSuccess(null), 4000);
+    setTimeout(() => { setFormSuccess(null); setFormError(null); }, 5000);
   };
 
   // ── Ekspor Excel (.xlsx) per kelas / seluruh kelas ──
@@ -335,8 +327,7 @@ export default function PortalDashboard() {
     return list;
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
+  const handleLogout = () => {
     router.push("/kokurikuler");
   };
 
@@ -362,27 +353,16 @@ export default function PortalDashboard() {
         </div>
         <div className={styles.topbarRight}>
           <span className={styles.topbarUser}>
-            <Eye size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} />
-            {userName}
+            <FileSpreadsheet size={14} style={{ display: "inline", verticalAlign: "middle", marginRight: 4 }} />
+            Tersimpan ke Google Sheets
           </span>
           <button className={styles.logoutBtn} onClick={handleLogout}>
-            <LogOut size={15} aria-hidden="true" />
             Tutup Portal
           </button>
         </div>
       </header>
 
       <div className={styles.dashContent}>
-
-        {/* Banner Pratinjau */}
-        {authToken === "preview-mode" && (
-          <div className={styles.previewBanner}>
-            <Eye size={20} style={{ flexShrink: 0 }} />
-            <div>
-              <strong>Mode Pratinjau &amp; Penilaian Massal Per Kelas Aktif:</strong> Anda tidak perlu mengetik nama siswa 1 per 1 lagi. Cukup pilih kelas, klik tombol <em>&quot;Set Semua B (Baik)&quot;</em>, atur nilai 3 dimensi sekaligus, dan unduh format **Excel (.xlsx)** untuk e-rapor!
-            </div>
-          </div>
-        )}
 
         {/* ══ MATRIKS PENILAIAN 1 KELAS ═════════════════════════════════ */}
         <section className={styles.formSection}>

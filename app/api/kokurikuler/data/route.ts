@@ -40,8 +40,13 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // Jika GAS belum dikonfigurasi, kembalikan data demo kosong
+  // Jika GAS belum dikonfigurasi, kembalikan data demo kosong (kecuali tab kursi yang terhubung ke Gviz)
   if (!GAS_URL || GAS_URL.includes('GANTI_SETELAH_DEPLOY')) {
+    if (tab === 'kursi') {
+      const { fetchKursiGviz } = await import('@/lib/kokurikuler');
+      const kursi = await fetchKursiGviz();
+      return NextResponse.json({ data: kursi, tab, count: kursi.length }, { status: 200 });
+    }
     return NextResponse.json(
       {
         data: [],

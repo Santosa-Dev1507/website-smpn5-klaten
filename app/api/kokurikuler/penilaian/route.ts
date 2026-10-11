@@ -1,66 +1,34 @@
 // app/api/kokurikuler/penilaian/route.ts
-// CRUD penilaian kokurikuler — tersimpan di Supabase
-// POST: simpan penilaian (single record atau batch array per kelas)
-// GET:  ambil semua penilaian untuk ekspor/rekap (perlu auth)
+// Simpan & baca penilaian kokurikuler via Google Apps Script (Sheets)
+// Tidak memerlukan autentikasi Supabase — guru diidentifikasi via field dinilai_oleh
+//
+// POST /api/kokurikuler/penilaian  → GAS action SAVE_PENILAIAN (batch upsert)
+// GET  /api/kokurikuler/penilaian  → GAS action GET_PENILAIAN  (baca rekap)
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+const GAS_URL =
+  process.env.NEXT_PUBLIC_GAS_KELOMPOK_URL ||
+  'https://script.google.com/macros/s/AKfycbyzwoslzbeNA2-8-x1mng1HBo9S5sE54PjUCpNtyIaF8cdG2-iC-mdLTMvgDors0OQ/exec';
 
-// Validasi session dari header Authorization: Bearer <token>
-async function getAuthenticatedUser(req: NextRequest) {
-  const authHeader = req.headers.get('authorization');
-  if (!authHeader?.startsWith('Bearer ')) return null;
-  const token = authHeader.slice(7);
-  const { data: { user } } = await supabaseAdmin.auth.getUser(token);
-  return user;
-}
-
+// ── POST: Simpan batch nilai ke Sheets ─────────────────────────────────────
 export async function POST(req: NextRequest) {
-  const user = await getAuthenticatedUser(req);
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     const body = await req.json();
+    // Dukung single record maupun array
+    const records = Array.isArray(body) ? body : [body];
 
-    // Dukungan untuk batch insert / upsert (array of records per kelas)
-    if (Array.isArray(body)) {
-      const recordsToInsert = body.map(item => ({
-        nama_siswa:     item.nama_siswa,
-        kelas:          item.kelas,
-        kelompok:       item.kelompok ?? null,
-        dimensi:        item.dimensi,
-        predikat:       item.predikat,
-        catatan:        item.catatan ?? null,
-        dinilai_oleh:   item.dinilai_oleh,
-        jenis_asesmen:  item.jenis_asesmen ?? 'Sumatif',
-        tahun_kegiatan: item.tahun_kegiatan ?? '2026/2027',
-        nama_kegiatan:  item.nama_kegiatan ?? 'Kokurikuler Kelas VIII — Destinasi Semarang',
-        created_by:     user.id,
-      }));
-
-      const { data, error } = await supabaseAdmin
-        .from('kokurikuler_penilaian')
-        .upsert(recordsToInsert, { onConflict: 'nama_siswa,kelas,dimensi' })
-        .select();
-
-      if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
-      }
-
-      return NextResponse.json({ success: true, count: data?.length ?? 0, data });
+    if (records.length === 0) {
+      return NextResponse.json(
+        { error: 'Tidak ada data yang dikirim' },
+        { status: 400 }
+      );
     }
 
-    // Single record insert
-    const requiredFields = ['nama_siswa', 'kelas', 'dimensi', 'predikat', 'dinilai_oleh', 'jenis_asesmen'];
-    for (const field of requiredFields) {
-      if (!body[field]) {
+    // Validasi field wajib pada record pertama
+    const required = ['nama_siswa', 'kelas', 'dimensi', 'predikat', 'dinilai_oleh'];
+    for (const field of required) {
+      if (!records[0][field]) {
         return NextResponse.json(
           { error: `Field "${field}" wajib diisi` },
           { status: 400 }
@@ -68,92 +36,58 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const { data, error } = await supabaseAdmin
-      .from('kokurikuler_penilaian')
-      .insert({
-        nama_siswa:     body.nama_siswa,
-        kelas:          body.kelas,
-        kelompok:       body.kelompok ?? null,
-        dimensi:        body.dimensi,
-        predikat:       body.predikat,
-        catatan:        body.catatan ?? null,
-        dinilai_oleh:   body.dinilai_oleh,
-        jenis_asesmen:  body.jenis_asesmen,
-        tahun_kegiatan: body.tahun_kegiatan ?? '2026/2027',
-        nama_kegiatan:  body.nama_kegiatan ?? 'Kokurikuler Kelas VIII — Destinasi Semarang',
-        created_by:     user.id,
-      })
-      .select()
-      .single();
+    const gasRes = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'SAVE_PENILAIAN', records }),
+    });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (!gasRes.ok) {
+      return NextResponse.json(
+        { error: `GAS error: HTTP ${gasRes.status}` },
+        { status: 502 }
+      );
     }
 
-    return NextResponse.json({ success: true, data });
+    const json = await gasRes.json();
+
+    if (json.error) {
+      return NextResponse.json({ error: json.error }, { status: 500 });
+    }
+
+    return NextResponse.json(json);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
+// ── GET: Baca rekap nilai dari Sheets ──────────────────────────────────────
 export async function GET(req: NextRequest) {
-  const user = await getAuthenticatedUser(req);
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
+  const kelas = req.nextUrl.searchParams.get('kelas');
   const tahun = req.nextUrl.searchParams.get('tahun');
-  const kelas = req.nextUrl.searchParams.get('kelas');
 
-  let query = supabaseAdmin
-    .from('kokurikuler_penilaian')
-    .select('*')
-    .order('kelas', { ascending: true })
-    .order('nama_siswa', { ascending: true });
+  try {
+    const gasRes = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'GET_PENILAIAN', kelas, tahun }),
+      cache: 'no-store',
+    });
 
-  if (tahun) query = query.eq('tahun_kegiatan', tahun);
-  if (kelas) query = query.eq('kelas', kelas);
+    if (!gasRes.ok) {
+      return NextResponse.json(
+        { error: `GAS error: HTTP ${gasRes.status}` },
+        { status: 502 }
+      );
+    }
 
-  const { data, error } = await query;
-
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const json = await gasRes.json();
+    return NextResponse.json(json, {
+      headers: { 'Cache-Control': 'no-store' },
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  return NextResponse.json({ data, count: data?.length ?? 0 });
-}
-
-export async function DELETE(req: NextRequest) {
-  const user = await getAuthenticatedUser(req);
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
-
-  const id = req.nextUrl.searchParams.get('id');
-  const kelas = req.nextUrl.searchParams.get('kelas');
-
-  if (id) {
-    const { error } = await supabaseAdmin
-      .from('kokurikuler_penilaian')
-      .delete()
-      .eq('id', id)
-      .eq('created_by', user.id);
-
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ success: true });
-  }
-
-  if (kelas) {
-    const { error } = await supabaseAdmin
-      .from('kokurikuler_penilaian')
-      .delete()
-      .eq('kelas', kelas)
-      .eq('created_by', user.id);
-
-    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json({ success: true });
-  }
-
-  return NextResponse.json({ error: 'Parameter "id" atau "kelas" diperlukan' }, { status: 400 });
 }

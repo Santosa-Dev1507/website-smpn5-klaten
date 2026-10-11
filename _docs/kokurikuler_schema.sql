@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS kokurikuler_penilaian (
   nama_siswa      text        NOT NULL,
   kelas           text        NOT NULL,
   kelompok        text,
-  dimensi         text        NOT NULL,     -- 'Penalaran Kritis' | 'Kolaborasi' | 'Komunikasi/Kreativitas'
+  dimensi         text        NOT NULL,     -- 'Penalaran Kritis' | 'Kolaborasi' | 'Kreativitas' | 'Komunikasi'
   predikat        text        NOT NULL,     -- 'SB' | 'B' | 'C' | 'K'
   catatan         text,
   dinilai_oleh    text        NOT NULL,     -- nama guru mapel yang menilai
@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS kokurikuler_penilaian (
   tahun_kegiatan  text,                    -- e.g. '2026/2027'
   nama_kegiatan   text,                    -- e.g. 'Kokurikuler Kelas VIII — Destinasi Semarang'
   created_at      timestamptz DEFAULT now(),
-  created_by      uuid        REFERENCES auth.users(id) ON DELETE SET NULL
+  created_by      uuid        REFERENCES auth.users(id) ON DELETE SET NULL,
+  CONSTRAINT uq_kokurikuler_penilaian UNIQUE (nama_siswa, kelas, dimensi)
 );
 
 -- Index untuk query umum
@@ -53,6 +54,11 @@ CREATE POLICY "guru_dapat_delete_milik_sendiri" ON kokurikuler_penilaian
 
 -- ── Constraint validasi ────────────────────────────────────────────
 ALTER TABLE kokurikuler_penilaian
+  DROP CONSTRAINT IF EXISTS chk_predikat,
+  DROP CONSTRAINT IF EXISTS chk_dimensi,
+  DROP CONSTRAINT IF EXISTS chk_asesmen;
+
+ALTER TABLE kokurikuler_penilaian
   ADD CONSTRAINT chk_predikat    CHECK (predikat IN ('SB', 'B', 'C', 'K')),
-  ADD CONSTRAINT chk_dimensi     CHECK (dimensi IN ('Penalaran Kritis', 'Kolaborasi', 'Komunikasi/Kreativitas')),
+  ADD CONSTRAINT chk_dimensi     CHECK (dimensi IN ('Penalaran Kritis', 'Kolaborasi', 'Kreativitas', 'Komunikasi')),
   ADD CONSTRAINT chk_asesmen     CHECK (jenis_asesmen IN ('Formatif', 'Sumatif'));

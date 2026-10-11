@@ -87,8 +87,8 @@ export default function DaftarKelompokPage() {
 
   const classStudents = students.filter(s => s.kelas === kelas);
 
-  // Tambah anggota ke-6 (slot Anggota tambahan)
-  const canAddMore = anggota.length < 6;
+  // Tambah anggota ke-6 dan ke-7 (slot Anggota tambahan)
+  const canAddMore = anggota.length < 7;
   const canRemoveLast = anggota.length > 5;
 
   const handleAddAnggota = () => {
@@ -247,7 +247,7 @@ export default function DaftarKelompokPage() {
                 Anggota Kelompok &amp; Pembagian Peran
               </h2>
               <span className={styles.anggotaCount}>
-                {anggota.length}/6 anggota
+                {anggota.length}/7 anggota
               </span>
             </div>
 
@@ -321,16 +321,16 @@ export default function DaftarKelompokPage() {
               ))}
             </div>
 
-            {/* Tambah / hapus baris ke-6 */}
+            {/* Tambah / hapus baris ke-6 atau ke-7 */}
             <div className={styles.anggotaActions}>
               {canAddMore && (
                 <button type="button" className={styles.addBtn} onClick={handleAddAnggota}>
-                  <PlusCircle size={16} /> Tambah Anggota ke-6
+                  <PlusCircle size={16} /> Tambah Anggota (ke-{anggota.length + 1})
                 </button>
               )}
               {canRemoveLast && (
                 <button type="button" className={styles.removeBtn} onClick={handleRemoveAnggota}>
-                  <Trash2 size={14} /> Hapus Anggota ke-6
+                  <Trash2 size={14} /> Hapus Anggota Terakhir (ke-{anggota.length})
                 </button>
               )}
             </div>

@@ -1,0 +1,940 @@
+/* ===================================================================
+   PENDAFTARAN OSIS — SMP NEGERI 5 KLATEN
+   Brand Tokens: Marun (#944535) · Emas (#FAD6A6 / #e8b86d) · Ivory (#fdf8f2)
+   Design Philosophy: Anti-AI-Slop, Prestigious School Institutional UI
+   =================================================================== */
+
+.pageContainer {
+  min-height: 100vh;
+  background-color: var(--background-alt, #fdf8f2);
+  color: var(--text-main, #0D0C13);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Breadcrumb Bar ─────────────────────────────────────────── */
+.breadcrumbBar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color, #eaeaea);
+  padding: 0.75rem 5%;
+}
+
+.breadcrumbInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #666666;
+  flex-wrap: wrap;
+}
+
+.breadcrumbLink {
+  color: #555555;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumbLink:hover {
+  color: var(--primary, #944535);
+}
+
+.breadcrumbSep {
+  color: #bbbbbb;
+  font-size: 0.75rem;
+}
+
+.breadcrumbCurrent {
+  color: var(--primary, #944535);
+  font-weight: 600;
+}
+
+/* ── Hero Section ───────────────────────────────────────────── */
+.hero {
+  position: relative;
+  background: linear-gradient(135deg, #782e21 0%, #944535 55%, #6a2418 100%);
+  color: #ffffff;
+  padding: 3.75rem 5% 4.25rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 85% 20%, rgba(250, 214, 166, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0, 0, 0, 0.2) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.heroLogoWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.heroLogo {
+  width: 76px;
+  height: 76px;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  object-fit: contain;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 4.5vw, 2.85rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.heroSubtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 600;
+  color: var(--secondary, #FAD6A6);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.01em;
+}
+
+.heroDescription {
+  max-width: 680px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.5rem auto 0;
+}
+
+/* ── Content Layout ─────────────────────────────────────────── */
+.mainContent {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.75rem 5% 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* ── Section Header ─────────────────────────────────────────── */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.sectionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(148, 69, 53, 0.08);
+  color: var(--primary, #944535);
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 50px;
+  border: 1px solid rgba(148, 69, 53, 0.16);
+  margin-bottom: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sectionTitle {
+  font-size: clamp(1.4rem, 3vw, 1.85rem);
+  font-weight: 800;
+  color: var(--text-main, #0D0C13);
+  margin-bottom: 0.45rem;
+  letter-spacing: -0.02em;
+}
+
+.sectionSubtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted, #555555);
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.55;
+}
+
+/* ── Timeline Section ───────────────────────────────────────── */
+.timelineGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.timelineCard {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid var(--border-color, #eaeaea);
+  border-top: 4px solid var(--card-accent, #944535);
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timelineCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.timelineCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.timelineStepNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--card-accent, #944535);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.timelineStatusBadge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 50px;
+  background: var(--badge-bg, rgba(148, 69, 53, 0.1));
+  color: var(--badge-color, #944535);
+}
+
+.timelineStageName {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--text-main, #0D0C13);
+  margin-bottom: 0.25rem;
+}
+
+.timelineDates {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--card-accent, #944535);
+  margin-bottom: 1rem;
+}
+
+.timelineItemList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border-top: 1px solid #f2f2f4;
+  padding-top: 0.85rem;
+  margin-top: auto;
+}
+
+.timelineItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  color: #454652;
+  line-height: 1.45;
+}
+
+.timelineCheckIcon {
+  color: var(--card-accent, #944535);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Syarat & Kualifikasi Section ───────────────────────────── */
+.requirementsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.reqCard {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid var(--border-color, #eaeaea);
+  padding: 1.65rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.reqCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.15rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid #f0f0f2;
+}
+
+.reqIconCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(148, 69, 53, 0.08);
+  color: var(--primary, #944535);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reqCardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main, #0D0C13);
+}
+
+.reqList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.reqItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.reqItemIcon {
+  color: var(--primary, #944535);
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.reqSubNote {
+  display: block;
+  font-size: 0.8rem;
+  color: #767683;
+  margin-top: 0.2rem;
+  font-style: italic;
+}
+
+/* ── Dokumen Fisik Notice Box ───────────────────────────────── */
+.docNoticeBox {
+  background: #fff8f0;
+  border: 1.5px solid #fad6a6;
+  border-left: 5px solid var(--primary, #944535);
+  border-radius: 14px;
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(148, 69, 53, 0.05);
+}
+
+.docNoticeHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.docNoticeTitle {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--primary, #944535);
+}
+
+.docNoticeLead {
+  font-size: 0.88rem;
+  color: #3b3a40;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.docNoticeRecipient {
+  font-weight: 800;
+  color: #0D0C13;
+  background: rgba(250, 214, 166, 0.35);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.docNoticeList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.6rem;
+}
+
+.docNoticeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.84rem;
+  color: #454652;
+  line-height: 1.4;
+  background: #ffffff;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid rgba(250, 214, 166, 0.7);
+}
+
+.docNoticeItemIcon {
+  color: var(--primary, #944535);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Form Section ───────────────────────────────────────────── */
+.formWrapper {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--border-color, #eaeaea);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.formBanner {
+  background: var(--primary, #944535);
+  color: #ffffff;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.formBannerTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.formBannerDesc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.formBannerBadge {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--secondary, #FAD6A6);
+  white-space: nowrap;
+}
+
+.formBody {
+  padding: 2.25rem 2.25rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Form Section Divider / Header */
+.formSectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1.5px solid #f0f0f4;
+  margin-top: 0.5rem;
+}
+
+.formSectionHeaderNumber {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary, #944535);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.formSectionHeaderText {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text-main, #0D0C13);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.formLabel {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #2c2d36;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.requiredMark {
+  color: #c92a2a;
+  margin-left: 2px;
+}
+
+.formInput,
+.formSelect,
+.formTextarea {
+  width: 100%;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.92rem;
+  color: var(--text-main, #0D0C13);
+  background: #fbfbfd;
+  border: 1.5px solid #dcdce0;
+  border-radius: 10px;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.formInput:hover,
+.formSelect:hover,
+.formTextarea:hover {
+  border-color: #b5b5be;
+}
+
+.formInput:focus,
+.formSelect:focus,
+.formTextarea:focus {
+  border-color: var(--primary, #944535);
+  box-shadow: 0 0 0 3px rgba(148, 69, 53, 0.12);
+  background: #ffffff;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: #9999a4;
+}
+
+.formTextarea {
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.formHelper {
+  font-size: 0.78rem;
+  color: #767683;
+  margin-top: 0.1rem;
+}
+
+/* Word counter pill */
+.counterPill {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 50px;
+  background: #f0f0f3;
+  color: #555562;
+}
+
+.counterPillValid {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.counterPillLimit {
+  background: #ffebee;
+  color: #c62828;
+}
+
+/* ── Agreement Box ──────────────────────────────────────────── */
+.agreementBox {
+  background: #fcf9f5;
+  border: 1.5px solid #ebd8bf;
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.agreementLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: #2c2d36;
+  cursor: pointer;
+  line-height: 1.55;
+}
+
+.agreementCheckbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--primary, #944535);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* ── Error Banner ───────────────────────────────────────────── */
+.errorBanner {
+  background: #fff5f5;
+  border: 1.5px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  line-height: 1.45;
+}
+
+.errorBannerIcon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Action Buttons ─────────────────────────────────────────── */
+.formActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.submitBtn {
+  background: var(--primary, #944535);
+  color: #ffffff;
+  padding: 0.95rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(148, 69, 53, 0.28);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  min-width: 260px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: var(--primary-hover, #7a382a);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(148, 69, 53, 0.34);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitBtn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.formSecurityNote {
+  font-size: 0.78rem;
+  color: #767683;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ── Loading State ──────────────────────────────────────────── */
+.loadingContainer {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(148, 69, 53, 0.15);
+  border-top-color: var(--primary, #944535);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main, #0D0C13);
+}
+
+.loadingSub {
+  font-size: 0.86rem;
+  color: var(--text-muted, #555555);
+}
+
+/* ── Success Screen ─────────────────────────────────────────── */
+.successContainer {
+  max-width: 680px;
+  margin: 3.5rem auto 5rem;
+  padding: 0 1.25rem;
+}
+
+.successCard {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--border-color, #eaeaea);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  padding: 2.75rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.successIconCircle {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #e8f5e9;
+  color: #2e7d32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.successTitle {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #1b5e20;
+  margin-bottom: 0.4rem;
+}
+
+.successName {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary, #944535);
+  margin-bottom: 0.75rem;
+}
+
+.successMessage {
+  font-size: 0.93rem;
+  color: #454652;
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 1.75rem;
+}
+
+.successSummaryBox {
+  width: 100%;
+  background: #fdf8f2;
+  border: 1px solid rgba(148, 69, 53, 0.16);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.successSummaryTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--primary, #944535);
+  margin-bottom: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.successSummaryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.86rem;
+  color: #3b3a40;
+}
+
+.successActionRow {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btnBackHome {
+  background: var(--primary, #944535);
+  color: #ffffff;
+  padding: 0.75rem 1.6rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.2s ease;
+}
+
+.btnBackHome:hover {
+  background: var(--primary-hover, #7a382a);
+}
+
+.btnNewForm {
+  background: transparent;
+  color: #454652;
+  border: 1.5px solid #dcdce0;
+  padding: 0.75rem 1.4rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btnNewForm:hover {
+  background: #f0f0f4;
+  border-color: #bbbbc5;
+}
+
+/* ── School Footer ──────────────────────────────────────────── */
+.footer {
+  margin-top: auto;
+  background: #ffffff;
+  border-top: 1px solid var(--border-color, #eaeaea);
+  padding: 2rem 5%;
+}
+
+.footerInner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--text-muted, #555555);
+}
+
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.footerBrandName {
+  font-weight: 800;
+  color: var(--primary, #944535);
+}
+
+.footerLinks {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.footerLink {
+  color: var(--text-muted, #555555);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerLink:hover {
+  color: var(--primary, #944535);
+}
+
+/* ── Responsive Queries ─────────────────────────────────────── */
+@media (max-width: 860px) {
+  .timelineGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .requirementsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .formBody {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .formBanner {
+    padding: 1.25rem 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 2.75rem 4% 3rem;
+  }
+
+  .heroTitle {
+    font-size: 1.85rem;
+  }
+
+  .mainContent {
+    padding: 1.75rem 4% 3.5rem;
+    gap: 2.25rem;
+  }
+
+  .footerInner {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+}

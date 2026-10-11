@@ -1,13 +1,25 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import styles from "./Header.module.css";
 
-const navLinks = [
+type NavChild = { label: string; href: string };
+type NavLink =
+  | { label: string; href: string; children?: undefined }
+  | { label: string; href?: undefined; children: NavChild[] };
+
+const navLinks: NavLink[] = [
   { label: "Beranda", href: "/" },
   { label: "Profil", href: "/profil" },
   { label: "Layanan", href: "/layanan-publik" },
-  { label: "Ekskul", href: "/ekstrakurikuler" },
+  {
+    label: "Ekskul",
+    children: [
+      { label: "Ekstrakurikuler", href: "/ekstrakurikuler" },
+      { label: "Daftar Ekskul", href: "/ekstrakurikuler/daftar" },
+      { label: "Pendaftaran OSIS", href: "/osis/daftar" },
+    ],
+  },
   { label: "Kokurikuler", href: "/kokurikuler" },
   { label: "Alumni", href: "/alumni" },
   { label: "Prestasi", href: "/#prestasi" },
@@ -48,15 +60,45 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
 
         {/* Desktop Nav */}
         <nav className={styles.nav}>
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={activePage === link.label ? styles.navActive : ""}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.children ? (
+              <div key={link.label} className={styles.dropdown}>
+                <button
+                  className={`${styles.dropdownTrigger} ${
+                    link.children.some((c) => activePage === c.label)
+                      ? styles.navActive
+                      : ""
+                  }`}
+                  aria-haspopup="true"
+                >
+                  {link.label}
+                  <span className={styles.dropdownArrow} aria-hidden="true">▾</span>
+                </button>
+                <div className={styles.dropdownMenu} role="menu">
+                  {link.children.map((child) => (
+                    <a
+                      key={child.href}
+                      href={child.href}
+                      className={`${styles.dropdownItem} ${
+                        activePage === child.label ? styles.dropdownItemActive : ""
+                      }`}
+                      role="menuitem"
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className={activePage === link.label ? styles.navActive : ""}
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <a href="/spmb" className={`${styles.navCta} ${activePage === "SPMB" ? styles.navCtaActive : ""}`}>
             Info SPMB
           </a>
@@ -81,43 +123,106 @@ export default function Header({ activePage = "" }: { activePage?: string }) {
       )}
 
       {/* Mobile Drawer */}
-      <nav className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}>
-        <div className={styles.mobileMenuHeader}>
-          <div className={styles.mobileLogoArea}>
-            <Image src="/logo_smpn5.png" alt="Logo" width={40} height={40} />
-            <div>
-              <span className={styles.schoolName}>SMPN 5 KLATEN</span>
-              <span className={styles.schoolTagline}>Generasi JUARA</span>
-            </div>
-          </div>
-          <button className={styles.closeBtn} onClick={() => setMenuOpen(false)} aria-label="Tutup Menu">✕</button>
-        </div>
+      <MobileDrawer
+        navLinks={navLinks}
+        activePage={activePage}
+        menuOpen={menuOpen}
+        onClose={() => setMenuOpen(false)}
+      />
+    </>
+  );
+}
 
-        <div className={styles.mobileLinks}>
-          {navLinks.map((link) => (
+/** Drawer mobile dengan accordion untuk item ber-children */
+function MobileDrawer({
+  navLinks,
+  activePage,
+  menuOpen,
+  onClose,
+}: {
+  navLinks: NavLink[];
+  activePage: string;
+  menuOpen: boolean;
+  onClose: () => void;
+}) {
+  const [expandedLabel, setExpandedLabel] = useState<string | null>(null);
+
+  return (
+    <nav className={`${styles.mobileMenu} ${menuOpen ? styles.mobileMenuOpen : ""}`}>
+      <div className={styles.mobileMenuHeader}>
+        <div className={styles.mobileLogoArea}>
+          <Image src="/logo_smpn5.png" alt="Logo" width={40} height={40} />
+          <div>
+            <span className={styles.schoolName}>SMPN 5 KLATEN</span>
+            <span className={styles.schoolTagline}>Generasi JUARA</span>
+          </div>
+        </div>
+        <button className={styles.closeBtn} onClick={onClose} aria-label="Tutup Menu">✕</button>
+      </div>
+
+      <div className={styles.mobileLinks}>
+        {navLinks.map((link) =>
+          link.children ? (
+            <div key={link.label}>
+              <button
+                className={`${styles.mobileLink} ${styles.mobileLinkAccordion} ${
+                  link.children.some((c) => activePage === c.label)
+                    ? styles.mobileLinkActive
+                    : ""
+                }`}
+                onClick={() =>
+                  setExpandedLabel((prev) => prev === link.label ? null : link.label)
+                }
+                aria-expanded={expandedLabel === link.label}
+              >
+                {link.label}
+                <span
+                  className={styles.mobileLinkArrow}
+                  style={{ transform: expandedLabel === link.label ? "rotate(90deg)" : "none" }}
+                >
+                  →
+                </span>
+              </button>
+              {expandedLabel === link.label && (
+                <div className={styles.mobileSubLinks}>
+                  {link.children.map((child) => (
+                    <a
+                      key={child.href}
+                      href={child.href}
+                      className={`${styles.mobileSubLink} ${
+                        activePage === child.label ? styles.mobileLinkActive : ""
+                      }`}
+                      onClick={onClose}
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
             <a
               key={link.href}
               href={link.href}
-              className={`${styles.mobileLink} ${activePage === link.label ? styles.mobileLinkActive : ""}`}
-              onClick={() => setMenuOpen(false)}
+              className={`${styles.mobileLink} ${
+                activePage === link.label ? styles.mobileLinkActive : ""
+              }`}
+              onClick={onClose}
             >
               {link.label}
               <span className={styles.mobileLinkArrow}>→</span>
             </a>
-          ))}
-          <a
-            href="/spmb"
-            className={styles.mobileCta}
-            onClick={() => setMenuOpen(false)}
-          >
-            Daftar SPMB Sekarang
-          </a>
-        </div>
+          )
+        )}
+        <a href="/spmb" className={styles.mobileCta} onClick={onClose}>
+          Daftar SPMB Sekarang
+        </a>
+      </div>
 
-        <div className={styles.mobileFooter}>
-          <p>Jl. Kendali Sodo, Jomboran, Klaten Tengah</p>
-        </div>
-      </nav>
-    </>
+      <div className={styles.mobileFooter}>
+        <p>Jl. Kendali Sodo, Jomboran, Klaten Tengah</p>
+      </div>
+    </nav>
   );
 }
+
