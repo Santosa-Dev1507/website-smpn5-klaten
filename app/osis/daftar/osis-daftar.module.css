@@ -1,6 +1,11 @@
 /* ===================================================================
+   Hallmark · macrostructure: Long-Document · genre: editorial
+   pre-emit critique: P5 H5 E5 S5 R5 V5
+   contrast: pass (40–41) · nav: inherited · footer: Ft2-inline
+   honest: pass (46) · chrome: pass (47) · mobile: pass (34,49–57)
+   ===================================================================
    PENDAFTARAN OSIS — SMP NEGERI 5 KLATEN
-   Brand Tokens: Marun (#944535) · Emas (#FAD6A6 / #e8b86d) · Ivory (#fdf8f2)
+   Brand Tokens: Marun (#944535) · Emas (#FAD6A6) · Ivory (#fdf8f2)
    Design Philosophy: Anti-AI-Slop, Prestigious School Institutional UI
    =================================================================== */
 
@@ -10,12 +15,34 @@
   color: var(--text-main, #0D0C13);
   display: flex;
   flex-direction: column;
+
+  /* Local Design Tokens */
+  --osis-primary: #944535;
+  --osis-primary-hover: #7a382a;
+  --osis-gold: #FAD6A6;
+  --osis-gold-dark: #b45309;
+  --osis-paper: #ffffff;
+  --osis-surface: #fbfbfd;
+  --osis-surface-warm: #fdf8f2;
+  --osis-surface-notice: #fff8f0;
+  --osis-border: #e4e4e8;
+  --osis-border-light: #f0f0f4;
+  --osis-border-warm: #fad6a6;
+  --osis-text-main: #0D0C13;
+  --osis-text-body: #374151;
+  --osis-text-muted: #555562;
+  --osis-text-helper: #767683;
+  --osis-error: #b91c1c;
+  --osis-error-bg: #fff5f5;
+  --osis-error-border: #fecaca;
+  --osis-success: #1b5e20;
+  --osis-success-bg: #e8f5e9;
 }
 
 /* ── Breadcrumb Bar ─────────────────────────────────────────── */
 .breadcrumbBar {
-  background: #ffffff;
-  border-bottom: 1px solid var(--border-color, #eaeaea);
+  background: var(--osis-paper);
+  border-bottom: 1px solid var(--osis-border);
   padding: 0.75rem 5%;
 }
 
@@ -26,47 +53,43 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.85rem;
-  color: #666666;
+  color: var(--osis-text-helper);
   flex-wrap: wrap;
 }
 
 .breadcrumbLink {
-  color: #555555;
+  color: var(--osis-text-muted);
   text-decoration: none;
   transition: color 0.2s ease;
+  border-radius: 4px;
 }
 
 .breadcrumbLink:hover {
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
+}
+
+.breadcrumbLink:focus-visible {
+  outline: 2px solid var(--osis-primary);
+  outline-offset: 2px;
 }
 
 .breadcrumbSep {
-  color: #bbbbbb;
+  color: var(--osis-border);
   font-size: 0.75rem;
 }
 
 .breadcrumbCurrent {
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
   font-weight: 600;
 }
 
-/* ── Hero Section ───────────────────────────────────────────── */
+/* ── Hero Section (Prestigious Institutional Layout) ────────── */
 .hero {
   position: relative;
   background: linear-gradient(135deg, #782e21 0%, #944535 55%, #6a2418 100%);
-  color: #ffffff;
-  padding: 3.75rem 5% 4.25rem;
+  color: var(--osis-paper);
+  padding: 3.5rem 5% 4rem;
   overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 70% 60% at 85% 20%, rgba(250, 214, 166, 0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0, 0, 0, 0.2) 0%, transparent 60%);
-  pointer-events: none;
 }
 
 .heroInner {
@@ -75,51 +98,59 @@
   max-width: 1100px;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
+  justify-content: space-between;
+  gap: 2.5rem;
 }
 
-.heroLogoWrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.25rem;
-}
-
-.heroLogo {
-  width: 76px;
-  height: 76px;
-  background: #ffffff;
-  border-radius: 50%;
-  padding: 6px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  object-fit: contain;
-}
-
-.heroTitle {
-  font-size: clamp(2rem, 4.5vw, 2.85rem);
-  font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.025em;
-  color: #ffffff;
+.heroText {
+  flex: 1;
+  min-width: 0;
 }
 
 .heroSubtitle {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  font-weight: 600;
-  color: var(--secondary, #FAD6A6);
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.01em;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--osis-gold);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.025em;
+  color: var(--osis-paper);
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .heroDescription {
-  max-width: 680px;
+  max-width: 58ch;
   font-size: 0.98rem;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.9);
-  margin: 0.5rem auto 0;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+}
+
+.heroLogoWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heroLogo {
+  width: 88px;
+  height: 88px;
+  background: var(--osis-paper);
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.28);
+  object-fit: contain;
 }
 
 /* ── Content Layout ─────────────────────────────────────────── */
@@ -144,7 +175,7 @@
   align-items: center;
   gap: 0.4rem;
   background: rgba(148, 69, 53, 0.08);
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
   font-weight: 700;
   font-size: 0.8rem;
   padding: 0.3rem 0.85rem;
@@ -158,31 +189,32 @@
 .sectionTitle {
   font-size: clamp(1.4rem, 3vw, 1.85rem);
   font-weight: 800;
-  color: var(--text-main, #0D0C13);
+  color: var(--osis-text-main);
   margin-bottom: 0.45rem;
   letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .sectionSubtitle {
   font-size: 0.95rem;
-  color: var(--text-muted, #555555);
-  max-width: 620px;
+  color: var(--osis-text-muted);
+  max-width: 60ch;
   margin: 0 auto;
   line-height: 1.55;
 }
 
-/* ── Timeline Section ───────────────────────────────────────── */
+/* ── Timeline Section (No Side/Top Stripes) ─────────────────── */
 .timelineGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
 .timelineCard {
-  background: #ffffff;
+  background: var(--osis-paper);
   border-radius: 16px;
-  border: 1px solid var(--border-color, #eaeaea);
-  border-top: 4px solid var(--card-accent, #944535);
+  border: 1px solid var(--osis-border);
   padding: 1.5rem;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   display: flex;
@@ -207,8 +239,8 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--card-accent, #944535);
-  color: #ffffff;
+  background: var(--osis-primary);
+  color: var(--osis-paper);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,16 +254,16 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 50px;
-  background: var(--badge-bg, rgba(148, 69, 53, 0.1));
-  color: var(--badge-color, #944535);
+  background: var(--badge-bg, rgba(148, 69, 53, 0.08));
+  color: var(--badge-color, var(--osis-primary));
 }
 
 .timelineStageName {
   font-size: 1.12rem;
   font-weight: 800;
-  color: var(--text-main, #0D0C13);
+  color: var(--osis-text-main);
   margin-bottom: 0.25rem;
 }
 
@@ -241,7 +273,7 @@
   gap: 0.35rem;
   font-size: 0.86rem;
   font-weight: 700;
-  color: var(--card-accent, #944535);
+  color: var(--osis-primary);
   margin-bottom: 1rem;
 }
 
@@ -252,7 +284,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  border-top: 1px solid #f2f2f4;
+  border-top: 1px solid var(--osis-border-light);
   padding-top: 0.85rem;
   margin-top: auto;
 }
@@ -262,12 +294,12 @@
   align-items: flex-start;
   gap: 0.5rem;
   font-size: 0.84rem;
-  color: #454652;
+  color: var(--osis-text-body);
   line-height: 1.45;
 }
 
 .timelineCheckIcon {
-  color: var(--card-accent, #944535);
+  color: var(--osis-primary);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -275,15 +307,15 @@
 /* ── Syarat & Kualifikasi Section ───────────────────────────── */
 .requirementsGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
   margin-bottom: 1.5rem;
 }
 
 .reqCard {
-  background: #ffffff;
+  background: var(--osis-paper);
   border-radius: 16px;
-  border: 1px solid var(--border-color, #eaeaea);
+  border: 1px solid var(--osis-border);
   padding: 1.65rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
@@ -294,7 +326,7 @@
   gap: 0.65rem;
   margin-bottom: 1.15rem;
   padding-bottom: 0.85rem;
-  border-bottom: 1px solid #f0f0f2;
+  border-bottom: 1px solid var(--osis-border-light);
 }
 
 .reqIconCircle {
@@ -302,7 +334,7 @@
   height: 36px;
   border-radius: 10px;
   background: rgba(148, 69, 53, 0.08);
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -312,7 +344,7 @@
 .reqCardTitle {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--text-main, #0D0C13);
+  color: var(--osis-text-main);
 }
 
 .reqList {
@@ -329,12 +361,12 @@
   align-items: flex-start;
   gap: 0.6rem;
   font-size: 0.88rem;
-  color: #374151;
+  color: var(--osis-text-body);
   line-height: 1.5;
 }
 
 .reqItemIcon {
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
   flex-shrink: 0;
   margin-top: 3px;
 }
@@ -342,19 +374,19 @@
 .reqSubNote {
   display: block;
   font-size: 0.8rem;
-  color: #767683;
-  margin-top: 0.2rem;
-  font-style: italic;
+  color: var(--osis-text-helper);
+  margin-top: 0.25rem;
+  font-style: normal;
+  line-height: 1.4;
 }
 
-/* ── Dokumen Fisik Notice Box ───────────────────────────────── */
+/* ── Dokumen Fisik Notice Box (No Asymmetric Side Stripe) ──── */
 .docNoticeBox {
-  background: #fff8f0;
-  border: 1.5px solid #fad6a6;
-  border-left: 5px solid var(--primary, #944535);
+  background: var(--osis-surface-notice);
+  border: 1px solid var(--osis-border-warm);
   border-radius: 14px;
   padding: 1.35rem 1.5rem;
-  box-shadow: 0 4px 16px rgba(148, 69, 53, 0.05);
+  box-shadow: 0 4px 16px rgba(148, 69, 53, 0.04);
 }
 
 .docNoticeHeader {
@@ -364,22 +396,27 @@
   margin-bottom: 0.5rem;
 }
 
+.docNoticeHeaderIcon {
+  color: var(--osis-primary);
+  flex-shrink: 0;
+}
+
 .docNoticeTitle {
   font-size: 0.98rem;
   font-weight: 800;
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
 }
 
 .docNoticeLead {
   font-size: 0.88rem;
-  color: #3b3a40;
+  color: var(--osis-text-body);
   line-height: 1.5;
   margin-bottom: 0.75rem;
 }
 
 .docNoticeRecipient {
   font-weight: 800;
-  color: #0D0C13;
+  color: var(--osis-text-main);
   background: rgba(250, 214, 166, 0.35);
   padding: 0.15rem 0.45rem;
   border-radius: 4px;
@@ -399,32 +436,32 @@
   align-items: flex-start;
   gap: 0.5rem;
   font-size: 0.84rem;
-  color: #454652;
+  color: var(--osis-text-body);
   line-height: 1.4;
-  background: #ffffff;
+  background: var(--osis-paper);
   padding: 0.6rem 0.85rem;
   border-radius: 8px;
   border: 1px solid rgba(250, 214, 166, 0.7);
 }
 
 .docNoticeItemIcon {
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 /* ── Form Section ───────────────────────────────────────────── */
 .formWrapper {
-  background: #ffffff;
+  background: var(--osis-paper);
   border-radius: 20px;
-  border: 1px solid var(--border-color, #eaeaea);
+  border: 1px solid var(--osis-border);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
 
 .formBanner {
-  background: var(--primary, #944535);
-  color: #ffffff;
+  background: var(--osis-primary);
+  color: var(--osis-paper);
   padding: 1.5rem 2rem;
   display: flex;
   align-items: center;
@@ -441,7 +478,7 @@
 
 .formBannerDesc {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .formBannerBadge {
@@ -451,7 +488,7 @@
   border-radius: 50px;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--secondary, #FAD6A6);
+  color: var(--osis-gold);
   white-space: nowrap;
 }
 
@@ -468,7 +505,7 @@
   align-items: center;
   gap: 0.6rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1.5px solid #f0f0f4;
+  border-bottom: 1.5px solid var(--osis-border-light);
   margin-top: 0.5rem;
 }
 
@@ -476,8 +513,8 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: var(--primary, #944535);
-  color: #ffffff;
+  background: var(--osis-primary);
+  color: var(--osis-paper);
   font-size: 0.75rem;
   font-weight: 800;
   display: flex;
@@ -489,12 +526,12 @@
 .formSectionHeaderText {
   font-size: 0.96rem;
   font-weight: 700;
-  color: var(--text-main, #0D0C13);
+  color: var(--osis-text-main);
 }
 
 .formRow {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
@@ -507,14 +544,14 @@
 .formLabel {
   font-size: 0.88rem;
   font-weight: 600;
-  color: #2c2d36;
+  color: var(--osis-text-main);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .requiredMark {
-  color: #c92a2a;
+  color: var(--osis-error);
   margin-left: 2px;
 }
 
@@ -524,13 +561,14 @@
   width: 100%;
   padding: 0.75rem 0.95rem;
   font-size: 0.92rem;
-  color: var(--text-main, #0D0C13);
-  background: #fbfbfd;
-  border: 1.5px solid #dcdce0;
+  color: var(--osis-text-main);
+  background: var(--osis-surface);
+  border: 1.5px solid var(--osis-border);
   border-radius: 10px;
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
   box-sizing: border-box;
 }
 
@@ -543,14 +581,16 @@
 .formInput:focus,
 .formSelect:focus,
 .formTextarea:focus {
-  border-color: var(--primary, #944535);
+  border-color: var(--osis-primary);
+  outline: 2px solid var(--osis-primary);
+  outline-offset: 1px;
   box-shadow: 0 0 0 3px rgba(148, 69, 53, 0.12);
-  background: #ffffff;
+  background: var(--osis-paper);
 }
 
 .formInput::placeholder,
 .formTextarea::placeholder {
-  color: #9999a4;
+  color: var(--osis-text-helper);
 }
 
 .formTextarea {
@@ -561,7 +601,7 @@
 
 .formHelper {
   font-size: 0.78rem;
-  color: #767683;
+  color: var(--osis-text-helper);
   margin-top: 0.1rem;
 }
 
@@ -571,24 +611,24 @@
   font-weight: 600;
   padding: 0.15rem 0.5rem;
   border-radius: 50px;
-  background: #f0f0f3;
-  color: #555562;
+  background: var(--osis-border-light);
+  color: var(--osis-text-muted);
 }
 
 .counterPillValid {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--osis-success-bg);
+  color: var(--osis-success);
 }
 
 .counterPillLimit {
-  background: #ffebee;
-  color: #c62828;
+  background: var(--osis-error-bg);
+  color: var(--osis-error);
 }
 
 /* ── Agreement Box ──────────────────────────────────────────── */
 .agreementBox {
-  background: #fcf9f5;
-  border: 1.5px solid #ebd8bf;
+  background: var(--osis-surface-warm);
+  border: 1.5px solid var(--osis-border-warm);
   border-radius: 12px;
   padding: 1.15rem 1.25rem;
   margin-top: 0.5rem;
@@ -599,7 +639,7 @@
   align-items: flex-start;
   gap: 0.75rem;
   font-size: 0.88rem;
-  color: #2c2d36;
+  color: var(--osis-text-main);
   cursor: pointer;
   line-height: 1.55;
 }
@@ -608,16 +648,22 @@
   width: 20px;
   height: 20px;
   margin-top: 2px;
-  accent-color: var(--primary, #944535);
+  accent-color: var(--osis-primary);
   flex-shrink: 0;
   cursor: pointer;
+  border-radius: 4px;
+}
+
+.agreementCheckbox:focus-visible {
+  outline: 2px solid var(--osis-primary);
+  outline-offset: 2px;
 }
 
 /* ── Error Banner ───────────────────────────────────────────── */
 .errorBanner {
-  background: #fff5f5;
-  border: 1.5px solid #fecaca;
-  color: #b91c1c;
+  background: var(--osis-error-bg);
+  border: 1.5px solid var(--osis-error-border);
+  color: var(--osis-error);
   border-radius: 10px;
   padding: 0.9rem 1.1rem;
   font-size: 0.88rem;
@@ -642,8 +688,8 @@
 }
 
 .submitBtn {
-  background: var(--primary, #944535);
-  color: #ffffff;
+  background: var(--osis-primary);
+  color: var(--osis-paper);
   padding: 0.95rem 2.5rem;
   border-radius: 50px;
   font-size: 1rem;
@@ -660,13 +706,18 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--primary-hover, #7a382a);
+  background: var(--osis-primary-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(148, 69, 53, 0.34);
 }
 
 .submitBtn:active:not(:disabled) {
-  transform: translateY(0);
+  transform: translateY(1px);
+}
+
+.submitBtn:focus-visible {
+  outline: 2.5px solid var(--osis-primary);
+  outline-offset: 3px;
 }
 
 .submitBtn:disabled {
@@ -679,10 +730,15 @@
 
 .formSecurityNote {
   font-size: 0.78rem;
-  color: #767683;
+  color: var(--osis-text-helper);
   display: flex;
   align-items: center;
   gap: 0.35rem;
+}
+
+.formSecurityNoteIcon {
+  color: var(--osis-primary);
+  flex-shrink: 0;
 }
 
 /* ── Loading State ──────────────────────────────────────────── */
@@ -701,7 +757,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid rgba(148, 69, 53, 0.15);
-  border-top-color: var(--primary, #944535);
+  border-top-color: var(--osis-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -715,12 +771,12 @@
 .loadingText {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--text-main, #0D0C13);
+  color: var(--osis-text-main);
 }
 
 .loadingSub {
   font-size: 0.86rem;
-  color: var(--text-muted, #555555);
+  color: var(--osis-text-muted);
 }
 
 /* ── Success Screen ─────────────────────────────────────────── */
@@ -731,9 +787,9 @@
 }
 
 .successCard {
-  background: #ffffff;
+  background: var(--osis-paper);
   border-radius: 20px;
-  border: 1px solid var(--border-color, #eaeaea);
+  border: 1px solid var(--osis-border);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
   padding: 2.75rem 2rem;
   text-align: center;
@@ -746,8 +802,8 @@
   width: 68px;
   height: 68px;
   border-radius: 50%;
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: var(--osis-success-bg);
+  color: var(--osis-success);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -757,20 +813,20 @@
 .successTitle {
   font-size: 1.75rem;
   font-weight: 800;
-  color: #1b5e20;
+  color: var(--osis-success);
   margin-bottom: 0.4rem;
 }
 
 .successName {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
   margin-bottom: 0.75rem;
 }
 
 .successMessage {
   font-size: 0.93rem;
-  color: #454652;
+  color: var(--osis-text-body);
   line-height: 1.6;
   max-width: 520px;
   margin-bottom: 1.75rem;
@@ -778,7 +834,7 @@
 
 .successSummaryBox {
   width: 100%;
-  background: #fdf8f2;
+  background: var(--osis-surface-warm);
   border: 1px solid rgba(148, 69, 53, 0.16);
   border-radius: 12px;
   padding: 1.25rem;
@@ -789,7 +845,7 @@
 .successSummaryTitle {
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
   margin-bottom: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -803,7 +859,7 @@
   flex-direction: column;
   gap: 0.5rem;
   font-size: 0.86rem;
-  color: #3b3a40;
+  color: var(--osis-text-body);
 }
 
 .successActionRow {
@@ -814,8 +870,8 @@
 }
 
 .btnBackHome {
-  background: var(--primary, #944535);
-  color: #ffffff;
+  background: var(--osis-primary);
+  color: var(--osis-paper);
   padding: 0.75rem 1.6rem;
   border-radius: 50px;
   font-weight: 700;
@@ -824,35 +880,55 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .btnBackHome:hover {
-  background: var(--primary-hover, #7a382a);
+  background: var(--osis-primary-hover);
+  transform: translateY(-1px);
+}
+
+.btnBackHome:active {
+  transform: translateY(1px);
+}
+
+.btnBackHome:focus-visible {
+  outline: 2.5px solid var(--osis-primary);
+  outline-offset: 3px;
 }
 
 .btnNewForm {
   background: transparent;
-  color: #454652;
-  border: 1.5px solid #dcdce0;
+  color: var(--osis-text-body);
+  border: 1.5px solid var(--osis-border);
   padding: 0.75rem 1.4rem;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .btnNewForm:hover {
-  background: #f0f0f4;
+  background: var(--osis-border-light);
   border-color: #bbbbc5;
+  transform: translateY(-1px);
+}
+
+.btnNewForm:active {
+  transform: translateY(1px);
+}
+
+.btnNewForm:focus-visible {
+  outline: 2.5px solid var(--osis-primary);
+  outline-offset: 3px;
 }
 
 /* ── School Footer ──────────────────────────────────────────── */
 .footer {
   margin-top: auto;
-  background: #ffffff;
-  border-top: 1px solid var(--border-color, #eaeaea);
+  background: var(--osis-paper);
+  border-top: 1px solid var(--osis-border);
   padding: 2rem 5%;
 }
 
@@ -865,7 +941,7 @@
   gap: 1.25rem;
   flex-wrap: wrap;
   font-size: 0.85rem;
-  color: var(--text-muted, #555555);
+  color: var(--osis-text-muted);
 }
 
 .footerBrand {
@@ -876,7 +952,7 @@
 
 .footerBrandName {
   font-weight: 800;
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
 }
 
 .footerLinks {
@@ -886,17 +962,47 @@
 }
 
 .footerLink {
-  color: var(--text-muted, #555555);
+  color: var(--osis-text-muted);
   text-decoration: none;
   transition: color 0.2s ease;
+  border-radius: 4px;
 }
 
 .footerLink:hover {
-  color: var(--primary, #944535);
+  color: var(--osis-primary);
+}
+
+.footerLink:focus-visible {
+  outline: 2px solid var(--osis-primary);
+  outline-offset: 2px;
+}
+
+/* ── Accessibility: Reduced Motion Fallback ─────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .loadingSpinner {
+    animation: none;
+    border-top-color: var(--osis-primary);
+  }
+  .timelineCard,
+  .submitBtn,
+  .btnBackHome,
+  .btnNewForm,
+  .breadcrumbLink,
+  .footerLink {
+    transition: none !important;
+    transform: none !important;
+  }
 }
 
 /* ── Responsive Queries ─────────────────────────────────────── */
 @media (max-width: 860px) {
+  .heroInner {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.5rem;
+  }
+
   .timelineGrid {
     grid-template-columns: 1fr;
   }
@@ -920,11 +1026,16 @@
 
 @media (max-width: 600px) {
   .hero {
-    padding: 2.75rem 4% 3rem;
+    padding: 2.5rem 4% 2.75rem;
   }
 
   .heroTitle {
     font-size: 1.85rem;
+  }
+
+  .heroLogo {
+    width: 76px;
+    height: 76px;
   }
 
   .mainContent {

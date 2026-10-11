@@ -18,7 +18,6 @@ import {
   ShieldCheck,
   ChevronRight,
   Send,
-  HelpCircle,
   Home,
   Check,
 } from "lucide-react";
@@ -33,7 +32,7 @@ const TIMELINE = [
     stage: "Pendaftaran",
     dates: "12–14 Oktober 2026",
     accent: "#944535",
-    badgeBg: "rgba(148, 69, 53, 0.1)",
+    badgeBg: "rgba(148, 69, 53, 0.08)",
     badgeColor: "#944535",
     statusText: "Tahap 1",
     items: [
@@ -46,9 +45,9 @@ const TIMELINE = [
     step: 2,
     stage: "Seleksi & Wawancara",
     dates: "19–21 Oktober 2026",
-    accent: "#2d6a4f",
-    badgeBg: "rgba(45, 106, 79, 0.1)",
-    badgeColor: "#2d6a4f",
+    accent: "#782e21",
+    badgeBg: "rgba(120, 46, 33, 0.08)",
+    badgeColor: "#782e21",
     statusText: "Tahap 2",
     items: [
       "Penyampaian visi & misi bakal calon",
@@ -61,7 +60,7 @@ const TIMELINE = [
     stage: "Pemilihan & Orasi",
     dates: "27 Oktober 2026",
     accent: "#b45309",
-    badgeBg: "rgba(180, 83, 9, 0.1)",
+    badgeBg: "rgba(180, 83, 9, 0.08)",
     badgeColor: "#b45309",
     statusText: "Tahap 3",
     items: [
@@ -259,28 +258,29 @@ export default function OsisDaftarClient() {
       {/* ── Hero Section (School Brand Identity) ── */}
       <section className={styles.hero} aria-labelledby="hero-title">
         <div className={styles.heroInner}>
+          <div className={styles.heroText}>
+            <p className={styles.heroSubtitle}>
+              Tahun Ajaran {TAHUN_AJARAN}
+            </p>
+            <h1 id="hero-title" className={styles.heroTitle}>
+              Pendaftaran Calon Pengurus OSIS
+            </h1>
+            <p className={styles.heroDescription}>
+              Bergabunglah dengan Organisasi Siswa Intra Sekolah (OSIS) SMP Negeri 5
+              Klaten. Wujudkan ide kreatif, asah kepemimpinan, dan bangun
+              lingkungan sekolah yang berprestasi dan berkarakter.
+            </p>
+          </div>
           <div className={styles.heroLogoWrap}>
             <Image
               src="/logo_smpn5.png"
               alt="Logo Resmi SMPN 5 Klaten"
-              width={76}
-              height={76}
+              width={88}
+              height={88}
               className={styles.heroLogo}
               priority
             />
           </div>
-
-          <h1 id="hero-title" className={styles.heroTitle}>
-            Pendaftaran Calon Pengurus OSIS
-          </h1>
-          <p className={styles.heroSubtitle}>
-            Tahun Ajaran {TAHUN_AJARAN}
-          </p>
-          <p className={styles.heroDescription}>
-            Bergabunglah dengan Organisasi Siswa Intra Sekolah (OSIS) SMP Negeri 5
-            Klaten. Wujudkan ide kreatif, asah kepemimpinan, dan bangun
-            lingkungan sekolah yang berprestasi dan berkarakter.
-          </p>
         </div>
       </section>
 
@@ -327,7 +327,7 @@ export default function OsisDaftarClient() {
 
             <div className={styles.docNoticeBox} style={{ width: "100%", marginBottom: "1.75rem", textAlign: "left" }}>
               <div className={styles.docNoticeHeader}>
-                <ClipboardList size={18} color="#944535" aria-hidden />
+                <ClipboardList size={18} className={styles.docNoticeHeaderIcon} aria-hidden />
                 <h4 className={styles.docNoticeTitle}>
                   Langkah Penting Berikutnya:
                 </h4>
@@ -505,7 +505,7 @@ export default function OsisDaftarClient() {
             {/* Dokumen Fisik Notice */}
             <div className={styles.docNoticeBox} role="note">
               <div className={styles.docNoticeHeader}>
-                <ClipboardList size={20} color="#944535" aria-hidden />
+                <ClipboardList size={20} className={styles.docNoticeHeaderIcon} aria-hidden />
                 <h3 className={styles.docNoticeTitle}>
                   Persyaratan Dokumen Fisik
                 </h3>
@@ -832,7 +832,7 @@ export default function OsisDaftarClient() {
                   Daftar Sekarang
                 </button>
                 <span className={styles.formSecurityNote}>
-                  <ShieldCheck size={14} color="#944535" aria-hidden />
+                  <ShieldCheck size={14} className={styles.formSecurityNoteIcon} aria-hidden />
                   Data pendaftaran terenkripsi dan hanya digunakan untuk keperluan seleksi resmi sekolah.
                 </span>
               </div>
@@ -864,9 +864,6 @@ export default function OsisDaftarClient() {
             </Link>
             <Link href="/profil" className={styles.footerLink}>
               Profil
-            </Link>
-            <Link href="/ekstrakurikuler/admin" className={styles.footerLink}>
-              Admin
             </Link>
           </div>
 
