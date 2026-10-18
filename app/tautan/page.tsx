@@ -14,11 +14,13 @@ const quickLinks = [
 ];
 
 const pembelajaran = [
-  { icon: "💻", name: "E-Learning ESPEMA", desc: "Platform pembelajaran digital resmi SMP Negeri 5 Klaten.", href: "#", color: "#944535" },
+  { icon: "📝", name: "Hasil Try Out TKA", desc: "Portal pengumuman hasil simulasi Try Out TKA 1 s.d. 4.", href: "/tryout-tka", color: "#944535" },
+  { icon: "📊", name: "Hasil Asesmen", desc: "Portal resmi nilai asesmen sumatif siswa.", href: "/hasil-asesmen", color: "#1A56A0" },
+  { icon: "💻", name: "E-Learning ESPEMA", desc: "Platform pembelajaran digital resmi SMP Negeri 5 Klaten.", href: "#", color: "#2D7D46" },
   { icon: "🎓", name: "Google Classroom", desc: "Ruang kelas digital untuk penugasan dan materi pelajaran.", href: "https://classroom.google.com", color: "#1A73E8" },
   { icon: "📝", name: "AKM Online", desc: "Asesmen Kompetensi Minimum — Pusat Asesmen Kemdikbud.", href: "https://akm.kemdikbud.go.id", color: "#F29900" },
-  { icon: "📚", name: "Bank Soal", desc: "Kumpulan soal dan materi evaluasi siswa.", href: "#", color: "#2D7D46" },
-  { icon: "🎮", name: "Quizizz", desc: "Kuis interaktif dan menyenangkan untuk belajar.", href: "https://quizizz.com", color: "#8854D0" },
+  { icon: "📚", name: "Bank Soal", desc: "Kumpulan soal dan materi evaluasi siswa.", href: "#", color: "#8854D0" },
+  { icon: "🎮", name: "Quizizz", desc: "Kuis interaktif dan menyenangkan untuk belajar.", href: "https://quizizz.com", color: "#C13584" },
   { icon: "🌐", name: "Khan Academy", desc: "Materi pembelajaran gratis berbagai mata pelajaran.", href: "https://id.khanacademy.org", color: "#14BF96" },
 ];
 

@@ -11,7 +11,14 @@ type NavLink =
 const navLinks: NavLink[] = [
   { label: "Beranda", href: "/" },
   { label: "Profil", href: "/profil" },
-  { label: "Layanan", href: "/layanan-publik" },
+  {
+    label: "Layanan",
+    children: [
+      { label: "Layanan Publik", href: "/layanan-publik" },
+      { label: "Hasil Try Out TKA", href: "/tryout-tka" },
+      { label: "Hasil Asesmen", href: "/hasil-asesmen" },
+    ],
+  },
   {
     label: "Ekskul",
     children: [

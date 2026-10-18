@@ -11,7 +11,11 @@ import AchievementsTab from "./components/AchievementsTab";
 // Menggunakan waktu target: 28 Juni 2026 23:59:00 WIB (UTC+7)
 const isSpmbOpen = new Date() >= new Date("2026-06-28T23:59:00+07:00");
 
-// ===== KONFIGURASI PENGUMUMAN HASIL TKA =====
+// ===== KONFIGURASI PENGUMUMAN HASIL TRY OUT TKA =====
+// Ubah ke `true` saat pengumuman hasil Try Out TKA dibuka
+const isTryOutTkaOpen = true;
+
+// ===== KONFIGURASI PENGUMUMAN HASIL TKA RESMI =====
 // Ubah ke `true` saat pengumuman hasil TKA dibuka, `false` saat sudah lewat masanya
 const isTkaOpen = false;
 
@@ -134,6 +138,16 @@ export default function Home() {
                 <strong>Pengumuman Kelulusan TA 2025/2026</strong>
               </div>
               <a href="/pengumuman" className={styles.btnAnnouncement}>Cek Kelulusan</a>
+            </div>
+          )}
+
+          {isTryOutTkaOpen && (
+            <div className={styles.announcementAlert}>
+              <div className={styles.announcementIcon}>📝</div>
+              <div className={styles.announcementText}>
+                <strong>Hasil Try Out 1 TKA Sudah Tersedia</strong>
+              </div>
+              <a href="/tryout-tka" className={styles.btnAnnouncement}>Cek Hasil Try Out</a>
             </div>
           )}
 
