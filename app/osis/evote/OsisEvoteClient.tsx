@@ -16,15 +16,28 @@ import {
 } from "lucide-react";
 
 // URL deployment Firebase Hosting
-const DEFAULT_EVOTE_URL =
+const PRODUCTION_EVOTE_URL =
   process.env.NEXT_PUBLIC_EVOTE_URL ||
   "https://evote-osis-smpn5klaten.web.app/";
 
 export default function OsisEvoteClient() {
+  const [evoteUrl, setEvoteUrl] = useState(PRODUCTION_EVOTE_URL);
   const [isLoading, setIsLoading] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [iframeKey, setIframeKey] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Jika sedang dijalankan di localhost, otomatis gunakan server e-vote lokal port 5173
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isLocal =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+      if (isLocal && !process.env.NEXT_PUBLIC_EVOTE_URL) {
+        setEvoteUrl("http://localhost:5173");
+      }
+    }
+  }, []);
 
   // Tangani tombol ESC untuk keluar dari fullscreen
   useEffect(() => {
@@ -103,7 +116,7 @@ export default function OsisEvoteClient() {
                 </button>
 
                 <a
-                  href={DEFAULT_EVOTE_URL}
+                  href={evoteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.btnAction}
@@ -144,7 +157,7 @@ export default function OsisEvoteClient() {
 
           <iframe
             key={iframeKey}
-            src={DEFAULT_EVOTE_URL}
+            src={evoteUrl}
             title="Bilik Suara E-Voting Calon Ketua OSIS SMP Negeri 5 Klaten"
             className={styles.iframe}
             onLoad={() => setIsLoading(false)}
