@@ -1,0 +1,268 @@
+.wrapper {
+  min-height: 100vh;
+  background-color: #faf9f6;
+  color: #1e293b;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: 1.5rem 1rem 3rem;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Breadcrumb & Header */
+.headerSection {
+  margin-bottom: 1.25rem;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.breadcrumbLink {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.breadcrumbLink:hover {
+  color: #944535;
+  text-decoration: underline;
+}
+
+.breadcrumbSep {
+  color: #cbd5e1;
+}
+
+.breadcrumbCurrent {
+  color: #944535;
+  font-weight: 600;
+}
+
+.bannerCard {
+  background: #ffffff;
+  border: 1px solid #e7e5dc;
+  border-left: 4px solid #944535;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.bannerInfo h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.02em;
+}
+
+.bannerInfo p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.bannerBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: #fdf7f6;
+  color: #944535;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid #f3dbd6;
+  margin-bottom: 0.375rem;
+}
+
+.badgePulse {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #944535;
+  border-radius: 9999px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btnAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.875rem;
+  min-height: 40px;
+  border-radius: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: #faf9f6;
+  color: #334155;
+  border: 1px solid #e7e5dc;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btnAction:hover {
+  background: #f4f2ec;
+  color: #944535;
+  border-color: #d1cfc7;
+}
+
+.btnPrimary {
+  background: #944535;
+  color: #ffffff;
+  border-color: #944535;
+}
+
+.btnPrimary:hover {
+  background: #782e21;
+  color: #ffffff;
+  border-color: #782e21;
+}
+
+/* Iframe Wrapper */
+.iframeContainer {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e7e5dc;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  height: calc(100vh - 230px);
+  min-height: 720px;
+  max-height: 960px;
+  transition: all 0.3s ease;
+}
+
+.iframeFullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100vh;
+  border-radius: 0;
+  z-index: 9999;
+  border: none;
+}
+
+.fullscreenExitBar {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  z-index: 10000;
+  background: rgba(30, 41, 59, 0.9);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.fullscreenExitBar:hover {
+  background: #000000;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Skeleton Loading State */
+.skeleton {
+  position: absolute;
+  inset: 0;
+  background: #faf9f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 10;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid #e7e5dc;
+  border-top-color: #944535;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Petunjuk Bantuan */
+.helpCard {
+  margin-top: 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e7e5dc;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.8125rem;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.helpCard strong {
+  color: #1e293b;
+}
+
+@media (max-width: 768px) {
+  .main {
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .bannerInfo h1 {
+    font-size: 1.25rem;
+  }
+
+  .iframeContainer {
+    height: calc(100dvh - 190px);
+    min-height: 600px;
+    border-radius: 1rem;
+  }
+}

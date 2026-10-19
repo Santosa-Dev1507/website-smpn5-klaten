@@ -25,6 +25,7 @@ const navLinks: NavLink[] = [
       { label: "Ekstrakurikuler", href: "/ekstrakurikuler" },
       { label: "Daftar Ekskul", href: "/ekstrakurikuler/daftar" },
       { label: "Pendaftaran OSIS", href: "/osis/daftar" },
+      { label: "E-Voting OSIS", href: "/osis/evote" },
     ],
   },
   { label: "Kokurikuler", href: "/kokurikuler" },
