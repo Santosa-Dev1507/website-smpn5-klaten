@@ -24,8 +24,10 @@ export default function OsisEvoteClient() {
   const [evoteUrl, setEvoteUrl] = useState(PRODUCTION_EVOTE_URL);
   const [isLoading, setIsLoading] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showFullscreenExit, setShowFullscreenExit] = useState(true);
   const [iframeKey, setIframeKey] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Jika sedang dijalankan di localhost, otomatis gunakan server e-vote lokal port 5173
   useEffect(() => {
@@ -38,6 +40,38 @@ export default function OsisEvoteClient() {
       }
     }
   }, []);
+
+  // Timer auto-hide tombol keluar layar penuh setelah 3.5 detik tidak ada aktivitas
+  const resetHideTimer = () => {
+    setShowFullscreenExit(true);
+    if (hideTimerRef.current) {
+      clearTimeout(hideTimerRef.current);
+    }
+    hideTimerRef.current = setTimeout(() => {
+      setShowFullscreenExit(false);
+    }, 3500);
+  };
+
+  useEffect(() => {
+    if (isFullscreen) {
+      resetHideTimer();
+      const onUserActivity = () => resetHideTimer();
+
+      window.addEventListener("mousemove", onUserActivity, { passive: true });
+      window.addEventListener("touchstart", onUserActivity, { passive: true });
+      window.addEventListener("keydown", onUserActivity, { passive: true });
+
+      return () => {
+        window.removeEventListener("mousemove", onUserActivity);
+        window.removeEventListener("touchstart", onUserActivity);
+        window.removeEventListener("keydown", onUserActivity);
+        if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+      };
+    } else {
+      setShowFullscreenExit(true);
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    }
+  }, [isFullscreen]);
 
   // Tangani tombol ESC untuk keluar dari fullscreen
   useEffect(() => {
@@ -141,7 +175,17 @@ export default function OsisEvoteClient() {
             <button
               type="button"
               onClick={toggleFullscreen}
-              className={styles.fullscreenExitBar}
+              onMouseEnter={() => {
+                if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+                setShowFullscreenExit(true);
+              }}
+              onMouseLeave={resetHideTimer}
+              className={`${styles.fullscreenExitBar} ${
+                showFullscreenExit
+                  ? styles.fullscreenExitBarVisible
+                  : styles.fullscreenExitBarHidden
+              }`}
+              title="Keluar dari Layar Penuh (Tekan ESC)"
             >
               <Minimize2 size={14} />
               <span>Keluar dari Layar Penuh (ESC)</span>
