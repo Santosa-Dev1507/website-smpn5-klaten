@@ -378,6 +378,97 @@ export default function OsisDaftarClient() {
         </section>
       ) : (
         <div className={styles.mainContent}>
+          {/* ── Banner Pengumuman Hasil Seleksi ── */}
+          <div
+            style={{
+              background: "linear-gradient(135deg, #782e21 0%, #944535 100%)",
+              borderRadius: "14px",
+              padding: "1.25rem 1.5rem",
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "1.25rem",
+              flexWrap: "wrap",
+              boxShadow: "0 4px 16px rgba(120, 46, 33, 0.18)",
+              border: "1px solid rgba(217, 119, 6, 0.3)",
+              marginBottom: "2rem",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <div
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "50%",
+                  background: "rgba(255, 255, 255, 0.15)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <Award size={24} style={{ color: "#fde68a" }} />
+              </div>
+              <div>
+                <div
+                  style={{
+                    display: "inline-block",
+                    background: "rgba(253, 230, 138, 0.2)",
+                    color: "#fde68a",
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    padding: "0.15rem 0.6rem",
+                    borderRadius: "999px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    marginBottom: "0.25rem",
+                  }}
+                >
+                  Telah Diumumkan
+                </div>
+                <h3
+                  style={{
+                    fontWeight: 800,
+                    fontSize: "1.05rem",
+                    margin: 0,
+                  }}
+                >
+                  Hasil Seleksi OSIS Periode 2026/2027
+                </h3>
+                <p
+                  style={{
+                    fontSize: "0.85rem",
+                    color: "rgba(255, 255, 255, 0.85)",
+                    margin: "0.2rem 0 0",
+                  }}
+                >
+                  35 siswa resmi terpilih sebagai Calon Pengurus dan Calon Ketua OSIS.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/osis/pengumuman"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                background: "#d97706",
+                color: "#fff",
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                padding: "0.6rem 1.25rem",
+                borderRadius: "999px",
+                textDecoration: "none",
+                minHeight: "40px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+              }}
+            >
+              <span>Lihat Pengumuman</span>
+              <ChevronRight size={16} />
+            </Link>
+          </div>
+
           {/* ── Section: Jadwal Rangkaian Kegiatan ── */}
           <section aria-labelledby="timeline-heading">
             <div className={styles.sectionHeader}>

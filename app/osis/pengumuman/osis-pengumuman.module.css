@@ -1,0 +1,497 @@
+/* ====================================================
+   Pengumuman Seleksi OSIS — CSS Module
+   Palette: Marun (--clr-maroon) + Emas (--clr-gold)
+   ==================================================== */
+
+/* ── Design Tokens ─────────────────────────────────── */
+.page {
+  --clr-maroon:        #944535;
+  --clr-maroon-dark:   #782e21;
+  --clr-maroon-light:  #f5ebe8;
+  --clr-gold:          #d97706;
+  --clr-gold-dark:     #b45309;
+  --clr-gold-light:    #fef3c7;
+  --clr-ink:           #1a1412;
+  --clr-ink-muted:     #5a4a44;
+  --clr-paper:         #fdfaf8;
+  --clr-border:        #e8ddd9;
+  --radius-card:       14px;
+  --shadow-card:       0 2px 12px rgb(0 0 0 / .08);
+  --shadow-card-hover: 0 6px 24px rgb(0 0 0 / .14);
+
+  font-family: "Inter", sans-serif;
+  background-color: var(--clr-paper);
+  color: var(--clr-ink);
+  overflow-x: clip;
+}
+
+/* ── Hero ──────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--clr-maroon-dark) 0%, var(--clr-maroon) 55%, #b05240 100%);
+  color: #fff;
+  padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 30%, rgba(217,119,6,.18) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.heroEyebrow {
+  display: inline-block;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 999px;
+  padding: 0.3rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fde68a;
+  margin-bottom: 1rem;
+}
+
+.heroTitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.heroSub {
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: rgba(255,255,255,.85);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── Stat Cards ─────────────────────────────────────── */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 640px;
+  margin: -2.5rem auto 0;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 480px) {
+  .statsRow {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+  }
+}
+
+.statCard {
+  background: #fff;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 1rem 0.75rem;
+  text-align: center;
+}
+
+.statNumber {
+  display: block;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 800;
+  color: var(--clr-maroon);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  color: var(--clr-ink-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+}
+
+/* ── Section Wrapper ─────────────────────────────────── */
+.section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem);
+}
+
+.sectionHeader {
+  margin-bottom: 1.75rem;
+}
+
+.sectionEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-gold-dark);
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+  font-weight: 800;
+  color: var(--clr-ink);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.sectionDivider {
+  width: 48px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--clr-maroon), var(--clr-gold));
+  border-radius: 9px;
+  margin-top: 0.75rem;
+}
+
+/* ── Calon Ketua Cards ──────────────────────────────── */
+.ketuaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.ketuaCard {
+  background: #fff;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: box-shadow 0.22s ease, transform 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ketuaCard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--clr-maroon), var(--clr-gold));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ketuaCard:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-3px);
+  }
+}
+
+.ketuaNomorBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--clr-maroon);
+  color: #fff;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ketuaNama {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--clr-ink);
+  line-height: 1.3;
+}
+
+.ketuaMeta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.badgeKelas {
+  background: var(--clr-maroon-light);
+  color: var(--clr-maroon-dark);
+}
+
+.badgeGender {
+  background: var(--clr-gold-light);
+  color: var(--clr-gold-dark);
+}
+
+.badgeKetua {
+  background: var(--clr-maroon);
+  color: #fff;
+}
+
+.badgePengurus {
+  background: #e8f4e8;
+  color: #2d6a2d;
+}
+
+/* ── Filter Bar ──────────────────────────────────────── */
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filterBtn {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--clr-border);
+  background: #fff;
+  color: var(--clr-ink-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, color 0.18s;
+  min-height: 36px;
+}
+
+.filterBtn:hover {
+  border-color: var(--clr-maroon);
+  color: var(--clr-maroon);
+}
+
+.filterBtnActive {
+  background: var(--clr-maroon);
+  border-color: var(--clr-maroon);
+  color: #fff;
+}
+
+.searchBox {
+  margin-left: auto;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--clr-border);
+  background: #fff;
+  color: var(--clr-ink);
+  font-size: 0.85rem;
+  min-width: 200px;
+  min-height: 36px;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.searchBox:focus {
+  border-color: var(--clr-maroon);
+  box-shadow: 0 0 0 3px rgba(148,69,53,.15);
+}
+
+@media (max-width: 560px) {
+  .searchBox {
+    margin-left: 0;
+    min-width: 100%;
+  }
+}
+
+/* ── Table ───────────────────────────────────────────── */
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--clr-border);
+  box-shadow: var(--shadow-card);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.875rem;
+}
+
+.table thead tr {
+  background: var(--clr-maroon);
+  color: #fff;
+}
+
+.table th {
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.table th:first-child { border-radius: 0; }
+
+.table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--clr-border);
+  color: var(--clr-ink);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td { border-bottom: none; }
+
+.table tbody tr:hover { background: var(--clr-maroon-light); }
+
+.tdNo {
+  font-weight: 700;
+  color: var(--clr-maroon);
+  width: 48px;
+  text-align: center;
+}
+
+.tdNama { font-weight: 600; }
+
+.emptyRow td {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--clr-ink-muted);
+  font-size: 0.9rem;
+}
+
+/* ── WhatsApp CTA Banner ─────────────────────────────── */
+.waBanner {
+  background: linear-gradient(135deg, #1a7a3c 0%, #128c3e 60%, #0d7034 100%);
+  border-radius: var(--radius-card);
+  padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1.25rem, 4vw, 2rem);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.waBannerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  background: rgba(255,255,255,.15);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.waBannerBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.waBannerTitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  margin: 0 0 0.3rem;
+}
+
+.waBannerDesc {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,.85);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.waBannerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  background: #fff;
+  color: #1a7a3c;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  min-height: 44px;
+  transition: background 0.18s, transform 0.18s;
+}
+
+.waBannerBtn:hover { background: #f0fdf4; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .waBannerBtn:hover { transform: scale(1.03); }
+}
+
+.waBannerBtnDisabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Evote CTA ───────────────────────────────────────── */
+.evoteBanner {
+  background: linear-gradient(135deg, var(--clr-maroon-dark) 0%, var(--clr-maroon) 100%);
+  border-radius: var(--radius-card);
+  padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1.25rem, 4vw, 2rem);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.evoteBannerBody { flex: 1; min-width: 0; }
+
+.evoteBannerTitle {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  margin: 0 0 0.3rem;
+}
+
+.evoteBannerDesc {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,.85);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.evoteBannerBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  background: var(--clr-gold);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  min-height: 44px;
+  transition: background 0.18s, transform 0.18s;
+}
+
+.evoteBannerBtn:hover { background: var(--clr-gold-dark); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .evoteBannerBtn:hover { transform: scale(1.03); }
+}
