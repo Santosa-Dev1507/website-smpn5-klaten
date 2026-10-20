@@ -10,13 +10,13 @@ export interface SiswaOsis {
 }
 
 export const daftarSiswaOsis: SiswaOsis[] = [
-  // ── 6 Calon Ketua (Susunan asli dipertahankan) ───────────────
+  // ── 6 Calon Ketua (Diurutkan Kelas VIII A–VIII E) ───────────
   { no: 1,  nama: "Vania Regina Putri",           kelas: "VIII A", jenisKelamin: "P", kategori: "Calon Ketua" },
   { no: 2,  nama: "Eillia Zahira Farha Andewsta",  kelas: "VIII B", jenisKelamin: "P", kategori: "Calon Ketua" },
-  { no: 3,  nama: "Muhammad Caesar Umam Prastyo",  kelas: "VIII E", jenisKelamin: "L", kategori: "Calon Ketua" },
-  { no: 4,  nama: "Tanaya Nuansa Marenta",          kelas: "VIII B", jenisKelamin: "P", kategori: "Calon Ketua" },
-  { no: 5,  nama: "Olivia Rita Saputri",            kelas: "VIII E", jenisKelamin: "P", kategori: "Calon Ketua" },
-  { no: 6,  nama: "Arkaan Nailufar Putra Daviya",   kelas: "VIII B", jenisKelamin: "L", kategori: "Calon Ketua" },
+  { no: 3,  nama: "Tanaya Nuansa Marenta",          kelas: "VIII B", jenisKelamin: "P", kategori: "Calon Ketua" },
+  { no: 4,  nama: "Arkaan Nailufar Putra Daviya",   kelas: "VIII B", jenisKelamin: "L", kategori: "Calon Ketua" },
+  { no: 5,  nama: "Muhammad Caesar Umam Prastyo",  kelas: "VIII E", jenisKelamin: "L", kategori: "Calon Ketua" },
+  { no: 6,  nama: "Olivia Rita Saputri",            kelas: "VIII E", jenisKelamin: "P", kategori: "Calon Ketua" },
 
   // ── 29 Calon Pengurus (Diurutkan Kelas 7A–7H, lalu 8A–8H) ────
   // Kelas VII A
