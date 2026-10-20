@@ -84,15 +84,15 @@ export default function OsisPengumumanClient() {
       <section className={styles.hero} aria-labelledby="pengumuman-heading">
         <div className={styles.heroContent}>
           <span className={styles.heroEyebrow}>
-            Hasil Resmi Seleksi OSIS 2026/2027
+            Hasil Resmi Seleksi Pengurus OSIS Periode 2026/2027
           </span>
 
           <h1 id="pengumuman-heading" className={styles.heroTitle}>
-            Selamat & Sukses kepada 35 Siswa Terpilih OSIS SMPN 5 Klaten
+            Selamat & Sukses kepada 35 Murid Terpilih OSIS SMPN 5 Klaten
           </h1>
 
           <p className={styles.heroSub}>
-            Berdasarkan hasil seleksi wawancara dan administrasi, berikut 35 siswa-siswi berprestasi
+            Berdasarkan hasil seleksi wawancara dan administrasi, berikut 35 murid berprestasi
             yang siap mengemban amanah sebagai Calon Pengurus & Calon Ketua OSIS Generasi JUARA.
           </p>
         </div>
@@ -164,10 +164,10 @@ export default function OsisPengumumanClient() {
               <span>Daftar Lengkap</span>
             </div>
             <h2 id="daftar-lengkap-heading" className={styles.sectionTitle}>
-              Daftar Lengkap Kelulusan Pengurus OSIS
+              Daftar Lengkap Kelulusan Calon Pengurus OSIS
             </h2>
             <p className={styles.sectionDescription}>
-              Gunakan kotak pencarian atau filter kelas di bawah untuk memeriksa status kelulusan peserta didik.
+              Gunakan kotak pencarian atau filter kelas di bawah untuk memeriksa status kelulusan calon pengurus OSIS.
             </p>
             <div className={styles.sectionDivider} aria-hidden />
           </div>
@@ -226,24 +226,24 @@ export default function OsisPengumumanClient() {
               <Search size={16} className={styles.searchIcon} aria-hidden />
               <input
                 type="text"
-                placeholder="Ketik nama siswa atau kelas..."
+                placeholder="Ketik nama murid atau kelas..."
                 className={styles.searchBox}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                aria-label="Cari nama atau kelas siswa"
+                aria-label="Cari nama atau kelas murid"
               />
             </div>
           </div>
 
           {/* Accessible Table */}
-          <div className={styles.tableWrapper} tabIndex={0} role="region" aria-label="Tabel daftar siswa terpilih">
+          <div className={styles.tableWrapper} tabIndex={0} role="region" aria-label="Tabel daftar murid terpilih">
             <table className={styles.table}>
               <thead>
                 <tr>
                   <th scope="col" style={{ width: "56px", textAlign: "center" }}>
                     No.
                   </th>
-                  <th scope="col">Nama Lengkap Siswa</th>
+                  <th scope="col">Nama Lengkap Murid</th>
                   <th scope="col">Kelas</th>
                   <th scope="col" style={{ width: "70px", textAlign: "center" }}>
                     L/P
@@ -255,7 +255,7 @@ export default function OsisPengumumanClient() {
                 {filteredList.length === 0 ? (
                   <tr className={styles.emptyRow}>
                     <td colSpan={5}>
-                      Tidak ditemukan siswa dengan kata kunci &quot;{searchQuery}&quot; pada kategori ini.
+                      Tidak ditemukan murid dengan kata kunci &quot;{searchQuery}&quot; pada kategori ini.
                     </td>
                   </tr>
                 ) : (
@@ -324,7 +324,7 @@ export default function OsisPengumumanClient() {
                   Langkah Selanjutnya: Bergabung ke Grup Koordinasi
                 </h3>
                 <p className={styles.waDesc}>
-                  Khusus bagi 35 siswa yang dinyatakan lolos, silakan masuk ke WhatsApp Group resmi untuk menerima pengarahan jadwal pembekalan dan persiapan kepengurusan dari Pembina OSIS.
+                  Khusus bagi 35 murid yang dinyatakan lolos, silakan masuk ke WhatsApp Group resmi untuk menerima pengarahan jadwal pembekalan dan persiapan kepengurusan dari Pembina OSIS.
                 </p>
               </div>
             </div>
