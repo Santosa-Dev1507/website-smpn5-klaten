@@ -46,35 +46,33 @@ export const daftarSiswaOsis: SiswaOsis[] = [
   // Kelas VII G
   { no: 21, nama: "Mishelina Riska Pamela",         kelas: "VII G",  jenisKelamin: "P", kategori: "Calon Pengurus" },
 
-  // Kelas VII H
-  { no: 22, nama: "Nadia Faizan Ramadhani",         kelas: "VII H",  jenisKelamin: "P", kategori: "Calon Pengurus" },
-
   // Kelas VIII A
-  { no: 23, nama: "Satya Oktavian Saputra",         kelas: "VIII A", jenisKelamin: "L", kategori: "Calon Pengurus" },
+  { no: 22, nama: "Satya Oktavian Saputra",         kelas: "VIII A", jenisKelamin: "L", kategori: "Calon Pengurus" },
 
   // Kelas VIII B
-  { no: 24, nama: "Raffa Disya Zura M.",            kelas: "VIII B", jenisKelamin: "L", kategori: "Calon Pengurus" },
+  { no: 23, nama: "Raffa Disya Zura M.",            kelas: "VIII B", jenisKelamin: "L", kategori: "Calon Pengurus" },
 
   // Kelas VIII C
-  { no: 25, nama: "Adelia Kanaya Putri Benita",     kelas: "VIII C", jenisKelamin: "P", kategori: "Calon Pengurus" },
-  { no: 26, nama: "Prima Surya Dewantara",          kelas: "VIII C", jenisKelamin: "L", kategori: "Calon Pengurus" },
+  { no: 24, nama: "Adelia Kanaya Putri Benita",     kelas: "VIII C", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 25, nama: "Prima Surya Dewantara",          kelas: "VIII C", jenisKelamin: "L", kategori: "Calon Pengurus" },
 
   // Kelas VIII E
-  { no: 27, nama: "Sofiyah",                        kelas: "VIII E", jenisKelamin: "P", kategori: "Calon Pengurus" },
-  { no: 28, nama: "Danendra Aqil Zhafran",          kelas: "VIII E", jenisKelamin: "L", kategori: "Calon Pengurus" },
-  { no: 29, nama: "Ambita Nur Hanifah",             kelas: "VIII E", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 26, nama: "Sofiyah",                        kelas: "VIII E", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 27, nama: "Danendra Aqil Zhafran",          kelas: "VIII E", jenisKelamin: "L", kategori: "Calon Pengurus" },
+  { no: 28, nama: "Ambita Nur Hanifah",             kelas: "VIII E", jenisKelamin: "P", kategori: "Calon Pengurus" },
 
   // Kelas VIII F
-  { no: 30, nama: "Naila Alesha Acintua",           kelas: "VIII F", jenisKelamin: "P", kategori: "Calon Pengurus" },
-  { no: 31, nama: "Aulia Hajar Jameela",            kelas: "VIII F", jenisKelamin: "P", kategori: "Calon Pengurus" },
-  { no: 32, nama: "Brian Galen Putra Purnama",      kelas: "VIII F", jenisKelamin: "L", kategori: "Calon Pengurus" },
+  { no: 29, nama: "Naila Alesha Acintua",           kelas: "VIII F", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 30, nama: "Aulia Hajar Jameela",            kelas: "VIII F", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 31, nama: "Brian Galen Putra Purnama",      kelas: "VIII F", jenisKelamin: "L", kategori: "Calon Pengurus" },
 
   // Kelas VIII G
-  { no: 33, nama: "Arreza Cahya Saputra",           kelas: "VIII G", jenisKelamin: "L", kategori: "Calon Pengurus" },
+  { no: 32, nama: "Arreza Cahya Saputra",           kelas: "VIII G", jenisKelamin: "L", kategori: "Calon Pengurus" },
 
   // Kelas VIII H
-  { no: 34, nama: "Kynara Suci Auryna",             kelas: "VIII H", jenisKelamin: "P", kategori: "Calon Pengurus" },
-  { no: 35, nama: "Adila Nur Asfarina",             kelas: "VIII H", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 33, nama: "Kynara Suci Auryna",             kelas: "VIII H", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 34, nama: "Adila Nur Asfarina",             kelas: "VIII H", jenisKelamin: "P", kategori: "Calon Pengurus" },
+  { no: 35, nama: "Nadia Faizan Ramadhani",         kelas: "VIII H", jenisKelamin: "P", kategori: "Calon Pengurus" },
 ];
 
 export const totalSiswa = daftarSiswaOsis.length; // 35
