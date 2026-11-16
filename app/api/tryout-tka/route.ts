@@ -55,10 +55,14 @@ function getCsvUrlForTO(toIndex: number): string | undefined {
       return (
         process.env.TRYOUT_TKA_CSV_TO1 ||
         process.env.TRYOUT_TKA_CSV_URL ||
-        process.env.TKA_TRYOUT_CSV_URL
+        process.env.TKA_TRYOUT_CSV_URL ||
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vREmsYuX2klqYR1qH1-2c4pnANoaRmuhpDB3B7eb2GX5Nw6SldcuRq-6FQ92W2nqUYbUoGmH-IbLXbH/pub?output=csv"
       );
     case 2:
-      return process.env.TRYOUT_TKA_CSV_TO2;
+      return (
+        process.env.TRYOUT_TKA_CSV_TO2 ||
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vREmsYuX2klqYR1qH1-2c4pnANoaRmuhpDB3B7eb2GX5Nw6SldcuRq-6FQ92W2nqUYbUoGmH-IbLXbH/pub?gid=1134663987&single=true&output=csv"
+      );
     case 3:
       return process.env.TRYOUT_TKA_CSV_TO3;
     case 4:
