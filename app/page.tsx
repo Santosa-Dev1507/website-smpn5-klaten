@@ -145,7 +145,7 @@ export default function Home() {
             <div className={styles.announcementAlert}>
               <div className={styles.announcementIcon}>📝</div>
               <div className={styles.announcementText}>
-                <strong>Hasil Try Out 1 TKA Sudah Tersedia</strong>
+                <strong>Hasil Try Out 1 & 2 TKA Sudah Tersedia</strong>
               </div>
               <a href="/tryout-tka" className={styles.btnAnnouncement}>Cek Hasil Try Out</a>
             </div>

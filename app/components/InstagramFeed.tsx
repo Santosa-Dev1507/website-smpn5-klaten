@@ -25,7 +25,7 @@ export default async function InstagramFeed() {
       const mediaData = await mediaRes.json();
 
       if (!mediaRes.ok || mediaData.error) {
-        console.error("[InstagramFeed] Media Error:", JSON.stringify(mediaData.error ?? mediaData, null, 2));
+        console.warn("[InstagramFeed] Token expired or invalid, displaying fallback UI.");
         error = true;
       } else {
         posts = mediaData.data || [];
