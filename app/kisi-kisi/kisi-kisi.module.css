@@ -182,30 +182,6 @@
 }
 
 /* ════════════════════════════════════════════
-   DEMO / NOTICE BANNER
-════════════════════════════════════════════ */
-.demoBanner {
-  background-color: #fff6e6;
-  border-bottom: 1px solid #f0d7a8;
-  color: #6b3f08;
-  padding: 0.75rem 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-.demoBannerInner {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-}
-
-.demoBannerIcon {
-  flex-shrink: 0;
-  margin-top: 2px;
-  color: #b45309;
-}
-
-/* ════════════════════════════════════════════
    FILTER BAR (Static on small phones, Sticky >= 48rem)
 ════════════════════════════════════════════ */
 .filterWrap {

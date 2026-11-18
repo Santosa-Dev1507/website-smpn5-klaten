@@ -21,7 +21,6 @@ import {
   FileText,
   FlaskConical,
   Globe2,
-  Info,
   Languages,
   Link2,
   Monitor,
@@ -75,7 +74,6 @@ export default function KisiKisiClient() {
   // State data utama
   const [items, setItems] = useState<KisiKisiItem[]>([]);
   const [tahunList, setTahunList] = useState<string[]>([]);
-  const [isDemo, setIsDemo] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -119,7 +117,6 @@ export default function KisiKisiClient() {
       const data: KisiKisiResponse = await res.json();
       setItems(data.items || []);
       setTahunList(data.tahunAjaranList || []);
-      setIsDemo(Boolean(data.isDemo));
 
       // Pilih periode default (terbaru) jika URL belum menentukan periode valid
       setTahunAjaran((prev) => {
@@ -365,20 +362,6 @@ export default function KisiKisiClient() {
           </div>
         </div>
       </section>
-
-      {/* DEMO NOTICE (hanya tampil jika KISIKISI_CSV_URL belum diisi) */}
-      {isDemo && !loading && (
-        <div className={styles.demoBanner} role="status">
-          <div className={`${styles.container} ${styles.demoBannerInner}`}>
-            <Info size={18} className={styles.demoBannerIcon} aria-hidden="true" />
-            <span>
-              <strong>Mode Pratinjau Data:</strong> Tautan Spreadsheet belum dihubungkan. Isi{" "}
-              <code>KISIKISI_CSV_URL</code> di pengaturan lingkungan untuk menampilkan file
-              kisi-kisi asli sekolah.
-            </span>
-          </div>
-        </div>
-      )}
 
       {/* FILTER BAR */}
       <section className={styles.filterWrap} aria-label="Filter kisi-kisi ujian">

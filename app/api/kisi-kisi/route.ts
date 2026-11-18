@@ -175,70 +175,12 @@ function canonicalMapelName(rawMapel: string): string {
   return matched || rawMapel.trim();
 }
 
-/** Data pratinjau sementara sebelum KISIKISI_CSV_URL diatur di .env.local */
-function buildDemoResponse(): KisiKisiResponse {
-  const periods = ["2026/2027 · ASAS Gasal", "2025/2026 · ASAT Genap"];
-  const items: KisiKisiItem[] = [];
-
-  // Mapel yang disimulasikan sudah tersedia untuk periode aktif
-  const availableActive = new Set([
-    "VII::Matematika",
-    "VII::Bahasa Indonesia",
-    "VII::Ilmu Pengetahuan Alam (IPA)",
-    "VII::Bahasa Inggris",
-    "VII::Pendidikan Agama & Budi Pekerti",
-    "VII::Informatika",
-    "VIII::Matematika",
-    "VIII::Bahasa Indonesia",
-    "VIII::Ilmu Pengetahuan Sosial (IPS)",
-    "VIII::Bahasa Inggris",
-    "VIII::Pendidikan Pancasila",
-    "IX::Matematika",
-    "IX::Bahasa Indonesia",
-    "IX::Ilmu Pengetahuan Alam (IPA)",
-    "IX::Bahasa Inggris",
-    "IX::Bahasa Jawa",
-  ]);
-
-  const demoPdf = "/denah-daftar-ulang.pdf";
-
-  for (const period of periods) {
-    const isArchive = period.startsWith("2025/2026");
-    for (const kelas of ALL_KELAS) {
-      for (const mapel of MASTER_MAPEL) {
-        const ready = isArchive || availableActive.has(`${kelas}::${mapel}`);
-        items.push({
-          id: makeSlug(period, kelas, mapel),
-          tahunAjaran: period,
-          kelas,
-          mataPelajaran: mapel,
-          status: ready ? "tersedia" : "segera",
-          linkUnduh: ready ? demoPdf : "",
-          linkPreview: ready ? demoPdf : "",
-        });
-      }
-    }
-  }
-
-  return {
-    items,
-    tahunAjaranList: periods,
-    isDemo: true,
-    updatedAt: new Date().toISOString(),
-  };
-}
+const DEFAULT_KISIKISI_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ9bFBveV2I342ePtoh6zPyLjBfOCp_WTtoinQipKWAN4pLP-TSEs8YcuY4LuxfZYTY94hHI_5nZE0i/pub?output=csv";
 
 export async function GET() {
   try {
-    const csvUrl = process.env.KISIKISI_CSV_URL?.trim();
-
-    if (!csvUrl) {
-      return NextResponse.json(buildDemoResponse(), {
-        headers: {
-          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
-        },
-      });
-    }
+    const csvUrl = process.env.KISIKISI_CSV_URL?.trim() || DEFAULT_KISIKISI_CSV_URL;
 
     const res = await fetch(csvUrl, {
       next: { revalidate: 60 },
@@ -259,7 +201,6 @@ export async function GET() {
       return NextResponse.json({
         items: [],
         tahunAjaranList: [],
-        isDemo: false,
         updatedAt: new Date().toISOString(),
       } satisfies KisiKisiResponse);
     }
@@ -374,7 +315,6 @@ export async function GET() {
     const payload: KisiKisiResponse = {
       items,
       tahunAjaranList,
-      isDemo: false,
       updatedAt: new Date().toISOString(),
     };
 

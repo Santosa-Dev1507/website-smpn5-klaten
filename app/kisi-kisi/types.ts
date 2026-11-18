@@ -15,6 +15,5 @@ export interface KisiKisiItem {
 export interface KisiKisiResponse {
   items: KisiKisiItem[];
   tahunAjaranList: string[];
-  isDemo: boolean;
   updatedAt: string;
 }
