@@ -43,6 +43,12 @@ export default function sitemap() {
       priority: 0.85,
     },
     {
+      url: 'https://www.smpn5klaten.sch.id/kisi-kisi',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
       url: 'https://www.smpn5klaten.sch.id/kokurikuler',
       lastModified: new Date(),
       changeFrequency: 'weekly',

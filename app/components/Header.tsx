@@ -15,6 +15,7 @@ const navLinks: NavLink[] = [
     label: "Layanan",
     children: [
       { label: "Layanan Publik", href: "/layanan-publik" },
+      { label: "Kisi-Kisi Ujian", href: "/kisi-kisi" },
       { label: "Hasil Try Out TKA", href: "/tryout-tka" },
       { label: "Hasil Asesmen", href: "/hasil-asesmen" },
     ],
